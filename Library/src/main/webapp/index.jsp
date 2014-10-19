@@ -19,7 +19,7 @@
   </head>
   <body>
     <h3>
-		<a href="hello">Hello World</a>
+		<a href="hello?name=Steve">Hello World</a>
 	</h3>
  
 	<h3>
