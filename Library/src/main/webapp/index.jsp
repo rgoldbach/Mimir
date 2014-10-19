@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
- 
-pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -9,8 +8,8 @@ pageEncoding="ISO-8859-1"%>
     <title>Bootstrap 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+				
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -19,14 +18,18 @@ pageEncoding="ISO-8859-1"%>
     <![endif]-->
   </head>
   <body>
-    <h2>Hello World</h2>
-		<h3>
-			<a href="hello?name=Eric">Click Here</a>
-		</h3>
+    <h3>
+		<a href="hello">Hello World</a>
+	</h3>
+ 
+	<h3>
+		<a href="employee">Employee List</a>
+	</h3>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+  	
   </body>
 </html>

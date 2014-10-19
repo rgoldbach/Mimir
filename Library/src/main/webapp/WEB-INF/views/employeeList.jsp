@@ -18,10 +18,10 @@
     <![endif]-->
   </head>
   <body>
-    <h2>Hello World</h2>
-		<h2>
-			${message} ${name}
-		</h2>
+    <c:forEach items="${employeeList}" var="employee">
+			${employee.id}: ${employee.lastName}, ${employee.firstName}<br>
+	</c:forEach>
+ 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
