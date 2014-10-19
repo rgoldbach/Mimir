@@ -393,3 +393,19 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #0085a1;
 }
+.carousel {
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+}
+
+/* The controlsy */
+.carousel-control {
+	left: -12px;
+    height: 0px;
+	width: 0px;
+    background: none repeat scroll 0 0 #222222;
+    margin-top: 55px;
+}
+.carousel-control.right {
+	right: -12px;
+}

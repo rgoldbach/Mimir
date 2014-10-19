@@ -55,7 +55,9 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img style="max-width: 100px; margin-top: -15px;" src="<c:url value="/resources/img/logo.png" />"></a>
+				<a class="navbar-brand" href="#"><img
+					style="max-width: 100px; margin-top: -15px;"
+					src="<c:url value="/resources/img/logo.png" />"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -79,7 +81,7 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 					<div class="site-heading">
-						<h1>Search Goes Here</h1>
+						<h1>Search Box Goes Here</h1>
 					</div>
 				</div>
 			</div>
@@ -93,8 +95,100 @@
 				<div class="post-preview">
 					<h2 class="post-title">eBooks</h2>
 					<h3 class="post-subtitle">Most Popular</h3>
-					<p class="post-meta">[book] [book] [book] [book] [book] [book]
-						[book] [book] [book]</p>
+					<div id="Carousel" class="carousel slide">
+						<!-- Carousel items -->
+						<div class="carousel-inner">
+
+							<div class="item active">
+								<div class="row">
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+								</div>
+								<!--.row-->
+							</div>
+							<!--.item-->
+
+							<div class="item">
+								<div class="row">
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+								</div>
+								<!--.row-->
+							</div>
+							<!--.item-->
+
+							<div class="item">
+								<div class="row">
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+									<div class="col-md-3">
+										<a href="#" class="thumbnail"><img
+											src="http://placehold.it/250x250" alt="Image"
+											style="max-width: 100%;"></a>
+									</div>
+								</div>
+								<!--.row-->
+							</div>
+							<!--.item-->
+
+						</div>
+						<!--.carousel-inner-->
+						<a data-slide="prev" href="#Carousel"
+							class="left carousel-control"><span
+							class="glyphicon glyphicon-chevron-left"></span></a> <a
+							data-slide="next" href="#Carousel" class="right carousel-control"><span
+							class="glyphicon glyphicon-chevron-right"></span></a>
+					</div>
+					<!--.Carousel-->
 				</div>
 				<hr>
 				<div class="post-preview">
@@ -146,6 +240,13 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value="/resources/js/clean-blog.min.js" />"></script>
 
+	<script>
+	$(document).ready(function() {
+	    $('#Carousel').carousel({
+	        interval: 5000
+	    })
+	});
+	</script>
 </body>
 
 </html>
