@@ -9,12 +9,21 @@ public class EmployeeManager {
  
 	public EmployeeManager(){
 		 employeeList = new ArrayList<Employee>();
-		 employeeList.add(new Employee("1", "Mike", "Smith"));
-		 employeeList.add(new Employee("2", "John", "Taylor"));
-		 employeeList.add(new Employee("3", "Dave", "Wilson"));	 
+		 employeeList.add(new Employee(1, "Mike", "Smith"));
+		 employeeList.add(new Employee(2, "John", "Taylor"));
+		 employeeList.add(new Employee(3, "Dave", "Wilson"));	 
 	}
  
 	public List<Employee> getEmployeeList(){
 		return employeeList;
+	}
+ 
+	public Employee addEmployee(Employee e){
+		Employee employee = new Employee();
+		employee.setId(employeeList.size()+1);
+		employee.setFirstName(e.getFirstName());
+		employee.setLastName(e.getLastName());
+		employeeList.add(employee);
+		return employee;
 	}
 }

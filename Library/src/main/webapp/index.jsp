@@ -25,6 +25,10 @@
 	<h3>
 		<a href="employee">Employee List</a>
 	</h3>
+	
+	<h3>
+		<a href="showEmployeeForm">Add Employee</a>
+	</h3>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

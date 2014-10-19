@@ -1,20 +1,24 @@
 package com.mimir.library.model;
  
 public class Employee {
-	private String id;
+	private int id;
 	private String lastName;
 	private String firstName;
  
-	public Employee(String id, String lastName, String firstName) {
+	public Employee(){
+ 
+	}
+ 
+	public Employee(int id, String lastName, String firstName) {
 		this.id = id;
 		this.lastName = lastName;
 		this.firstName = firstName;
 	}
  
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getLastName() {
