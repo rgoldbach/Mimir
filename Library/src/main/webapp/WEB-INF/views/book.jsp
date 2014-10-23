@@ -137,7 +137,7 @@
                     <br>
                     <h4>Rating</h4>  
                     <div id="controls">
-                        <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">
+                         <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm"> 
                         <a href="llamazon.jsp"><button class="bg-primary btn-lg">Borrow</button></a>
                         <button class="bg-info btn-sm">Wishlist</button>
                     </div>
