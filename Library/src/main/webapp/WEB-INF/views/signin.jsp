@@ -109,7 +109,7 @@
 	<!-- Main Content -->
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8">
+			
 				        <!-- Page Content -->
         <div class="col-lg-12">
             <ul class="nav nav-pills nav-stacked col-md-2">
@@ -560,7 +560,6 @@
 				<hr>
 			</div>
 		</div>
-	</div>
 	
 	<hr>
 

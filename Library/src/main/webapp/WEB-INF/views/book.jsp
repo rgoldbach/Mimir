@@ -32,6 +32,9 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
 	rel='stylesheet' type='text/css'>
+	
+<!-- star rating addon -->
+<link href="<c:url value="/resources/css/star-rating.min.css" />" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -755,6 +758,8 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value="/resources/js/clean-blog.js" />"></script>
+	
+	 <script src="<c:url value="/resources/js/star-rating.min.js"/>"></script>
 	
 </body>
 
