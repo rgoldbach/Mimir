@@ -55,7 +55,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><img
+				<a class="navbar-brand" href="/Library/"><img
 					style="max-width: 100px; margin-top: -15px;"
 					src="<c:url value="/resources/img/logo.png" />"></a>
 			</div>
@@ -76,8 +76,8 @@
 
 	<!-- Page Header -->
 	<!-- Set your background image for this header on the line below. -->
-	<header class="intro-header"
-		style="background-image: url('<c:url value="/resources/img/lib-bg.jpg" />')">
+	<header class="search-header"
+		style="background-image: url('<c:url value="/resources/img/lib-bg-sm.jpg" />')">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -110,400 +110,100 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="ebooksMostPopular">
-					<h1 class="post-title">eBooks</h1>
-					<h3 class="post-subtitle">Most Popular</h3>
-					<div id="eBooksMostPopularCarousel" class="carousel slide">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
+				            <!-- Portfolio Item Row -->
+            <div class="row">
 
-							<div class="item active">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg1.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg2.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg3.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg4.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                <div class="col-md-6">
+                    <img class="img-responsive" src="resources/img/TestImg1.jpg" alt="">
+                </div>
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                <div class="col-md-6">
+                    <h2>A Brief History Of Time</h2><!--Book Title-->
+                    <!-- <h5>Is it a series?</h5><!-- Series? --> 
+                    <h5>by <a>Stephen Hawking</a></h5><!-- Author -->
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
 
-						</div>
-						<!--.carousel-inner-->
-						<a data-slide="prev" href="#eBooksMostPopularCarousel"
-							class="left carousel-control"><span
-							class="glyphicon glyphicon-chevron-left"></span></a> <a
-							data-slide="next" href="#eBooksMostPopularCarousel" class="right carousel-control"><span
-							class="glyphicon glyphicon-chevron-right"></span></a>
-					</div>
-					<!--.Carousel-->
-				</div>
-				<hr>
-				<div class="ebooksNewArrivals">
-					<h3 class="post-subtitle">New Arrivals</h3>
-					<div id="ebooksNewArrivalsCarousel" class="carousel slide">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
+                    <h3>Book Description</h3>
+                    <p>
+                        #1 NEW YORK TIMES BESTSELLER
 
-							<div class="item active">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                        A landmark volume in science writing by one of the great minds of our time, Stephen Hawking's book explores such profound questions as: How did the universe begin-and what made its start possible? Does time always flow forward? Is the universe unending-or are there boundaries? Are there other dimensions in space? What will happen when it all ends?
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                        Told in language we all can understand, A Brief History of Time plunges into the exotic realms of black holes and quarks, of antimatter and ""arrows of time," of the big bang and a bigger God-where the possibilities are wondrous and unexpected. With exciting images and profound imagination, Stephen Hawking brings us closer to the ultimate secrets at the very heart of creation.
+                    </p>
+                    <br>
+                    <h4>Rating</h4>  
+                    <div id="controls">
+                        <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm">
+                        <a href="llamazon.jsp"><button class="bg-primary btn-lg">Borrow</button></a>
+                        <button class="bg-info btn-sm">Wishlist</button>
+                    </div>
+                </div>
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+            </div>
+            <!-- /.row -->
+            <br>
 
-						</div>
-						<!--.carousel-inner-->
-						<a data-slide="prev" href="#ebooksNewArrivalsCarousel"
-							class="left carousel-control"><span
-							class="glyphicon glyphicon-chevron-left"></span></a> <a
-							data-slide="next" href="#ebooksNewArrivalsCarousel" class="right carousel-control"><span
-							class="glyphicon glyphicon-chevron-right"></span></a>
-					</div>
-					<!--.Carousel-->
-				</div>
-				
-				<div class="audioBooksMostPopular">
-					<h1 class="post-title">Audio Books</h1>
-					<h3 class="post-subtitle">Most Popular</h3>
-					<div id="audioBooksMostPopularCarousel" class="carousel slide">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
 
-							<div class="item active">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg1.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg2.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg3.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+            <div id="accordion" class="panel-group">
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                <div class="panel panel-default">
+                    <div data-toggle="collapse" data-target="#collapseOne" class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Details</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p><b>File Size</b>: 2437 Kilobytes</p>
+                            <p><b>Publisher</b>: Bantam; 10 Anv edition (May 4, 2011)</p>
+                            <p><b>ISBN-10</b>: 0553380168</p>
+                            <p><b>ISBN-13</b>: 978-0553380163</p>
+                        </div>
+                    </div>
+                </div>
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
 
-						</div>
-						<!--.carousel-inner-->
-						<a data-slide="prev" href="#audioBooksMostPopularCarousel"
-							class="left carousel-control"><span
-							class="glyphicon glyphicon-chevron-left"></span></a> <a
-							data-slide="next" href="#audioBooksMostPopularCarousel" class="right carousel-control"><span
-							class="glyphicon glyphicon-chevron-right"></span></a>
-					</div>
-					<!--.Carousel-->
-				</div>
-				<hr>
-				<div class="audioBooksNewArrivals">
-					<h3 class="post-subtitle">New Arrivals</h3>
-					<div id="audioBooksNewArrivalsCarousel" class="carousel slide">
-						<!-- Carousel items -->
-						<div class="carousel-inner">
+                <div class="panel panel-default">
+                    <div data-toggle="collapse" data-target="#collapseTwo" class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Editorial Reviews</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p>
+                                "[Hawking] can explain the complexities of cosmological physics with an engaging combination of clarity and wit. . . . His is a brain of extraordinary power." - <b>The New York Review of Books</b>
+                            </p>
+                            <p>
+                                ""This book marries a child's wonder to a genius's intellect. We journey into Hawking's universe while marvelling at his mind." - <b>The Sunday Times (London)</b>
+                            </p>
+                            <p>
+                                "Masterful." - <b>The Wall Street Journal</b>
+                            </p>
+                            <p>
+                                "Stupendous!" - <b>Local Drunk</b>
+                            </p>
+                            <p>
+                                "Charming and lucid . . . [A book of] sunny brilliance." - <b>The New Yorker</b>
+                            </p>
 
-							<div class="item active">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg4.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
+                            <p>
+                                "Lively and provocative . . . Mr. Hawking clearly possesses a natural teacher's gifts-easy, good-natured humor and an ability to illustrate highly complex propositions with analogies plucked from daily life." - <b>The New York Times</b>
+                            </p>
+                            <p>
+                                "Even as he sits helpless in his wheelchair, his mind seems to soar ever more brilliantly across the vastness of space and time to unlock the secrets of the universe." - <b>Time</b>
+                            </p>
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
 
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
 
-						</div>
-						<!--.carousel-inner-->
-						<a data-slide="prev" href="#audioBooksNewArrivalsCarousel"
-							class="left carousel-control"><span
-							class="glyphicon glyphicon-chevron-left"></span></a> <a
-							data-slide="next" href="#audioBooksNewArrivalsCarousel" class="right carousel-control"><span
-							class="glyphicon glyphicon-chevron-right"></span></a>
-					</div>
-					<!--.Carousel-->
-				</div>
-				
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <br>
 			</div>
 		</div>
 	</div>
@@ -564,7 +264,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<a href="signin" type="button" class="btn btn-primary">Sign In</a>
+					<button type="button" class="btn btn-primary">Sign In</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -1055,16 +755,7 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="<c:url value="/resources/js/clean-blog.js" />"></script>
-
-	<script>
-
-		$(document).ready(function() {
-			$('#Carousel').carousel({
-				interval : 5000
-			})
-		});
-	</script>
-
+	
 </body>
 
 </html>
