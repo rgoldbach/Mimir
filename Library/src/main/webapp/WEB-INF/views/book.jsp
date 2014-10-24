@@ -14,15 +14,16 @@
 
 <title>Mímir</title>
 
+	
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/resources/css/bootstrap.css" />"
 	rel="stylesheet">
 
-<!-- Custom CSS -->
+<!-- Custom CSS  -->
 <link href="<c:url value="/resources/css/clean-blog.css" />"
-	rel="stylesheet">
+	rel="stylesheet"> 
 
-<!-- Custom Fonts -->
+<!-- Custom Fonts  -->
 <link
 	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"
 	rel="stylesheet" type="text/css">
@@ -32,6 +33,7 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
 	rel='stylesheet' type='text/css'>
+
 	
 <!-- star rating addon -->
 <link href="<c:url value="/resources/css/star-rating.min.css" />" rel="stylesheet">
@@ -137,7 +139,7 @@
                     <br>
                     <h4>Rating</h4>  
                     <div id="controls">
-                         <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-size="sm"> 
+                         <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-symbol="&#xe006;" data-size="sm"> 
                         <a href="llamazon.jsp"><button class="bg-primary btn-lg">Borrow</button></a>
                         <button class="bg-info btn-sm">Wishlist</button>
                     </div>
@@ -756,7 +758,7 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 
-	<!-- Custom Theme JavaScript -->
+	<!-- Custom Theme JavaScript  -->
 	<script src="<c:url value="/resources/js/clean-blog.js" />"></script>
 	
 	 <script src="<c:url value="/resources/js/star-rating.min.js"/>"></script>
