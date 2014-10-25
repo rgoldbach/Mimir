@@ -12,7 +12,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Mímir</title>
+<title>MÃ­mir</title>
 
 	
 <!-- Bootstrap Core CSS -->
@@ -32,11 +32,13 @@
 	rel='stylesheet' type='text/css'>
 <link
 	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
-	rel='stylesheet' type='text/css'>
+	rel='stylesheet' type='text/css'>	
 
-	
+
+<link href="<c:url value="/resources/css/whhg.css" />" rel="stylesheet">
+
 <!-- star rating addon -->
-<link href="<c:url value="/resources/css/star-rating.min.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/star-rating.css" />" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -44,6 +46,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
 
 </head>
 
@@ -139,7 +142,7 @@
                     <br>
                     <h4>Rating</h4>  
                     <div id="controls">
-                         <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-symbol="&#xe006;" data-size="sm"> 
+                        <input id="input-21b" value="4" type="number" class="rating" min=0 max=5 step=0.5 data-symbol="&#xF379" data-size="sm">
                         <a href="llamazon.jsp"><button class="bg-primary btn-lg">Borrow</button></a>
                         <button class="bg-info btn-sm">Wishlist</button>
                     </div>
@@ -237,7 +240,7 @@
 							</span>
 						</a></li>
 					</ul>
-					<p class="copyright text-muted">Copyright &copy; Mímir 2014</p>
+					<p class="copyright text-muted">Copyright &copy; MÃ­mir 2014</p>
 				</div>
 			</div>
 		</div>
@@ -466,7 +469,7 @@
 										<option>Historical Fiction</option>
 										<option>History</option>
 										<option>Holiday Music</option>
-										<option>Home Design &amp; Décor</option>
+										<option>Home Design &amp; DÃ©cor</option>
 										<option>Horror</option>
 										<option>Human Rights</option>
 										<option>Humor (Fiction)</option>
@@ -761,7 +764,7 @@
 	<!-- Custom Theme JavaScript  -->
 	<script src="<c:url value="/resources/js/clean-blog.js" />"></script>
 	
-	 <script src="<c:url value="/resources/js/star-rating.min.js"/>"></script>
+	 <script src="<c:url value="/resources/js/star-rating.js"/>"></script>
 	
 </body>
 

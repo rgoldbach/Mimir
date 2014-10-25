@@ -17,13 +17,13 @@
     border: none;
 }
 /*
- * Stars
+ * Stars ~ Glyphicons Halflings
  */
 .rating-gly {
-    font-family: 'Glyphicons Halflings';
+    font-family: 'WebHostingHub-Glyphs';
 }
 .rating-gly-star {
-    font-family: 'Glyphicons Halflings';
+    font-family: 'WebHostingHub-Glyphs';
     padding-left: 2px;
 }
 

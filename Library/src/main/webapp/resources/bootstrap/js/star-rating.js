@@ -165,7 +165,7 @@
             $element = self.$element;
             self.containerClass = options.containerClass;
             self.glyphicon = options.glyphicon;
-            var defaultStar = (self.glyphicon) ? '\ue006' : '\u2605';
+            var defaultStar = (self.glyphicon) ? '\uf379' : '\uf379';
             self.symbol = isEmpty(options.symbol) ? defaultStar : options.symbol;
             self.rtl = options.rtl || self.$element.attr('dir');
             if (self.rtl) {
@@ -225,7 +225,7 @@
             var self = this, clear = self.renderClear(), caption = self.renderCaption(),
                 css = (self.rtl) ? 'rating-container-rtl' : 'rating-container',
                 stars = self.getStars();
-            css += (self.glyphicon) ? ((self.symbol == '\ue006') ? ' rating-gly-star' : ' rating-gly') : ' rating-uni';
+            css += (self.glyphicon) ? ((self.symbol == '\uf379') ? ' rating-gly-star' : ' rating-gly') : ' rating-uni';
             self.$rating.attr('class', css);
             self.$rating.attr('data-content', stars);
             self.$stars.attr('data-content', stars);
