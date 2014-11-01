@@ -9,4 +9,6 @@
 	
 	<script src="<c:url value="/resources/js/intro.js" />"></script>
 	
+	<script src="<c:url value="/resources/js/star-rating.js"/>"></script>
+	
 	<%@ include file="/WEB-INF/views/ajax/determineRole.jsp" %>

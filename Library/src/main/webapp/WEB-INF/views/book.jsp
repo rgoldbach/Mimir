@@ -121,7 +121,7 @@
 
 	<%@ include file="/WEB-INF/views/include/javascriptSources.jsp" %>
 	
-	<script src="<c:url value="/resources/js/star-rating.js"/>"></script>
+	
 	
 </body>
 

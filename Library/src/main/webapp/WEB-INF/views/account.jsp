@@ -33,7 +33,7 @@
                             <div class="row row-centered">
                                
                                 
-                                <div class="col-md-3 col-centered portfolio-item">
+                                <div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
                                     <a href="#">
                                         <img class="img-responsive" src="<c:url value="/resources/img/TestImg1.jpg" />">
                                     </a>
@@ -43,7 +43,7 @@
                                     <h4>
                                         <a href="#">Stephen Hawking</a>
                                     </h4>
-                                    <p>Description Pending...</p>
+                                    <h6>Description Pending...</h6>
                                     <div align="center" >
                                         <input id="input-21b" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
                                         <button class="btn btn-danger">Return</button>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="row-centered">
-                                <div class="col-md-3 col-centered portfolio-item">
+                                <div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
                                     <a href="#">
                                         <img class="img-responsive" src="<c:url value="/resources/img/TestImg4.jpg" />">
                                   
