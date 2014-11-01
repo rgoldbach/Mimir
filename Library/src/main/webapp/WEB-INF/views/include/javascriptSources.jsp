@@ -7,4 +7,6 @@
 	<!-- Custom Theme JavaScript  -->
 	<script src="<c:url value="/resources/js/clean-blog.js" />"></script>
 	
+	<script src="<c:url value="/resources/js/intro.js" />"></script>
+	
 	<%@ include file="/WEB-INF/views/ajax/determineRole.jsp" %>

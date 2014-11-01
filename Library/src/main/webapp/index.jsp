@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="ebooksMostPopular">
+				<div data-step="4" data-intro="Here are the most popular books on Mimir right now." class="ebooksMostPopular">
 					<h1 class="post-title">eBooks</h1>
 					<h3 class="post-subtitle">Most Popular</h3>
 					<div id="eBooksMostPopularCarousel" class="carousel slide">
@@ -424,10 +424,11 @@
 	<script>
 
 		$(document).ready(function() {
-			$('#Carousel').carousel({
+			$('.carousel').carousel({
 				interval : 5000
 			})
 		});
+		$('.carousel').carousel('cycle');
 	</script>
 
 </body>

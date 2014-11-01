@@ -31,5 +31,8 @@
 	
 	<!-- star rating addon -->
 	<link href="<c:url value="/resources/css/star-rating.css" />" rel="stylesheet">
+	
+	<link href="<c:url value="/resources/css/introjs.css" />"
+	rel="stylesheet">
 
 </head>

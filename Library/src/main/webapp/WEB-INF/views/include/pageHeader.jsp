@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				<div class="site-heading">
-					<div class="input-group input-group-lg">
+					<div data-step="3" data-intro="Here you can search by book title, genre, isbn, etc." class="input-group input-group-lg">
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default dropdown-toggle"
 								data-toggle="dropdown">
