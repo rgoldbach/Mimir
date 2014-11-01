@@ -5,7 +5,7 @@ $(document).ready(function() {
 		            event.preventDefault();
 		            var url = $('.determineRole').attr('name');
 		            var json = "";
-		            if(url === "signin"){
+		            if(url ===  "signin"){
 		            	json = {
 				                "username" : $('#email').val(),
 				                "password" : $('#password').val()
@@ -14,7 +14,7 @@ $(document).ready(function() {
 		            else{
 		            	json = "";
 		            }
-		            
+		            var jsona = JSON.stringify(json);
 		            $.ajax({
 		                headers: { 
 		                    'Accept': 'application/json',

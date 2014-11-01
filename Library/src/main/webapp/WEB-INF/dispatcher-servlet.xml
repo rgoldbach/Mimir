@@ -12,11 +12,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
  
 	<context:component-scan base-package="com.mimir.library.controller" />
  
-	<bean id="employeeManager" class="com.mimir.library.service.EmployeeManager" />
+ 	<!--<bean id="employeeManager" class="com.mimir.library.service.EmployeeManager" />
  
 	<bean name="/employee" class="com.mimir.library.controller.EmployeeController">
 		<property name="employeeManager" ref="employeeManager"/>
-	</bean>
+	</bean>-->	
+ 
  
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

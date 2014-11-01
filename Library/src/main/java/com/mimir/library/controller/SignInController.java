@@ -3,13 +3,10 @@ package com.mimir.library.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.LoginCredentials;
@@ -20,8 +17,9 @@ import com.mimir.library.service.AccountManager;
 public class SignInController {
  
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public @ResponseBody String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
-		
+	@ResponseBody
+	public String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
+		System.out.println("in controller");
 		//Do some sort of authentication, for now, just assume they are a valid user.
 		
 		
@@ -34,7 +32,7 @@ public class SignInController {
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.POST)
 	public @ResponseBody String signOut(@RequestBody String todo, HttpSession session) {
-		
+		System.out.println("in controller");
 		//Do some sort of authentication, for now, just assume they are a valid user.
 		
 		
