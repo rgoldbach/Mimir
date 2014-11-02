@@ -19,7 +19,7 @@ public class SignInController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
 	public String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
-		System.out.println("in controller");
+		System.out.println("in signin controller");
 		//Do some sort of authentication, for now, just assume they are a valid user.
 		
 		
@@ -32,7 +32,7 @@ public class SignInController {
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.POST)
 	public @ResponseBody String signOut(@RequestBody String todo, HttpSession session) {
-		System.out.println("in controller");
+		System.out.println("in signin controller");
 		//Do some sort of authentication, for now, just assume they are a valid user.
 		
 		

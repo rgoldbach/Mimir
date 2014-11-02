@@ -12,7 +12,6 @@ public class AccountManager {
 											    "Giant",
 											    "Hodir@Mimir.com",
 											    "password",
-											    AccountType.RegisteredUser,
 											    "1111111111");
 		return ru;
 	}

@@ -11,9 +11,8 @@ public class RegisteredUser extends User {
 	private BooksOnHold booksOnHold;
 	private Bookshelf bookshelf;
  
-	public RegisteredUser(String id, String firstName, String lastName, String email, String password,
-			AccountType accountType, String libraryCardNumber) {
-		super(id, firstName, lastName, accountType);
+	public RegisteredUser(String id, String firstName, String lastName, String email, String password, String libraryCardNumber) {
+		super(id, firstName, lastName, AccountType.RegisteredUser);
 		this.libraryCardNumber = libraryCardNumber;
 		this.loginCredentials = new LoginCredentials(email, password);
 		this.interests = new Interests();
