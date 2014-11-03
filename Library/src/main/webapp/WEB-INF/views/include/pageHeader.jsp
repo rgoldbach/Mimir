@@ -35,9 +35,7 @@
 								<div class="panel-body">
 	<!-- Book Information Inputs -->
 									<div class="form-group">
-										<fieldset>
-											<legend class="col-sm-5">Book Information</legend>
-										</fieldset>
+										<h2 class="col-sm-5">Book Information</h2>
 									</div>
 									<div class="form-group">
 		<!-- Title Input -->
@@ -60,7 +58,7 @@
 										<label for="subject" class="col-sm-1 control-label">Subject:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -72,7 +70,7 @@
 										<label for="language" class="col-sm-1 control-label">Language:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -86,7 +84,7 @@
 										<label for="publisher" class="col-sm-1 control-label">Publisher:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -98,7 +96,7 @@
 										<label for="awards" class="col-sm-1 control-label">Awards:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -112,7 +110,8 @@
 										<label for="added" class="col-sm-1 control-label">Added:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -124,7 +123,7 @@
 										<label for="format" class="col-sm-1 control-label">Format:
 										</label>
 										<div class="col-sm-5">
-											<select class="selectpicker" multiple>
+											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
@@ -134,8 +133,8 @@
 										</div>
 									</div>
 									<div class="form-group">
-		<!-- Availability Input -->
-										<label for="subject" class="col-sm-1 control-label">Available
+		<!-- Availability Input -->			
+										<label for="subject" class="col-sm-2 control-label">Available
 											Only: </label>
 										<div class="col-sm-1">
 											<input type="checkbox" class="form-control" id="availability">
@@ -143,32 +142,93 @@
 									</div>
 	<!-- Reading Level Inputs -->
 									<div class="form-group">
-										<fieldset>
-											<legend class="col-sm-5">Reading Levels</legend>
-										</fieldset>
+										<h2 class="col-sm-5">Reading Levels</h2>
 									</div>
 									<div class="form-group">
 		<!-- Interest Input -->
-										<label for="title" class="col-sm-2 control-label">Interest Level:
+										<label for="title" class="col-sm-1 control-label">Interest Level:
 										</label>
-										<div class="col-sm-9">
-											<input type="search" class="form-control" placeholder="SLIDER GOES HERE">
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
+										</div>
+										<div class="col-sm-1">
+										<label for="title" class="col-sm-1 control-label"> to 
+										</label>
+										</div>
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- ATOS Input -->
-										<label for="title" class="col-sm-2 control-label">ATOS Level:
+										<label for="title" class="col-sm-1 control-label">ATOS Level:
 										</label>
-										<div class="col-sm-9">
-											<input type="search" class="form-control" placeholder="SLIDER GOES HERE">
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
+										</div>
+										<div class="col-sm-1">
+										<label for="title" class="col-sm-1 control-label"> to 
+										</label>
+										</div>
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- Reading Input -->
-										<label for="title" class="col-sm-2 control-label">Reading Level:
+										<label for="title" class="col-sm-1 control-label">Reading Level:
 										</label>
-										<div class="col-sm-9">
-											<input type="search" class="form-control" placeholder="SLIDER GOES HERE">
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
+										</div>
+										<div class="col-sm-1">
+										<label for="title" class="col-sm-1 control-label"> to 
+										</label>
+										</div>
+										<div class="col-sm-5">
+											<select class="selectpicker" data-width="span5">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 									</div>
 								</div>
