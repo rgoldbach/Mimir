@@ -14,6 +14,10 @@
 	<!-- Custom CSS  -->
 	<link href="<c:url value="/resources/css/clean-blog.css" />"
 		rel="stylesheet"> 
+		
+	<!-- Bootstrap-Select CSS -->
+	<link href="<c:url value="/resources/css/bootstrap-select.css" />"
+		rel="stylesheet"> 
 	
 	<!-- Custom Fonts  -->
 	<link

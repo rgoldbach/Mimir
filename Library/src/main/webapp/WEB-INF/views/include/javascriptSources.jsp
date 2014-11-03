@@ -11,4 +11,6 @@
 	
 	<script src="<c:url value="/resources/js/star-rating.js"/>"></script>
 	
+	<script src="<c:url value="/resources/js/bootstrap-select.js" />"></script>
+	
 	<%@ include file="/WEB-INF/views/ajax/determineRole.jsp" %>

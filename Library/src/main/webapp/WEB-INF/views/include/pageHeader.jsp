@@ -60,25 +60,25 @@
 										<label for="subject" class="col-sm-1 control-label">Subject:
 										</label>
 										<div class="col-sm-5">
-											<select class="form-control" id="subject">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 		<!-- Language Input -->
 										<label for="language" class="col-sm-1 control-label">Language:
 										</label>
 										<div class="col-sm-5">
-											<select class="form-control" id="language">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -86,52 +86,54 @@
 										<label for="publisher" class="col-sm-1 control-label">Publisher:
 										</label>
 										<div class="col-sm-5">
-											<select class="form-control" id="publisher">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 		<!-- Awards Input -->
 										<label for="awards" class="col-sm-1 control-label">Awards:
 										</label>
 										<div class="col-sm-5">
-											<select class="form-control" id="awards">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- Added Input -->
 										<label for="added" class="col-sm-1 control-label">Added:
 										</label>
-										<div class="col-sm-4">
-											<select class="form-control" id="added">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+										<div class="col-sm-5">
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
 		<!-- Format Input -->
 										<label for="format" class="col-sm-1 control-label">Format:
 										</label>
-										<div class="col-sm-4">
-											<select class="form-control" id="format">
-												<option>Example 1</option>
-												<option>Example 2</option>
-												<option>Example 3</option>
-												<option>Example 4</option>
-												<option>Example 5</option>
-											</select>
+										<div class="col-sm-5">
+											<select class="selectpicker" multiple>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
 										</div>
+									</div>
+									<div class="form-group">
 		<!-- Availability Input -->
 										<label for="subject" class="col-sm-1 control-label">Available
 											Only: </label>
