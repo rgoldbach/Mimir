@@ -13,7 +13,7 @@
 								<div class="input-group-btn">
 	<!-- Terms Input -->
 									<button type="button" class="btn btn-default" disabled>
-										Search</button>
+										<b>Search</b></button>
 									<button type="button" class="btn btn-default"
 										data-toggle="collapse" data-target="#advancedSearch">
 										<span class="glyphicon glyphicon-list"></span>
