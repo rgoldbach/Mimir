@@ -31,6 +31,6 @@
 	<link href="http://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet" type="text/css" >
 	
 	<!-- ??? -->
-	<link href="<c:url value="/resources/whhg.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/star-rating/whhg.css" />" rel="stylesheet">
 	
 </head>
