@@ -15,7 +15,7 @@ public class SearchController {
 			@RequestParam(value = "type", required = false, defaultValue = "ERROR") String type) {
 		System.out.println("in controller");
  
-		ModelAndView mv = new ModelAndView("search");
+		ModelAndView mv = new ModelAndView("library/search");
 		mv.addObject("message", message);
 		mv.addObject("type", type);
 		return mv;

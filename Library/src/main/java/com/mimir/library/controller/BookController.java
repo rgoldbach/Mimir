@@ -12,7 +12,7 @@ public class BookController {
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook) {
 		System.out.println("in controller");
  
-		ModelAndView mv = new ModelAndView("book");
+		ModelAndView mv = new ModelAndView("library/book");
 		mv.addObject("whichBook", whichBook);
 		return mv;
 	}

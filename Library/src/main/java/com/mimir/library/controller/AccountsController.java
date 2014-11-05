@@ -21,7 +21,7 @@ public class AccountsController {
 			ModelAndView mv = new ModelAndView("error");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView("account");
+		ModelAndView mv = new ModelAndView("library/account");
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
 		
 		BookDisplayableInformation dummyInfo = new BookDisplayableInformation();
