@@ -17,6 +17,9 @@
 	<!-- metisMenu -->
 	<link href="<c:url value="/resources/metisMenu/css/metisMenu.css" />" rel="stylesheet"> 
 	
+	<!-- Charts -->
+	<link href="<c:url value="/resources/charts/css/c3.min.css" />" rel="stylesheet">
+	
 	<!-- Custom Admin -->
 	<link href="<c:url value="/resources/custom/admin/css/admin.css" />" rel="stylesheet"> 
     
