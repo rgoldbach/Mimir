@@ -26,7 +26,7 @@ $(document).ready(function() {
 		                'complete' : function(result) {
 		                	if(result.status === 200){
 		                		if(result.responseText === "signoutsuccess"){
-		                			window.location.replace("index.jsp");
+		                			window.location.replace("/Library/");
 		                		}
 		                		else{
 		                			location.reload();  
