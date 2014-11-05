@@ -10,7 +10,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/Library/"><img
-				style="max-width: 100px; margin-top: -15px;"
+				style="max-width: 150px; margin-top: -15px;"
 				src="<c:url value="/resources/img/logo.png" />"></a>
 		</div>
 
