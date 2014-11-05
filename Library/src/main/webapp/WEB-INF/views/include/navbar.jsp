@@ -18,7 +18,7 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul id="signInArea" class="nav navbar-nav navbar-right">
-				<signin:SignIn />
+				<signin:SignIn /> <!-- see custom tags package -->
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->

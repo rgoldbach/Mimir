@@ -11,7 +11,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.RegisteredUser;
 
-public class SignInTagHandler  extends SimpleTagSupport {
+public class SignInTagHandler extends SimpleTagSupport {
 
 	@Override
     public void doTag() throws JspException, IOException{
