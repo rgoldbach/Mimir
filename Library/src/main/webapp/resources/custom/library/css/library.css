@@ -23,14 +23,6 @@ h6 {
 legend {
   border-bottom: 0px;
 }
-button[disabled=disabled], button:disabled {
-  pointer-events: none;			
-  cursor: not-allowed;
-  filter: alpha(opacity=100);	
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  opacity: 1;					
-}
 .panel-default {
   margin-bottom: 0px;								
   background-color: rgba(0, 0, 0, 0);				
