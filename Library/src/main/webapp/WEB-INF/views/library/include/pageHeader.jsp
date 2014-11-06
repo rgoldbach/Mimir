@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<br>
-				<form class="form-horizontal">
+				<form class="form-horizontal" action="./search" method="get">
 					<div class="site-heading">
 <!-- Start Basic Search -->
 						<div class="form-group">
@@ -20,7 +20,7 @@
 									</button>
 								</div>
 								<!--  placeholder="&quot;So many books, so little time.&quot; - Frank Zappa" -->
-								<input type="search" class="form-control"> <span
+								<input type="search" name="query"  class="form-control"> <span
 									class="input-group-btn">
 									<button type="submit" class="btn btn-default" type="button">
 										<span class="glyphicon glyphicon-search"></span>

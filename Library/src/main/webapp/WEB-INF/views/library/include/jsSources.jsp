@@ -15,6 +15,6 @@
 	<script src="<c:url value="/resources/star-rating/js/star-rating.js"/>"></script>
 	
 	<!-- Custom Library -->
-	<script src="<c:url value="/resources/custom/library/js/library.js" />"></script>
+	<!-- <script src="<c:url value="/resources/custom/library/js/library.js" />"></script> -->
 	
 	<%@ include file="/WEB-INF/views/library/ajax/determineRole.jsp" %>
