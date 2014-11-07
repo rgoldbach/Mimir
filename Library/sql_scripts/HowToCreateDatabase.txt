@@ -1,0 +1,26 @@
+1. In MySql Workbench 6.0 CE, start your local instance. 
+
+2. Create a database named mimir and make it the default. 
+
+	- Create a new SQL file --> type: Create Database mimir; --> Execute
+	
+	- Right click the mimir database on the left hand side (might need to refresh all) and click Set As Default Schema.
+	
+3. Run the attached Script within in this folder: MimirDatabaseScript.sql.
+
+4. Make a user with username: 'mimir' and password: 'teamelm', give them all rights to the mimir database.
+
+	- Left hand side of the local instance: Go to Users and Privileges.
+	
+	- Click Add Account (Bottom Leftish part of screen)
+	
+	- On Login tab, enter the username (mimir) and password (teamelm).
+	
+	- Then go to Schema Privileges tab --> Add Entry (right part of screen) --> click the selected schema radio button and select mimir and hit Ok.
+	
+	- Then select all the check boxes to give this user all rights, theres a select all button on the bottom right. 
+	
+	- Click Apply
+	
+*** As of right now (5:30 11/7), there are missing tables, I am working on getting them set up. The config file for our database settings is located
+    at src/main/resources in application.properties. 
