@@ -22,5 +22,5 @@
 	
 	- Click Apply
 	
-*** As of right now (5:30 11/7), there are missing tables, I am working on getting them set up. The config file for our database settings is located
+*** As of right now (10:20 11/7), there are missing tables (I think only audio books), I am working on getting them set up. The config file for our database settings is located
     at src/main/resources in application.properties. 

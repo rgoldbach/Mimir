@@ -12,8 +12,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `RegisteredUsers`;
 CREATE TABLE `RegisteredUsers` (
-	`userId` INT NOT NULL AUTO_INCREMENT,
-	`libraryCard` VARCHAR(50) NOT NULL,
+    `userId` INT NOT NULL AUTO_INCREMENT,
+    `libraryCard` VARCHAR(50) NOT NULL,
     PRIMARY KEY (userId)
 );
 
@@ -25,11 +25,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `LoginCreds`;
 CREATE TABLE `LoginCreds` (
-	`userId` INT NOT NULL,
-	`email` VARCHAR(50) NOT NULL,
-	`password` VARCHAR(50) NOT NULL,
+    `userId` INT NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(50) NOT NULL,
     PRIMARY KEY (userId),
-	CONSTRAINT `loginToUser` FOREIGN KEY (`userId`) REFERENCES `RegisteredUsers` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `loginToUser` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `LoginCreds` WRITE;
@@ -40,11 +42,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `AccountInfo`;
 CREATE TABLE `AccountInfo` (
-	`userId` INT NOT NULL, 
-	`firstName` VARCHAR(50) NOT NULL,
-	`lastName` VARCHAR(50) NOT NULL,
+    `userId` INT NOT NULL,
+    `firstName` VARCHAR(50) NOT NULL,
+    `lastName` VARCHAR(50) NOT NULL,
     PRIMARY KEY (userId),
-	CONSTRAINT `userAcctDeterminedBy` FOREIGN KEY (`userId`) REFERENCES `RegisteredUsers` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `userAcctDeterminedBy` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `AccountInfo` WRITE;
@@ -61,9 +65,9 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Authors`;
 CREATE TABLE `Authors` (
-	`authorId` INT NOT NULL AUTO_INCREMENT,
-	`name` INT NOT NULL,
-	`description` VARCHAR(50) NOT NULL,
+    `authorId` INT NOT NULL AUTO_INCREMENT,
+    `name` INT NOT NULL,
+    `description` VARCHAR(50) NOT NULL,
     PRIMARY KEY (authorId)
 );
 
@@ -75,10 +79,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `AwardInfo`;
 CREATE TABLE `AwardInfo` (
-	`awardId` INT NOT NULL AUTO_INCREMENT,
-	`title` INT NOT NULL,
-	`description` VARCHAR(50) NOT NULL,
-	`year`	VARCHAR(50),
+    `awardId` INT NOT NULL AUTO_INCREMENT,
+    `title` INT NOT NULL,
+    `description` VARCHAR(50) NOT NULL,
+    `year` VARCHAR(50),
     PRIMARY KEY (awardId)
 );
 
@@ -90,11 +94,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `AuthorAwards`;
 CREATE TABLE `AuthorAwards` (
-	`awardId` INT NOT NULL,
-	`authorId` INT NOT NULL,
-    PRIMARY KEY (awardId, authorId),
-	CONSTRAINT `awardToAward` FOREIGN KEY (`awardId`) REFERENCES `AwardInfo` (`awardId`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `authorToAuthor` FOREIGN KEY (`authorId`) REFERENCES `Authors` (`authorId`) ON DELETE CASCADE ON UPDATE CASCADE
+    `awardId` INT NOT NULL,
+    `authorId` INT NOT NULL,
+    PRIMARY KEY (awardId , authorId),
+    CONSTRAINT `awardToAward` FOREIGN KEY (`awardId`)
+        REFERENCES `AwardInfo` (`awardId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `authorToAuthor` FOREIGN KEY (`authorId`)
+        REFERENCES `Authors` (`authorId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `AuthorAwards` WRITE;
@@ -105,12 +113,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Books`;
 CREATE TABLE `Books` (
-	`bookId` INT NOT NULL AUTO_INCREMENT,
-	`authorId` INT NOT NULL,
-	`isbn` VARCHAR(50) NOT NULL,
-	`seriesName` VARCHAR(50),
+    `bookId` INT NOT NULL AUTO_INCREMENT,
+    `authorId` INT NOT NULL,
+    `isbn` VARCHAR(50) NOT NULL,
+    `seriesName` VARCHAR(50),
     PRIMARY KEY (bookId),
-	CONSTRAINT `bookToAuthor` FOREIGN KEY (`authorId`) REFERENCES `Authors` (`authorId`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `bookToAuthor` FOREIGN KEY (`authorId`)
+        REFERENCES `Authors` (`authorId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `Books` WRITE;
@@ -121,11 +131,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookAwards`;
 CREATE TABLE `BookAwards` (
-	`awardId` INT NOT NULL,
-	`bookId` INT NOT NULL,
-    PRIMARY KEY (awardId, bookId),
-	CONSTRAINT `bookawardToAward` FOREIGN KEY (`awardId`) REFERENCES `AwardInfo` (`awardId`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `bookToBook` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE
+    `awardId` INT NOT NULL,
+    `bookId` INT NOT NULL,
+    PRIMARY KEY (awardId , bookId),
+    CONSTRAINT `bookawardToAward` FOREIGN KEY (`awardId`)
+        REFERENCES `AwardInfo` (`awardId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `bookToBook` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookAwards` WRITE;
@@ -140,13 +154,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookshelfBooks`;
 CREATE TABLE `BookshelfBooks` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`bookId` INT NOT NULL, 
-	`userId` INT NOT NULL,
-	`dateExpires` DATE NOT NULL,
-	`bookRating` DECIMAL,
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `bookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    `dateExpires` DATE NOT NULL,
+    `bookRating` DECIMAL,
     PRIMARY KEY (id),
-	CONSTRAINT `userDeterminedBy` FOREIGN KEY (`userId`) REFERENCES `RegisteredUsers` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `userDeterminedBy` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookshelfBooks` WRITE;
@@ -161,13 +177,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookDisplayInfo`;
 CREATE TABLE `BookDisplayInfo` (
-	`bookId` INT NOT NULL,
-	`title` VARCHAR(50) NOT NULL, 
-	`description` VARCHAR(300) NOT NULL,
-	`dateAdded` DATE NOT NULL,
-	`imageFilePath` VARCHAR(50) NOT NULL,
+    `bookId` INT NOT NULL,
+    `title` VARCHAR(50) NOT NULL,
+    `description` VARCHAR(300) NOT NULL,
+    `dateAdded` DATE NOT NULL,
+    `imageFilePath` VARCHAR(50) NOT NULL,
     PRIMARY KEY (bookId),
-	CONSTRAINT `bookDisplayDeterminedBy` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `bookDisplayDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookDisplayInfo` WRITE;
@@ -181,8 +199,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Genres`;
 CREATE TABLE `Genres` (
-	`genreId` INT NOT NULL AUTO_INCREMENT,
-	`genre` VARCHAR(50) NOT NULL UNIQUE,
+    `genreId` INT NOT NULL AUTO_INCREMENT,
+    `genre` VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY (genreId)
 );
 
@@ -194,11 +212,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookGenres`;
 CREATE TABLE `BookGenres` (
-	`bookId` INT NOT NULL,
-	`genreId` INT NOT NULL, 
-    PRIMARY KEY (bookId, genreId),
-	CONSTRAINT `bookGenreDeterminedBy` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `genreDeterminedBy` FOREIGN KEY (`genreId`) REFERENCES `Genres` (`genreId`) ON DELETE CASCADE ON UPDATE CASCADE
+    `bookId` INT NOT NULL,
+    `genreId` INT NOT NULL,
+    PRIMARY KEY (bookId , genreId),
+    CONSTRAINT `bookGenreDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `genreDeterminedBy` FOREIGN KEY (`genreId`)
+        REFERENCES `Genres` (`genreId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookGenres` WRITE;
@@ -209,8 +231,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `InterestLevels`;
 CREATE TABLE `InterestLevels` (
-	`interestLevelId` INT NOT NULL,
-	`interestLevel` VARCHAR(50) NOT NULL UNIQUE,
+    `interestLevelId` INT NOT NULL,
+    `interestLevel` VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY (interestLevelId)
 );
 
@@ -222,11 +244,15 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookInterestLevels`;
 CREATE TABLE `BookInterestLevels` (
-	`bookId` INT NOT NULL,
-	`interestLevelId` INT NOT NULL,
-    PRIMARY KEY (bookId, interestLevelId),
-	CONSTRAINT `bookILDeterminedBy` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `ILDeterminedBy` FOREIGN KEY (`interestLevelId`) REFERENCES `InterestLevels` (`interestLevelId`) ON DELETE CASCADE ON UPDATE CASCADE
+    `bookId` INT NOT NULL,
+    `interestLevelId` INT NOT NULL,
+    PRIMARY KEY (bookId , interestLevelId),
+    CONSTRAINT `bookILDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `ILDeterminedBy` FOREIGN KEY (`interestLevelId`)
+        REFERENCES `InterestLevels` (`interestLevelId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookInterestLevels` WRITE;
@@ -234,4 +260,200 @@ LOCK TABLES `BookInterestLevels` WRITE;
 INSERT INTO `BookInterestLevels` VALUES (1, 1), (2, 2), (3, 1), (4, 3);
 /*!40000 ALTER TABLE `BookInterestLevels` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextPublishers`;
+CREATE TABLE `BookTextPublishers` (
+    `publisherId` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+	`information` VARCHAR(300),
+    PRIMARY KEY (publisherId)
+);
+
+LOCK TABLES `BookTextPublishers` WRITE;
+/*!40000 ALTER TABLE `BookTextPublishers` DISABLE KEYS */;
+INSERT INTO `BookTextPublishers` VALUES (1, 'Random House Publishing Group', null), (2, 'Houghton Mifflin Harcourt', null), (3, 'Publisher 3', null), (4, 'Mimir Books', null);
+/*!40000 ALTER TABLE `BookTextPublishers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextFormats`;
+CREATE TABLE `BookTextFormats` (
+    `bookId` INT NOT NULL,
+    `publisherId` INT NOT NULL,
+    PRIMARY KEY (bookId)
+);
+
+ALTER TABLE `BookTextFormats` ADD CONSTRAINT `book_text` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `BookTextFormats` ADD CONSTRAINT `publisher_text` FOREIGN KEY (`publisherId`) REFERENCES `BookTextPublishers` (`publisherId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+LOCK TABLES `BookTextFormats` WRITE;
+/*!40000 ALTER TABLE `BookTextFormats` DISABLE KEYS */;
+INSERT INTO `BookTextFormats` VALUES (1, 1), 
+								 (2, 2), 
+								 (3, 3),
+								 (4, 4);
+/*!40000 ALTER TABLE `BookTextFormats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `Formats`;
+CREATE TABLE `Formats` (
+    `formatId` INT NOT NULL,
+    `format` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (formatId)
+);
+
+LOCK TABLES `Formats` WRITE;
+/*!40000 ALTER TABLE `Formats` DISABLE KEYS */;
+INSERT INTO `Formats` VALUES (1, 'Kindle'), 
+						     (2, 'EPub'), 
+							 (3, 'MP3');
+/*!40000 ALTER TABLE `Formats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `TextFormats`;
+CREATE TABLE `TextFormats` (
+    `textFormatId` INT NOT NULL AUTO_INCREMENT,
+	`bookId` INT NOT NULL,
+    `formatId` INT NOT NULL,
+    `releaseDate` DATE,
+    `fileSize` VARCHAR(50),
+    PRIMARY KEY (textFormatId),
+    CONSTRAINT `bookTextFormatDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `BookTextFormats` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `textFormatDeterminedBy` FOREIGN KEY (`formatId`)
+        REFERENCES `Formats` (`formatId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `TextFormats` WRITE;
+/*!40000 ALTER TABLE `TextFormats` DISABLE KEYS */;
+INSERT INTO `TextFormats` VALUES (1, 1, 1, '2011-05-04', null), (2, 1, 2, '2011-05-04', '4210 KB'),
+								 (3, 2, 1, '2011-05-05', null), (4, 2, 2, '1993-04-26', '1204 KB'),
+								 (5, 3, 2, '2006-10-31', '954419 KB'),
+								 (6, 4, 2, '2012-03-29', '237016 KB');
+/*!40000 ALTER TABLE `TextFormats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `Languages`;
+CREATE TABLE `Languages` (
+    `languageId` INT NOT NULL AUTO_INCREMENT,
+    `language` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (languageId)
+);
+
+LOCK TABLES `Languages` WRITE;
+/*!40000 ALTER TABLE `Languages` DISABLE KEYS */;
+INSERT INTO `Languages` VALUES (1, 'English'), (2, 'Spanish'), (3, 'French'), (4, 'Chinese');
+/*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextLanguages`;
+CREATE TABLE `BookTextLanguages` (
+    `bookId` INT NOT NULL,
+    `languageId` INT NOT NULL,
+    PRIMARY KEY (bookId, languageId),
+    CONSTRAINT `book_language_text` FOREIGN KEY (`bookId`)
+        REFERENCES `BookTextFormats` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `language_determined` FOREIGN KEY (`languageId`)
+        REFERENCES `Languages` (`languageId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `BookTextLanguages` WRITE;
+/*!40000 ALTER TABLE `BookTextLanguages` DISABLE KEYS */;
+INSERT INTO `BookTextLanguages` VALUES (1, 1), (1,2),
+								   (2, 1), (2, 3),
+								   (3, 1), (3, 2), (3, 3),
+								   (4, 1);
+/*!40000 ALTER TABLE `BookTextLanguages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextRatings`;
+CREATE TABLE `BookTextRatings` (
+    `bookId` INT NOT NULL,
+    `numberOfRatings` INT NOT NULL,
+	`sumOfRatings` DECIMAL NOT NULL,
+    PRIMARY KEY (bookId),
+    CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `BookTextFormats` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `BookTextRatings` WRITE;
+/*!40000 ALTER TABLE `BookTextRatings` DISABLE KEYS */;
+INSERT INTO `BookTextRatings` VALUES (1, 5, 20),
+								     (2, 4, 15), 
+							 	     (3, 3, 10), 
+								     (4, 5, 20);
+/*!40000 ALTER TABLE `BookTextRatings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextHolds`;
+CREATE TABLE `BookTextHolds` (
+    `bookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+	`positionInQueue` INT NOT NULL,
+    PRIMARY KEY (bookId, userId),
+    CONSTRAINT `bookFormatHoldDeterminedBy` FOREIGN KEY (`bookId`)
+        REFERENCES `BookTextFormats` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `userHoldDeterminedBy` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `BookTextHolds` WRITE;
+/*!40000 ALTER TABLE `BookTextHolds` DISABLE KEYS */;
+INSERT INTO `BookTextHolds` VALUES   (1, 5, 20),
+								   (2, 4, 15), 
+								   (3, 3, 10), 
+								   (4, 5, 20),
+								   (5, 2, 10),
+								   (6, 1, 4);
+/*!40000 ALTER TABLE `BookTextHolds` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `DownloadSites`;
+CREATE TABLE `DownloadSites` (
+    `downloadSiteId` INT NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+	`baseUrl` VARCHAR(100) NOT NULL,
+	`downloadUrl` VARCHAR(100) NOT NULL,
+	`bookKeyUrl` VARCHAR(100) NOT NULL,
+	`publicKey` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (downloadSiteId)
+);
+
+LOCK TABLES `DownloadSites` WRITE;
+/*!40000 ALTER TABLE `DownloadSites` DISABLE KEYS */;
+INSERT INTO `DownloadSites` VALUES   (1, 'Lamazon', 'Not_Implemented_Yet', 'Not_Implemented_Yet', 'Not_Implemented_Yet', 'Not_Implemented_Yet');
+/*!40000 ALTER TABLE `DownloadSites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `BookTextLicenses`;
+CREATE TABLE `BookTextLicenses` (
+    `textLicenseId` INT NOT NULL AUTO_INCREMENT,
+	`bookId` INT NOT NULL,
+    `downloadSiteId` INT NOT NULL,
+	`availableCopies` INT NOT NULL,
+    PRIMARY KEY (textLicenseId),
+    CONSTRAINT `book_download_text` FOREIGN KEY (`bookId`)
+        REFERENCES `BookTextFormats` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `downloadSite_text_determined` FOREIGN KEY (`downloadSiteId`)
+        REFERENCES `DownloadSites` (`downloadSiteId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `BookTextLicenses` WRITE;
+/*!40000 ALTER TABLE `BookTextLicenses` DISABLE KEYS */;
+INSERT INTO `BookTextLicenses` VALUES   (1, 1, 1, 5),
+										(2, 2, 1, 10), 
+										(3, 3, 1, 15), 
+										(4, 4, 1, -1);
+/*!40000 ALTER TABLE `BookTextLicenses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 
