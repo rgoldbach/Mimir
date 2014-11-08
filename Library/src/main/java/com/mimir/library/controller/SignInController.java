@@ -24,8 +24,8 @@ public class SignInController {
 		
 		
 		//Get a default user for now
-		RegisteredUser tempUser = AccountManager.getDefaultUser(creds.getUsername());
-		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, tempUser);
+		//RegisteredUser tempUser = AccountManager.getDefaultUser(creds.getUsername());
+		//session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, tempUser);
 		return "success";
 
 	}

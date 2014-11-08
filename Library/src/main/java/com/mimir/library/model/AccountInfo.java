@@ -2,13 +2,13 @@ package com.mimir.library.model;
 
 import com.mimir.library.enums.AccountType;
 
-public abstract class User {
+public abstract class AccountInfo {
 	
 	private String firstName;
 	private String lastName;
 	private AccountType accountType;
 	
-	public User(){
+	public AccountInfo(){
 		
 	}
 
@@ -35,5 +35,5 @@ public abstract class User {
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
 	}
-
+	
 }

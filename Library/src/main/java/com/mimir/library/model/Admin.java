@@ -2,12 +2,11 @@ package com.mimir.library.model;
 
 import com.mimir.library.enums.AccountType;
 
-public class Admin extends User{
+public class Admin{
 
 	private Library library;
 	
-	public Admin(String id, String firstName, String lastName, Library library) {
-		super(id, firstName, lastName, AccountType.Admin);
+	public Admin(Library library) {
 		this.library = library;
 	}
 

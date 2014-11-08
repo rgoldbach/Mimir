@@ -1,20 +1,35 @@
 package com.mimir.library.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.mimir.library.enums.LanguageName;
 
+@Entity
+@Table(name = "Languages")
 public class Language {
 
-		private LanguageName language;
-		
-		public Language(LanguageName language){
-			this.language = language;
-		}
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int languageId;
+	
+	@Column(name = "language")
+	private LanguageName language;
 
-		public LanguageName getLanguage() {
-			return language;
-		}
+	public LanguageName getLanguage() {
+		return language;
+	}
 
-		public void setLanguage(LanguageName language) {
-			this.language = language;
-		}
+	public void setLanguage(LanguageName language) {
+		this.language = language;
+	}
+
+	public int getLanguageId() {
+		return languageId;
+	}
 }

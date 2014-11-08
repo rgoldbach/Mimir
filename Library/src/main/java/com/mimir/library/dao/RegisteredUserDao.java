@@ -2,8 +2,11 @@ package com.mimir.library.dao;
 
 import java.util.List;
 
-import com.mimir.library.model.BookshelfBook;
+import com.mimir.library.model.BorrowedBook;
+import com.mimir.library.model.OnHoldBook;
+import com.mimir.library.model.PastBorrowedBook;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.model.WishlistBook;
 
 public interface RegisteredUserDao {
 
@@ -16,9 +19,9 @@ public interface RegisteredUserDao {
 	
 	RegisteredUser getSpecificUser(int id);
 	
-	List<BookshelfBook> getBookshelfBooksOfSpecificUser(int userId);
-	List<BookshelfBook> getPastBooksOfSpecificUser(int userId);
-	List<BookshelfBook> getWaitlistBooksOfSpecificUser(int userId);
-	List<BookshelfBook> getWishlistBooksOfSpecificUser(int userId);
+	List<BorrowedBook> getBookshelfBooksOfSpecificUser(int userId);
+	List<PastBorrowedBook> getPastBooksOfSpecificUser(int userId);
+	List<OnHoldBook> getWaitlistBooksOfSpecificUser(int userId);
+	List<WishlistBook> getWishlistBooksOfSpecificUser(int userId);
 	
 }

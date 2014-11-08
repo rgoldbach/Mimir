@@ -25,10 +25,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `LoginCreds`;
 CREATE TABLE `LoginCreds` (
+	`loginId` INT NOT NULL AUTO_INCREMENT,
     `userId` INT NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (userId),
+    PRIMARY KEY (loginId),
     CONSTRAINT `loginToUser` FOREIGN KEY (`userId`)
         REFERENCES `RegisteredUsers` (`userId`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -36,25 +37,26 @@ CREATE TABLE `LoginCreds` (
 
 LOCK TABLES `LoginCreds` WRITE;
 /*!40000 ALTER TABLE `LoginCreds` DISABLE KEYS */;
-INSERT INTO `LoginCreds` VALUES (1, 'Test1', 'password'), (2, 'Test2', 'password'), (3, 'Test3', 'password');
+INSERT INTO `LoginCreds` VALUES (1, 1, 'Test1', 'password'), (2, 2, 'Test2', 'password'), (3, 3, 'Test3', 'password');
 /*!40000 ALTER TABLE `LoginCreds` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `AccountInfo`;
-CREATE TABLE `AccountInfo` (
+DROP TABLE IF EXISTS `UserAccountInfo`;
+CREATE TABLE `UserAccountInfo` (
+	`accountInfoId` INT NOT NULL AUTO_INCREMENT,
     `userId` INT NOT NULL,
     `firstName` VARCHAR(50) NOT NULL,
     `lastName` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (userId),
-    CONSTRAINT `userAcctDeterminedBy` FOREIGN KEY (`userId`)
+    PRIMARY KEY (accountInfoId),
+    CONSTRAINT `user_account_info` FOREIGN KEY (`userId`)
         REFERENCES `RegisteredUsers` (`userId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `AccountInfo` WRITE;
-/*!40000 ALTER TABLE `AccountInfo` DISABLE KEYS */;
-INSERT INTO `AccountInfo` VALUES (1, 'Hodir', 'Smith'), (2, 'Odin', 'Johnson'), (3, 'Freya', 'Jones');
-/*!40000 ALTER TABLE `AccountInfo` ENABLE KEYS */;
+LOCK TABLES `UserAccountInfo` WRITE;
+/*!40000 ALTER TABLE `UserAccountInfo` DISABLE KEYS */;
+INSERT INTO `UserAccountInfo` VALUES (1, 1, 'Hodir', 'Smith'), (2, 2, 'Odin', 'Johnson'), (3, 3, 'Freya', 'Jones');
+/*!40000 ALTER TABLE `UserAccountInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -152,23 +154,88 @@ UNLOCK TABLES;
 /*USER BOOK INFORMATION */
 /***************************************************************/
 
-DROP TABLE IF EXISTS `BookshelfBooks`;
-CREATE TABLE `BookshelfBooks` (
+DROP TABLE IF EXISTS `BorrowedBooks`;
+CREATE TABLE `BorrowedBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `userId` INT NOT NULL,
     `dateExpires` DATE NOT NULL,
     `bookRating` DECIMAL,
     PRIMARY KEY (id),
-    CONSTRAINT `userDeterminedBy` FOREIGN KEY (`userId`)
+    CONSTRAINT `user_current_books` FOREIGN KEY (`userId`)
         REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `book_current_books` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookshelfBooks` WRITE;
-/*!40000 ALTER TABLE `BookshelfBooks` DISABLE KEYS */;
-INSERT INTO `BookshelfBooks` VALUES (1, 1, 1, '2015-09-09', null), (2, 2, 1, '2015-09-09', null), (3, 3, 1, '2015-09-09', 4), (4, 4, 2, '2015-09-09', null);
-/*!40000 ALTER TABLE `BookshelfBooks` ENABLE KEYS */;
+LOCK TABLES `BorrowedBooks` WRITE;
+/*!40000 ALTER TABLE `BorrowedBooks` DISABLE KEYS */;
+INSERT INTO `BorrowedBooks` VALUES (1, 1, 1, '2015-09-09', null), (2, 2, 1, '2015-09-09', null), (3, 3, 1, '2015-09-09', 4), (4, 4, 2, '2015-09-09', null);
+/*!40000 ALTER TABLE `BorrowedBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `PastBookshelfBooks`;
+CREATE TABLE `PastBookshelfBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `bookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    `dateExpired` DATE NOT NULL,
+    `bookRating` DECIMAL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_past_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `book_past_books` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `PastBookshelfBooks` WRITE;
+/*!40000 ALTER TABLE `PastBookshelfBooks` DISABLE KEYS */;
+INSERT INTO `PastBookshelfBooks` VALUES (1, 4, 1, '2015-09-09', null), (2, 3, 1, '2015-09-09', null), (3, 2, 1, '2015-09-09', 4), (4, 1, 2, '2015-09-09', null);
+/*!40000 ALTER TABLE `PastBookshelfBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `OnHoldBooks`;
+CREATE TABLE `OnHoldBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `bookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_hold_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `book_hold_books` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `OnHoldBooks` WRITE;
+/*!40000 ALTER TABLE `OnHoldBooks` DISABLE KEYS */;
+INSERT INTO `OnHoldBooks` VALUES (1, 3, 1), (2, 4, 1), (3, 1, 1), (4, 2, 2);
+/*!40000 ALTER TABLE `OnHoldBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `WishlistBooks`;
+CREATE TABLE `WishlistBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `bookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_wishlist_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `book_wishlist_books` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `WishlistBooks` WRITE;
+/*!40000 ALTER TABLE `WishlistBooks` DISABLE KEYS */;
+INSERT INTO `WishlistBooks` VALUES (1, 2, 1), (2, 1, 1), (3, 4, 1), (4, 3, 2);
+/*!40000 ALTER TABLE `WishlistBooks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 /***************************************************************/
@@ -210,6 +277,26 @@ INSERT INTO `Genres` VALUES (1, 'History'), (2, 'Science'), (3, 'Fiction'), (4, 
 /*!40000 ALTER TABLE `Genres` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `GenreInterests`;
+CREATE TABLE `GenreInterests` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `genreId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+	CONSTRAINT `genre_interest` FOREIGN KEY (`genreId`)
+        REFERENCES `Genres` (`genreId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `user_genre_interest` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `GenreInterests` WRITE;
+/*!40000 ALTER TABLE `GenreInterests` DISABLE KEYS */;
+INSERT INTO `GenreInterests` VALUES (1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 4);
+/*!40000 ALTER TABLE `GenreInterests` ENABLE KEYS */;
+UNLOCK TABLES;
+
 DROP TABLE IF EXISTS `BookGenres`;
 CREATE TABLE `BookGenres` (
     `bookId` INT NOT NULL,
@@ -240,6 +327,26 @@ LOCK TABLES `InterestLevels` WRITE;
 /*!40000 ALTER TABLE `InterestLevels` DISABLE KEYS */;
 INSERT INTO `InterestLevels` VALUES (1, 'Adult'), (2, 'High School'), (3, 'Young Adults');
 /*!40000 ALTER TABLE `InterestLevels` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `InterestLevelInterests`;
+CREATE TABLE `InterestLevelInterests` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `interestLevelId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+	CONSTRAINT `interest_level_interest` FOREIGN KEY (`interestLevelId`)
+        REFERENCES `InterestLevels` (`interestLevelId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `user_intlevel_interest` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `InterestLevelInterests` WRITE;
+/*!40000 ALTER TABLE `InterestLevelInterests` DISABLE KEYS */;
+INSERT INTO `InterestLevelInterests` VALUES (1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 1);
+/*!40000 ALTER TABLE `InterestLevelInterests` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookInterestLevels`;
@@ -345,6 +452,26 @@ LOCK TABLES `Languages` WRITE;
 /*!40000 ALTER TABLE `Languages` DISABLE KEYS */;
 INSERT INTO `Languages` VALUES (1, 'English'), (2, 'Spanish'), (3, 'French'), (4, 'Chinese');
 /*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `LanguageInterests`;
+CREATE TABLE `LanguageInterests` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+    `languageId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+	CONSTRAINT `language_interest` FOREIGN KEY (`languageId`)
+        REFERENCES `Languages` (`languageId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `user_language_interest` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `LanguageInterests` WRITE;
+/*!40000 ALTER TABLE `LanguageInterests` DISABLE KEYS */;
+INSERT INTO `LanguageInterests` VALUES (1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 4);
+/*!40000 ALTER TABLE `LanguageInterests` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookTextLanguages`;
