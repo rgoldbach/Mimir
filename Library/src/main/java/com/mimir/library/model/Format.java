@@ -14,7 +14,7 @@ public abstract class Format {
 	private Date releaseDate;
 	private Collection<String> userWaitlist;
 	private Collection<Language> languages;
-	private Rating rating;
+	private BookRating rating;
 	private Publisher publisher;
 	private Collection<DownloadSite> downloadSites;
 	private Collection<License> license;
@@ -29,7 +29,7 @@ public abstract class Format {
 		this.releaseDate = releaseDate;
 		this.userWaitlist = new LinkedList<String>();
 		this.languages = languages;
-		this.rating = new Rating();
+		this.rating = new BookRating();
 		this.publisher = publisher;
 		this.downloadSites = downloadSites;
 		this.license = license;
@@ -59,10 +59,10 @@ public abstract class Format {
 	public void setLanguages(Collection<Language> languages) {
 		this.languages = languages;
 	}
-	public Rating getRating() {
+	public BookRating getRating() {
 		return rating;
 	}
-	public void setRating(Rating rating) {
+	public void setRating(BookRating rating) {
 		this.rating = rating;
 	}
 	public Publisher getPublisher() {

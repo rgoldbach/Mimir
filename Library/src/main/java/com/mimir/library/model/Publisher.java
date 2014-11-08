@@ -1,19 +1,26 @@
 package com.mimir.library.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="BookTextPublishers")
 public class Publisher {
 
-	private String name;
-	private String information;
-	private ContactInformation contactInformation;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int publisherId;
 	
-	public Publisher(){
-		
-	}
-	public Publisher(String name, String information, ContactInformation contactInformation){
-		this.name = name;
-		this.information = information;
-		this.contactInformation = contactInformation;
-	}
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "information")
+	private String information;
+	
 	public String getName() {
 		return name;
 	}
@@ -26,11 +33,8 @@ public class Publisher {
 	public void setInformation(String information) {
 		this.information = information;
 	}
-	public ContactInformation getContactInformation() {
-		return contactInformation;
-	}
-	public void setContactInformation(ContactInformation contactInformation) {
-		this.contactInformation = contactInformation;
+	public int getPublisherId() {
+		return publisherId;
 	}
 	
 }

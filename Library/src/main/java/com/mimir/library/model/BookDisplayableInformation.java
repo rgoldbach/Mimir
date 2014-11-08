@@ -1,62 +1,109 @@
 package com.mimir.library.model;
 
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@Entity
+@Table(name="BookDisplayableInfo")
 public class BookDisplayableInformation {
 
-	private String bookId;
-	private String title;
-	private String description;
-	private Date dateAdded;
-	private String imageFilePath;
-	private Author author;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int bookDisplayId;
 	
-	public BookDisplayableInformation(){
-		
+	@OneToOne
+	@JoinColumn(name = "bookId")
+	private Book book;
+	
+	@Column(name = "title")
+	private String title;
+	
+	@Column(name = "description")
+	private String description;
+	
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name = "dateAdded")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate dateAdded;
+	
+	@Column(name = "imageFilePath")
+	private String imageFilePath;
+	
+	//private Collection<String> authorNames;
+
+	public int getBookDisplayId() {
+		return bookDisplayId;
 	}
-	public BookDisplayableInformation(String bookId, String title, String description, Date dateAdded, String imageFilePath, Author author){
-		this.bookId = bookId;
-		this.title = title;
-		this.description = description;
-		this.dateAdded = dateAdded;
-		this.imageFilePath = imageFilePath;
-		this.author = author;
+
+	public Book getBook() {
+		return book;
 	}
-	public String getBookId() {
-		return bookId;
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
-	public void setBookId(String bookId) {
-		this.bookId = bookId;
-	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getDateAdded() {
+
+	public LocalDate getDateAdded() {
 		return dateAdded;
 	}
-	public void setDateAdded(Date dateAdded) {
+
+	public void setDateAdded(LocalDate dateAdded) {
 		this.dateAdded = dateAdded;
 	}
+
 	public String getImageFilePath() {
 		return imageFilePath;
 	}
+
 	public void setImageFilePath(String imageFilePath) {
 		this.imageFilePath = imageFilePath;
 	}
-	public Author getAuthor() {
-		return author;
+
+	/*public Collection<String> getAuthorNames() {
+		return authorNames;
 	}
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
+
+	public void setAuthorNames(Collection<String> authorNames) {
+		this.authorNames = authorNames;
+	}*/
+	
+	
+	//TEMP CODE - ONLY TO KEEP ACCOUNTS CONTROLLER FROM ERRORING...
+	/*private Author author;
+	public Author getAuthor(){ return author; }
+	public void setAuthor(Author author){ this.author = author; }
+	private String bookId;
+	public String getBookId(){ return bookId; }
+	public void setBookId(String bookId){ this.bookId = bookId; }*/
+
 	
 }

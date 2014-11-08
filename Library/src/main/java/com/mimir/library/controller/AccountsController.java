@@ -25,16 +25,16 @@ public class AccountsController {
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
 		
 		BookDisplayableInformation dummyInfo = new BookDisplayableInformation();
-		dummyInfo.setAuthor(new Author("Dummy Author", "Likes to write books"));
-		dummyInfo.setBookId("Dummy Id");
+		//dummyInfo.setAuthor(new Author("Dummy Author", "Likes to write books"));
+		//dummyInfo.setBookId("Dummy Id");
 		dummyInfo.setImageFilePath("/Library/resources/img/TestImg1.jpg");
 		dummyInfo.setTitle("Dummy Title");
 		dummyInfo.setDescription("Dummy Description...");
 		dummyList.add(dummyInfo);
 		
 		BookDisplayableInformation dummyInfo2 = new BookDisplayableInformation();
-		dummyInfo2.setAuthor(new Author("Dummy Author2", "Doesn't like to write books"));
-		dummyInfo2.setBookId("Dummy Id2");
+		//dummyInfo2.setAuthor(new Author("Dummy Author2", "Doesn't like to write books"));
+		//dummyInfo2.setBookId("Dummy Id2");
 		dummyInfo2.setImageFilePath("/Library/resources/img/TestImg2.jpg");
 		dummyInfo2.setTitle("Dummy Title2");
 		dummyInfo2.setDescription("Dummy Description2...Yay TestingLayoutSpacingTestingLayoutSpacing\nTestingLayoutSpacingTestingLayoutSpacingTestingLayoutSpacing");

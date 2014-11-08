@@ -84,7 +84,7 @@ CREATE TABLE `AwardInfo` (
     `awardId` INT NOT NULL AUTO_INCREMENT,
     `title` INT NOT NULL,
     `description` VARCHAR(50) NOT NULL,
-    `year` VARCHAR(50),
+    `year` VARCHAR(4),
     PRIMARY KEY (awardId)
 );
 
@@ -96,9 +96,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `AuthorAwards`;
 CREATE TABLE `AuthorAwards` (
+	`authorAwardId` INT NOT NULL AUTO_INCREMENT,
     `awardId` INT NOT NULL,
     `authorId` INT NOT NULL,
-    PRIMARY KEY (awardId , authorId),
+    PRIMARY KEY (authorAwardId),
     CONSTRAINT `awardToAward` FOREIGN KEY (`awardId`)
         REFERENCES `AwardInfo` (`awardId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -109,7 +110,7 @@ CREATE TABLE `AuthorAwards` (
 
 LOCK TABLES `AuthorAwards` WRITE;
 /*!40000 ALTER TABLE `AuthorAwards` DISABLE KEYS */;
-INSERT INTO `AuthorAwards` VALUES (1, 4);
+INSERT INTO `AuthorAwards` VALUES (1, 1, 4);
 /*!40000 ALTER TABLE `AuthorAwards` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,12 +245,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookDisplayInfo`;
 CREATE TABLE `BookDisplayInfo` (
+	`bookDisplayId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `title` VARCHAR(50) NOT NULL,
     `description` VARCHAR(300) NOT NULL,
     `dateAdded` DATE NOT NULL,
     `imageFilePath` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (bookId),
+    PRIMARY KEY (bookDisplayId),
     CONSTRAINT `bookDisplayDeterminedBy` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -257,10 +259,10 @@ CREATE TABLE `BookDisplayInfo` (
 
 LOCK TABLES `BookDisplayInfo` WRITE;
 /*!40000 ALTER TABLE `BookDisplayInfo` DISABLE KEYS */;
-INSERT INTO `BookDisplayInfo` VALUES (1, 'A Brief History Of Time', 'Description.', '2015-11-07', '/resources/img/TestImg1.jpg'), 
-									 (2, 'The Giver', 'Description.', '2015-11-07', '/resources/img/TestImg2.jpg'),
-									 (3, 'Game Of Thrones', 'Description.', '2015-11-07', '/resources/img/TestImg3.jpg'),
-									 (4, 'Harry Potter And The Sorcerers Stone', 'Description.', '2015-11-07', '/resources/img/TestImg4.jpg');
+INSERT INTO `BookDisplayInfo` VALUES (1, 1, 'A Brief History Of Time', 'Description.', '2015-11-07', '/resources/img/TestImg1.jpg'), 
+									 (2, 2, 'The Giver', 'Description.', '2015-11-07', '/resources/img/TestImg2.jpg'),
+									 (3, 3, 'Game Of Thrones', 'Description.', '2015-11-07', '/resources/img/TestImg3.jpg'),
+									 (4, 4, 'Harry Potter And The Sorcerers Stone', 'Description.', '2015-11-07', '/resources/img/TestImg4.jpg');
 /*!40000 ALTER TABLE `BookDisplayInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -384,20 +386,24 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookTextFormats`;
 CREATE TABLE `BookTextFormats` (
+	`bookTextFormatId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `publisherId` INT NOT NULL,
-    PRIMARY KEY (bookId)
+    PRIMARY KEY (bookTextFormatId),
+    CONSTRAINT `book_text` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `publisher_text` FOREIGN KEY (`publisherId`)
+        REFERENCES `BookTextPublishers` (`publisherId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-ALTER TABLE `BookTextFormats` ADD CONSTRAINT `book_text` FOREIGN KEY (`bookId`) REFERENCES `Books` (`bookId`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `BookTextFormats` ADD CONSTRAINT `publisher_text` FOREIGN KEY (`publisherId`) REFERENCES `BookTextPublishers` (`publisherId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 LOCK TABLES `BookTextFormats` WRITE;
 /*!40000 ALTER TABLE `BookTextFormats` DISABLE KEYS */;
-INSERT INTO `BookTextFormats` VALUES (1, 1), 
-								 (2, 2), 
-								 (3, 3),
-								 (4, 4);
+INSERT INTO `BookTextFormats` VALUES (1, 1, 1), 
+								 (2, 2, 2), 
+								 (3, 3, 3),
+								 (4, 4, 4);
 /*!40000 ALTER TABLE `BookTextFormats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -498,21 +504,22 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookTextRatings`;
 CREATE TABLE `BookTextRatings` (
-    `bookId` INT NOT NULL,
+	`bookRatingId` INT NOT NULL AUTO_INCREMENT,
+    `bookTextFormatId` INT NOT NULL,
     `numberOfRatings` INT NOT NULL,
 	`sumOfRatings` DECIMAL NOT NULL,
-    PRIMARY KEY (bookId),
-    CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`bookId`)
-        REFERENCES `BookTextFormats` (`bookId`)
+    PRIMARY KEY (bookRatingId),
+    CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`bookTextFormatId`)
+        REFERENCES `BookTextFormats` (`bookTextFormatId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 LOCK TABLES `BookTextRatings` WRITE;
 /*!40000 ALTER TABLE `BookTextRatings` DISABLE KEYS */;
-INSERT INTO `BookTextRatings` VALUES (1, 5, 20),
-								     (2, 4, 15), 
-							 	     (3, 3, 10), 
-								     (4, 5, 20);
+INSERT INTO `BookTextRatings` VALUES (1, 1, 5, 20),
+								     (2, 2, 4, 15), 
+							 	     (3, 3, 3, 10), 
+								     (4, 4, 5, 20);
 /*!40000 ALTER TABLE `BookTextRatings` ENABLE KEYS */;
 UNLOCK TABLES;
 
