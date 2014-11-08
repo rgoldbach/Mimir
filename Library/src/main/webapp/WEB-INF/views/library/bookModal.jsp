@@ -11,9 +11,9 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span>&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h2>A Brief History Of Time</h2><!--Book Title-->
+					<h2>${book.bookDisplay.title}</h2><!--Book Title-->
                     <!-- <h5>Is it a series?</h5><!-- Series? --> 
-                    <h5>by <a>Stephen Hawking</a></h5><!-- Author -->
+                    <h5>by <a>${book.authors[0].name}, ${book.authors[1].name}</a></h5><!-- Author -->
 					
 				</div>
 	<div class="modal-body">
@@ -23,7 +23,7 @@
             <div class="row">
 
                 <div class="col-md-6">
-                    <img class="img-responsive" src="resources/img/TestImg1.jpg" alt="">
+                    <img class="img-responsive" src=${book.bookDisplay.imageFilePath}  alt="">
                 </div>
 
                 <div class="col-md-6">
@@ -32,11 +32,7 @@
 
                     <h3>Book Description</h3>
                     <p>
-                        #1 NEW YORK TIMES BESTSELLER
-
-                        A landmark volume in science writing by one of the great minds of our time, Stephen Hawking's book explores such profound questions as: How did the universe begin-and what made its start possible? Does time always flow forward? Is the universe unending-or are there boundaries? Are there other dimensions in space? What will happen when it all ends?
-
-                        Told in language we all can understand, A Brief History of Time plunges into the exotic realms of black holes and quarks, of antimatter and ""arrows of time," of the big bang and a bigger God-where the possibilities are wondrous and unexpected. With exciting images and profound imagination, Stephen Hawking brings us closer to the ultimate secrets at the very heart of creation.
+						${book.bookDisplay.description}
                     </p>
                     <br>
                     <h4>Rating</h4>  
