@@ -1,48 +1,57 @@
 package com.mimir.library.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="WishlistBooks")
-public class WishlistBook {
+@Table(name="EBookHolds")
+public class EBookOnHold {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)	
+	private int ebookOnHoldId;
+
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "userId")
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "bookId")
-	private Book book;
+	@JoinColumn(name = "eBookId")
+	private EBook eBook;
+	
+	@Column(name = "positionInQueue")
+	private int positionInQueue;
+
+
+	public int getEbookOnHoldId() {
+		return ebookOnHoldId;
+	}
+
 
 	public RegisteredUser getUser() {
 		return user;
 	}
 
+
 	public void setUser(RegisteredUser user) {
 		this.user = user;
 	}
 
-	public Book getBook() {
-		return book;
+
+	public EBook geteBook() {
+		return eBook;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+
+	public void seteBook(EBook eBook) {
+		this.eBook = eBook;
 	}
 
-	public int getId() {
-		return id;
-	}
-	
 }

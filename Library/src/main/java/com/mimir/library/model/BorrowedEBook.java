@@ -16,9 +16,9 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="PastBorrowedBooks")
-public class PastBorrowedBook {
-
+@Table(name="BorrowedEBooks")
+public class BorrowedEBook {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -28,14 +28,14 @@ public class PastBorrowedBook {
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "bookId")
-	private Book book;
+    @JoinColumn(name = "eBookId")
+	private EBook eBook;
 	
 	@NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy") 
-    @Column(name = "dateExpired")
+    @Column(name = "dateExpires")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate dateExpired;
+	private LocalDate dateExpires;
 	
 	@Column(name = "bookRating")
 	private double bookRating;
@@ -44,11 +44,14 @@ public class PastBorrowedBook {
 	public int getId() {
 		return id;
 	}
-	public LocalDate getDateExpired() {
-		return dateExpired;
+	public RegisteredUser getUser() {
+		return user;
 	}
-	public void setDateExpired(LocalDate dateExpired) {
-		this.dateExpired = dateExpired;
+	public LocalDate getDateExpired() {
+		return dateExpires;
+	}
+	public void setDateExpired(LocalDate dateExpires) {
+		this.dateExpires = dateExpires;
 	}
 	public double getBookRating() {
 		return bookRating;
@@ -56,17 +59,10 @@ public class PastBorrowedBook {
 	public void setBookRating(double bookRating) {
 		this.bookRating = bookRating;
 	}
-	public Book getBook() {
-		return book;
+	public EBook geteBook() {
+		return eBook;
 	}
-	public void setBook(Book book) {
-		this.book = book;
+	public void seteBook(EBook eBook) {
+		this.eBook = eBook;
 	}
-	public RegisteredUser getUser() {
-		return user;
-	}
-	public void setUser(RegisteredUser user) {
-		this.user = user;
-	}
-	
 }

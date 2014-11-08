@@ -13,7 +13,7 @@ import com.mimir.library.enums.AccountType;
 
 @Entity
 @Table(name="UserAccountInfo")
-public class UserAccountInfo extends AccountInfo{
+public class UserAccountInfo{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

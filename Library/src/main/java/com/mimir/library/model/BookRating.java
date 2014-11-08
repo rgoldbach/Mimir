@@ -1,30 +1,13 @@
 package com.mimir.library.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+public abstract class BookRating {
 
-@Entity
-@Table(name="BookTextRatings")
-public class BookRating {
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookRatingId;
-	
-	@OneToOne
-	@JoinColumn(name = "bookTextFormatId")
-	private BookTextFormat bookTextFormat;
-	
-	@Column(name = "numberOfRatings")
+
+	private EBook bookTextFormat;
+
 	private int numberOfRatings;
-	
-	@Column(name = "sumOfRatings")
+
 	private double sumOfRatings;
 	
 	private double rating;
@@ -54,10 +37,10 @@ public class BookRating {
 		addToSumOfRatings(rating);
 		rating = sumOfRatings / numberOfRatings;
 	}
-	public BookTextFormat getBookTextFormat() {
+	public EBook getBookTextFormat() {
 		return bookTextFormat;
 	}
-	public void setBookTextFormat(BookTextFormat bookTextFormat) {
+	public void setBookTextFormat(EBook bookTextFormat) {
 		this.bookTextFormat = bookTextFormat;
 	}
 	public int getBookRatingId() {

@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="OnHoldBooks")
-public class OnHoldBook {
-	
+@Table(name="WishlistEBooks")
+public class WishlistEBook {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -22,8 +22,8 @@ public class OnHoldBook {
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "bookId")
-	private Book book;
+    @JoinColumn(name = "eBookId")
+	private EBook eBook;
 
 	public RegisteredUser getUser() {
 		return user;
@@ -33,15 +33,16 @@ public class OnHoldBook {
 		this.user = user;
 	}
 
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
 	public int getId() {
 		return id;
 	}
+
+	public EBook geteBook() {
+		return eBook;
+	}
+
+	public void seteBook(EBook eBook) {
+		this.eBook = eBook;
+	}
+	
 }
