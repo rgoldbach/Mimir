@@ -1,32 +1,33 @@
 package com.mimir.library.model;
 
-public abstract class DownloadSite {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="DownloadSites")
+public class DownloadSite {
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int downloadSiteId;
+	
+	@Column(name = "name")
 	private String name;
-	private String id;
+	
+	@Column(name = "baseUrl")
 	private String baseUrl;
-	public DownloadSite(String name, String id, String baseUrl){
-		this.name = name;
-		this.id = id;
-		this.baseUrl = baseUrl;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getBaseUrl() {
-		return baseUrl;
-	}
-	public void setBaseUrl(String baseUrl) {
-		this.baseUrl = baseUrl;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
+	@Column(name = "downloadUrl")
+	private String downloadUrl;
+	
+	@Column(name = "bookKeyUrl")
+	private String bookKeyUrl;
+	
+	@Column(name = "publicKey")
+	private String publicKey;
 	
 }

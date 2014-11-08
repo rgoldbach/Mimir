@@ -152,92 +152,17 @@ INSERT INTO `BookAwards` VALUES (2, 4);
 UNLOCK TABLES;
 
 /***************************************************************/
-/*USER BOOK INFORMATION */
+/*Old USER BOOK INFORMATION */
 /***************************************************************/
 
 DROP TABLE IF EXISTS `BorrowedBooks`;
-CREATE TABLE `BorrowedBooks` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `bookId` INT NOT NULL,
-    `userId` INT NOT NULL,
-    `dateExpires` DATE NOT NULL,
-    `bookRating` DECIMAL,
-    PRIMARY KEY (id),
-    CONSTRAINT `user_current_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `book_current_books` FOREIGN KEY (`bookId`)
-        REFERENCES `Books` (`bookId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-LOCK TABLES `BorrowedBooks` WRITE;
-/*!40000 ALTER TABLE `BorrowedBooks` DISABLE KEYS */;
-INSERT INTO `BorrowedBooks` VALUES (1, 1, 1, '2015-09-09', null), (2, 2, 1, '2015-09-09', null), (3, 3, 1, '2015-09-09', 4), (4, 4, 2, '2015-09-09', null);
-/*!40000 ALTER TABLE `BorrowedBooks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `PastBookshelfBooks`;
-CREATE TABLE `PastBookshelfBooks` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `bookId` INT NOT NULL,
-    `userId` INT NOT NULL,
-    `dateExpired` DATE NOT NULL,
-    `bookRating` DECIMAL,
-    PRIMARY KEY (id),
-    CONSTRAINT `user_past_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `book_past_books` FOREIGN KEY (`bookId`)
-        REFERENCES `Books` (`bookId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-LOCK TABLES `PastBookshelfBooks` WRITE;
-/*!40000 ALTER TABLE `PastBookshelfBooks` DISABLE KEYS */;
-INSERT INTO `PastBookshelfBooks` VALUES (1, 4, 1, '2015-09-09', null), (2, 3, 1, '2015-09-09', null), (3, 2, 1, '2015-09-09', 4), (4, 1, 2, '2015-09-09', null);
-/*!40000 ALTER TABLE `PastBookshelfBooks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `OnHoldBooks`;
-CREATE TABLE `OnHoldBooks` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `bookId` INT NOT NULL,
-    `userId` INT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `user_hold_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `book_hold_books` FOREIGN KEY (`bookId`)
-        REFERENCES `Books` (`bookId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-LOCK TABLES `OnHoldBooks` WRITE;
-/*!40000 ALTER TABLE `OnHoldBooks` DISABLE KEYS */;
-INSERT INTO `OnHoldBooks` VALUES (1, 3, 1), (2, 4, 1), (3, 1, 1), (4, 2, 2);
-/*!40000 ALTER TABLE `OnHoldBooks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `WishlistBooks`;
-CREATE TABLE `WishlistBooks` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `bookId` INT NOT NULL,
-    `userId` INT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `user_wishlist_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `book_wishlist_books` FOREIGN KEY (`bookId`)
-        REFERENCES `Books` (`bookId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
 
-LOCK TABLES `WishlistBooks` WRITE;
-/*!40000 ALTER TABLE `WishlistBooks` DISABLE KEYS */;
-INSERT INTO `WishlistBooks` VALUES (1, 2, 1), (2, 1, 1), (3, 4, 1), (4, 3, 2);
-/*!40000 ALTER TABLE `WishlistBooks` ENABLE KEYS */;
-UNLOCK TABLES;
 
 /***************************************************************/
 /*MORE BOOK INFORMATION */
@@ -370,41 +295,42 @@ INSERT INTO `BookInterestLevels` VALUES (1, 1), (2, 2), (3, 1), (4, 3);
 /*!40000 ALTER TABLE `BookInterestLevels` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextPublishers`;
-CREATE TABLE `BookTextPublishers` (
+DROP TABLE IF EXISTS `EBookPublishers`;
+CREATE TABLE `EBookPublishers` (
     `publisherId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
 	`information` VARCHAR(300),
     PRIMARY KEY (publisherId)
 );
 
-LOCK TABLES `BookTextPublishers` WRITE;
-/*!40000 ALTER TABLE `BookTextPublishers` DISABLE KEYS */;
-INSERT INTO `BookTextPublishers` VALUES (1, 'Random House Publishing Group', null), (2, 'Houghton Mifflin Harcourt', null), (3, 'Publisher 3', null), (4, 'Mimir Books', null);
-/*!40000 ALTER TABLE `BookTextPublishers` ENABLE KEYS */;
+LOCK TABLES `EBookPublishers` WRITE;
+/*!40000 ALTER TABLE `EBookPublishers` DISABLE KEYS */;
+INSERT INTO `EBookPublishers` VALUES (1, 'Random House Publishing Group', null), (2, 'Houghton Mifflin Harcourt', null), (3, 'Publisher 3', null), (4, 'Mimir Books', null);
+/*!40000 ALTER TABLE `EBookPublishers` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextFormats`;
-CREATE TABLE `BookTextFormats` (
-	`bookTextFormatId` INT NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `BookEBookFormats`;
+DROP TABLE IF EXISTS `EBooks`;
+CREATE TABLE `EBooks` (
+	`eBookId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `publisherId` INT NOT NULL,
-    PRIMARY KEY (bookTextFormatId),
+    PRIMARY KEY (eBookId),
     CONSTRAINT `book_text` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `publisher_text` FOREIGN KEY (`publisherId`)
-        REFERENCES `BookTextPublishers` (`publisherId`)
+        REFERENCES `EBookPublishers` (`publisherId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookTextFormats` WRITE;
-/*!40000 ALTER TABLE `BookTextFormats` DISABLE KEYS */;
-INSERT INTO `BookTextFormats` VALUES (1, 1, 1), 
+LOCK TABLES `EBooks` WRITE;
+/*!40000 ALTER TABLE `EBooks` DISABLE KEYS */;
+INSERT INTO `EBooks` VALUES (1, 1, 1), 
 								 (2, 2, 2), 
 								 (3, 3, 3),
 								 (4, 4, 4);
-/*!40000 ALTER TABLE `BookTextFormats` ENABLE KEYS */;
+/*!40000 ALTER TABLE `EBooks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Formats`;
@@ -422,29 +348,29 @@ INSERT INTO `Formats` VALUES (1, 'Kindle'),
 /*!40000 ALTER TABLE `Formats` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `TextFormats`;
-CREATE TABLE `TextFormats` (
-    `textFormatId` INT NOT NULL AUTO_INCREMENT,
-	`bookId` INT NOT NULL,
+DROP TABLE IF EXISTS `EBookFormats`;
+CREATE TABLE `EBookFormats` (
+    `ebookFormatId` INT NOT NULL AUTO_INCREMENT,
+	`eBookId` INT NOT NULL,
     `formatId` INT NOT NULL,
     `releaseDate` DATE,
     `fileSize` VARCHAR(50),
-    PRIMARY KEY (textFormatId),
-    CONSTRAINT `bookTextFormatDeterminedBy` FOREIGN KEY (`bookId`)
-        REFERENCES `BookTextFormats` (`bookId`)
+    PRIMARY KEY (ebookFormatId),
+    CONSTRAINT `ebook_format_type` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `textFormatDeterminedBy` FOREIGN KEY (`formatId`)
+    CONSTRAINT `format_type` FOREIGN KEY (`formatId`)
         REFERENCES `Formats` (`formatId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `TextFormats` WRITE;
-/*!40000 ALTER TABLE `TextFormats` DISABLE KEYS */;
-INSERT INTO `TextFormats` VALUES (1, 1, 1, '2011-05-04', null), (2, 1, 2, '2011-05-04', '4210 KB'),
+LOCK TABLES `EBookFormats` WRITE;
+/*!40000 ALTER TABLE `EBookFormats` DISABLE KEYS */;
+INSERT INTO `EBookFormats` VALUES (1, 1, 1, '2011-05-04', null), (2, 1, 2, '2011-05-04', '4210 KB'),
 								 (3, 2, 1, '2011-05-05', null), (4, 2, 2, '1993-04-26', '1204 KB'),
 								 (5, 3, 2, '2006-10-31', '954419 KB'),
 								 (6, 4, 2, '2012-03-29', '237016 KB');
-/*!40000 ALTER TABLE `TextFormats` ENABLE KEYS */;
+/*!40000 ALTER TABLE `EBookFormats` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Languages`;
@@ -480,77 +406,77 @@ INSERT INTO `LanguageInterests` VALUES (1, 1, 1), (2, 2, 2), (3, 3, 3), (4, 4, 4
 /*!40000 ALTER TABLE `LanguageInterests` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextLanguages`;
-CREATE TABLE `BookTextLanguages` (
-    `bookId` INT NOT NULL,
+DROP TABLE IF EXISTS `EBookLanguages`;
+CREATE TABLE `EBookLanguages` (
+	`eBookLanguageId` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
     `languageId` INT NOT NULL,
-    PRIMARY KEY (bookId, languageId),
-    CONSTRAINT `book_language_text` FOREIGN KEY (`bookId`)
-        REFERENCES `BookTextFormats` (`bookId`)
+    PRIMARY KEY (eBookLanguageId),
+    CONSTRAINT `book_language_text` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `language_determined` FOREIGN KEY (`languageId`)
         REFERENCES `Languages` (`languageId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookTextLanguages` WRITE;
-/*!40000 ALTER TABLE `BookTextLanguages` DISABLE KEYS */;
-INSERT INTO `BookTextLanguages` VALUES (1, 1), (1,2),
-								   (2, 1), (2, 3),
-								   (3, 1), (3, 2), (3, 3),
-								   (4, 1);
-/*!40000 ALTER TABLE `BookTextLanguages` ENABLE KEYS */;
+LOCK TABLES `EBookLanguages` WRITE;
+/*!40000 ALTER TABLE `EBookLanguages` DISABLE KEYS */;
+INSERT INTO `EBookLanguages` VALUES (1, 1, 1), (2, 1,2),
+								   (3, 2, 1), (4, 2, 3),
+								   (5, 3, 1), (6, 3, 2), (7, 3, 3),
+								   (8, 4, 1);
+/*!40000 ALTER TABLE `EBookLanguages` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextRatings`;
-CREATE TABLE `BookTextRatings` (
+DROP TABLE IF EXISTS `EBookRatings`;
+CREATE TABLE `EBookRatings` (
 	`bookRatingId` INT NOT NULL AUTO_INCREMENT,
-    `bookTextFormatId` INT NOT NULL,
+    `eBookId` INT NOT NULL,
     `numberOfRatings` INT NOT NULL,
 	`sumOfRatings` DECIMAL NOT NULL,
     PRIMARY KEY (bookRatingId),
-    CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`bookTextFormatId`)
-        REFERENCES `BookTextFormats` (`bookTextFormatId`)
+    CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookTextRatings` WRITE;
-/*!40000 ALTER TABLE `BookTextRatings` DISABLE KEYS */;
-INSERT INTO `BookTextRatings` VALUES (1, 1, 5, 20),
+LOCK TABLES `EBookRatings` WRITE;
+/*!40000 ALTER TABLE `EBookRatings` DISABLE KEYS */;
+INSERT INTO `EBookRatings` VALUES (1, 1, 5, 20),
 								     (2, 2, 4, 15), 
 							 	     (3, 3, 3, 10), 
 								     (4, 4, 5, 20);
-/*!40000 ALTER TABLE `BookTextRatings` ENABLE KEYS */;
+/*!40000 ALTER TABLE `EBookRatings` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextHolds`;
-CREATE TABLE `BookTextHolds` (
-    `bookId` INT NOT NULL,
+DROP TABLE IF EXISTS `EBookHolds`;
+CREATE TABLE `EBookHolds` (
+	`eBookOnHoldId` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
     `userId` INT NOT NULL,
 	`positionInQueue` INT NOT NULL,
-    PRIMARY KEY (bookId, userId),
-    CONSTRAINT `bookFormatHoldDeterminedBy` FOREIGN KEY (`bookId`)
-        REFERENCES `BookTextFormats` (`bookId`)
+    PRIMARY KEY (eBookOnHoldId),
+    CONSTRAINT `ebook_hold` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `userHoldDeterminedBy` FOREIGN KEY (`userId`)
+	CONSTRAINT `user_hold` FOREIGN KEY (`userId`)
         REFERENCES `RegisteredUsers` (`userId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookTextHolds` WRITE;
-/*!40000 ALTER TABLE `BookTextHolds` DISABLE KEYS */;
-INSERT INTO `BookTextHolds` VALUES   (1, 5, 20),
-								   (2, 4, 15), 
-								   (3, 3, 10), 
-								   (4, 5, 20),
-								   (5, 2, 10),
-								   (6, 1, 4);
-/*!40000 ALTER TABLE `BookTextHolds` ENABLE KEYS */;
+LOCK TABLES `EBookHolds` WRITE;
+/*!40000 ALTER TABLE `EBookHolds` DISABLE KEYS */;
+INSERT INTO `EBookHolds` VALUES   (1, 3, 5, 20),
+								   (2, 4, 4, 15), 
+								   (3, 1, 3, 10), 
+								   (4, 2, 5, 20);
+/*!40000 ALTER TABLE `EBookHolds` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `DownloadSites`;
 CREATE TABLE `DownloadSites` (
-    `downloadSiteId` INT NOT NULL,
+    `downloadSiteId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
 	`baseUrl` VARCHAR(100) NOT NULL,
 	`downloadUrl` VARCHAR(100) NOT NULL,
@@ -565,29 +491,116 @@ INSERT INTO `DownloadSites` VALUES   (1, 'Lamazon', 'Not_Implemented_Yet', 'Not_
 /*!40000 ALTER TABLE `DownloadSites` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `BookTextLicenses`;
-CREATE TABLE `BookTextLicenses` (
-    `textLicenseId` INT NOT NULL AUTO_INCREMENT,
-	`bookId` INT NOT NULL,
+DROP TABLE IF EXISTS `EBookLicenses`;
+CREATE TABLE `EBookLicenses` (
+    `eBookLicenseId` INT NOT NULL AUTO_INCREMENT,
+	`eBookId` INT NOT NULL,
     `downloadSiteId` INT NOT NULL,
-	`availableCopies` INT NOT NULL,
-    PRIMARY KEY (textLicenseId),
-    CONSTRAINT `book_download_text` FOREIGN KEY (`bookId`)
-        REFERENCES `BookTextFormats` (`bookId`)
+	`numberOfCopiesForDownload` INT NOT NULL,
+    PRIMARY KEY (eBookLicenseId),
+    CONSTRAINT `book_download_text` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT `downloadSite_text_determined` FOREIGN KEY (`downloadSiteId`)
         REFERENCES `DownloadSites` (`downloadSiteId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `BookTextLicenses` WRITE;
-/*!40000 ALTER TABLE `BookTextLicenses` DISABLE KEYS */;
-INSERT INTO `BookTextLicenses` VALUES   (1, 1, 1, 5),
+LOCK TABLES `EBookLicenses` WRITE;
+/*!40000 ALTER TABLE `EBookLicenses` DISABLE KEYS */;
+INSERT INTO `EBookLicenses` VALUES   (1, 1, 1, 5),
 										(2, 2, 1, 10), 
 										(3, 3, 1, 15), 
 										(4, 4, 1, -1);
-/*!40000 ALTER TABLE `BookTextLicenses` ENABLE KEYS */;
+/*!40000 ALTER TABLE `EBookLicenses` ENABLE KEYS */;
 UNLOCK TABLES;
 
+/***************************************************************/
+/*USER BOOK INFORMATION */
+/***************************************************************/
+
+DROP TABLE IF EXISTS `BorrowedEBooks`;
+CREATE TABLE `BorrowedEBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    `dateExpires` DATE NOT NULL,
+    `bookRating` DECIMAL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_current_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ebook_current_books` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `BorrowedEBooks` WRITE;
+/*!40000 ALTER TABLE `BorrowedEBooks` DISABLE KEYS */;
+INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2015-09-09', null), (2, 2, 1, '2015-09-09', null), (3, 3, 1, '2015-09-09', 4), (4, 4, 2, '2015-09-09', null);
+/*!40000 ALTER TABLE `BorrowedEBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `PastBookshelfEBooks`;
+CREATE TABLE `PastBookshelfEBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    `dateExpired` DATE NOT NULL,
+    `bookRating` DECIMAL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_past_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ebook_past_books` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `PastBookshelfEBooks` WRITE;
+/*!40000 ALTER TABLE `PastBookshelfEBooks` DISABLE KEYS */;
+INSERT INTO `PastBookshelfEBooks` VALUES (1, 4, 1, '2015-09-09', null), (2, 3, 1, '2015-09-09', null), (3, 2, 1, '2015-09-09', 4), (4, 1, 2, '2015-09-09', null);
+/*!40000 ALTER TABLE `PastBookshelfEBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `OnHoldEBooks`;
+/*CREATE TABLE `OnHoldEBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_hold_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ebook_hold_books` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `OnHoldEBooks` WRITE;
+/*!40000 ALTER TABLE `OnHoldEBooks` DISABLE KEYS */;
+/*INSERT INTO `OnHoldEBooks` VALUES (1, 3, 1), (2, 4, 1), (3, 1, 1), (4, 2, 2);
+/*!40000 ALTER TABLE `OnHoldEBooks` ENABLE KEYS */;
+/*UNLOCK TABLES;*/
+
+DROP TABLE IF EXISTS `WishlistEBooks`;
+CREATE TABLE `WishlistEBooks` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `eBookId` INT NOT NULL,
+    `userId` INT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `user_wishlist_books` FOREIGN KEY (`userId`)
+        REFERENCES `RegisteredUsers` (`userId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `ebook_wishlist_books` FOREIGN KEY (`eBookId`)
+        REFERENCES `EBooks` (`eBookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `WishlistEBooks` WRITE;
+/*!40000 ALTER TABLE `WishlistEBooks` DISABLE KEYS */;
+INSERT INTO `WishlistEBooks` VALUES (1, 2, 1), (2, 1, 1), (3, 4, 1), (4, 3, 2);
+/*!40000 ALTER TABLE `WishlistEBooks` ENABLE KEYS */;
+UNLOCK TABLES;
 
 

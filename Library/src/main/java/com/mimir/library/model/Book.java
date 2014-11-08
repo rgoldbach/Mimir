@@ -2,6 +2,7 @@ package com.mimir.library.model;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,13 +30,67 @@ public class Book {
 	private BookDisplayableInformation bookDisplay;
 	
 	@OneToOne(mappedBy = "book")
-	private BookTextFormat bookTextFormat;
+	private EBook bookTextFormat;
+	
+	@Column(name = "isbn")
+	private String isbn;
+	
+	@Column(name = "seriesName")
+	private String seriesName;
+
+	public int getBookId() {
+		return bookId;
+	}
+
+	public Collection<Author> getAuthors() {
+		return authors;
+	}
+
+	public void setAuthors(Collection<Author> authors) {
+		this.authors = authors;
+	}
+
+	public Collection<BookAward> getAwards() {
+		return awards;
+	}
+
+	public void setAwards(Collection<BookAward> awards) {
+		this.awards = awards;
+	}
+
+	public BookDisplayableInformation getBookDisplay() {
+		return bookDisplay;
+	}
+
+	public void setBookDisplay(BookDisplayableInformation bookDisplay) {
+		this.bookDisplay = bookDisplay;
+	}
+
+	public EBook getBookTextFormat() {
+		return bookTextFormat;
+	}
+
+	public void setBookTextFormat(EBook bookTextFormat) {
+		this.bookTextFormat = bookTextFormat;
+	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getSeriesName() {
+		return seriesName;
+	}
+
+	public void setSeriesName(String seriesName) {
+		this.seriesName = seriesName;
+	}
 	
 	
-	
-	//private BookDisplayableInformation bookDisplay;
-	//private Collection<Award> awards;
-	//private TypeInformation typeInformation;
-	//private TitleInformation titleInformation;
+
 	
 }

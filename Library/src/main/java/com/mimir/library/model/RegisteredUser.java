@@ -38,16 +38,17 @@ public class RegisteredUser{
 	private Set<LanguageInterest> languageInterests;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<BorrowedBook> currentBooks;
+	private Set<BorrowedEBook> currentEBooks;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<PastBorrowedBook> pastBooks;
+	private Set<PastBorrowedEBook> pastEBooks;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<OnHoldBook> onHoldBooks;
+	private Set<EBookOnHold> onHoldEBooks;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<WishlistBook> wishlistBooks;
+	private Set<WishlistEBook> wishlistEBooks;
+	
 	
 	public RegisteredUser(){
 		
@@ -67,14 +68,6 @@ public class RegisteredUser{
 
 	public void setLoginCredentials(LoginCredentials loginCredentials) {
 		this.loginCredentials = loginCredentials;
-	}
-
-	public Set<BorrowedBook> getCurrentBooks() {
-		return currentBooks;
-	}
-
-	public void setCurrentBooks(Set<BorrowedBook> currentBooks) {
-		this.currentBooks = currentBooks;
 	}
 
 	public UserAccountInfo getAccountInfo() {
@@ -109,32 +102,40 @@ public class RegisteredUser{
 		this.languageInterests = languageInterests;
 	}
 
-	public Set<PastBorrowedBook> getPastBooks() {
-		return pastBooks;
-	}
-
-	public void setPastBooks(Set<PastBorrowedBook> pastBooks) {
-		this.pastBooks = pastBooks;
-	}
-
-	public Set<OnHoldBook> getOnHoldBooks() {
-		return onHoldBooks;
-	}
-
-	public void setOnHoldBooks(Set<OnHoldBook> onHoldBooks) {
-		this.onHoldBooks = onHoldBooks;
-	}
-
-	public Set<WishlistBook> getWishlistBooks() {
-		return wishlistBooks;
-	}
-
-	public void setWishlistBooks(Set<WishlistBook> wishlistBooks) {
-		this.wishlistBooks = wishlistBooks;
-	}
-
 	public int getUserId() {
 		return userId;
+	}
+
+	public Set<BorrowedEBook> getCurrentEBooks() {
+		return currentEBooks;
+	}
+
+	public void setCurrentEBooks(Set<BorrowedEBook> currentEBooks) {
+		this.currentEBooks = currentEBooks;
+	}
+
+	public Set<PastBorrowedEBook> getPastEBooks() {
+		return pastEBooks;
+	}
+
+	public void setPastEBooks(Set<PastBorrowedEBook> pastEBooks) {
+		this.pastEBooks = pastEBooks;
+	}
+
+	public Set<EBookOnHold> getOnHoldEBooks() {
+		return onHoldEBooks;
+	}
+
+	public void setOnHoldEBooks(Set<EBookOnHold> onHoldEBooks) {
+		this.onHoldEBooks = onHoldEBooks;
+	}
+
+	public Set<WishlistEBook> getWishlistEBooks() {
+		return wishlistEBooks;
+	}
+
+	public void setWishlistEBooks(Set<WishlistEBook> wishlistEBooks) {
+		this.wishlistEBooks = wishlistEBooks;
 	}
 	
 }

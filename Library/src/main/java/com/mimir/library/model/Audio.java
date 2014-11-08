@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.mimir.library.enums.FormatType;
 
-public abstract class Audio extends Format{
+public abstract class Audio{
 	
 	private int numberOfParts;
 	private String duration;
@@ -15,7 +15,6 @@ public abstract class Audio extends Format{
 			Collection<Language> languages, Publisher publisher,
 			Collection<DownloadSite> downloadSites, Collection<License> license,
 			int numberOfParts, String duration, String fileSize) {
-		super(formatType, releaseDate, languages, publisher, downloadSites, license);
 		this.setNumberOfParts(numberOfParts);
 		this.setDuration(duration);
 		this.setFileSize(fileSize);
