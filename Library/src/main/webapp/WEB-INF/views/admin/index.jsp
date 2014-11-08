@@ -29,7 +29,7 @@
                             Weekly Book Report
                         </div>
                         <!-- /.panel-heading -->
-                        <div id = "weeklyReport" class="panel-body" style = "height:400px;">
+                        <div id = "weeklyReport" class="panel-body graph-container" style = "height:400px;">
                             TODO: SOMEONE ADD GRAPH STUFF PLS 
                         </div>
                         <!-- /.panel-body -->
@@ -46,7 +46,7 @@
                             Monthly Book Report
                         </div>
                         <!-- /.panel-heading -->
-                        <div id = "monthlyReport" class="panel-body" style = "height:400px;">
+                        <div id = "monthlyReport" class="panel-body graph-container" style = "height:400px;">
                             TODO: THIS ONE TOO
                         </div>
                         <!-- /.panel-body -->
@@ -62,7 +62,7 @@
                             Site Use Report
                         </div>
                         <!-- /.panel-heading -->
-                        <div id = "userReport" class="panel-body" style = "height:400px;">
+                        <div id = "userReport" class="panel-body graph-container" style = "height:400px;">
                             TODO: I AM NOT GOOD WITH COMPUTER
                         </div>
                         <!-- /.panel-body -->
