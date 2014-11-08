@@ -1,4 +1,4 @@
-<!-- START MODALS -->
+ju<!-- START MODALS -->
 	<div class="modal fade" id="signInModal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -27,6 +27,23 @@
 					<a type="button" name='signin' class="btn btn-primary determineRole">Sign In</a>
 					<a href="admin" type="button" name='signin' class="btn btn-danger">Admin</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="bookModal" tabindex="-1">
+		<div class="modal-dialog" id="bookModalDialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span>&times;</span><span class="sr-only"></span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+				</div>
+				<div class="modal-body">...</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"></button>
 				</div>
 			</div>
 		</div>

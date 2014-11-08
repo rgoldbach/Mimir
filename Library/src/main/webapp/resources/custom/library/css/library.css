@@ -467,3 +467,9 @@ body {
 .carousel-control.right {
 	right: -12px;
 }
+
+#bookModalDialog{
+	width:70%;
+	padding:1px;
+	
+}
