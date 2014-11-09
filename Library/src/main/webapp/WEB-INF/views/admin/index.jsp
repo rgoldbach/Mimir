@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div id = "weeklyReport" class="panel-body graph-container" style = "height:400px;">
-                            TODO: SOMEONE ADD GRAPH STUFF PLS 
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -47,7 +47,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div id = "monthlyReport" class="panel-body graph-container" style = "height:400px;">
-                            TODO: THIS ONE TOO
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -63,7 +63,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div id = "userReport" class="panel-body graph-container" style = "height:400px;">
-                            TODO: I AM NOT GOOD WITH COMPUTER
+                            
                         </div>
                         <!-- /.panel-body -->
                     </div>
