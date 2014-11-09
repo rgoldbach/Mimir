@@ -78,7 +78,7 @@
 											<a href="#"><c:out value="${element.getTitle()}"/></a>
 										</h3>
 										<h4>
-											<a href="#"><c:out value="${element.getAuthor().getName()}"/></a>
+											<a href="#"><c:out value="${element.getBook().getAuthors()[0].getName()}"/></a> 
 										</h4>
 										<h6><c:out value="${element.getDescription()}"/></h6>
 										<div align="center">

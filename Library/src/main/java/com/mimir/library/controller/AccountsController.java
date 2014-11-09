@@ -36,17 +36,30 @@ public class AccountsController {
 		ModelAndView mv = new ModelAndView("library/account");
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
 		
+		Book dummyBook = new Book();
+		Author dummyAuthor = new Author("Colonel Sanders", "Mmmm mmmmm good");
+		ArrayList<Author> dummyAuthors = new ArrayList<Author>();
+		dummyAuthors.add(dummyAuthor);
+		dummyBook.setAuthors(dummyAuthors);
 		BookDisplayableInformation dummyInfo = new BookDisplayableInformation();
 		//dummyInfo.setAuthor(new Author("Dummy Author", "Likes to write books"));
 		//dummyInfo.setBookId("Dummy Id");
 		dummyInfo.setImageFilePath("/Library/resources/img/TestImg1.jpg");
 		dummyInfo.setTitle("Dummy Title");
+		dummyInfo.setBook(dummyBook);
 		dummyInfo.setDescription("Dummy Description...");
 		dummyList.add(dummyInfo);
 		
+		
+		Book dummyBook2 = new Book();
+		Author dummyAuthor2 = new Author("Anne Frank", "My diary brings all the boys to the yard and they're like mein's better than yours");
+		ArrayList<Author> dummyAuthors2 = new ArrayList<Author>();
+		dummyAuthors2.add(dummyAuthor2);
+		dummyBook2.setAuthors(dummyAuthors2);
 		BookDisplayableInformation dummyInfo2 = new BookDisplayableInformation();
 		//dummyInfo2.setAuthor(new Author("Dummy Author2", "Doesn't like to write books"));
 		//dummyInfo2.setBookId("Dummy Id2");
+		dummyInfo2.setBook(dummyBook2);
 		dummyInfo2.setImageFilePath("/Library/resources/img/TestImg2.jpg");
 		dummyInfo2.setTitle("Dummy Title2");
 		dummyInfo2.setDescription("Dummy Description2...Yay TestingLayoutSpacingTestingLayoutSpacing\nTestingLayoutSpacingTestingLayoutSpacingTestingLayoutSpacing");
