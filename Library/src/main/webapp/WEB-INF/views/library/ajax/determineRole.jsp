@@ -7,7 +7,7 @@ $(document).ready(function() {
 		            var json = "";
 		            if(url ===  "signin"){
 		            	json = {
-				                "username" : $('#email').val(),
+				                "email" : $('#email').val(),
 				                "password" : $('#password').val()
 				        }
 		            }

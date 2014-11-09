@@ -1,4 +1,4 @@
-package com.mimir.library.dao;
+package com.mimir.library.service;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
 
-public interface RegisteredUserDao {
+public interface RegisteredUserService {
 
-	void saveRegisteredUser(RegisteredUser user);
+void saveRegisteredUser(RegisteredUser user);
 	
 	List<RegisteredUser> getAllUsers();
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);
@@ -26,5 +26,4 @@ public interface RegisteredUserDao {
 	List<WishlistEBook> getWishlistEBooksOfSpecificUser(int userId);
 	
 	RegisteredUser userCanSignIn(LoginCredentials loginCreds);
-	
 }

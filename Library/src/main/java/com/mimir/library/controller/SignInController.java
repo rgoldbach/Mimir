@@ -16,7 +16,7 @@ import com.mimir.library.service.AccountManager;
 @Controller
 public class SignInController {
  
-	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
 	public String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
 		System.out.println("in signin controller");
@@ -40,5 +40,5 @@ public class SignInController {
 		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, null);
 		return "signoutsuccess";
 
-	}
+	}*/
 }

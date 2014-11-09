@@ -30,26 +30,28 @@ public class LoginCredentials {
 	public LoginCredentials(){
 		
 	}
-	
-	public LoginCredentials(String username, String password){
-		this.email = username;
-		this.password = password;
-	}
-	
-	public String getUsername(){ 
-		return email; 
-		}
-	public String getPassword(){ 
-		return password; 
-		}
-	public void setUsername(String username){ 
-		this.email = username; 
-		}	
-	public void setPassword(String password){ 
-		this.password = password; 
-		}
 
-	public int getLoginId() {
-		return loginId;
+	public RegisteredUser getUser() {
+		return user;
+	}
+
+	public void setUser(RegisteredUser user) {
+		this.user = user;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

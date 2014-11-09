@@ -29,12 +29,8 @@ public class UserAccountInfo{
 	@Column(name = "lastName")
 	private String lastName;
 	
-	private AccountType accountType;
+	//private AccountType accountType;
 	
-	public UserAccountInfo(){
-		accountType = AccountType.RegisteredUser;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -49,10 +45,6 @@ public class UserAccountInfo{
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public AccountType getAccountType() {
-		return accountType;
 	}
 
 	public int getAccountInfoId() {
