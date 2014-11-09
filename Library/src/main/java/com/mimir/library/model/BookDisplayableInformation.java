@@ -95,7 +95,9 @@ public class BookDisplayableInformation {
 	public void setAuthorNames(Collection<String> authorNames) {
 		this.authorNames = authorNames;
 	}*/
-	
+	public void setBookDisplayId(int id){
+		bookDisplayId = id;
+	}
 	
 	//TEMP CODE - ONLY TO KEEP ACCOUNTS CONTROLLER FROM ERRORING...
 	/*private Author author;

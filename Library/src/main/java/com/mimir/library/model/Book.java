@@ -90,7 +90,9 @@ public class Book {
 		this.seriesName = seriesName;
 	}
 	
-	
+	public void setBookId(int id){
+		bookId = id;
+	}
 
 	
 }

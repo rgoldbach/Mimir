@@ -11,7 +11,7 @@
 					<button type="button" class="close" data-dismiss="modal">
 						<span>&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h2>ff${book.bookDisplay.title}</h2><!--Book Title-->
+					<h2>${book.bookDisplay.title}</h2><!--Book Title-->
                     <!-- <h5>Is it a series?</h5><!-- Series? --> 
                     <h5>by 
                     		<c:forEach var="author" items = "${book.authors}">
