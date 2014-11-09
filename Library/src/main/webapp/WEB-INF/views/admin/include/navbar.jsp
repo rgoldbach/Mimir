@@ -14,7 +14,7 @@
 	</div>
 	<ul class="nav navbar-top-links navbar-right">
 		<li>
-    		<form action="#">
+    		<form action="./">
         		<button class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-log-out"></span></button>
     		</form>
 		</li>
@@ -22,18 +22,16 @@
 	<div class="navbar-default sidebar">
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
-				<li><a class="active" href="reports.html"><i
-						class="fa fa-bar-chart-o fa-fw"></i> Reports</a></li>
-				<li><a href="#"><i class="fa fa-book fa-fw"></i> Books<span
-						class="fa arrow"></span></a>
+				<li><a class="active" href="admin"><i class="fa fa-bar-chart-o fa-fw"></i> Reports</a></li>
+				<li><a href="#"><i class="fa fa-book fa-fw"></i> Books<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="add_book.html">Add Single</a></li>
-						<li><a href="add_books.html">Add Multiple</a></li>
-						<li><a href="search_books.html">Search</a></li>
+						<li><a href="addBook">Add Single</a></li>
+						<li><a href="addBooks">Add Multiple</a></li>
+						<li><a href="searchBooks">Search</a></li>
 					</ul> <!-- /.nav-second-level --></li>
-				<li><a href="users.html"><i class="fa fa-users fa-fw"></i>
+				<li><a href="users"><i class="fa fa-users fa-fw"></i>
 						Users</a></li>
-				<li><a href="support.html"><i class="fa fa-ticket fa-fw"></i>
+				<li><a href="support"><i class="fa fa-ticket fa-fw"></i>
 						Support</a></li>
 			</ul>
 		</div>
