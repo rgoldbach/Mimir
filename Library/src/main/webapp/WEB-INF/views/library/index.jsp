@@ -320,7 +320,7 @@
 							<div class="item active">
 								<div class="row">
 									<div class="col-md-3">
-										<a data-toggle="modal" data-target = "#bookModal" href="bookModal" class="thumbnail"><img
+										<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=1" class="thumbnail"><img
 											src="<c:url value="/resources/img/TestAudioImg4.jpg" />" alt="Image"
 											style="max-width: 100%;"></a>
 									</div>

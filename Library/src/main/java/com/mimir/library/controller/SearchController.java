@@ -11,13 +11,22 @@ public class SearchController {
 	String message = "Search Returned 1337 Results!";
  
 	@RequestMapping("/search")
-	public ModelAndView showMessage(
-			@RequestParam(value = "type", required = false, defaultValue = "ERROR") String type) {
-		System.out.println("in controller");
+	public ModelAndView quickSearch(
+			@RequestParam(value = "type", required = false, defaultValue = "") String query) {
+		System.out.println("Quick Search for " + query);
  
 		ModelAndView mv = new ModelAndView("library/search");
 		mv.addObject("message", message);
-		mv.addObject("type", type);
+		
+		return mv;
+	}
+	
+	@RequestMapping("/advancedSearch")
+	public ModelAndView advancedSearch(){
+		//define search object and pass as paramater
+		ModelAndView mv = new ModelAndView("library/search");
+		//get list of books based on search object and add to mv
+		
 		return mv;
 	}
 }

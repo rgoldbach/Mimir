@@ -1030,3 +1030,34 @@ jQuery(document).ready(function($) {
             });
     }
 });
+
+
+
+$(document).ready(function() {
+	   
+	  $('#borrowBookButton').click(function(event) {
+		  console.log("tst");
+	      var currentBook = $('#currentBook').val();
+	      var json = { "whichBook" : currentBook};
+	       
+	    $.ajax({
+	        url: "borrow",
+	        data: JSON.stringify(json),
+	        type: "POST",
+	         
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader("Accept", "application/json");
+	            xhr.setRequestHeader("Content-Type", "application/json");
+	        },
+	        success: function() {
+	                     
+	        }
+	    });
+	      
+	    event.preventDefault();
+	  });
+	    
+	});
+
+
+
