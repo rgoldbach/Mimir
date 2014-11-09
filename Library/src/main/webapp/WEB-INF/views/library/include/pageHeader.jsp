@@ -12,7 +12,7 @@
 							<div class="input-group input-group-lg">
 								<div class="input-group-btn">
 	<!-- Terms Input -->
-									<button type="button" class="btn btn-default" disabled>
+									<button type="button" class="btn btn-default" disabled style="opacity:1">
 										<b>Search</b></button>
 									<button type="button" class="btn btn-default"
 										data-toggle="collapse" data-target="#advancedSearch">

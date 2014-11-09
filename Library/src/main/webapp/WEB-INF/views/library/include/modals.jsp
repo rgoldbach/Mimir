@@ -26,6 +26,7 @@ ju<!-- START MODALS -->
 				<div class="modal-footer">
 					<a type="button" name='signin' class="btn btn-primary determineRole">Sign In</a>
 					<a href="admin" type="button" name='signin' class="btn btn-danger">Admin</a>
+					<a href="test" type="button" class="btn btn-success">Test</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
