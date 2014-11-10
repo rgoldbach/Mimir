@@ -39,7 +39,7 @@ public class AccountsController {
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
 		
 		Book dummyBook = new Book();
-		Author dummyAuthor = new Author("Colonel Sanders", "Mmmm mmmmm good");
+		Author dummyAuthor = new Author("Stephen Hawking", "I ARE SMART	");
 		ArrayList<Author> dummyAuthors = new ArrayList<Author>();
 		dummyAuthors.add(dummyAuthor);
 		dummyBook.setAuthors(dummyAuthors);
@@ -54,7 +54,7 @@ public class AccountsController {
 		
 		
 		Book dummyBook2 = new Book();
-		Author dummyAuthor2 = new Author("Anne Frank", "My diary brings all the boys to the yard and they're like mein's better than yours");
+		Author dummyAuthor2 = new Author("Lois Lowry", "Wizards and stuff");
 		ArrayList<Author> dummyAuthors2 = new ArrayList<Author>();
 		dummyAuthors2.add(dummyAuthor2);
 		dummyBook2.setAuthors(dummyAuthors2);

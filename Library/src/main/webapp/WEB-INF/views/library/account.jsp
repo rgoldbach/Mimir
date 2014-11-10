@@ -46,7 +46,7 @@
 					<li><a href="#tab_d" data-toggle="pill">
 							<p align="center">
 								<i class="fa fa-info-circle fa-4x"> </i> <span
-									style="font-size: 200%;"> <br>Information
+									style="font-size: 200%;"> <br>Info
 								</span>
 							</p>
 					</a></li>
@@ -64,119 +64,36 @@
 										<li><c:out value="${element}" /></li>
 									</c:forEach>
 								</ul> -->
-								
+
 								<div class="row row-centered">
-									
-	
-									<c:forEach items="${dummyBooks}" var="element">		
-									<div
-										class="col-md-3 col-md-offset-2 col-centered portfolio-item">
-										<a href="#"> <img class="img-responsive"
-											src="<c:out value="${element.getImageFilePath()}"/>">
-										</a>
-										<h3>
-											<a href="#"><c:out value="${element.getTitle()}"/></a>
-										</h3>
-										<h4>
-											<a href="#"><c:out value="${element.getBook().getAuthors()[0].getName()}"/></a> 
-										</h4>
-										<h6><c:out value="${element.getDescription()}"/></h6>
-										<div align="center">
-											<input id="input-21b" value="0" type="number" class="rating"
-												min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
-											<button class="btn btn-danger">Return</button>
+
+
+									<c:forEach items="${dummyBooks}" var="element">
+										<div
+											class="col-md-4 col-md-offset-1 col-centered portfolio-item">
+											<a href="#"> <img class="img-responsive"
+												src="<c:out value="${element.getImageFilePath()}"/>">
+											</a>
+											<h3>
+												<a href="#"><c:out value="${element.getTitle()}" /></a>
+											</h3>
+											<h4>
+												<a href="#"><c:out
+														value="${element.getBook().getAuthors()[0].getName()}" /></a>
+											</h4>
+											<h6>
+												<c:out value="${element.getDescription()}" />
+											</h6>
+											<div align="center">
+												<input id="input-21b" value="0" type="number" class="rating"
+													min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
+												<button class="btn btn-danger">Return</button>
+											</div>
 										</div>
-									</div>
 									</c:forEach>
 								</div>
-	
-								<!--  <div class="row row-centered">
-									
-	
-
-									<div
-										class="col-md-3 col-md-offset-2 col-centered portfolio-item">
-										<a href="#"> <img class="img-responsive"
-											src="<c:url value="/resources/img/TestImg1.jpg" />">
-										</a>
-										<h3>
-											<a href="#">A Brief History Of Time</a>
-										</h3>
-										<h4>
-											<a href="#">Stephen Hawking</a>
-										</h4>
-										<h6>Description Pending...</h6>
-										<div align="center">
-											<input id="input-21b" value="0" type="number" class="rating"
-												min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
-											<button class="btn btn-danger">Return</button>
-										</div>
-									</div>
 
 
-									<div
-										class="col-md-3 col-md-offset-1 col-centered portfolio-item">
-										<a href="#"> <img class="img-responsive"
-											src="<c:url value="/resources/img/TestImg3.jpg" />">
-										</a>
-										<h3>
-											<a href="#">Game of Thrones</a>
-										</h3>
-										<h4>
-											<a href="#">George R.R. Martin</a>
-										</h4>
-										<p>Description Pending...</p>
-										<div align="center">
-											<input id="input-21b" value="0" type="number" class="rating"
-												min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
-											<button class="btn btn-danger">Return</button>
-										</div>
-									</div>
-								</div>
-								<div class="row-centered">
-									<div
-										class="col-md-3 col-md-offset-2 col-centered portfolio-item">
-										<a href="#"> <img class="img-responsive"
-											src="<c:url value="/resources/img/TestImg4.jpg" />">
-
-										</a>
-										<h3>
-											<a href="#">Harry Potter And The Sorcerer's Stone</a>
-										</h3>
-										<h4>
-											<a href="#">J.K. Rowling</a>
-										</h4>
-										<p>Description Pending...</p>
-										<div align="center">
-											<input id="input-21b" value="0" type="number" class="rating"
-												min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
-											<button class="btn btn-danger">Return</button>
-										</div>
-									</div>
-
-
-
-									<div
-										class="col-md-3 col-md-offset-1 col-centered portfolio-item">
-										<a href="#"> <img class="img-responsive"
-											src="<c:url value="/resources/img/TestImg6.jpg" />">
-
-										</a>
-										<h3>
-											<a href="#">A People's History Of The United States</a>
-										</h3>
-										<h4>
-											<a href="#">Howard Zinn</a>
-										</h4>
-										<p>Description Pending...</p>
-										<div align="center">
-											<input id="input-21b" value="0" type="number" class="rating"
-												min=0 max=5 step=0.5 data-size="xs" data-star-captions="{}">
-											<button class="btn btn-danger">Return</button>
-										</div>
-									</div>
-
- 								</div> -->
 							</div>
 
 						</div>
@@ -201,12 +118,13 @@
 												<!--BOOKS START-->
 
 												<div class="container">
-													<center>
-														<h3 class="page-header">Books you want to borrow</h3>
-													</center>
+
+													<h3 style="text-align: center;"page-header">Books you
+														want to borrow</h3>
+
 													<div class="row row-centered">
 
-														<div class="col-md-3 col-centered portfolio-item">
+														<div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 															<a href="#"> <img class="img-responsive"
 																src="<c:url value="/resources/img/TestImg1.jpg" />">
 
@@ -228,7 +146,7 @@
 
 
 														<div
-															class="col-md-3 col-md-offset-1 col-centered portfolio-item">
+															class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 															<a href="#"> <img class="img-responsive"
 																src="<c:url value="/resources/img/TestImg3.jpg" />">
 
@@ -248,9 +166,9 @@
 															</div>
 														</div>
 													</div>
-
+												
 													<div class="row-centered">
-														<div class="col-md-3 col-centered portfolio-item">
+														<div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 															<a href="#"> <img class="img-responsive"
 																src="<c:url value="/resources/img/TestImg4.jpg" />">
 
@@ -273,7 +191,7 @@
 
 
 														<div
-															class="col-md-3 col-md-offset-1 col-centered portfolio-item">
+															class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 															<a href="#"> <img class="img-responsive"
 																src="<c:url value="/resources/img/TestImg6.jpg" />">
 
@@ -368,11 +286,11 @@
 
 
 							<div class="container">
-								<center>
-									<h1 class="page-header">Holds</h1>
-								</center>
+							
+									<h1 style="text-align:center;" class="page-header">Holds</h1>
+							
 								<div class="row row-centered">
-									<div class="col-md-3 col-centered portfolio-item">
+									<div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 										<a href="#"> <img class="img-responsive"
 											src="<c:url value="/resources/img/TestImg10.jpg" />">
 
@@ -393,7 +311,7 @@
 
 
 									<div
-										class="col-md-3 col-md-offset-1 col-centered portfolio-item">
+										class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 										<a href="#"> <img class="img-responsive"
 											src="<c:url value="/resources/img/TestImg7.jpg" />">
 
@@ -413,7 +331,7 @@
 									</div>
 								</div>
 								<div class="row-centered">
-									<div class="col-md-3 col-centered portfolio-item">
+									<div class="col-md-3 col-md-offset-2 col-centered portfolio-item">
 										<a href="#"> <img class="img-responsive"
 											src="<c:url value="/resources/img/TestImg5.jpg" />">
 
@@ -442,16 +360,14 @@
 						<div class="tab-pane" id="tab_d">
 
 							<div class="container">
-								<center>
-									<h1 class="page-header">Information</h1>
-								</center>
+							
+									<h1 style="text-align:center;" class="page-header">Information</h1>
+							
 								<!--Todo Readonly-->
 								<form class="form-horizontal">
 									<fieldset>
 										<!-- Form Name -->
-										<center>
-											<h3>Settings</h3>
-										</center>
+											<h3 style="text-align:center;">Settings</h3>
 										<br>
 										<!-- Text input-->
 										<div class="form-group">

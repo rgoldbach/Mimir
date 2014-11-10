@@ -36,4 +36,11 @@
 	<!-- ??? -->
 	<link href="<c:url value="/resources/star-rating/whhg.css" />" rel="stylesheet">
 	
+	<style>
+		.row
+		{
+			padding-bottom:20px;
+		}
+	</style>
+	
 </head>
