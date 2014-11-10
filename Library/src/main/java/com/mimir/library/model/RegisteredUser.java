@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,16 +18,14 @@ public class RegisteredUser{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	private int regUserId;
 	
 	@Column(name = "libraryCard")
 	private String libraryCardNumber;
 	
-	@OneToOne(mappedBy = "user")
-	private UserAccountInfo accountInfo;
-	
-	@OneToOne(mappedBy = "user")
-	private LoginCredentials loginCredentials;
+	@OneToOne
+	@JoinColumn(name = "accountInfoId")
+	private AccountInfo accountInfo;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<GenreInterest> genreInterests;
@@ -38,7 +37,7 @@ public class RegisteredUser{
 	private Set<LanguageInterest> languageInterests;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<BorrowedEBook> currentEBooks = null;
+	private Set<BorrowedEBook> currentEBooks;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<PastBorrowedEBook> pastEBooks;
@@ -62,21 +61,6 @@ public class RegisteredUser{
 		this.libraryCardNumber = libraryCardNumber; 
 	}	
 
-	public LoginCredentials getLoginCredentials() {
-		return loginCredentials;
-	}
-
-	public void setLoginCredentials(LoginCredentials loginCredentials) {
-		this.loginCredentials = loginCredentials;
-	}
-
-	public UserAccountInfo getAccountInfo() {
-		return accountInfo;
-	}
-
-	public void setAccountInfo(UserAccountInfo accountInfo) {
-		this.accountInfo = accountInfo;
-	}
 
 	public Set<GenreInterest> getGenreInterests() {
 		return genreInterests;
@@ -100,10 +84,6 @@ public class RegisteredUser{
 
 	public void setLanguageInterests(Set<LanguageInterest> languageInterests) {
 		this.languageInterests = languageInterests;
-	}
-
-	public int getUserId() {
-		return userId;
 	}
 
 	public Set<BorrowedEBook> getCurrentEBooks() {
@@ -140,6 +120,18 @@ public class RegisteredUser{
 	
 	public void addBookToBookshelf(BorrowedEBook bookToBorrow){
 		currentEBooks.add(bookToBorrow);
+	}
+
+	public AccountInfo getAccountInfo() {
+		return accountInfo;
+	}
+
+	public void setAccountInfo(AccountInfo accountInfo) {
+		this.accountInfo = accountInfo;
+	}
+	
+	public void addBookToWishlist(WishlistEBook bookToAdd){
+		wishlistEBooks.add(bookToAdd);
 	}
 	
 }

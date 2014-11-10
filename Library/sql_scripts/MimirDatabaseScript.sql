@@ -10,6 +10,15 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `authors_books`;
+DROP TABLE IF EXISTS `borrowedebooks`;
+DROP TABLE IF EXISTS `ebookholds`;
+DROP TABLE IF EXISTS `ebooklanguages`;
+DROP TABLE IF EXISTS `ebooklicenses`;
+DROP TABLE IF EXISTS `ebookratings`;
+DROP TABLE IF EXISTS `ebooks`;
+DROP TABLE IF EXISTS `pastbookshelfebooks`;
+DROP TABLE IF EXISTS `wishlistebooks`;
 DROP TABLE IF EXISTS `RegisteredUsers`;
 DROP TABLE IF EXISTS `LoginCreds`;
 DROP TABLE IF EXISTS `UserAccountInfo`;
@@ -49,28 +58,30 @@ DROP TABLE IF EXISTS `BookTextHolds`;
 DROP TABLE IF EXISTS `DownloadSites`;
 DROP TABLE IF EXISTS `BookTextLicenses`;
 
-DROP TABLE IF EXISTS `RegisteredUsers`;
-CREATE TABLE `RegisteredUsers` (
-    `userId` INT NOT NULL AUTO_INCREMENT,
-    `libraryCard` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (userId)
+DROP TABLE IF EXISTS `AccountInfo`;
+CREATE TABLE `AccountInfo` (
+    `accountInfoId` INT NOT NULL AUTO_INCREMENT,
+    `accountType` VARCHAR(50) NOT NULL,
+	`firstName` VARCHAR(50) NOT NULL,
+	`lastName` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (accountInfoId)
 );
 
-LOCK TABLES `RegisteredUsers` WRITE;
-/*!40000 ALTER TABLE `RegisteredUsers` DISABLE KEYS */;
-INSERT INTO `RegisteredUsers` VALUES (1, '1234567890'), (2, '0987654321'), (3, '5432109876');
-/*!40000 ALTER TABLE `RegisteredUsers` ENABLE KEYS */;
+LOCK TABLES `AccountInfo` WRITE;
+/*!40000 ALTER TABLE `AccountInfo` DISABLE KEYS */;
+INSERT INTO `AccountInfo` VALUES (1, 'RegUser', 'Hodir', 'Smith'), (2, 'RegUser', 'Odin', 'Johnson'), (3, 'Admin', 'Freya', 'Jones');
+/*!40000 ALTER TABLE `AccountInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `LoginCreds`;
 CREATE TABLE `LoginCreds` (
 	`loginId` INT NOT NULL AUTO_INCREMENT,
-    `userId` INT NOT NULL,
+    `accountInfoId` INT NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(50) NOT NULL,
     PRIMARY KEY (loginId),
-    CONSTRAINT `loginToUser` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `login_to_user_account` FOREIGN KEY (`accountInfoId`)
+        REFERENCES `AccountInfo` (`accountInfoId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -80,23 +91,42 @@ INSERT INTO `LoginCreds` VALUES (1, 1, 'Test1', 'password'), (2, 2, 'Test2', 'pa
 /*!40000 ALTER TABLE `LoginCreds` ENABLE KEYS */;
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `UserAccountInfo`;
-CREATE TABLE `UserAccountInfo` (
-	`accountInfoId` INT NOT NULL AUTO_INCREMENT,
-    `userId` INT NOT NULL,
-    `firstName` VARCHAR(50) NOT NULL,
-    `lastName` VARCHAR(50) NOT NULL,
-    PRIMARY KEY (accountInfoId),
-    CONSTRAINT `user_account_info` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+DROP TABLE IF EXISTS `RegisteredUsers`;
+CREATE TABLE `RegisteredUsers` (
+    `regUserId` INT NOT NULL AUTO_INCREMENT,
+	`accountInfoId` INT NOT NULL,
+    `libraryCard` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (regUserId),
+	CONSTRAINT `user_account_info_map` FOREIGN KEY (`accountInfoId`)
+        REFERENCES `AccountInfo` (`accountInfoId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-LOCK TABLES `UserAccountInfo` WRITE;
-/*!40000 ALTER TABLE `UserAccountInfo` DISABLE KEYS */;
-INSERT INTO `UserAccountInfo` VALUES (1, 1, 'Hodir', 'Smith'), (2, 2, 'Odin', 'Johnson'), (3, 3, 'Freya', 'Jones');
-/*!40000 ALTER TABLE `UserAccountInfo` ENABLE KEYS */;
+LOCK TABLES `RegisteredUsers` WRITE;
+/*!40000 ALTER TABLE `RegisteredUsers` DISABLE KEYS */;
+INSERT INTO `RegisteredUsers` VALUES (1, 1,'1234567890'), (2, 2,'0987654321');
+/*!40000 ALTER TABLE `RegisteredUsers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `Admins`;
+CREATE TABLE `Admins` (
+    `adminId` INT NOT NULL AUTO_INCREMENT,
+	`accountInfoId` INT NOT NULL,
+    PRIMARY KEY (adminId),
+	CONSTRAINT `admin_account_info` FOREIGN KEY (`accountInfoId`)
+        REFERENCES `AccountInfo` (`accountInfoId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `Admins` WRITE;
+/*!40000 ALTER TABLE `Admins` DISABLE KEYS */;
+INSERT INTO `Admins` VALUES (1, 3);
+/*!40000 ALTER TABLE `Admins` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `UserAccountInfo`;
+/* Changed to AccountInfo */
 
 
 /***************************************************************/
@@ -262,13 +292,13 @@ DROP TABLE IF EXISTS `GenreInterests`;
 CREATE TABLE `GenreInterests` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `genreId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     PRIMARY KEY (id),
 	CONSTRAINT `genre_interest` FOREIGN KEY (`genreId`)
         REFERENCES `Genres` (`genreId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `user_genre_interest` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_genre_interest` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -315,13 +345,13 @@ DROP TABLE IF EXISTS `InterestLevelInterests`;
 CREATE TABLE `InterestLevelInterests` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `interestLevelId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     PRIMARY KEY (id),
 	CONSTRAINT `interest_level_interest` FOREIGN KEY (`interestLevelId`)
         REFERENCES `InterestLevels` (`interestLevelId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `user_intlevel_interest` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_intlevel_interest` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -446,13 +476,13 @@ DROP TABLE IF EXISTS `LanguageInterests`;
 CREATE TABLE `LanguageInterests` (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `languageId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     PRIMARY KEY (id),
 	CONSTRAINT `language_interest` FOREIGN KEY (`languageId`)
         REFERENCES `Languages` (`languageId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `user_language_interest` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_language_interest` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -510,14 +540,14 @@ DROP TABLE IF EXISTS `EBookHolds`;
 CREATE TABLE `EBookHolds` (
 	`eBookOnHoldId` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
 	`positionInQueue` INT NOT NULL,
     PRIMARY KEY (eBookOnHoldId),
     CONSTRAINT `ebook_hold` FOREIGN KEY (`eBookId`)
         REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `user_hold` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+	CONSTRAINT `user_hold` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -579,12 +609,12 @@ DROP TABLE IF EXISTS `BorrowedEBooks`;
 CREATE TABLE `BorrowedEBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     `dateExpires` DATE NOT NULL,
     `bookRating` DECIMAL,
     PRIMARY KEY (id),
-    CONSTRAINT `user_current_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_current_books` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT `ebook_current_books` FOREIGN KEY (`eBookId`)
         REFERENCES `EBooks` (`eBookId`)
@@ -601,12 +631,12 @@ DROP TABLE IF EXISTS `PastBookshelfEBooks`;
 CREATE TABLE `PastBookshelfEBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     `dateExpired` DATE NOT NULL,
     `bookRating` DECIMAL,
     PRIMARY KEY (id),
-    CONSTRAINT `user_past_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_past_books` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT `ebook_past_books` FOREIGN KEY (`eBookId`)
         REFERENCES `EBooks` (`eBookId`)
@@ -625,10 +655,10 @@ DROP TABLE IF EXISTS `WishlistEBooks`;
 CREATE TABLE `WishlistEBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
-    `userId` INT NOT NULL,
+    `regUserId` INT NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT `user_wishlist_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
+    CONSTRAINT `user_wishlist_books` FOREIGN KEY (`regUserId`)
+        REFERENCES `RegisteredUsers` (`regUserId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT `ebook_wishlist_books` FOREIGN KEY (`eBookId`)
         REFERENCES `EBooks` (`eBookId`)

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
@@ -74,16 +76,34 @@ public class AccountsController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
 	public String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
-		System.out.println("In Accounts Controller --> Trying to login user. ");
-		RegisteredUser currentUser = service.userCanSignIn(creds);
-		if(currentUser != null){
-			System.out.println("User " + currentUser.getAccountInfo().getFirstName() + " now signed in.");
-			currentUser.setCurrentEBooks(new HashSet<BorrowedEBook>());
-			currentUser.setWishlistEBooks(new HashSet<WishlistEBook>());
-			session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, currentUser);
-			return "success";
+		System.out.println("In Accounts Controller --> Trying to login user. ");	
+		AccountInfo currentUserAccountInfo = service.signInUser(creds);
+		
+		if(currentUserAccountInfo != null){
+			System.out.println("User " + currentUserAccountInfo.getFirstName() + " sign in.");
+			if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.REGISTERED_USER_TYPE)){
+				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is a registered user.");
+				RegisteredUser user = service.getSpecificUserFromAccountInfo(currentUserAccountInfo);
+				if(user != null){
+					user.setCurrentEBooks(new HashSet<BorrowedEBook>());
+					user.setWishlistEBooks(new HashSet<WishlistEBook>());
+					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
+					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
+					return "user";
+				}			
+			}
+			else if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.ADMIN_USER_TYPE)){
+				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is an admin.");		
+				Admin admin = service.getSpecificAdminFromAccountInfo(currentUserAccountInfo);
+				if(admin != null){
+					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, admin);
+					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
+					return "admin";
+				}	    
+			}		
 		}
-		return "failure";
+		System.out.println("Invalid user signin.");
+		return "signinfailure";
 
 	}
 	

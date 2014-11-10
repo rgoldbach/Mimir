@@ -1,20 +1,23 @@
 package com.mimir.library.model;
 
-import com.mimir.library.enums.AccountType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="Admins")
 public class Admin{
 
-	private Library library;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int adminId;
+
+	@OneToOne
+	@JoinColumn(name = "accountInfoId")
+	private AccountInfo accountInfo;
 	
-	public Admin(Library library) {
-		this.library = library;
-	}
-
-	public Library getLibrary() {
-		return library;
-	}
-	public void setLibrary(Library library) {
-		this.library = library;
-	}
-
 }

@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.LoginCredentials;
@@ -75,11 +77,31 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	}
 
 	@Override
-	public RegisteredUser userCanSignIn(LoginCredentials loginCreds) {
-		Criteria userSignInCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
-		userSignInCriteria.createAlias("registeredUser.loginCredentials", "loginCredentials");
+	public AccountInfo signInUser(LoginCredentials loginCreds) {
+		Criteria userSignInCriteria = getSession().createCriteria(AccountInfo.class, "account");
+		userSignInCriteria.createAlias("account.loginCredentials", "loginCredentials");
 		userSignInCriteria.add(Restrictions.eq("loginCredentials.email", loginCreds.getEmail()));
-		return (RegisteredUser) userSignInCriteria.uniqueResult();
+		userSignInCriteria.add(Restrictions.eq("loginCredentials.password", loginCreds.getPassword()));
+		return (AccountInfo) userSignInCriteria.uniqueResult();
+		/*Criteria userSignInCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
+		userSignInCriteria.createAlias("registeredUser.loginCredentials", "loginCredentials");
+		
+		return (RegisteredUser) userSignInCriteria.uniqueResult();*/
+	}
+
+	@Override
+	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
+		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
+		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
+		System.out.println("Account id = " + accountInfo.getAccountInfoId());
+		return (RegisteredUser) userCriteria.uniqueResult();
+	}
+
+	@Override
+	public Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo) {
+		Criteria userCriteria = getSession().createCriteria(Admin.class, "admin");
+		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
+		return (Admin) userCriteria.uniqueResult();
 	}
 
 	

@@ -1,4 +1,4 @@
-ju<!-- START MODALS -->
+<!-- START MODALS -->
 	<div class="modal fade" id="signInModal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -12,6 +12,9 @@ ju<!-- START MODALS -->
 					<form>
 						<fieldset>
 							<div class="form-group">
+								<span id="signInError" class="formerror"></span>
+							</div>
+							<div class="form-group">
 								<input id="email" class="form-control" placeholder="Email" name="email" type="email">
 							</div>
 							<div class="form-group">
@@ -24,7 +27,7 @@ ju<!-- START MODALS -->
 					</form>
 				</div>
 				<div class="modal-footer">
-					<a type="button" name='signin' class="btn btn-primary determineRole">Sign In</a>
+					<a href="javascript:void();" onclick='signInOrOut()' type="button" name='signin' class="btn btn-primary determineRole">Sign In</a>
 					<a href="admin" type="button" name='signin' class="btn btn-danger">Admin</a>
 					<a href="test" type="button" class="btn btn-success">Test</a>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

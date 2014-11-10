@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
-import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.TestLibrary;
  
@@ -52,9 +52,9 @@ public class BookController {
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		if(currentUser!=null){
-			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getLoginCredentials().getEmail());
+			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
 			TestLibrary tl = new TestLibrary();
-			BorrowedEBook rentedEBook = new BorrowedEBook(tl.getBookById(whichBook), currentUser);
+			BorrowedEBook rentedEBook = new BorrowedEBook(service.getSpecificBook(whichBook), currentUser);
 			if(currentUser.getCurrentEBooks()==null){
 				Set<BorrowedEBook> bookshelf = new HashSet<BorrowedEBook>();
 				bookshelf.add(rentedEBook);
@@ -76,9 +76,9 @@ public class BookController {
 	
 	@RequestMapping("/waitlist")
 	public String waitlistBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook){
+			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
 		System.out.println("Request to waitlist " + whichBook);
-		
+
 		//get book from service
 		
 		//add book to current users waitlist
@@ -91,9 +91,20 @@ public class BookController {
 	
 	@RequestMapping("/wishlist")
 	public String wishlistBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook){
+			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println("Request to wishtlist " + whichBook);
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		
+		WishlistEBook wishBook = new WishlistEBook(service.getSpecificBook(whichBook), currentUser);
+		if(currentUser.getWishlistEBooks()==null){
+			Set<WishlistEBook> wishlistBooks = new HashSet<WishlistEBook>();
+			wishlistBooks.add(wishBook);
+			currentUser.setWishlistEBooks(wishlistBooks);
+		}
+		else{
+			currentUser.addBookToWishlist(wishBook);
+		}
+		System.out.println(currentUser.getWishlistEBooks().size());
 		//get book from service
 		
 		//add book to current users waishist
