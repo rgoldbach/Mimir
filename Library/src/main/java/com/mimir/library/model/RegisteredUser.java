@@ -37,7 +37,7 @@ public class RegisteredUser{
 	private Set<LanguageInterest> languageInterests;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<BorrowedEBook> currentEBooks = null;
+	private Set<BorrowedEBook> currentEBooks;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<PastBorrowedEBook> pastEBooks;

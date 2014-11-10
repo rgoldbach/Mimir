@@ -85,9 +85,11 @@ public class AccountsController {
 				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is a registered user.");
 				RegisteredUser user = service.getSpecificUserFromAccountInfo(currentUserAccountInfo);
 				if(user != null){
+					user.setCurrentEBooks(new HashSet<BorrowedEBook>());
+					user.setWishlistEBooks(new HashSet<WishlistEBook>());
 					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
 					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
-					return "success";
+					return "user";
 				}			
 			}
 			else if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.ADMIN_USER_TYPE)){
@@ -96,11 +98,12 @@ public class AccountsController {
 				if(admin != null){
 					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, admin);
 					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
-					return "success";
+					return "admin";
 				}	    
 			}		
 		}
-		return "failure";
+		System.out.println("Invalid user signin.");
+		return "signinfailure";
 
 	}
 	

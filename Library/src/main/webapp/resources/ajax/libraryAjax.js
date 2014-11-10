@@ -91,44 +91,44 @@ function rateBook(){
   });	
 }
 
-$(document).ready(function() {
-    $('.determineRole').click(
-        function(event) {
-            event.preventDefault();
-            var url = $('.determineRole').attr('name');
-            var json = "";
-            if(url ===  "signin"){
-            	json = {
-		                "email" : $('#email').val(),
-		                "password" : $('#password').val()
-		        }
-            }
-            else{
-            	json = "";
-            }
-            $.ajax({
-                headers: { 
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
-                },
-                'url' : url,
-                'data' : JSON.stringify(json),
-                'type' : "POST",
-                'complete' : function(result) {
-                	if(result.status === 200){
-                		if(result.responseText === "signoutsuccess"){
-                			window.location.replace("/Library/");
-                		}
-                		else if(result.responseText === "signinfailure"){
-                			$('#.signInError').innterHtml('Invalid login information. Please try again.');
-                		}
-                		else{
-                			location.reload();  
-                		}
-                		
-                	}              	              	
-                }
-            });
-        return false;
-    });
-});
+function signInOrOut() {
+	
+    var url = $('.determineRole').attr('name');
+    var json = "";
+    if(url ===  "signin"){
+    	json = {
+                "email" : $('#email').val(),
+                "password" : $('#password').val()
+        };
+    }
+    else{
+    	json = "";
+    }
+    $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        'url' : url,
+        'data' : JSON.stringify(json),
+        'type' : "POST",
+        'complete' : function(result) {
+        	if(result.status === 200){
+        		if(result.responseText === "signoutsuccess"){
+        			window.location.replace("/Library/");
+        		}
+        		else if(result.responseText === "signinfailure"){
+        			$('#signInError').text("Invalid login information. Please try again.");
+        		}
+        		else if(result.responseText === "admin"){
+        			window.location.replace("/Library/admin/");
+        		}
+        		else{
+        			location.reload();  
+        		}
+        		
+        	}              	              	
+        }
+    });  
+    return false;
+}
