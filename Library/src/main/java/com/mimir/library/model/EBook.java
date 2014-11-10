@@ -41,5 +41,9 @@ public class EBook {
 	
 	@OneToMany(mappedBy = "eBook")
 	private Collection<EBookLicense> eBookLicenses;
+	
+	public EBook(Book book){
+		this.book = book;
+	}
 
 }

@@ -38,7 +38,7 @@ public class RegisteredUser{
 	private Set<LanguageInterest> languageInterests;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<BorrowedEBook> currentEBooks;
+	private Set<BorrowedEBook> currentEBooks = null;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<PastBorrowedEBook> pastEBooks;
@@ -136,6 +136,10 @@ public class RegisteredUser{
 
 	public void setWishlistEBooks(Set<WishlistEBook> wishlistEBooks) {
 		this.wishlistEBooks = wishlistEBooks;
+	}
+	
+	public void addBookToBookshelf(BorrowedEBook bookToBorrow){
+		currentEBooks.add(bookToBorrow);
 	}
 	
 }

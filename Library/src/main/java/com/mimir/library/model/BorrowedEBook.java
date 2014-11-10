@@ -41,6 +41,14 @@ public class BorrowedEBook {
 	private double bookRating;
 
 
+	
+	public BorrowedEBook(Book book, RegisteredUser user){
+		id = book.getBookId();
+		this.user = user;
+		eBook = new EBook(book);
+		
+	}
+	
 	public int getId() {
 		return id;
 	}

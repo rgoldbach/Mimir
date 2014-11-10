@@ -1,6 +1,9 @@
 package com.mimir.library.controller;
  
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Book;
-import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.service.TestLibrary;
  
 @Controller
@@ -42,8 +47,27 @@ public class BookController {
 	@RequestMapping(value ="/borrow")
 	@ResponseBody
 	public String borrowBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpServletRequest request){
-		System.out.println("Request to borrow " + whichBook);
+			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		if(currentUser!=null){
+			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getLoginCredentials().getEmail());
+			TestLibrary tl = new TestLibrary();
+			BorrowedEBook rentedEBook = new BorrowedEBook(tl.getBookById(whichBook), currentUser);
+			if(currentUser.getCurrentEBooks()==null){
+				System.out.println("TEst");
+				Set<BorrowedEBook> bookshelf = new HashSet<BorrowedEBook>();
+				bookshelf.add(rentedEBook);
+				currentUser.setCurrentEBooks(bookshelf);
+			}
+			else{
+				System.out.println("test");
+				currentUser.addBookToBookshelf(rentedEBook);
+			}
+			System.out.println(currentUser.getCurrentEBooks().size());
+			
+			
+		}
+
 		
 		//get book from service
 		

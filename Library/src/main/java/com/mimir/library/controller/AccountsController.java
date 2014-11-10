@@ -1,7 +1,7 @@
 package com.mimir.library.controller;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,8 +17,10 @@ import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.RegisteredUserService;
 
 @Controller
@@ -76,6 +78,8 @@ public class AccountsController {
 		RegisteredUser currentUser = service.userCanSignIn(creds);
 		if(currentUser != null){
 			System.out.println("User " + currentUser.getAccountInfo().getFirstName() + " now signed in.");
+			currentUser.setCurrentEBooks(new HashSet<BorrowedEBook>());
+			currentUser.setWishlistEBooks(new HashSet<WishlistEBook>());
 			session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, currentUser);
 			return "success";
 		}
