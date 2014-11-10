@@ -37,7 +37,7 @@ public class AccountsController {
 			ModelAndView mv = new ModelAndView("error");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView("library/account");
+		ModelAndView mv = new ModelAndView("library/newaccount");
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
 		
 		Book dummyBook = new Book();
