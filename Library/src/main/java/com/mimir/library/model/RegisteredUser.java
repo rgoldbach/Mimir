@@ -142,4 +142,8 @@ public class RegisteredUser{
 		currentEBooks.add(bookToBorrow);
 	}
 	
+	public void addBookToWishlist(WishlistEBook bookToAdd){
+		wishlistEBooks.add(bookToAdd);
+	}
+	
 }
