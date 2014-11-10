@@ -22,8 +22,8 @@ public class SignInTagHandler extends SimpleTagSupport {
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		
 		if(user != null){
-			out.println("<li><a href='account'>My Account</a></li>");
-			out.println("<li><a class='determineRole' name='signout' href='#'>Sign Out</a></li>");
+			out.println("<li><a href='account' data-step='1' data-intro='Click here to access and modify your account info'>My Account</a></li>");
+			out.println("<li><a class='determineRole' data-step='2' data-intro='Click here to sign out!' name='signout' href='#'>Sign Out</a></li>");
 			out.println("<li><a href='#' href='javascript:void(0);' onclick='javascript:introJs().start();'>Help</a></li>");
 		}
 		else{

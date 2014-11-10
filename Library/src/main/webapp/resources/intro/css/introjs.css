@@ -90,6 +90,7 @@ tr.introjs-showElement > th {
   left: -16px;
   z-index: 9999999999 !important;
   padding: 0px;
+  visibility: hidden;
   font-family: Arial, verdana, tahoma;
   font-size: 13px;
   font-weight: bold;

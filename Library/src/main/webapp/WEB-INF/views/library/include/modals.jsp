@@ -33,7 +33,7 @@ ju<!-- START MODALS -->
 		</div>
 	</div>
 
-	<div class="modal fade" id="bookModal" tabindex="-1">
+	<div class="modal" id="bookModal" tabindex="-1">
 		<div class="modal-dialog" id="bookModalDialog">
 			<div class="modal-content">
 				<div class="modal-header">
