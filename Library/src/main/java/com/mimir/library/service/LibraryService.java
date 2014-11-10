@@ -1,4 +1,4 @@
-package com.mimir.library.dao;
+package com.mimir.library.service;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
 
-public interface BookDao {
+public interface LibraryService {
 
 	void saveBook(Book book);
 	

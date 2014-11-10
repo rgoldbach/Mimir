@@ -17,7 +17,7 @@ public class EBook {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String bookTextFormatId;
+	private String eBookId;
 	
 	@OneToOne
 	@JoinColumn(name = "bookId")
@@ -42,8 +42,76 @@ public class EBook {
 	@OneToMany(mappedBy = "eBook")
 	private Collection<EBookLicense> eBookLicenses;
 	
+	public EBook(){
+		
+	}
+	
 	public EBook(Book book){
+		this.setBook(book);
+	}
+
+	public String geteBookId() {
+		return eBookId;
+	}
+
+	public void seteBookId(String eBookId) {
+		this.eBookId = eBookId;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public EBookPublisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(EBookPublisher publisher) {
+		this.publisher = publisher;
+	}
+
+	public EBookRating getBookRating() {
+		return bookRating;
+	}
+
+	public void setBookRating(EBookRating bookRating) {
+		this.bookRating = bookRating;
+	}
+
+	public Collection<EBookOnHold> getBooksOnHold() {
+		return booksOnHold;
+	}
+
+	public void setBooksOnHold(Collection<EBookOnHold> booksOnHold) {
+		this.booksOnHold = booksOnHold;
+	}
+
+	public Collection<EBookFormat> geteBookFormats() {
+		return eBookFormats;
+	}
+
+	public void seteBookFormats(Collection<EBookFormat> eBookFormats) {
+		this.eBookFormats = eBookFormats;
+	}
+
+	public Collection<EBookLanguage> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(Collection<EBookLanguage> languages) {
+		this.languages = languages;
+	}
+
+	public Collection<EBookLicense> geteBookLicenses() {
+		return eBookLicenses;
+	}
+
+	public void seteBookLicenses(Collection<EBookLicense> eBookLicenses) {
+		this.eBookLicenses = eBookLicenses;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="EBookRatings")
@@ -15,7 +16,7 @@ public class EBookRating extends BookRating{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int bookRatingId;
+	private int eBookRatingId;
 	
 	@OneToOne
 	@JoinColumn(name = "eBookId")
@@ -27,6 +28,7 @@ public class EBookRating extends BookRating{
 	@Column(name = "sumOfRatings")
 	private double sumOfRatings;
 	
+	@Transient
 	private double rating;
 	
 	public EBookRating(){
@@ -54,14 +56,17 @@ public class EBookRating extends BookRating{
 		addToSumOfRatings(rating);
 		rating = sumOfRatings / numberOfRatings;
 	}
-	public int getBookRatingId() {
-		return bookRatingId;
-	}
 	public EBook geteBook() {
 		return eBook;
 	}
 	public void seteBook(EBook eBook) {
 		this.eBook = eBook;
+	}
+	public int geteBookRatingId() {
+		return eBookRatingId;
+	}
+	public void seteBookRatingId(int eBookRatingId) {
+		this.eBookRatingId = eBookRatingId;
 	}
 	
 }

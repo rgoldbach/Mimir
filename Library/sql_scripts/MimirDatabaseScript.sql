@@ -11,6 +11,45 @@
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `RegisteredUsers`;
+DROP TABLE IF EXISTS `LoginCreds`;
+DROP TABLE IF EXISTS `UserAccountInfo`;
+DROP TABLE IF EXISTS `AccountInfo`;
+DROP TABLE IF EXISTS `Authors`;
+DROP TABLE IF EXISTS `AwardInfo`;
+DROP TABLE IF EXISTS `AuthorAwards`;
+DROP TABLE IF EXISTS `Books`;
+DROP TABLE IF EXISTS `BookAwards`;
+DROP TABLE IF EXISTS `BorrowedBooks`;
+DROP TABLE IF EXISTS `BookshelfBooks`;
+DROP TABLE IF EXISTS `PastBookshelfBooks`;
+DROP TABLE IF EXISTS `OnHoldBooks`;
+DROP TABLE IF EXISTS `WishlistBooks`;
+DROP TABLE IF EXISTS `BookDisplayInfo`;
+DROP TABLE IF EXISTS `Genres`;
+DROP TABLE IF EXISTS `GenreInterests`;
+DROP TABLE IF EXISTS `BookGenres`;
+DROP TABLE IF EXISTS `InterestLevels`;
+DROP TABLE IF EXISTS `InterestLevelInterests`;
+DROP TABLE IF EXISTS `BookInterestLevels`;
+DROP TABLE IF EXISTS `Publishers`;
+DROP TABLE IF EXISTS `EBookPublishers`;
+DROP TABLE IF EXISTS `BookTextPublishers`;
+DROP TABLE IF EXISTS `BookFormats`;
+DROP TABLE IF EXISTS `BookTextFormats`;
+DROP TABLE IF EXISTS `BookEBookFormats`;
+DROP TABLE IF EXISTS `Formats`;
+DROP TABLE IF EXISTS `TextFormats`;
+DROP TABLE IF EXISTS `EBookFormats`;
+DROP TABLE IF EXISTS `Languages`;
+DROP TABLE IF EXISTS `LanguageInterests`;
+DROP TABLE IF EXISTS `BookLanguages`;
+DROP TABLE IF EXISTS `BookTextLanguages`;
+DROP TABLE IF EXISTS `BookTextRatings`;
+DROP TABLE IF EXISTS `BookTextHolds`;
+DROP TABLE IF EXISTS `DownloadSites`;
+DROP TABLE IF EXISTS `BookTextLicenses`;
+
+DROP TABLE IF EXISTS `RegisteredUsers`;
 CREATE TABLE `RegisteredUsers` (
     `userId` INT NOT NULL AUTO_INCREMENT,
     `libraryCard` VARCHAR(50) NOT NULL,
@@ -184,10 +223,10 @@ CREATE TABLE `BookDisplayInfo` (
 
 LOCK TABLES `BookDisplayInfo` WRITE;
 /*!40000 ALTER TABLE `BookDisplayInfo` DISABLE KEYS */;
-INSERT INTO `BookDisplayInfo` VALUES (1, 1, 'A Brief History Of Time', 'Description.', '2015-11-07', '/resources/img/TestImg1.jpg'), 
-									 (2, 2, 'The Giver', 'Description.', '2015-11-07', '/resources/img/TestImg2.jpg'),
-									 (3, 3, 'Game Of Thrones', 'Description.', '2015-11-07', '/resources/img/TestImg3.jpg'),
-									 (4, 4, 'Harry Potter And The Sorcerers Stone', 'Description.', '2015-11-07', '/resources/img/TestImg4.jpg');
+INSERT INTO `BookDisplayInfo` VALUES (1, 1, 'A Brief History Of Time', 'Description.', '2015-11-07', 'resources/img/TestImg1.jpg'), 
+									 (2, 2, 'The Giver', 'Description.', '2015-11-07', 'resources/img/TestImg2.jpg'),
+									 (3, 3, 'Game Of Thrones', 'Description.', '2015-11-07', 'resources/img/TestImg3.jpg'),
+									 (4, 4, 'Harry Potter And The Sorcerers Stone', 'Description.', '2015-11-07', 'resources/img/TestImg4.jpg');
 /*!40000 ALTER TABLE `BookDisplayInfo` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -30,8 +29,7 @@ public class Author {
 	@OneToMany(mappedBy = "author")
 	private Collection<AuthorAward> awards;
 	
-	@ManyToMany
-	@JoinColumn(name = "bookId")	
+	@ManyToMany(mappedBy = "authors")	
 	private Collection<Book> books;
 	
 	public Author(){

@@ -39,7 +39,7 @@ public class TestLibrary {
 		goneGirldbi.setTitle("Gone Girl");
 		goneGirldbi.setDescription("Marriage can be a real killer. One of the most critically acclaimed suspense writers of our time, New York Times bestseller Gillian Flynn takes that statement to its darkest place in this unputdownable masterpiece about a marriage gone terribly, terribly wrong. The Chicago Tribune proclaimed that her work “draws you in and keeps you reading with the force of a pure but nasty addiction.” Gone Girl’s toxic mix of sharp-edged wit and deliciously chilling prose creates a nerve-fraying thriller that confounds you at every turn. On a warm summer morning in North Carthage, Missouri, it is Nick and Amy Dunne’s fifth wedding anniversary. Presents are being wrapped and reservations are being m");
 		goneGirldbi.setImageFilePath("resources/img/TestImg8.jpg");
-		goneGirldbi.setBookDisplayId(1);
+		goneGirldbi.setBookDisplayId(5);
 		goneGirl.setBookDisplay(goneGirldbi);
 		library.add(goneGirl);
 		//faultInOurStars
@@ -54,7 +54,7 @@ public class TestLibrary {
 		faultInOurStarsdbi.setTitle("The Fault In Our Stars");
 		faultInOurStarsdbi.setDescription("Despite the tumor-shrinking medical miracle that has bought her a few years, Hazel has never been anything but terminal, her final chapter inscribed upon diagnosis. But when a gorgeous plot twist named Augustus Waters suddenly appears at Cancer Kid Support Group, Hazel’s story is about to be completely rewritten.");
 		faultInOurStarsdbi.setImageFilePath("resources/img/TestImg7.jpg");
-		faultInOurStarsdbi.setBookDisplayId(2);
+		faultInOurStarsdbi.setBookDisplayId(6);
 		faultInOurStars.setBookDisplay(faultInOurStarsdbi);
 		library.add(faultInOurStars);
 		//gameOfThrones
@@ -84,7 +84,7 @@ public class TestLibrary {
 		theGiverdbi.setTitle("The Giver");
 		theGiverdbi.setDescription("Soon to be a major motion picture, The Giver, the 1994 Newbery Medal winner, has become one of the most influential novels of our time. The haunting story centers on twelve-year-old Jonas, who lives in a seemingly ideal, if colorless, world of conformity and contentment. Not until he is given his life assignment as the Receiver of Memory does he begin to understand the dark, complex secrets behind his fragile community. Lois Lowry has written three companion novels to The Giver, including Gathering Blue, Messenger, and Son.");
 		theGiverdbi.setImageFilePath("resources/img/TestImg2.jpg");
-		theGiverdbi.setBookDisplayId(4);
+		theGiverdbi.setBookDisplayId(2);
 		theGiver.setBookDisplay(theGiverdbi);
 		library.add(theGiver);
 		
@@ -99,7 +99,7 @@ public class TestLibrary {
 		divergentdbi.setTitle("Divergent");
 		divergentdbi.setDescription("This first book in Veronica Roth's #1 New York Times bestselling Divergent trilogy is the novel that inspired the major motion picture starring Shailene Woodley, Theo James, and Kate Winslet. This dystopian series set in a futuristic Chicago has captured the hearts of millions of teen and adult readers. Perfect for fans of the Hunger Games and Maze Runner series, Divergent and its sequels, Insurgent and Allegiant—plus Four: A Divergent Collection, four stories told from the perspective of the character Tobias—are the gripping story of a dystopian world transformed by courage, self-sacrifice, and love. Fans of the Divergent movie will find the book packed with just as much emotional depth and exhilarating action as the film, all told in beautiful, rich language.");
 		divergentdbi.setImageFilePath("resources/img/TestImg9.jpg");
-		divergentdbi.setBookDisplayId(5);
+		divergentdbi.setBookDisplayId(7);
 		divergent.setBookDisplay(divergentdbi);
 		library.add(divergent);
 		
@@ -114,7 +114,7 @@ public class TestLibrary {
 		harryPotterdbi.setTitle("Harry Potter and the Sorcerer's Stone");
 		harryPotterdbi.setDescription("Harry Potter has never played a sport while flying on a broomstick. He's never worn a cloak of invisibility, befriended a giant, or helped hatch a dragon. All Harry knows is a miserable life with the Dursleys, his horrible aunt and uncle, and their abominable son, Dudley. Harry's room is a tiny closet at the foot of the stairs, and he hasn't had a birthday party in eleven years.But all that is about to change when a mysterious letter arrives by owl messenger: a letter with an invitation to a wonderful place he never dreamed existed. There he finds not only friends, aerial sports, and magic around every corner, but a great destiny that's been waiting for him...if Harry can survive the encounter.");
 		harryPotterdbi.setImageFilePath("resources/img/TestImg4.jpg");
-		harryPotterdbi.setBookDisplayId(6);
+		harryPotterdbi.setBookDisplayId(4);
 		harryPotter.setBookDisplay(harryPotterdbi);
 		library.add(harryPotter);
 		
@@ -129,7 +129,7 @@ public class TestLibrary {
 		unlucky13dbi.setTitle("Unlucky 13");
 		unlucky13dbi.setDescription("San Francisco Detective Lindsay Boxer is loving her life as a new mother. With an attentive husband, a job she loves, plus best friends who can talk about anything from sex to murder, things couldn't be better. Then the FBI sends Lindsay a photo of a killer from her past, and her happy world is shattered. The picture captures a beautiful woman at a stoplight. But all Lindsay sees is the psychopath behind those seductive eyes: Mackie Morales, the most deranged and dangerous mind the Women's Murder Club has ever encountered.");
 		unlucky13dbi.setImageFilePath("resources/img/TestAudioImg4.jpg");
-		unlucky13dbi.setBookDisplayId(7);
+		unlucky13dbi.setBookDisplayId(8);
 		unlucky13.setBookDisplay(unlucky13dbi);
 		library.add(unlucky13);
 		

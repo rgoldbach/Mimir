@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,13 +13,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.TestLibrary;
  
 @Controller
 public class BookController {
+	
+	@Autowired
+	LibraryService service;
+	
 	@RequestMapping("/book")
 	public ModelAndView showMessage(
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook) {
@@ -33,14 +40,9 @@ public class BookController {
 	public ModelAndView openBookModal(
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook){
 		System.out.println(whichBook);
-		ModelAndView mv = new ModelAndView("library/bookModal");
-		//dummy data final code will use whichBook to get book from service
-		
-		TestLibrary tl = new TestLibrary();
-		Book theBook = tl.getBookById(whichBook);
-		
-		
-		mv.addObject("book", theBook);
+		ModelAndView mv = new ModelAndView("library/bookModal");		
+		Book book = service.getSpecificBook(whichBook);		
+		mv.addObject("book", book);
 		return mv;
 	}
 	

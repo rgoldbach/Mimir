@@ -1,6 +1,7 @@
 package com.mimir.library.configuration;
 
 import javax.servlet.ServletContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
@@ -24,5 +25,6 @@ public class AppInitializer implements WebApplicationInitializer {
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
     }
+	
 	
 }
