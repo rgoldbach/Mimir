@@ -107,7 +107,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Authors`;
 CREATE TABLE `Authors` (
     `authorId` INT NOT NULL AUTO_INCREMENT,
-    `name` INT NOT NULL,
+    `name` VARCHAR(50) NOT NULL,
     `description` VARCHAR(50) NOT NULL,
     PRIMARY KEY (authorId)
 );
@@ -121,7 +121,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `AwardInfo`;
 CREATE TABLE `AwardInfo` (
     `awardId` INT NOT NULL AUTO_INCREMENT,
-    `title` INT NOT NULL,
+    `title` VARCHAR(50) NOT NULL,
     `description` VARCHAR(50) NOT NULL,
     `year` VARCHAR(4),
     PRIMARY KEY (awardId)
@@ -156,19 +156,34 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Books`;
 CREATE TABLE `Books` (
     `bookId` INT NOT NULL AUTO_INCREMENT,
-    `authorId` INT NOT NULL,
     `isbn` VARCHAR(50) NOT NULL,
     `seriesName` VARCHAR(50),
-    PRIMARY KEY (bookId),
-    CONSTRAINT `bookToAuthor` FOREIGN KEY (`authorId`)
-        REFERENCES `Authors` (`authorId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY (bookId)
 );
 
 LOCK TABLES `Books` WRITE;
 /*!40000 ALTER TABLE `Books` DISABLE KEYS */;
-INSERT INTO `Books` VALUES (1, 1, '9780553896923', null), (2, 2, '9780547345901', null), (3, 3, '9780739353370', 'A Song of Ice and Fire'), (4, 4, '9781781102527', 'Harry Potter');
+INSERT INTO `Books` VALUES (1, '9780553896923', null), (2, '9780547345901', null), (3,'9780739353370', 'A Song of Ice and Fire'), (4, '9781781102527', 'Harry Potter');
 /*!40000 ALTER TABLE `Books` ENABLE KEYS */;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `Authors_Books`;
+CREATE TABLE `Authors_Books` (
+    `bookId` INT NOT NULL AUTO_INCREMENT,
+    `authorId` INT NOT NULL,
+    PRIMARY KEY (bookId, authorId),
+    CONSTRAINT `author_book_map` FOREIGN KEY (`authorId`)
+        REFERENCES `Authors` (`authorId`)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT `book_author_map` FOREIGN KEY (`bookId`)
+        REFERENCES `Books` (`bookId`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+LOCK TABLES `Authors_Books` WRITE;
+/*!40000 ALTER TABLE `Authors_Books` DISABLE KEYS */;
+INSERT INTO `Authors_Books` VALUES (1, 1), (2, 2), (3, 3), (4, 4);
+/*!40000 ALTER TABLE `Authors_Books` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookAwards`;
@@ -265,9 +280,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookGenres`;
 CREATE TABLE `BookGenres` (
+	`bookGenreId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `genreId` INT NOT NULL,
-    PRIMARY KEY (bookId , genreId),
+    PRIMARY KEY (bookGenreId),
     CONSTRAINT `bookGenreDeterminedBy` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -278,7 +294,7 @@ CREATE TABLE `BookGenres` (
 
 LOCK TABLES `BookGenres` WRITE;
 /*!40000 ALTER TABLE `BookGenres` DISABLE KEYS */;
-INSERT INTO `BookGenres` VALUES (1, 1), (1, 2), (2, 3), (2, 4), (3, 5), (3, 6), (4, 5);
+INSERT INTO `BookGenres` VALUES (1, 1, 1), (2, 1, 2), (3, 2, 3), (4, 2, 4), (5, 3, 5), (6, 3, 6), (7, 4, 5);
 /*!40000 ALTER TABLE `BookGenres` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,9 +333,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `BookInterestLevels`;
 CREATE TABLE `BookInterestLevels` (
+	`bookInterestLevelId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `interestLevelId` INT NOT NULL,
-    PRIMARY KEY (bookId , interestLevelId),
+    PRIMARY KEY (bookInterestLevelId),
     CONSTRAINT `bookILDeterminedBy` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -330,7 +347,7 @@ CREATE TABLE `BookInterestLevels` (
 
 LOCK TABLES `BookInterestLevels` WRITE;
 /*!40000 ALTER TABLE `BookInterestLevels` DISABLE KEYS */;
-INSERT INTO `BookInterestLevels` VALUES (1, 1), (2, 2), (3, 1), (4, 3);
+INSERT INTO `BookInterestLevels` VALUES (1, 1, 1), (2, 2, 2), (3, 3, 1), (4, 4, 3);
 /*!40000 ALTER TABLE `BookInterestLevels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -470,11 +487,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `EBookRatings`;
 CREATE TABLE `EBookRatings` (
-	`bookRatingId` INT NOT NULL AUTO_INCREMENT,
+	`eBookRatingId` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
     `numberOfRatings` INT NOT NULL,
 	`sumOfRatings` DECIMAL NOT NULL,
-    PRIMARY KEY (bookRatingId),
+    PRIMARY KEY (eBookRatingId),
     CONSTRAINT `bookFormatRatingDeterminedBy` FOREIGN KEY (`eBookId`)
         REFERENCES `EBooks` (`eBookId`)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -603,24 +620,6 @@ INSERT INTO `PastBookshelfEBooks` VALUES (1, 4, 1, '2015-09-09', null), (2, 3, 1
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `OnHoldEBooks`;
-/*CREATE TABLE `OnHoldEBooks` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `eBookId` INT NOT NULL,
-    `userId` INT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `user_hold_books` FOREIGN KEY (`userId`)
-        REFERENCES `RegisteredUsers` (`userId`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT `ebook_hold_books` FOREIGN KEY (`eBookId`)
-        REFERENCES `EBooks` (`eBookId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-LOCK TABLES `OnHoldEBooks` WRITE;
-/*!40000 ALTER TABLE `OnHoldEBooks` DISABLE KEYS */;
-/*INSERT INTO `OnHoldEBooks` VALUES (1, 3, 1), (2, 4, 1), (3, 1, 1), (4, 2, 2);
-/*!40000 ALTER TABLE `OnHoldEBooks` ENABLE KEYS */;
-/*UNLOCK TABLES;*/
 
 DROP TABLE IF EXISTS `WishlistEBooks`;
 CREATE TABLE `WishlistEBooks` (
@@ -640,6 +639,98 @@ LOCK TABLES `WishlistEBooks` WRITE;
 /*!40000 ALTER TABLE `WishlistEBooks` DISABLE KEYS */;
 INSERT INTO `WishlistEBooks` VALUES (1, 2, 1), (2, 1, 1), (3, 4, 1), (4, 3, 2);
 /*!40000 ALTER TABLE `WishlistEBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+/* MORE DATA ************************************************************************************************************************************* */
+
+LOCK TABLES `Authors` WRITE;
+/*!40000 ALTER TABLE `Authors` DISABLE KEYS */;
+INSERT INTO `Authors` VALUES (5, 'Gillian Flynn', 'Description would be here.'), (6, 'John Green', 'Description would go here.'), (7, 'Veronica Roth', 'Description would go here.'), (8, 'James Patterson', 'Description would go here.');
+/*!40000 ALTER TABLE `Authors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `Books` WRITE;
+/*!40000 ALTER TABLE `Books` DISABLE KEYS */;
+INSERT INTO `Books` VALUES (5, '9781299008069', null), (6, '9780307588364', null), (7, '9781410450951', null), (8, '9780297859390', null);
+/*!40000 ALTER TABLE `Books` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `Authors_Books` WRITE;
+/*!40000 ALTER TABLE `Authors_Books` DISABLE KEYS */;
+INSERT INTO `Authors_Books` VALUES (5, 5), (6, 6), (7, 7), (8, 8);
+/*!40000 ALTER TABLE `Authors_Books` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `BookDisplayInfo` WRITE;
+/*!40000 ALTER TABLE `BookDisplayInfo` DISABLE KEYS */;
+INSERT INTO `BookDisplayInfo` VALUES (5, 5, 'Gone Girl', 'Marriage can be a real killer. One of the most critically acclaimed suspense writers of our time, New York Times bestseller Gillian Flynn takes that statement to its darkest place in this unputdownable masterpiece about a marriage gone terribly, terribly wrong. The Chicago Tribune proclaimed that her work “draws you in and keeps you reading with the force of a pure but nasty addiction.” Gone Girl’s toxic mix of sharp-edged wit and deliciously chilling prose creates a nerve-fraying thriller that confounds you at every turn. On a warm summer morning in North Carthage, Missouri, it is Nick and Amy Dunne’s fifth wedding anniversary. Presents are being wrapped and reservations are being m.', '2015-11-07', 'resources/img/TestImg8.jpg'), 
+									 (6, 6, 'The Fault In Our Stars', 'Despite the tumor-shrinking medical miracle that has bought her a few years, Hazel has never been anything but terminal, her final chapter inscribed upon diagnosis. But when a gorgeous plot twist named Augustus Waters suddenly appears at Cancer Kid Support Group, Hazel’s story is about to be completely rewritten.', '2015-11-07', 'resources/img/TestImg7.jpg'),
+									 (7, 7, 'Divergent', 'This first book in Veronica Roths #1 New York Times bestselling Divergent trilogy is the novel that inspired the major motion picture starring Shailene Woodley, Theo James, and Kate Winslet. This dystopian series set in a futuristic Chicago has captured the hearts of millions of teen and adult readers. Perfect for fans of the Hunger Games and Maze Runner series, Divergent and its sequels, Insurgent and Allegiant—plus Four: A Divergent Collection, four stories told from the perspective of the character Tobias—are the gripping story of a dystopian world transformed by courage, self-sacrifice, and love. Fans of the Divergent movie will find the book packed with just as much emotional depth and exhilarating action as the film, all told in beautiful, rich language.', '2015-11-07', 'resources/img/TestImg9.jpg'),
+									 (8, 8, 'Unlucky 13', 'San Francisco Detective Lindsay Boxer is loving her life as a new mother. With an attentive husband, a job she loves, plus best friends who can talk about anything from sex to murder, things couldnt be better. Then the FBI sends Lindsay a photo of a killer from her past, and her happy world is shattered. The picture captures a beautiful woman at a stoplight. But all Lindsay sees is the psychopath behind those seductive eyes: Mackie Morales, the most deranged and dangerous mind the Womens Murder Club has ever encountered..', '2015-11-07', 'resources/img/TestAudioImg4.jpg');
+/*!40000 ALTER TABLE `BookDisplayInfo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `Genres` WRITE;
+/*!40000 ALTER TABLE `Genres` DISABLE KEYS */;
+INSERT INTO `Genres` VALUES (7, 'Mystery'), (8, 'Romance'), (9, 'Action'), (10, 'Comedy');
+/*!40000 ALTER TABLE `Genres` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `BookGenres` WRITE;
+/*!40000 ALTER TABLE `BookGenres` DISABLE KEYS */;
+INSERT INTO `BookGenres` VALUES (8, 5, 7), (9, 6, 8), (10, 7, 9), (11, 8, 10);
+/*!40000 ALTER TABLE `BookGenres` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `BookInterestLevels` WRITE;
+/*!40000 ALTER TABLE `BookInterestLevels` DISABLE KEYS */;
+INSERT INTO `BookInterestLevels` VALUES (5, 5, 1), (6, 6, 2), (7, 7, 3), (8, 8, 1);
+/*!40000 ALTER TABLE `BookInterestLevels` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `EBooks` WRITE;
+/*!40000 ALTER TABLE `EBooks` DISABLE KEYS */;
+INSERT INTO `EBooks` VALUES (5, 5, 3), 
+								 (6, 6, 3), 
+								 (7, 7, 3),
+								 (8, 8, 3);
+/*!40000 ALTER TABLE `EBooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `EBookFormats` WRITE;
+/*!40000 ALTER TABLE `EBookFormats` DISABLE KEYS */;
+INSERT INTO `EBookFormats` VALUES (7, 5, 1, '2012-05-04', null),
+								 (8, 6, 1, '2005-05-05', null),
+								 (9, 7, 1, '2008-10-31', null),
+								 (10, 8, 1, '2002-03-29', null);
+/*!40000 ALTER TABLE `EBookFormats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `EBookLanguages` WRITE;
+/*!40000 ALTER TABLE `EBookLanguages` DISABLE KEYS */;
+INSERT INTO `EBookLanguages` VALUES (9, 5, 1),
+								   (10, 6, 1),
+								   (11, 7, 1), 
+								   (12, 8, 1);
+/*!40000 ALTER TABLE `EBookLanguages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `EBookRatings` WRITE;
+/*!40000 ALTER TABLE `EBookRatings` DISABLE KEYS */;
+INSERT INTO `EBookRatings` VALUES (5, 5, 5, 20),
+								     (6, 6, 4, 15), 
+							 	     (7, 7, 3, 10), 
+								     (8, 8, 5, 20);
+/*!40000 ALTER TABLE `EBookRatings` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `EBookLicenses` WRITE;
+/*!40000 ALTER TABLE `EBookLicenses` DISABLE KEYS */;
+INSERT INTO `EBookLicenses` VALUES   (5, 5, 1, 5),
+										(6, 6, 1, 10), 
+										(7, 7, 1, 15), 
+										(8, 8, 1, -1);
+/*!40000 ALTER TABLE `EBookLicenses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
