@@ -69,7 +69,8 @@ ju<!-- START MODALS -->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Library Card Number</label>
 							<div class="col-sm-5">
-								<input type="text" class="form-control" name="username"
+								<input type="text" class="form-control" name="libraryCardNumber"
+									placeholder="123456789"
 									data-bv-message="The library card number is not valid"
 									data-bv-notempty="true"
 									data-bv-notempty-message="The library card number is required and cannot be empty"
@@ -87,7 +88,7 @@ ju<!-- START MODALS -->
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="firstName"
-									placeholder="First name" data-bv-notempty="true"
+									placeholder="William" data-bv-notempty="true"
 									data-bv-notempty-message="The first name is required and cannot be empty" />
 							</div>
 						</div>
@@ -96,7 +97,7 @@ ju<!-- START MODALS -->
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="lastName"
-									placeholder="Last name" data-bv-notempty="true"
+									placeholder="Shakespeare" data-bv-notempty="true"
 									data-bv-notempty-message="The last name is required and cannot be empty" />
 							</div>
 						</div>
@@ -105,6 +106,7 @@ ju<!-- START MODALS -->
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
 								<input class="form-control" name="email" type="email"
+									placeholder="will@shakespeare.com"
 									data-bv-notempty="true"
 									data-bv-emailaddress="true"
 									data-bv-emailaddress-message="The input is not a valid email address" />
@@ -117,9 +119,6 @@ ju<!-- START MODALS -->
 								<input type="password" class="form-control" name="password"
 									data-bv-notempty="true"
 									data-bv-notempty-message="The password is required and cannot be empty"
-									data-bv-identical="true"
-									data-bv-identical-field="confirmPassword"
-									data-bv-identical-message="The password and its confirm are not the same"
 									data-bv-different="true" data-bv-different-field="username"
 									data-bv-different-message="The password cannot be the same as username" />
 							</div>
