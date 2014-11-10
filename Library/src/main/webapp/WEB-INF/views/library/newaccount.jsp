@@ -224,7 +224,7 @@
 							<label class="col-sm-3 control-label">Library Card Number</label>
 							<div class="col-sm-5">
 								<input type="text" class="form-control" name="libraryCardNumber"
-									placeholder="123456789"
+									value="<c:out value="${dummyLibraryCard}" />"
 									disabled />
 							</div>
 						</div>
@@ -233,7 +233,7 @@
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="firstName"
-									placeholder="William" />
+									value="William" />
 							</div>
 						</div>
 						
@@ -241,7 +241,7 @@
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="lastName"
-									placeholder="Shakespeare" />
+									value="Shakespeare" />
 							</div>
 						</div>
 
@@ -249,7 +249,7 @@
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
 								<input class="form-control" name="email" type="text"
-									placeholder="will@shakespeare.com"
+									value="<c:out value="${dummyEmail}" />"
 									data-bv-regexp="true" data-bv-regexp-regexp="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
 									data-bv-regexp-message="The input is not a valid email address" />
 							</div>
@@ -259,6 +259,7 @@
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-5">
 								<input type="password" class="form-control" name="password"
+									value="<c:out value="${dummyPassword}" />"
 									data-bv-different="true" data-bv-different-field="username"
 									data-bv-different-message="The password cannot be the same as username" />
 							</div>
@@ -269,7 +270,9 @@
 							<label class="col-sm-3 control-label">Confirm password</label>
 							<div class="col-sm-5">
 								<input type="password" class="form-control"
-									name="confirmPassword" data-bv-notempty="true"
+									name="confirmPassword" 
+									value="<c:out value="${dummyPassword}" />"
+									data-bv-notempty="true"
 									data-bv-notempty-message="The confirm password is required and cannot be empty"
 									data-bv-different="true" data-bv-different-field="username"
 									data-bv-different-message="The password cannot be the same as username" />

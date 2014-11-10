@@ -70,6 +70,11 @@ public class AccountsController {
 		dummyList.add(dummyInfo2);
 		
 		mv.addObject("dummyBooks", dummyList);
+		
+		mv.addObject("dummyLibraryCard", "957613468");
+		mv.addObject("dummyEmail", "william.shakespeare@msn.com");
+		mv.addObject("dummyPassword", "password");
+		
 		return mv;
 	}
 	
