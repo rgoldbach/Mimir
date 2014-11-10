@@ -55,7 +55,7 @@
 									</div>
 									<div class="form-group">
 		<!-- Subject Input -->
-										<label for="subject" class="col-sm-1 control-label">Subject:
+										<label for="subject" class="col-sm-1 control-label">Genre:
 										</label>
 										<div class="col-sm-5">
 											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
