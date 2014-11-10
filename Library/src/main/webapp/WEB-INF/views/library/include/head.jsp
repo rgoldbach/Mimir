@@ -20,6 +20,9 @@
 	<!-- Intro -->
 	<link href="<c:url value="/resources/intro/css/introjs.css" />" rel="stylesheet">
 	
+	<!-- BootstrapValidator -->
+	<link href="<c:url value="/resources/bootstrapValidator/css/bootstrapValidator.css" />" rel="stylesheet">
+	
 	<!-- Custom Library  -->
 	<link href="<c:url value="/resources/custom/library/css/library.css" />" rel="stylesheet"> 
 		

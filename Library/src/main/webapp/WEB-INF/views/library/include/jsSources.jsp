@@ -11,6 +11,9 @@
 	<!-- Intro -->
 	<script src="<c:url value="/resources/intro/js/intro.js" />"></script>
 	
+	<!-- bootstrapValidator -->
+	<script src="<c:url value="/resources/bootstrapValidator/js/bootstrapValidator.js" />"></script>
+	
 	<!-- Star-Rating -->
 	<script src="<c:url value="/resources/star-rating/js/star-rating.js"/>"></script>
 	
@@ -18,4 +21,9 @@
 	<!-- <script src="<c:url value="/resources/custom/library/js/library.js" />"></script> -->
 	
 	<script src="<c:url value="/resources/ajax/libraryAjax.js" />"></script>
+	
+	<script>
+		$(document).ready(function() {
+    	$('#registerForm').bootstrapValidator();});
+	</script>
 	

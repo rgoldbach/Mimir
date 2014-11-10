@@ -50,38 +50,100 @@ ju<!-- START MODALS -->
 		</div>
 	</div>
 
+	<!-- Register Modal -->
 	<div class="modal fade" id="registerModal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span>&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Register</h4>
-				</div>
-				<div class="modal-body">
-					<form>
-						<fieldset>
-							<div class="form-group">
-								<input class="form-control" placeholder="Library Card Number" name="LibNum" type="text">
+				<form id="registerForm" method="post" class="form-horizontal"
+					data-bv-message="This value is not valid"
+					data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+					data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+					data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title" id="registerModalLabel">Register Account</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Library Card Number</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" name="username"
+									data-bv-message="The library card number is not valid"
+									data-bv-notempty="true"
+									data-bv-notempty-message="The library card number is required and cannot be empty"
+									data-bv-regexp="true" data-bv-regexp-regexp="^[0-9]+$"
+									data-bv-regexp-message="The library card number consists of 9 numbers"
+									data-bv-stringlength="true" data-bv-stringlength-min="9"
+									data-bv-stringlength-max="9"
+									data-bv-stringlength-message="The library card number must be 9 characters long"
+									data-bv-different="true" data-bv-different-field="password"
+									data-bv-different-message="The library card number and password cannot be the same as each other" />
 							</div>
-							<div class="form-group">
-								<input class="form-control" placeholder="Email" name="email" type="email">
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label">First Name</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="firstName"
+									placeholder="First name" data-bv-notempty="true"
+									data-bv-notempty-message="The first name is required and cannot be empty" />
 							</div>
-							<div class="form-group">
-								<input class="form-control" placeholder="Password" name="password" type="password">
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Last Name</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="lastName"
+									placeholder="Last name" data-bv-notempty="true"
+									data-bv-notempty-message="The last name is required and cannot be empty" />
 							</div>
-							<div class="form-group">
-								<input class="form-control" placeholder="Retype Password" name="repassword" type="password">
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Email address</label>
+							<div class="col-sm-5">
+								<input class="form-control" name="email" type="email"
+									data-bv-notempty="true"
+									data-bv-emailaddress="true"
+									data-bv-emailaddress-message="The input is not a valid email address" />
 							</div>
-							
-						</fieldset>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Register</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Password</label>
+							<div class="col-sm-5">
+								<input type="password" class="form-control" name="password"
+									data-bv-notempty="true"
+									data-bv-notempty-message="The password is required and cannot be empty"
+									data-bv-identical="true"
+									data-bv-identical-field="confirmPassword"
+									data-bv-identical-message="The password and its confirm are not the same"
+									data-bv-different="true" data-bv-different-field="username"
+									data-bv-different-message="The password cannot be the same as username" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Retype password</label>
+							<div class="col-sm-5">
+								<input type="password" class="form-control"
+									name="confirmPassword" data-bv-notempty="true"
+									data-bv-notempty-message="The confirm password is required and cannot be empty"
+									data-bv-identical="true" data-bv-identical-field="password"
+									data-bv-identical-message="The password and its confirm are not the same"
+									data-bv-different="true" data-bv-different-field="username"
+									data-bv-different-message="The password cannot be the same as username" />
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Register</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

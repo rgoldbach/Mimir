@@ -13,6 +13,7 @@
 	</h1>
 </div>
 <div>
+	<h5><a href="register">Ajax Testing</a></h5>
 	<h3>Advanced Search</h3>
 	<h4>Using controller.TestPageController and model.AdvancedSearchForm</h4>
 	<h5>see http://examples.javacodegeeks.com/enterprise-java/spring/mvc/spring-mvc-dropdown-box-example/</h5>
