@@ -479,3 +479,20 @@ body {
     align:left;
     color:red;
 }
+
+.row
+{
+    padding-bottom:20px;
+}
+
+@font-face {
+    font-family: 'WebHostingHub-Glyphs';
+    src: url('../../../star-rating/fonts/webhostinghub-glyphs.eot');
+    src: url('../../../star-rating/fonts/webhostinghub-glyphs.eot?#iefix') format('embedded-opentype'),
+         url('../../../star-rating/fonts/webhostinghub-glyphs.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    -moz-font-feature-settings: "calt=0,liga=0";
+}
+[class^="icon-"], [class*=" icon-"] {font-family:'WebHostingHub-Glyphs';background:none;width:auto;height:auto;font-style:normal}
+.icon-viking:before{content:'\f379'}
