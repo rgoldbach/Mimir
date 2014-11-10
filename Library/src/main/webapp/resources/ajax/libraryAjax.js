@@ -119,6 +119,9 @@ $(document).ready(function() {
                 		if(result.responseText === "signoutsuccess"){
                 			window.location.replace("/Library/");
                 		}
+                		else if(result.responseText === "signinfailure"){
+                			$('#.signInError').innterHtml('Invalid login information. Please try again.');
+                		}
                 		else{
                 			location.reload();  
                 		}

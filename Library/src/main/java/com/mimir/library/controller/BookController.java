@@ -52,7 +52,7 @@ public class BookController {
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		if(currentUser!=null){
-			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getLoginCredentials().getEmail());
+			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
 			TestLibrary tl = new TestLibrary();
 			BorrowedEBook rentedEBook = new BorrowedEBook(tl.getBookById(whichBook), currentUser);
 			if(currentUser.getCurrentEBooks()==null){

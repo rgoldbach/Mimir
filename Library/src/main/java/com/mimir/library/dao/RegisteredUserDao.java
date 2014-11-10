@@ -2,6 +2,8 @@ package com.mimir.library.dao;
 
 import java.util.List;
 
+import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.LoginCredentials;
@@ -25,6 +27,8 @@ public interface RegisteredUserDao {
 	List<EBookOnHold> getWaitlistEBooksOfSpecificUser(int userId);
 	List<WishlistEBook> getWishlistEBooksOfSpecificUser(int userId);
 	
-	RegisteredUser userCanSignIn(LoginCredentials loginCreds);
+	AccountInfo signInUser(LoginCredentials loginCreds);
+	RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo);
+	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
 	
 }

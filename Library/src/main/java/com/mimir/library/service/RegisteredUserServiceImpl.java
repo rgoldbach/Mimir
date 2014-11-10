@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.dao.RegisteredUserDao;
+import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.LoginCredentials;
@@ -70,8 +72,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	}
 
 	@Override
-	public RegisteredUser userCanSignIn(LoginCredentials loginCreds) {
-		return dao.userCanSignIn(loginCreds);
+	public AccountInfo signInUser(LoginCredentials loginCreds) {
+		return dao.signInUser(loginCreds);
+	}
+
+	@Override
+	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
+		return dao.getSpecificUserFromAccountInfo(accountInfo);
+	}
+
+	@Override
+	public Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo) {
+		return dao.getSpecificAdminFromAccountInfo(accountInfo);
 	}
 
 }

@@ -12,6 +12,9 @@ ju<!-- START MODALS -->
 					<form>
 						<fieldset>
 							<div class="form-group">
+								<span id="signInError" class="formerror"></span>
+							</div>
+							<div class="form-group">
 								<input id="email" class="form-control" placeholder="Email" name="email" type="email">
 							</div>
 							<div class="form-group">

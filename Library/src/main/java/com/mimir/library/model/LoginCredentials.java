@@ -18,8 +18,8 @@ public class LoginCredentials {
 	private int loginId;
 	
 	@OneToOne
-	@JoinColumn(name = "userId")
-	private RegisteredUser user;
+	@JoinColumn(name = "accountInfoId")
+	private AccountInfo accountInfo;
 	
 	@Column(name = "email")
 	private String email;
@@ -29,14 +29,6 @@ public class LoginCredentials {
 	
 	public LoginCredentials(){
 		
-	}
-
-	public RegisteredUser getUser() {
-		return user;
-	}
-
-	public void setUser(RegisteredUser user) {
-		this.user = user;
 	}
 
 	public String getEmail() {
@@ -53,5 +45,15 @@ public class LoginCredentials {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public AccountInfo getAccountInfo() {
+		return accountInfo;
+	}
+
+
+	public void setAccountInfo(AccountInfo accountInfo) {
+		this.accountInfo = accountInfo;
 	}
 }

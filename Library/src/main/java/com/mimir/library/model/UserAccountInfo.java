@@ -11,22 +11,22 @@ import javax.persistence.Table;
 
 import com.mimir.library.enums.AccountType;
 
-@Entity
-@Table(name="UserAccountInfo")
+//@Entity
+//@Table(name="UserAccountInfo")
 public class UserAccountInfo{
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountInfoId;
 	
-	@OneToOne
-	@JoinColumn(name = "userId")
+	//@OneToOne
+	//@JoinColumn(name = "userId")
 	private RegisteredUser user;
 	
-	@Column(name = "firstName")
+	//@Column(name = "firstName")
 	private String firstName;
 	
-	@Column(name = "lastName")
+	//@Column(name = "lastName")
 	private String lastName;
 	
 	//private AccountType accountType;
