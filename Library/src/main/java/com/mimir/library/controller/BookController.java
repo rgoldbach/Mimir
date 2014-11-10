@@ -54,24 +54,17 @@ public class BookController {
 			TestLibrary tl = new TestLibrary();
 			BorrowedEBook rentedEBook = new BorrowedEBook(tl.getBookById(whichBook), currentUser);
 			if(currentUser.getCurrentEBooks()==null){
-				System.out.println("TEst");
 				Set<BorrowedEBook> bookshelf = new HashSet<BorrowedEBook>();
 				bookshelf.add(rentedEBook);
 				currentUser.setCurrentEBooks(bookshelf);
 			}
 			else{
-				System.out.println("test");
 				currentUser.addBookToBookshelf(rentedEBook);
 			}
 			System.out.println(currentUser.getCurrentEBooks().size());
 			
 			
 		}
-
-		
-		//get book from service
-		
-		//add book to current users bookshelf
 		
 		//return message
 		

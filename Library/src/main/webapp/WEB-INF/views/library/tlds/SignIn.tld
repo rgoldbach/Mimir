@@ -8,4 +8,9 @@
       <tag-class>com.mimir.library.customtags.SignInTagHandler</tag-class>
       <body-content>scriptless</body-content>
   </tag>
+  <tag>
+      <name>BookModal</name>
+      <tag-class>com.mimir.library.customtags.BookModalTagHandler</tag-class>
+      <body-content>scriptless</body-content>
+  </tag>
 </taglib>

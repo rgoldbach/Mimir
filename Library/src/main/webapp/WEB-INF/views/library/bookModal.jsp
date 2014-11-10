@@ -42,9 +42,7 @@
                     <br>
                     <h4>Rating</h4>  
                     <div id="controls">
-                        <input onclick="rateBook()" id="input-21b" value="0" type="number" class="rating" min=0 max=5 step=0.5 data-symbol="&#xF379" data-default-caption="{rating} helmets" data-star-captions="{}" data-size="sm">
-                        <button onclick = "borrowBook()" id="borrowBookButton" class="bg-primary btn-lg">Borrow</button>
-                        <button onclick= "wishlistBook()" id = "wishlistBookButton" class="bg-info btn-sm">Wishlist</button>
+                        <signin:BookModal />
                     </div>
                 </div>
 
