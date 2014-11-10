@@ -23,13 +23,13 @@ public class SignInTagHandler extends SimpleTagSupport {
 		
 		if(user != null){
 			out.println("<li><a href='account' data-step='1' data-intro='Click here to access and modify your account info'>My Account</a></li>");
-			out.println("<li><a onclick='signInOrOut(); 'class='determineRole' data-step='2' data-intro='Click here to sign out!' name='signout' href='#'>Sign Out</a></li>");
-			out.println("<li><a href='#' href='javascript:void(0);' onclick='javascript:introJs().start();'>Help</a></li>");
+			out.println("<li><a href='javascript:void(0);' onclick='signInOrOut();' 'class='determineRole' data-step='2' data-intro='Click here to sign out!' name='signout'>Sign Out</a></li>");
+			out.println("<li><a href='javascript:void(0);' onclick='javascript:introJs().start();'>Help</a></li>");
 		}
 		else{
-			out.println("<li><a href='#' data-step='1' data-intro='Click here to sign in!' data-toggle='modal' data-target='#signInModal'>Sign In</a></li>");
-			out.println("<li><a href='#' data-step='2' data-intro=\"Click here to register if you don't have an account!\" data-position='left' data-toggle='modal' data-target='#registerModal'>Register</a></li>");
-			out.println("<li><a href='#' href='javascript:void(0);' onclick='javascript:introJs().start();'>Help</a></li>");
+			out.println("<li><a href='javascript:void(0);' data-step='1' data-intro='Click here to sign in!' data-toggle='modal' data-target='#signInModal'>Sign In</a></li>");
+			out.println("<li><a href='javascript:void(0);' data-step='2' data-intro=\"Click here to register if you don't have an account!\" data-position='left' data-toggle='modal' data-target='#registerModal'>Register</a></li>");
+			out.println("<li><a href='javascript:void(0);' onclick='javascript:introJs().start();'>Help</a></li>");
 		}
 		
     }

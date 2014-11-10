@@ -28,7 +28,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 			out.println("<button onclick= 'wishlistBook()' id = 'wishlistBookButton' class='bg-info btn-sm'>Wishlist</button>");
 		}
 		else{
-			out.println("<button class='bg-primary btn-lg'>Log In Or Register To Borrow Book</button>");
+			out.println("<button data-toggle='modal' data-target='#signInModal' data-dismiss='modal' class='bg-primary btn-lg'>Log In Or Register To Borrow Book</button>");
 		}
 		
     }
