@@ -105,11 +105,11 @@ ju<!-- START MODALS -->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
-								<input class="form-control" name="email" type="email"
+								<input class="form-control" name="email" type="text"
 									placeholder="will@shakespeare.com"
 									data-bv-notempty="true"
-									data-bv-emailaddress="true"
-									data-bv-emailaddress-message="The input is not a valid email address" />
+									data-bv-regexp="true" data-bv-regexp-regexp="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
+									data-bv-regexp-message="The input is not a valid email address" />
 							</div>
 						</div>
 
