@@ -130,4 +130,8 @@ public class RegisteredUser{
 		this.accountInfo = accountInfo;
 	}
 	
+	public void addBookToWishlist(WishlistEBook bookToAdd){
+		wishlistEBooks.add(bookToAdd);
+	}
+	
 }

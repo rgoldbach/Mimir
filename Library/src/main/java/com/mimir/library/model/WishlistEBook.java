@@ -12,7 +12,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="WishlistEBooks")
 public class WishlistEBook {
-
+	
+	public WishlistEBook(){
+		
+	}
+	
+	public WishlistEBook(Book book, RegisteredUser user){
+		this.user = user;
+		eBook = new EBook(book);
+		id = book.getBookId();
+		
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

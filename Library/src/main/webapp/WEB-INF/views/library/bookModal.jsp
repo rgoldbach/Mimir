@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<%@ include file="/WEB-INF/views/library/include/head.jsp" %>
 
 <body>
 	<!-- Main Content -->
@@ -40,7 +39,6 @@
 						${book.bookDisplay.description}
                     </p>
                     <br>
-                    <h4>Rating</h4>  
                     <div id="controls">
                         <signin:BookModal />
                     </div>
