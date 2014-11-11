@@ -53,110 +53,116 @@
 					</div>
 		<!-- Holds -->
 					<div class="tab-pane col-md-11" id="tab_bookHolds">
-						<div class="row">
-						<div class="col-md-6">
 						<h1>Book Holds</h1>
 						<hr>
-						</div>
-						</div>
-						<div class="row">
-						<div class="col-md-12">
-						<h2>Available</h2>
-						<hr>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg3.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-success">Borrow</button>
-							<br>
-							<br>
-						</div>
-						</div>
-						<div class="row">
-						<div class="col-md-12">
-						<h2>Pending</h2>
-						<hr>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg6.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-danger">Remove</button>
-							<br>
-							<br>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg7.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-danger">Remove</button>
-							<br>
-							<br>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg4.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-danger">Remove</button>
-							<br>
-							<br>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg5.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-danger">Remove</button>
-							<br>
-							<br>
-						</div>
-						<div class="col-md-3">
-							<a href="#"> <img width="100px"
-								src="<c:url value="/resources/img/TestImg7.jpg" />">
-							</a>
-							<h4>
-								<a href="#">Title</a>
-							</h4>
-							<h5>
-								<a href="#">Author</a>
-							</h5>
-							<button class="btn btn-danger">Remove</button>
-							<br>
-							<br>
-						</div>
+						<div class="panel-group" id="holds">
+							<div class="panel panel-default">
+								<div class="panel-heading" id="available">
+									<h4 class="panel-title">
+										<a class="collapsed" data-toggle="collapse"
+											data-parent="#holds" href="#collapseAvailable"> Available
+											<span class="label label-success">1</span>
+										</a>
+									</h4>
+								</div>
+								<div id="collapseAvailable" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg3.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-success">Borrow</button>
+											<br> <br>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="panel-heading" id="pending">
+									<h4 class="panel-title">
+										<a class="collapsed" data-toggle="collapse"
+											data-parent="#holds" href="#collapsePending"> Pending </a>
+									</h4>
+								</div>
+								<div id="collapsePending" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg6.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-danger">Remove</button>
+											<br> <br>
+										</div>
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg7.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-danger">Remove</button>
+											<br> <br>
+										</div>
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg4.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-danger">Remove</button>
+											<br> <br>
+										</div>
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg5.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-danger">Remove</button>
+											<br> <br>
+										</div>
+										<div class="col-md-3">
+											<a href="#"> <img width="100px"
+												src="<c:url value="/resources/img/TestImg7.jpg" />">
+											</a>
+											<h4>
+												<a href="#">Title</a>
+											</h4>
+											<h5>
+												<a href="#">Author</a>
+											</h5>
+											<button class="btn btn-danger">Remove</button>
+											<br> <br>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-	<!-- Lists -->
+		<!-- Lists -->
 					<div class="tab-pane col-md-11" id="tab_bookLists">
 						<h1>Book Lists</h1>
 						<hr>
