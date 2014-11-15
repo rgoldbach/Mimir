@@ -230,7 +230,7 @@
 							<label class="col-sm-3 control-label">Library Card Number</label>
 							<div class="col-sm-5">
 								<input type="text" class="form-control" name="libraryCardNumber"
-									value="<c:out value="${dummyLibraryCard}" />"
+									value="<c:out value="${currentUser.libraryCardNumber}" />"
 									disabled />
 							</div>
 						</div>
@@ -239,7 +239,7 @@
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="firstName"
-									value="William" />
+									value=<c:out value="${currentUser.accountInfo.firstName}"/> />
 							</div>
 						</div>
 						
@@ -247,7 +247,7 @@
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="lastName"
-									value="Shakespeare" />
+									value=<c:out value="${currentUser.accountInfo.lastName}"/> />
 							</div>
 						</div>
 
@@ -255,7 +255,7 @@
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
 								<input class="form-control" name="email" type="text"
-									value="<c:out value="${dummyEmail}" />"
+									value="<c:out value="${currentUser.accountInfo.loginCredentials.email}" />"
 									data-bv-regexp="true" data-bv-regexp-regexp="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
 									data-bv-regexp-message="The input is not a valid email address" />
 							</div>
@@ -265,7 +265,7 @@
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-5">
 								<input type="password" class="form-control" name="password"
-									value="<c:out value="${dummyPassword}" />"
+									value="<c:out value="${currentUser.accountInfo.loginCredentials.password}" />"
 									data-bv-different="true" data-bv-different-field="username"
 									data-bv-different-message="The password cannot be the same as username" />
 							</div>
@@ -277,7 +277,7 @@
 							<div class="col-sm-5">
 								<input type="password" class="form-control"
 									name="confirmPassword" 
-									value="<c:out value="${dummyPassword}" />"
+									value="<c:out value="${currentUser.accountInfo.loginCredentials.password}" />"
 									data-bv-notempty="true"
 									data-bv-notempty-message="The confirm password is required and cannot be empty"
 									data-bv-different="true" data-bv-different-field="username"

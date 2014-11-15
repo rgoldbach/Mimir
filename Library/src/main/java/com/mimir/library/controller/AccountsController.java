@@ -16,13 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
-import com.mimir.library.model.Author;
-import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
+import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.RegisteredUserService;
 
 @Controller
@@ -30,6 +29,8 @@ public class AccountsController {
 	
 	@Autowired
     RegisteredUserService service;
+	@Autowired
+	LibraryService bookService;
 	
 	@RequestMapping("/account")
 	public ModelAndView showMessage(HttpSession session) {
@@ -39,7 +40,7 @@ public class AccountsController {
 		}
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
-		
+		/*
 		Book dummyBook = new Book();
 		Author dummyAuthor = new Author("Stephen Hawking", "I ARE SMART	");
 		ArrayList<Author> dummyAuthors = new ArrayList<Author>();
@@ -68,13 +69,18 @@ public class AccountsController {
 		dummyInfo2.setTitle("Dummy Title2");
 		dummyInfo2.setDescription("Dummy Description2...Yay TestingLayoutSpacingTestingLayoutSpacing\nTestingLayoutSpacingTestingLayoutSpacingTestingLayoutSpacing");
 		dummyList.add(dummyInfo2);
+		*/
+		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		HashSet<BorrowedEBook> books = (HashSet<BorrowedEBook>) currentUser.getCurrentEBooks();
+		for(BorrowedEBook book: books){
+			dummyList.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
+		}
 		
 		mv.addObject("dummyBooks", dummyList);
 		
 		mv.addObject("dummyLibraryCard", "957613468");
 		mv.addObject("dummyEmail", "william.shakespeare@msn.com");
 		mv.addObject("dummyPassword", "password");
-		
 		return mv;
 	}
 	

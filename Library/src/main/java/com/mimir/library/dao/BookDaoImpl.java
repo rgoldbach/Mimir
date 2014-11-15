@@ -96,7 +96,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	@Override
 	public BookDisplayableInformation getBookDisplay(int bookId) {
 		Criteria getBookDisplay = getSession().createCriteria(BookDisplayableInformation.class, "bookDisplayableInformation");
-		getBookDisplay.add(Restrictions.eq("bookId", bookId));
+		getBookDisplay.add(Restrictions.eq("bookDisplayId", bookId));
 		return (BookDisplayableInformation) getBookDisplay.uniqueResult();
 	}
 
