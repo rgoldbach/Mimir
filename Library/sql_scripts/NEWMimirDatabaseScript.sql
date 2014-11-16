@@ -440,7 +440,8 @@ CREATE TABLE `BorrowedEBooks` (
 );
 
 DROP TABLE IF EXISTS `PastBookshelfEBooks`;
-CREATE TABLE `PastBookshelfEBooks` (
+DROP TABLE IF EXISTS `PastBorrowedEBooks`;
+CREATE TABLE `PastBorrowedEBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `eBookId` INT NOT NULL,
     `regUserId` INT NOT NULL,
@@ -874,8 +875,8 @@ INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2015-09-09', null),
 									(4, 4, 2, '2015-09-09', null);
 UNLOCK TABLES;
 
-LOCK TABLES `PastBookshelfEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), BookRating */
-INSERT INTO `PastBookshelfEBooks` VALUES (1, 4, 1, '2015-09-09', null), 
+LOCK TABLES `PastBorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), BookRating */
+INSERT INTO `PastBorrowedEBooks` VALUES (1, 4, 1, '2015-09-09', null), 
 										 (2, 3, 1, '2015-09-09', null), 
 										 (3, 2, 1, '2015-09-09', 4), 
 										 (4, 1, 2, '2015-09-09', null);
