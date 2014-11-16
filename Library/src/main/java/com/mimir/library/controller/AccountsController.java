@@ -39,13 +39,20 @@ public class AccountsController {
 			return mv;
 		}
 		ModelAndView mv = new ModelAndView("library/newaccount");
-		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
+		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		HashSet<BorrowedEBook> books = (HashSet<BorrowedEBook>) currentUser.getCurrentEBooks();
 		for(BorrowedEBook book: books){
-			dummyList.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
+			bookshelfBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
 		}
-		mv.addObject("dummyBooks", dummyList);
+		mv.addObject("bookshelfBooks", bookshelfBooks);
+		
+		ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
+		HashSet<WishlistEBook> waitBooks = (HashSet<WishlistEBook>) currentUser.getWishlistEBooks();
+		for(WishlistEBook book: waitBooks){
+			wishlistBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
+		}
+		mv.addObject("wishlistBooks", wishlistBooks);
 		return mv;
 	}
 	

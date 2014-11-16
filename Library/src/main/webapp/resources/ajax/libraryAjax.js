@@ -15,8 +15,10 @@ function borrowBook(){
             xhr.setRequestHeader("Accept", "application/json");
             xhr.setRequestHeader("Content-Type", "application/json");
         },
-        success: function() {
-                     
+        complete: function(result) {
+        	$('#borrowBookButton').prop('disabled', true);
+        	$('#borrowBookButton').html("In Bookshelf");
+        	console.log("TEST");
         }
     });	
 }
@@ -38,8 +40,9 @@ function wishlistBook(){
           xhr.setRequestHeader("Accept", "application/json");
           xhr.setRequestHeader("Content-Type", "application/json");
       },
-      success: function() {
-                   
+      complete: function(result) {
+    		$('#wishlistBookButton').prop('disabled', true);
+          	$('#wishlistBookButton').html("In Wishlist");    	  
       }
   });	
 }

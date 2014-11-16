@@ -32,7 +32,7 @@
 						<h1>Bookshelf</h1>
 						<hr>
 						<div>
-							<c:forEach items="${dummyBooks}" var="element">
+							<c:forEach items="${bookshelfBooks}" var="element">
 								<div class="col-md-4">
 										<div>
 											<a href="#"> <img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> </a>
@@ -178,7 +178,18 @@
 									</div>
 									<div id="collapseWishlisted" class="panel-collapse collapse">
 										<div class="panel-body">
-											<i>You have not wishlisted any books.</i>
+											<c:forEach items="${wishlistBooks}" var="element">
+								<div class="col-md-4">
+										<div>
+											<a href="#"> <img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> </a>
+											<h3>
+												<a href="#"><c:out value="${element.getTitle()}" /></a>
+											</h3>
+											<button class="btn btn-danger">Remove</button>
+											<br>
+										</div>
+								</div>
+							</c:forEach>
 										</div>
 									</div>
 								</div>
