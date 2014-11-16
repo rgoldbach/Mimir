@@ -41,8 +41,11 @@ function wishlistBook(){
           xhr.setRequestHeader("Content-Type", "application/json");
       },
       complete: function(result) {
+    	console.log(result);
     		$('#wishlistBookButton').prop('disabled', true);
           	$('#wishlistBookButton').html("In Wishlist");    	  
+      
+    	
       }
   });	
 }

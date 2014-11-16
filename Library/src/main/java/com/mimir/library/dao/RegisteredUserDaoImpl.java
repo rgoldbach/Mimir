@@ -75,6 +75,17 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		return GlobalConstants.DAO_SUCCESS;
 		
 	}
+	
+	@Override
+	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook){
+		Query query = getSession().createSQLQuery("DELETE FROM BorrowedEBooks WHERE id = :id");
+		query.setLong("id", borrowedEBook.getId());
+		System.out.println("Debug: in removeBorrowedEBookOfSpecificUser");
+		System.out.println(query.toString());
+		query.executeUpdate();
+		return GlobalConstants.DAO_SUCCESS;
+		
+	}
 
 	//PAST BORROWED EBOOKS
 	@SuppressWarnings("unchecked")
@@ -149,6 +160,16 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		persist(wishlistEBook);
 		System.out.println("DEBUG: In saveWishlistEBookOfSpecificUser. WishlistEBook persisted!");
 		return GlobalConstants.DAO_SUCCESS;	
+	}
+	
+	@Override
+	public String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook){
+		Query query = getSession().createSQLQuery("DELETE FROM WishlistEBooks WHERE id = :id");
+		query.setLong("id", wishlistEBook.getId());
+		System.out.println("Debug: In removeWishlistEBooksOfSpecificUser");
+		System.out.println(query.toString());
+		query.executeUpdate();
+		return GlobalConstants.DAO_SUCCESS;
 	}
 
 	

@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
  
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,6 @@ import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.RegisteredUserService;
-import com.mimir.library.service.TestLibrary;
  
 @Controller
 public class BookController {
@@ -130,19 +130,34 @@ public class BookController {
 	}
 	
 	@RequestMapping("/return")
-	public String returnBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
+	public String returnBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		String message = GlobalConstants.DAO_SUCCESS;
 		System.out.println("Request to return book " + whichBook);
-		
-		
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		Set<BorrowedEBook> bookshelf =(Set<BorrowedEBook>) currentUser.getBorrowedEBooks();
+		BorrowedEBook bookToReturn = null;
+		for(BorrowedEBook book: bookshelf){
+			if(book.getEBook().getEBookId()==whichBook)
+				bookToReturn = book;
+		}
+		currentUser.removeFromBorrowedEBooks(bookToReturn);
+		message = userService.removeBorrowedEBookOfSpecificUser(bookToReturn);
 		return message;
 	}
 	
 	@RequestMapping("/removeFromWishlist")
-	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
+	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		String message = GlobalConstants.DAO_SUCCESS;
 		System.out.println("Request to remove wishlist book " + whichBook);
-		
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		Set<WishlistEBook> wishlistBooks = (Set<WishlistEBook>) currentUser.getWishlistEBooks();
+		WishlistEBook bookToRemove = null;
+		for(WishlistEBook book: wishlistBooks){
+			if(book.getEBook().getEBookId() == whichBook)
+				bookToRemove = book;
+		}
+		currentUser.removeFromWishlistEBooks(bookToRemove);
+		message = userService.removeWishlistEBookOfSpecificUser(bookToRemove);
 		
 		return message;
 	}

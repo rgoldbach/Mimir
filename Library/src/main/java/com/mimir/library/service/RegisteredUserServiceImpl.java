@@ -57,6 +57,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
 		return dao.saveBorrowedEBookOfSpecificUser(borrowedEBook);
 	}
+	@Override
+	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook){
+		return dao.removeBorrowedEBookOfSpecificUser(borrowedEBook);
+	}
 
 	//PAST BORROWED EBOOKS
 	@Override
@@ -90,6 +94,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	@Override
 	public String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook) {
 		return dao.saveWishlistEBookOfSpecificUser(wishlistEBook);
+	}
+	@Override
+	public String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook){
+		return dao.removeWishlistEBookOfSpecificUser(wishlistEBook);
 	}
 
 	//USER STUFF
