@@ -25,6 +25,7 @@ void saveRegisteredUser(RegisteredUser user);
 	//Borrowed EBooks
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);
 	String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
+	String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
 	
 	//Past Borrowed EBooks
 	List<PastBorrowedEBook> getPastBorrowedEBooksOfSpecificUser(RegisteredUser user);
@@ -38,6 +39,7 @@ void saveRegisteredUser(RegisteredUser user);
 	//Wish-list EBooks
 	List<WishlistEBook> getWishlistEBooksOfSpecificUser(RegisteredUser user);
 	String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook);
+	String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook);
 	
 	AccountInfo signInUser(LoginCredentials loginCreds);
 	RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo);

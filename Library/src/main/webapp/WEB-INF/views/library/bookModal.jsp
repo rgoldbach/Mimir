@@ -39,6 +39,7 @@
 						${book.bookDisplay.description}
                     </p>
                     <br>
+                    
                     <div id="controls">
                         <signin:BookModal />
                     </div>

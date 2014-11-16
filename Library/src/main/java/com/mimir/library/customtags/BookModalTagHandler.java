@@ -34,7 +34,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 			boolean inBookshelf = false;
 			boolean inWishlist = false;
 			for(BorrowedEBook testBook : bookshelf){
-				if(testBook.getId() == currentBook.getBookId())
+				if(testBook.getEBook().getBook().getBookId() == currentBook.getBookId())
 					inBookshelf = true;
 			}
 			for(WishlistEBook testBook : wishlistBooks){

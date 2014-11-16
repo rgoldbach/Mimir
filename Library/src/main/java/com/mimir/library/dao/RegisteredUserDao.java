@@ -25,6 +25,7 @@ public interface RegisteredUserDao {
 	//Borrowed EBooks
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);
 	String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
+	String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
 	
 	//Past Borrowed EBooks
 	List<PastBorrowedEBook> getPastBorrowedEBooksOfSpecificUser(RegisteredUser user);
@@ -38,6 +39,7 @@ public interface RegisteredUserDao {
 	//Wish-list EBooks
 	List<WishlistEBook> getWishlistEBooksOfSpecificUser(RegisteredUser user);
 	String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook);
+	String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook);
 	
 	
 	//Getting and Signing in specific Users

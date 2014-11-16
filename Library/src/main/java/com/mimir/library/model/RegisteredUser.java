@@ -137,4 +137,12 @@ public class RegisteredUser{
 		this.borrowedEBooks = borrowedEBooks;
 	}
 	
+	public void removeFromBorrowedEBooks(BorrowedEBook borrowedBook){
+		this.borrowedEBooks.remove(borrowedBook);
+	}
+	
+	public void removeFromWishlistEBooks(WishlistEBook wishlistBook){
+		this.wishlistEBooks.remove(wishlistBook);
+	}
+	
 }
