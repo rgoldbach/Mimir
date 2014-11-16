@@ -38,7 +38,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 					inBookshelf = true;
 			}
 			for(WishlistEBook testBook : wishlistBooks){
-				if(testBook.getId() == currentBook.getBookId())
+				if(testBook.getEBook().getBook().getBookId() == currentBook.getBookId())
 					inWishlist = true;
 			}
 			out.println("<h4>Rating</h4>");

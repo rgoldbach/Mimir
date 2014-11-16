@@ -62,6 +62,8 @@ public class BookController {
 			message = userService.saveBorrowedEBookOfSpecificUser(rentedEBook);
 			if(message.equals(GlobalConstants.DAO_SUCCESS)){
 				//Borrowed EBook persisted...
+				//adds book for  current session
+				currentUser.addBookToBookshelf(rentedEBook);
 			}
 			else{
 				//Borrowed EBook not persisted...
@@ -98,6 +100,7 @@ public class BookController {
 		message = userService.saveWishlistEBookOfSpecificUser(wishBook);
 		System.out.println(currentUser.getWishlistEBooks().size());
 		if(message.equals(GlobalConstants.DAO_SUCCESS)){
+			currentUser.addBookToWishlist(wishBook);
 			//Wish-list EBook persisted...
 		}
 		else{

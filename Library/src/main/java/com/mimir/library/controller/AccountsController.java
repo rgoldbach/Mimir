@@ -50,7 +50,7 @@ public class AccountsController {
 		ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
 		Set<WishlistEBook> waitBooks = currentUser.getWishlistEBooks();
 		for(WishlistEBook book: waitBooks){
-			wishlistBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
+			wishlistBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
 		}
 		mv.addObject("wishlistBooks", wishlistBooks);
 		return mv;
