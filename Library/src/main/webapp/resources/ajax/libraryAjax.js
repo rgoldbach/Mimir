@@ -135,3 +135,47 @@ function signInOrOut() {
     });  
     return false;
 }
+
+function returnBook(whichBook){
+	console.log(whichBook)
+	json = "";
+	$.ajax({
+	      url: "return?whichBook="+whichBook,
+	      data: json,
+	      type: "GET",
+	       
+	      beforeSend: function(xhr) {
+	          xhr.setRequestHeader("Accept", "application/json");
+	          xhr.setRequestHeader("Content-Type", "application/json");
+	      },
+	      complete: function(result) {
+	    	//removes book gui	 
+	    	// if successful
+	    	$('#bookshelfBook'+whichBook).remove();
+
+	      }
+	  });	
+}
+
+function removeFromWishlist(whichBook){
+	console.log(whichBook);
+	json = "";
+	$.ajax({
+	      url: "removeFromWishlist?whichBook="+whichBook,
+	      data: json,
+	      type: "GET",
+	       
+	      beforeSend: function(xhr) {
+	          xhr.setRequestHeader("Accept", "application/json");
+	          xhr.setRequestHeader("Content-Type", "application/json");
+	      },
+	      complete: function(result) {
+	    	//removes book gui	
+	    	//if successful
+	    	 console.log("wishlistBook"+whichBook);
+	    	$('#wishlistBook'+whichBook).remove();
+	      }
+	  });	
+	
+	
+}

@@ -100,6 +100,7 @@ public class BookController {
 		message = userService.saveWishlistEBookOfSpecificUser(wishBook);
 		System.out.println(currentUser.getWishlistEBooks().size());
 		if(message.equals(GlobalConstants.DAO_SUCCESS)){
+			//adds book for current session
 			currentUser.addBookToWishlist(wishBook);
 			//Wish-list EBook persisted...
 		}
@@ -126,6 +127,24 @@ public class BookController {
 		
 		return "temp";
 		
+	}
+	
+	@RequestMapping("/return")
+	public String returnBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
+		String message = GlobalConstants.DAO_SUCCESS;
+		System.out.println("Request to return book " + whichBook);
+		
+		
+		return message;
+	}
+	
+	@RequestMapping("/removeFromWishlist")
+	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
+		String message = GlobalConstants.DAO_SUCCESS;
+		System.out.println("Request to remove wishlist book " + whichBook);
+		
+		
+		return message;
 	}
 	
 	

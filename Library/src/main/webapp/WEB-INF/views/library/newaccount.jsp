@@ -33,7 +33,7 @@
 						<hr>
 						<div>
 							<c:forEach items="${bookshelfBooks}" var="element">
-								<div class="col-md-4">
+								<div id = "bookshelfBook${element.bookDisplayId}" class="col-md-4">
 										<div>
 											<a href="#"> <img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> </a>
 											<h3>
@@ -44,7 +44,7 @@
 											</h4>
 										
 											<!-- Rating -->
-											<button class="btn btn-danger">Return</button>
+											<button onclick = "returnBook(${element.bookDisplayId})"class="btn btn-danger">Return</button>
 											<br>
 										</div>
 								</div>
@@ -179,13 +179,17 @@
 									<div id="collapseWishlisted" class="panel-collapse collapse">
 										<div class="panel-body">
 											<c:forEach items="${wishlistBooks}" var="element">
-								<div class="col-md-4">
+								<div id = "wishlistBook${element.bookDisplayId}" class="col-md-4">
 										<div>
-											<a href="#"> <img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> </a>
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}"> 
+												<img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> 
+											</a>
 											<h3>
-												<a href="#"><c:out value="${element.getTitle()}" /></a>
+												<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}">
+													<c:out value="${element.getTitle()}" />
+												</a>
 											</h3>
-											<button class="btn btn-danger">Remove</button>
+											<button onclick="removeFromWishlist(${element.bookDisplayId})" btn btn-danger">Remove</button>
 											<br>
 										</div>
 								</div>

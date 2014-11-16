@@ -43,7 +43,7 @@ public class AccountsController {
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		Set<BorrowedEBook> books = currentUser.getBorrowedEBooks();
 		for(BorrowedEBook book: books){
-			bookshelfBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
+			bookshelfBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
 		}
 		mv.addObject("bookshelfBooks", bookshelfBooks);
 		
