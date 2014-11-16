@@ -38,10 +38,11 @@ public class BookController {
 	
 	@RequestMapping("/bookModal")
 	public ModelAndView openBookModal(
-			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook){
+			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println(whichBook);
 		ModelAndView mv = new ModelAndView("library/bookModal");		
 		Book book = service.getSpecificBook(whichBook);		
+		session.setAttribute("viewBook", book);
 		mv.addObject("book", book);
 		return mv;
 	}
@@ -51,6 +52,7 @@ public class BookController {
 	public String borrowBook(
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		String message = "success";		
 		if(currentUser!=null){
 			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
 			TestLibrary tl = new TestLibrary();
@@ -61,7 +63,13 @@ public class BookController {
 				currentUser.setCurrentEBooks(bookshelf);
 			}
 			else{
-				currentUser.addBookToBookshelf(rentedEBook);
+				HashSet<BorrowedEBook> bookshelf = (HashSet) currentUser.getCurrentEBooks();
+				for(BorrowedEBook book: bookshelf){
+					if(book.getId()==whichBook)
+						message="failure";
+				}
+				if(!message.equals("failure"))
+					currentUser.addBookToBookshelf(rentedEBook);
 			}
 			System.out.println(currentUser.getCurrentEBooks().size());
 			
@@ -70,7 +78,7 @@ public class BookController {
 		
 		//return message
 		
-		return "temp";
+		return message;
 		
 	}
 	
@@ -93,8 +101,8 @@ public class BookController {
 	public String wishlistBook(
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println("Request to wishtlist " + whichBook);
+		String message = "success";
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		
 		WishlistEBook wishBook = new WishlistEBook(service.getSpecificBook(whichBook), currentUser);
 		if(currentUser.getWishlistEBooks()==null){
 			Set<WishlistEBook> wishlistBooks = new HashSet<WishlistEBook>();
@@ -102,7 +110,13 @@ public class BookController {
 			currentUser.setWishlistEBooks(wishlistBooks);
 		}
 		else{
-			currentUser.addBookToWishlist(wishBook);
+			HashSet<WishlistEBook> wishlistBooks = (HashSet<WishlistEBook>) currentUser.getWishlistEBooks();
+			for(WishlistEBook testBook : wishlistBooks){
+				if(testBook.getId() == whichBook)
+					message = "failure";
+			}
+			if(!message.equals("failure"))
+				currentUser.addBookToWishlist(wishBook);
 		}
 		System.out.println(currentUser.getWishlistEBooks().size());
 		//get book from service

@@ -40,47 +40,12 @@ public class AccountsController {
 		}
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		ArrayList<BookDisplayableInformation> dummyList = new ArrayList<BookDisplayableInformation>();
-		/*
-		Book dummyBook = new Book();
-		Author dummyAuthor = new Author("Stephen Hawking", "I ARE SMART	");
-		ArrayList<Author> dummyAuthors = new ArrayList<Author>();
-		dummyAuthors.add(dummyAuthor);
-		dummyBook.setAuthors(dummyAuthors);
-		BookDisplayableInformation dummyInfo = new BookDisplayableInformation();
-		//dummyInfo.setAuthor(new Author("Dummy Author", "Likes to write books"));
-		//dummyInfo.setBookId("Dummy Id");
-		dummyInfo.setImageFilePath("/Library/resources/img/TestImg1.jpg");
-		dummyInfo.setTitle("Dummy Title");
-		dummyInfo.setBook(dummyBook);
-		dummyInfo.setDescription("Dummy Description...");
-		dummyList.add(dummyInfo);
-		
-		
-		Book dummyBook2 = new Book();
-		Author dummyAuthor2 = new Author("Lois Lowry", "Wizards and stuff");
-		ArrayList<Author> dummyAuthors2 = new ArrayList<Author>();
-		dummyAuthors2.add(dummyAuthor2);
-		dummyBook2.setAuthors(dummyAuthors2);
-		BookDisplayableInformation dummyInfo2 = new BookDisplayableInformation();
-		//dummyInfo2.setAuthor(new Author("Dummy Author2", "Doesn't like to write books"));
-		//dummyInfo2.setBookId("Dummy Id2");
-		dummyInfo2.setBook(dummyBook2);
-		dummyInfo2.setImageFilePath("/Library/resources/img/TestImg2.jpg");
-		dummyInfo2.setTitle("Dummy Title2");
-		dummyInfo2.setDescription("Dummy Description2...Yay TestingLayoutSpacingTestingLayoutSpacing\nTestingLayoutSpacingTestingLayoutSpacingTestingLayoutSpacing");
-		dummyList.add(dummyInfo2);
-		*/
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		HashSet<BorrowedEBook> books = (HashSet<BorrowedEBook>) currentUser.getCurrentEBooks();
 		for(BorrowedEBook book: books){
 			dummyList.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
 		}
-		
 		mv.addObject("dummyBooks", dummyList);
-		
-		mv.addObject("dummyLibraryCard", "957613468");
-		mv.addObject("dummyEmail", "william.shakespeare@msn.com");
-		mv.addObject("dummyPassword", "password");
 		return mv;
 	}
 	
