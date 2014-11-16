@@ -1,7 +1,7 @@
 package com.mimir.library.customtags;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
@@ -28,8 +28,8 @@ public class BookModalTagHandler extends SimpleTagSupport {
 		
 
 		if(user != null){
-			HashSet<BorrowedEBook> bookshelf = (HashSet<BorrowedEBook>) user.getCurrentEBooks();
-			HashSet<WishlistEBook> wishlistBooks = (HashSet<WishlistEBook>) user.getWishlistEBooks();
+			Set<BorrowedEBook> bookshelf = user.getBorrowedEBooks();
+			Set<WishlistEBook> wishlistBooks = user.getWishlistEBooks();
 			Book currentBook = (Book)session.getAttribute("viewBook");
 			boolean inBookshelf = false;
 			boolean inWishlist = false;

@@ -15,6 +15,8 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.mimir.library.globalVariables.GlobalConstants;
+
 @Entity
 @Table(name="PastBorrowedEBooks")
 public class PastBorrowedEBook {
@@ -24,7 +26,7 @@ public class PastBorrowedEBook {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "regUserId")
 	private RegisteredUser user;
 	
 	@OneToOne
@@ -38,8 +40,16 @@ public class PastBorrowedEBook {
 	private LocalDate dateExpired;
 	
 	@Column(name = "bookRating")
-	private double bookRating;
+	private Double bookRating;
 
+	public PastBorrowedEBook(){}
+	
+	public PastBorrowedEBook(EBook eBook, RegisteredUser user){
+		//id = book.getBookId(); Not the same id, could cause an error
+		this.user = user;
+		this.eBook = eBook;	
+		this.dateExpired = new LocalDate();
+	}
 
 	public int getId() {
 		return id;
@@ -50,10 +60,10 @@ public class PastBorrowedEBook {
 	public void setDateExpired(LocalDate dateExpired) {
 		this.dateExpired = dateExpired;
 	}
-	public double getBookRating() {
+	public Double getBookRating() {
 		return bookRating;
 	}
-	public void setBookRating(double bookRating) {
+	public void setBookRating(Double bookRating) {
 		this.bookRating = bookRating;
 	}
 	public RegisteredUser getUser() {
@@ -62,11 +72,18 @@ public class PastBorrowedEBook {
 	public void setUser(RegisteredUser user) {
 		this.user = user;
 	}
-	public EBook geteBook() {
+	public EBook getEBook() {
 		return eBook;
 	}
-	public void seteBook(EBook eBook) {
+	public void setEBook(EBook eBook) {
 		this.eBook = eBook;
 	}
-	
+	@Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof BorrowedEBook)){
+            return false;
+        }
+        PastBorrowedEBook temp = (PastBorrowedEBook)obj;
+        return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
+    }
 }

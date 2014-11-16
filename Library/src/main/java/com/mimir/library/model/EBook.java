@@ -17,7 +17,7 @@ public class EBook {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String eBookId;
+	private int eBookId;
 	
 	@OneToOne
 	@JoinColumn(name = "bookId")
@@ -50,11 +50,11 @@ public class EBook {
 		this.setBook(book);
 	}
 
-	public String geteBookId() {
+	public int getEBookId() {
 		return eBookId;
 	}
 
-	public void seteBookId(String eBookId) {
+	public void setEBookId(int eBookId) {
 		this.eBookId = eBookId;
 	}
 

@@ -22,13 +22,28 @@ public interface RegisteredUserDao {
 	
 	RegisteredUser getSpecificUser(int id);
 	
-	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(int userId);
-	List<PastBorrowedEBook> getPastEBooksOfSpecificUser(int userId);
-	List<EBookOnHold> getWaitlistEBooksOfSpecificUser(int userId);
-	List<WishlistEBook> getWishlistEBooksOfSpecificUser(int userId);
+	//Borrowed EBooks
+	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);
+	String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
 	
+	//Past Borrowed EBooks
+	List<PastBorrowedEBook> getPastBorrowedEBooksOfSpecificUser(RegisteredUser user);
+	String savePastBorrowedEBookOfSpecificUser(PastBorrowedEBook pastBorrowedEBook);
+	
+	//On Hold EBooks
+	List<EBookOnHold> getOnHoldEBooksOfSpecificUser(RegisteredUser user);
+	String saveOnHoldEBookOfSpecificUser(EBookOnHold eBookOnHold);
+	List<EBookOnHold> getOnHoldEBooks(int eBookId);
+	
+	//Wish-list EBooks
+	List<WishlistEBook> getWishlistEBooksOfSpecificUser(RegisteredUser user);
+	String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook);
+	
+	
+	//Getting and Signing in specific Users
 	AccountInfo signInUser(LoginCredentials loginCreds);
 	RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo);
+	RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo);
 	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
 	
 }

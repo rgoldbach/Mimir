@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
@@ -96,6 +97,11 @@ public class LibraryServiceImpl implements LibraryService{
 	@Override
 	public BookDisplayableInformation getBookDisplay(int bookId) {
 		return dao.getBookDisplay(bookId);
+	}
+
+	@Override
+	public EBook getSpecificEBook(int bookId) {
+		return dao.getSpecificEBook(bookId);
 	}
 	
 }

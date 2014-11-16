@@ -37,13 +37,13 @@ public class RegisteredUser{
 	private Set<LanguageInterest> languageInterests;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<BorrowedEBook> currentEBooks;
+	private Set<BorrowedEBook> borrowedEBooks;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<PastBorrowedEBook> pastEBooks;
+	private Set<PastBorrowedEBook> pastBorrowedEBooks;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<EBookOnHold> onHoldEBooks;
+	private Set<EBookOnHold> eBookHolds;
 	
 	@OneToMany(mappedBy = "user")
 	private Set<WishlistEBook> wishlistEBooks;
@@ -86,30 +86,6 @@ public class RegisteredUser{
 		this.languageInterests = languageInterests;
 	}
 
-	public Set<BorrowedEBook> getCurrentEBooks() {
-		return currentEBooks;
-	}
-
-	public void setCurrentEBooks(Set<BorrowedEBook> currentEBooks) {
-		this.currentEBooks = currentEBooks;
-	}
-
-	public Set<PastBorrowedEBook> getPastEBooks() {
-		return pastEBooks;
-	}
-
-	public void setPastEBooks(Set<PastBorrowedEBook> pastEBooks) {
-		this.pastEBooks = pastEBooks;
-	}
-
-	public Set<EBookOnHold> getOnHoldEBooks() {
-		return onHoldEBooks;
-	}
-
-	public void setOnHoldEBooks(Set<EBookOnHold> onHoldEBooks) {
-		this.onHoldEBooks = onHoldEBooks;
-	}
-
 	public Set<WishlistEBook> getWishlistEBooks() {
 		return wishlistEBooks;
 	}
@@ -119,7 +95,7 @@ public class RegisteredUser{
 	}
 	
 	public void addBookToBookshelf(BorrowedEBook bookToBorrow){
-		currentEBooks.add(bookToBorrow);
+		borrowedEBooks.add(bookToBorrow);
 	}
 
 	public AccountInfo getAccountInfo() {
@@ -132,6 +108,33 @@ public class RegisteredUser{
 	
 	public void addBookToWishlist(WishlistEBook bookToAdd){
 		wishlistEBooks.add(bookToAdd);
+	}
+
+	public int getRegUserId() {
+		return regUserId;
+	}
+
+	public Set<PastBorrowedEBook> getPastBorrowedEBooks() {
+		return pastBorrowedEBooks;
+	}
+
+	public void setPastBorrowedEBooks(Set<PastBorrowedEBook> pastBorrowedEBooks) {
+		this.pastBorrowedEBooks = pastBorrowedEBooks;
+	}
+
+	public Set<EBookOnHold> geteBookHolds() {
+		return eBookHolds;
+	}
+
+	public void seteBookHolds(Set<EBookOnHold> eBookHolds) {
+		this.eBookHolds = eBookHolds;
+	}
+	
+	public Set<BorrowedEBook> getBorrowedEBooks(){
+		return borrowedEBooks;
+	}
+	public void setBorrowedEBooks(Set<BorrowedEBook> borrowedEBooks){
+		this.borrowedEBooks = borrowedEBooks;
 	}
 	
 }

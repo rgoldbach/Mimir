@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
@@ -29,6 +30,7 @@ public interface LibraryService {
 	void deleteBook(int bookId);
 	
 	Book getSpecificBook(int bookId);
+	EBook getSpecificEBook(int bookId);
 	
 	BookDisplayableInformation getBookDisplay(int bookId);
 	

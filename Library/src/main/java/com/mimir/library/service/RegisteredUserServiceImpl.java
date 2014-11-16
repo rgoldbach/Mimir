@@ -48,42 +48,67 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		return dao.getSpecificUser(id);
 	}
 
+	//BORROWED EBOOKS
 	@Override
-	public List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(int userId) {
-		return dao.getBorrowedEBooksOfSpecificUser(userId);
+	public List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user) {
+		return dao.getBorrowedEBooksOfSpecificUser(user);
+	}
+	@Override
+	public String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
+		return dao.saveBorrowedEBookOfSpecificUser(borrowedEBook);
+	}
+
+	//PAST BORROWED EBOOKS
+	@Override
+	public List<PastBorrowedEBook> getPastBorrowedEBooksOfSpecificUser(RegisteredUser user) {
+		return dao.getPastBorrowedEBooksOfSpecificUser(user);
+	}
+	@Override
+	public String savePastBorrowedEBookOfSpecificUser(PastBorrowedEBook pastBorrowedEBook) {
+		return dao.savePastBorrowedEBookOfSpecificUser(pastBorrowedEBook);
+	}
+
+	//ON HOLD EBOOKS
+	@Override
+	public List<EBookOnHold> getOnHoldEBooksOfSpecificUser(RegisteredUser user) {
+		return dao.getOnHoldEBooksOfSpecificUser(user);
+	}
+	@Override
+	public String saveOnHoldEBookOfSpecificUser(EBookOnHold eBookOnHold) {
+		return dao.saveOnHoldEBookOfSpecificUser(eBookOnHold);
 	}
 
 	@Override
-	public List<PastBorrowedEBook> getPastEBooksOfSpecificUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EBookOnHold> getOnHoldEBooks(int eBookId) {
+		return dao.getOnHoldEBooks(eBookId);
 	}
-
+	//WISH-LIST EBOOKS
 	@Override
-	public List<EBookOnHold> getWaitlistEBooksOfSpecificUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<WishlistEBook> getWishlistEBooksOfSpecificUser(RegisteredUser user) {
+		return dao.getWishlistEBooksOfSpecificUser(user);
 	}
-
 	@Override
-	public List<WishlistEBook> getWishlistEBooksOfSpecificUser(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook) {
+		return dao.saveWishlistEBookOfSpecificUser(wishlistEBook);
 	}
 
+	//USER STUFF
 	@Override
 	public AccountInfo signInUser(LoginCredentials loginCreds) {
 		return dao.signInUser(loginCreds);
 	}
-
 	@Override
 	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
 		return dao.getSpecificUserFromAccountInfo(accountInfo);
 	}
-
 	@Override
 	public Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo) {
 		return dao.getSpecificAdminFromAccountInfo(accountInfo);
 	}
+	@Override
+	public RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo) {
+		return dao.getSpecificUserFromAccountInfoWithAllInfo(accountInfo);
+	}
+
 
 }

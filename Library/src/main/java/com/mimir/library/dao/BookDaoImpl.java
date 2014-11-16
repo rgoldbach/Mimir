@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
@@ -98,6 +99,13 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		Criteria getBookDisplay = getSession().createCriteria(BookDisplayableInformation.class, "bookDisplayableInformation");
 		getBookDisplay.add(Restrictions.eq("bookDisplayId", bookId));
 		return (BookDisplayableInformation) getBookDisplay.uniqueResult();
+	}
+
+	@Override
+	public EBook getSpecificEBook(int bookId) {
+		Criteria specificBook = getSession().createCriteria(EBook.class, "eBook");
+		specificBook.add(Restrictions.eq("book.bookId", bookId));
+		return (EBook) specificBook.uniqueResult();
 	}
 
 }

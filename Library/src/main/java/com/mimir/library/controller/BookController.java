@@ -1,6 +1,5 @@
 package com.mimir.library.controller;
  
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -18,13 +17,17 @@ import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LibraryService;
+import com.mimir.library.service.RegisteredUserService;
 import com.mimir.library.service.TestLibrary;
  
 @Controller
 public class BookController {
 	
 	@Autowired
-	LibraryService service;
+	LibraryService libraryService;
+	
+	@Autowired
+	RegisteredUserService userService;
 	
 	@RequestMapping("/book")
 	public ModelAndView showMessage(
@@ -41,7 +44,7 @@ public class BookController {
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println(whichBook);
 		ModelAndView mv = new ModelAndView("library/bookModal");		
-		Book book = service.getSpecificBook(whichBook);		
+		Book book = libraryService.getSpecificBook(whichBook);		
 		session.setAttribute("viewBook", book);
 		mv.addObject("book", book);
 		return mv;
@@ -51,33 +54,21 @@ public class BookController {
 	@ResponseBody
 	public String borrowBook(
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
-		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		String message = "success";		
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
+		String message = "";
 		if(currentUser!=null){
 			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
-			TestLibrary tl = new TestLibrary();
-			BorrowedEBook rentedEBook = new BorrowedEBook(service.getSpecificBook(whichBook), currentUser);
-			if(currentUser.getCurrentEBooks()==null){
-				Set<BorrowedEBook> bookshelf = new HashSet<BorrowedEBook>();
-				bookshelf.add(rentedEBook);
-				currentUser.setCurrentEBooks(bookshelf);
+			BorrowedEBook rentedEBook = new BorrowedEBook(libraryService.getSpecificEBook(whichBook), currentUser);
+			message = userService.saveBorrowedEBookOfSpecificUser(rentedEBook);
+			if(message.equals(GlobalConstants.DAO_SUCCESS)){
+				//Borrowed EBook persisted...
 			}
 			else{
-				HashSet<BorrowedEBook> bookshelf = (HashSet) currentUser.getCurrentEBooks();
-				for(BorrowedEBook book: bookshelf){
-					if(book.getId()==whichBook)
-						message="failure";
-				}
-				if(!message.equals("failure"))
-					currentUser.addBookToBookshelf(rentedEBook);
-			}
-			System.out.println(currentUser.getCurrentEBooks().size());
-			
-			
-		}
-		
-		//return message
-		
+				//Borrowed EBook not persisted...
+				//Reason why is already stored in message
+			}	
+		}	
+		//return message		
 		return message;
 		
 	}
@@ -101,31 +92,20 @@ public class BookController {
 	public String wishlistBook(
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println("Request to wishtlist " + whichBook);
-		String message = "success";
+		String message = "";
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		WishlistEBook wishBook = new WishlistEBook(service.getSpecificBook(whichBook), currentUser);
-		if(currentUser.getWishlistEBooks()==null){
-			Set<WishlistEBook> wishlistBooks = new HashSet<WishlistEBook>();
-			wishlistBooks.add(wishBook);
-			currentUser.setWishlistEBooks(wishlistBooks);
+		WishlistEBook wishBook = new WishlistEBook(libraryService.getSpecificEBook(whichBook), currentUser);
+		message = userService.saveWishlistEBookOfSpecificUser(wishBook);
+		System.out.println(currentUser.getWishlistEBooks().size());
+		if(message.equals(GlobalConstants.DAO_SUCCESS)){
+			//Wish-list EBook persisted...
 		}
 		else{
-			HashSet<WishlistEBook> wishlistBooks = (HashSet<WishlistEBook>) currentUser.getWishlistEBooks();
-			for(WishlistEBook testBook : wishlistBooks){
-				if(testBook.getId() == whichBook)
-					message = "failure";
-			}
-			if(!message.equals("failure"))
-				currentUser.addBookToWishlist(wishBook);
-		}
-		System.out.println(currentUser.getWishlistEBooks().size());
-		//get book from service
+			//Wish-list EBook not persisted...
+			//Reason why is already stored in message
+		}	
 		
-		//add book to current users waishist
-		
-		//return message
-		
-		return "temp";
+		return message;
 		
 	}
 	

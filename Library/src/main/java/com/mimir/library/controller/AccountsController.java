@@ -1,7 +1,7 @@
 package com.mimir.library.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,14 +41,14 @@ public class AccountsController {
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		HashSet<BorrowedEBook> books = (HashSet<BorrowedEBook>) currentUser.getCurrentEBooks();
+		Set<BorrowedEBook> books = currentUser.getBorrowedEBooks();
 		for(BorrowedEBook book: books){
 			bookshelfBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
 		}
 		mv.addObject("bookshelfBooks", bookshelfBooks);
 		
 		ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
-		HashSet<WishlistEBook> waitBooks = (HashSet<WishlistEBook>) currentUser.getWishlistEBooks();
+		Set<WishlistEBook> waitBooks = currentUser.getWishlistEBooks();
 		for(WishlistEBook book: waitBooks){
 			wishlistBooks.add(bookService.getSpecificBook(book.getId()).getBookDisplay());
 		}
@@ -66,10 +66,9 @@ public class AccountsController {
 			System.out.println("User " + currentUserAccountInfo.getFirstName() + " sign in.");
 			if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.REGISTERED_USER_TYPE)){
 				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is a registered user.");
-				RegisteredUser user = service.getSpecificUserFromAccountInfo(currentUserAccountInfo);
+				//Joins all the book list tables, so those lists are now created
+				RegisteredUser user = service.getSpecificUserFromAccountInfoWithAllInfo(currentUserAccountInfo);
 				if(user != null){
-					user.setCurrentEBooks(new HashSet<BorrowedEBook>());
-					user.setWishlistEBooks(new HashSet<WishlistEBook>());
 					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
 					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
 					return "user";
