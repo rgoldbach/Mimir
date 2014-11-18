@@ -14,5 +14,7 @@ public class GlobalConstants {
 	
 	//DAO success text
 	public static final String DAO_SUCCESS = "Success";
+	
+	public static final String[] DATE_ADDED_FOR_SEARCH = {"7 Days", "14 Days", "30 Days", "3 Months", "6 Months", "1 Year"};
 
 }

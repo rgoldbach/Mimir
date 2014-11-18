@@ -57,6 +57,8 @@ DROP TABLE IF EXISTS `BookTextRatings`;
 DROP TABLE IF EXISTS `BookTextHolds`;
 DROP TABLE IF EXISTS `DownloadSites`;
 DROP TABLE IF EXISTS `BookTextLicenses`;
+DROP TABLE IF EXISTS `AudioBookPublishers`;
+DROP TABLE IF EXISTS `EBookPublishers`;
 
 DROP TABLE IF EXISTS `AccountInfo`;
 CREATE TABLE `AccountInfo` (
@@ -281,8 +283,8 @@ CREATE TABLE `BookInterestLevels` (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-DROP TABLE IF EXISTS `EBookPublishers`;
-CREATE TABLE `EBookPublishers` (
+DROP TABLE IF EXISTS `Publishers`;
+CREATE TABLE `Publishers` (
     `publisherId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
 	`information` VARCHAR(300),
@@ -303,7 +305,7 @@ CREATE TABLE `EBooks` (
         REFERENCES `Books` (`bookId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `publisher_text` FOREIGN KEY (`publisherId`)
-        REFERENCES `EBookPublishers` (`publisherId`)
+        REFERENCES `Publishers` (`publisherId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -476,33 +478,14 @@ CREATE TABLE `WishlistEBooks` (
 /*AUDIO BOOK INFORMATION */
 /***************************************************************/
 
-DROP TABLE IF EXISTS `AudioBookPublishers`;
-CREATE TABLE `AudioBookPublishers` (
-    `audioBookPublisherId` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(50) NOT NULL,
-    `info` VARCHAR(400) NOT NULL,
-    PRIMARY KEY (audioBookPublisherId)
-);
-
 DROP TABLE IF EXISTS `AudioBooks`;
 CREATE TABLE `AudioBooks` (
     `audioBookId` INT NOT NULL AUTO_INCREMENT,
 	`bookId` INT NOT NULL UNIQUE,
-    `audioBookPublisherId` INT NOT NULL,
+    `publisherId` INT NOT NULL,
     PRIMARY KEY (audioBookId),
-	CONSTRAINT `audioBook_Publisher` FOREIGN KEY (`audioBookPublisherId`)
-        REFERENCES `AudioBookPublishers` (`audioBookPublisherId`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-DROP TABLE IF EXISTS `AudioBooks`;
-CREATE TABLE `AudioBooks` (
-    `audioBookId` INT NOT NULL AUTO_INCREMENT,
-	`bookId` INT NOT NULL UNIQUE,
-    `audioBookPublisherId` INT NOT NULL,
-    PRIMARY KEY (audioBookId),
-	CONSTRAINT `audioBook_Publisher` FOREIGN KEY (`audioBookPublisherId`)
-        REFERENCES `AudioBookPublishers` (`audioBookPublisherId`)
+	CONSTRAINT `audioBook_Publisher` FOREIGN KEY (`publisherId`)
+        REFERENCES `Publishers` (`publisherId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -766,8 +749,8 @@ INSERT INTO `BookInterestLevels` VALUES (1, 1, 1),
 										(8, 8, 1);
 UNLOCK TABLES;
 
-LOCK TABLES `EBookPublishers` WRITE;/* Id,  Name, Info*/
-INSERT INTO `EBookPublishers` VALUES (1, 'Random House Publishing Group', null), 
+LOCK TABLES `Publishers` WRITE;/* Id,  Name, Info*/
+INSERT INTO `Publishers` VALUES (1, 'Random House Publishing Group', null), 
 									 (2, 'Houghton Mifflin Harcourt', null), 
 									 (3, 'Publisher 3', null), 
 									 (4, 'Mimir Books', null);
@@ -887,10 +870,6 @@ INSERT INTO `WishlistEBooks` VALUES (1, 2, 1),
 									(2, 1, 1), 
 									(3, 4, 1), 
 									(4, 3, 2);
-UNLOCK TABLES;
-
-LOCK TABLES `AudioBookPublishers` WRITE;/* Id, Name, Info */
-INSERT INTO `AudioBookPublishers` VALUES   (1, 'Mimir Audio Books', 'Info Would Go Here');
 UNLOCK TABLES;
 
 

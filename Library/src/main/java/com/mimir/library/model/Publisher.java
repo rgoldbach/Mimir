@@ -1,11 +1,24 @@
 package com.mimir.library.model;
 
-public abstract class Publisher {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="Publishers")
+public class Publisher{
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int publisherId;
 	
+	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "information")
 	private String information;
 	
 	public String getName() {

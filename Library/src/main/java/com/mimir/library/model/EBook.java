@@ -25,7 +25,7 @@ public class EBook {
 	
 	@OneToOne
 	@JoinColumn(name = "publisherId")
-	private EBookPublisher publisher;
+	private Publisher publisher;
 	
 	@OneToOne(mappedBy = "eBook")
 	private EBookRating bookRating;
@@ -66,11 +66,11 @@ public class EBook {
 		this.book = book;
 	}
 
-	public EBookPublisher getPublisher() {
+	public Publisher getPublisher() {
 		return publisher;
 	}
 
-	public void setPublisher(EBookPublisher publisher) {
+	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 	}
 
