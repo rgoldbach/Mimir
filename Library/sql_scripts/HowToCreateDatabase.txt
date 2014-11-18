@@ -1,3 +1,7 @@
+Dropbox Link for img zip: https://dl.dropboxusercontent.com/u/17478960/img.zip
+
+
+
 1. In MySql Workbench 6.0 CE, start your local instance. 
 
 2. Create a database named mimir and make it the default. 
