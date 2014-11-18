@@ -9,14 +9,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.joda.time.LocalDate;
-
-import com.mimir.library.globalVariables.GlobalConstants;
-
 @Entity
-@Table(name="WishlistEBooks")
-public class WishlistEBook {
-	
+@Table(name="WishlistAudioBooks")
+public class WishlistAudioBook {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -26,16 +22,24 @@ public class WishlistEBook {
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "eBookId")
-	private EBook eBook;
+    @JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 
-	public WishlistEBook(){}
+	public WishlistAudioBook(){}
 	
-	public WishlistEBook(EBook eBook, RegisteredUser user){
+	public WishlistAudioBook(AudioBook audioBook, RegisteredUser user){
 		this.user = user;
-		this.eBook = eBook;	
+		this.audioBook = audioBook;	
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public RegisteredUser getUser() {
 		return user;
 	}
@@ -44,23 +48,20 @@ public class WishlistEBook {
 		this.user = user;
 	}
 
-	public int getId() {
-		return id;
+	public AudioBook getAudioBook() {
+		return audioBook;
 	}
 
-	public EBook getEBook() {
-		return eBook;
-	}
-
-	public void setEBook(EBook eBook) {
-		this.eBook = eBook;
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
 	}
 	@Override
     public boolean equals(Object obj){
-        if(!(obj instanceof WishlistEBook)){
+        if(!(obj instanceof WishlistAudioBook)){
             return false;
         }
-        WishlistEBook temp = (WishlistEBook)obj;
-        return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
+        WishlistAudioBook temp = (WishlistAudioBook)obj;
+        return (temp.getAudioBook().getAudioBookId() == this.getAudioBook().getAudioBookId());
     }
+	
 }

@@ -10,35 +10,35 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EBookLanguages")
-public class EBookLanguage {
+@Table(name="AudioBookLanguages")
+public class AudioBookLanguage {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int eBookLanguageId;
+	private int audioBookLanguageId;
 	
 	@ManyToOne
-	@JoinColumn(name = "eBookId")
-	private EBook eBook;
+	@JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 	
 	@OneToOne
 	@JoinColumn(name = "languageId")
 	private Language language;
 
-	public int geteBookLanguageId() {
-		return eBookLanguageId;
+	public int getAudioBookLanguageId() {
+		return audioBookLanguageId;
 	}
 
-	public void seteBookLanguageId(int eBookLanguageId) {
-		this.eBookLanguageId = eBookLanguageId;
+	public void setAudioBookLanguageId(int audioBookLanguageId) {
+		this.audioBookLanguageId = audioBookLanguageId;
 	}
 
-	public EBook geteBook() {
-		return eBook;
+	public AudioBook getAudioBook() {
+		return audioBook;
 	}
 
-	public void seteBook(EBook eBook) {
-		this.eBook = eBook;
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
 	}
 
 	public Language getLanguage() {

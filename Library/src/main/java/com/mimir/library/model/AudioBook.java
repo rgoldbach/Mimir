@@ -13,12 +13,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EBooks")
-public class EBook {
-	
+@Table(name="AudioBooks")
+public class AudioBook {
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int eBookId;
+	private int audioBookId;
 	
 	@OneToOne
 	@JoinColumn(name = "bookId")
@@ -28,38 +28,30 @@ public class EBook {
 	@JoinColumn(name = "publisherId")
 	private Publisher publisher;
 	
-	@OneToOne(mappedBy = "eBook")
-	private EBookRating bookRating;
+	@OneToOne(mappedBy = "audioBook")
+	private AudioBookRating bookRating;
 	
-	@OneToMany(mappedBy = "eBook")
-	private Collection<EBookOnHold> booksOnHold;
+	@OneToMany(mappedBy = "audioBook")
+	private Collection<AudioBookOnHold> booksOnHold;
 	
-	@OneToMany(mappedBy = "eBook")
-	private Collection<EBookFormat> eBookFormats;
+	@OneToMany(mappedBy = "audioBook")
+	private Collection<AudioBookFormat> eBookFormats;
 	
-	@OneToMany(mappedBy = "eBook")
-	private Collection<EBookLanguage> languages;
+	@OneToMany(mappedBy = "audioBook")
+	private Collection<AudioBookLanguage> languages;
 	
-	@OneToMany(mappedBy = "eBook")
-	private Collection<EBookLicense> eBookLicenses;
+	@OneToMany(mappedBy = "audioBook")
+	private Collection<AudioBookLicense> eBookLicenses;
 	
 	@Column(name = "remainingCopies")
 	private Integer remainingCopies;
-	
-	public EBook(){
-		
-	}
-	
-	public EBook(Book book){
-		this.setBook(book);
+
+	public int getAudioBookId() {
+		return audioBookId;
 	}
 
-	public int getEBookId() {
-		return eBookId;
-	}
-
-	public void setEBookId(int eBookId) {
-		this.eBookId = eBookId;
+	public void setAudioBookId(int audioBookId) {
+		this.audioBookId = audioBookId;
 	}
 
 	public Book getBook() {
@@ -78,43 +70,43 @@ public class EBook {
 		this.publisher = publisher;
 	}
 
-	public EBookRating getBookRating() {
+	public AudioBookRating getBookRating() {
 		return bookRating;
 	}
 
-	public void setBookRating(EBookRating bookRating) {
+	public void setBookRating(AudioBookRating bookRating) {
 		this.bookRating = bookRating;
 	}
 
-	public Collection<EBookOnHold> getBooksOnHold() {
+	public Collection<AudioBookOnHold> getBooksOnHold() {
 		return booksOnHold;
 	}
 
-	public void setBooksOnHold(Collection<EBookOnHold> booksOnHold) {
+	public void setBooksOnHold(Collection<AudioBookOnHold> booksOnHold) {
 		this.booksOnHold = booksOnHold;
 	}
 
-	public Collection<EBookFormat> geteBookFormats() {
+	public Collection<AudioBookFormat> geteBookFormats() {
 		return eBookFormats;
 	}
 
-	public void seteBookFormats(Collection<EBookFormat> eBookFormats) {
+	public void seteBookFormats(Collection<AudioBookFormat> eBookFormats) {
 		this.eBookFormats = eBookFormats;
 	}
 
-	public Collection<EBookLanguage> getLanguages() {
+	public Collection<AudioBookLanguage> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(Collection<EBookLanguage> languages) {
+	public void setLanguages(Collection<AudioBookLanguage> languages) {
 		this.languages = languages;
 	}
 
-	public Collection<EBookLicense> geteBookLicenses() {
+	public Collection<AudioBookLicense> geteBookLicenses() {
 		return eBookLicenses;
 	}
 
-	public void seteBookLicenses(Collection<EBookLicense> eBookLicenses) {
+	public void seteBookLicenses(Collection<AudioBookLicense> eBookLicenses) {
 		this.eBookLicenses = eBookLicenses;
 	}
 
@@ -125,5 +117,5 @@ public class EBook {
 	public void setRemainingCopies(Integer remainingCopies) {
 		this.remainingCopies = remainingCopies;
 	}
-
+	
 }

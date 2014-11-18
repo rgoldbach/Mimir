@@ -7,6 +7,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.EBook;
@@ -22,62 +23,6 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	public void saveBook(Book book) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificGenre(String genre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificAuthor(
-			String authorName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificAuthor(
-			int authorId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificLanguage(
-			String language) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificFormat(
-			String format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificInterestLevel(
-			String interestLevel) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksBySpecificKeyword(
-			String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookDisplayableInformation> getBooksByAdvancedSearch(
-			String title, String author, List<Genre> genres,
-			List<Language> languages, List<InterestLevel> interestLevels) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -107,5 +52,10 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		specificBook.add(Restrictions.eq("book.bookId", bookId));
 		return (EBook) specificBook.uniqueResult();
 	}
-
+	@Override
+	public AudioBook getSpecificAudioBook(int audioBookId) {
+		Criteria specificBook = getSession().createCriteria(AudioBook.class, "audioBook");
+		specificBook.add(Restrictions.eq("book.bookId", audioBookId));
+		return (AudioBook) specificBook.uniqueResult();
+	}
 }

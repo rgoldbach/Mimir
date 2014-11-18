@@ -15,12 +15,10 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.mimir.library.globalVariables.GlobalConstants;
-
 @Entity
-@Table(name="BorrowedEBooks")
-public class BorrowedEBook {
-	
+@Table(name="PastBorrowedAudioBooks")
+public class PastBorrowedAudioBook {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,57 +28,72 @@ public class BorrowedEBook {
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "eBookId")
-	private EBook eBook;
+    @JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 	
 	@NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy") 
-    @Column(name = "dateExpires")
+    @Column(name = "dateExpired")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate dateExpires;
+	private LocalDate dateExpired;
 	
 	@Column(name = "bookRating")
 	private Double bookRating;
-
-
-	public BorrowedEBook(){}
 	
-	public BorrowedEBook(EBook eBook, RegisteredUser user){
+	public PastBorrowedAudioBook(){}
+	
+	public PastBorrowedAudioBook(AudioBook audioBook, RegisteredUser user){
 		this.user = user;
-		this.eBook = eBook;	
-		this.dateExpires = new LocalDate().plusDays(GlobalConstants.BORROW_BOOK_LENGTH);
+		this.audioBook = audioBook;	
+		this.dateExpired = new LocalDate();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public RegisteredUser getUser() {
 		return user;
 	}
+
+	public void setUser(RegisteredUser user) {
+		this.user = user;
+	}
+
+	public AudioBook getAudioBook() {
+		return audioBook;
+	}
+
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
+	}
+
 	public LocalDate getDateExpired() {
-		return dateExpires;
+		return dateExpired;
 	}
-	public void setDateExpired(LocalDate dateExpires) {
-		this.dateExpires = dateExpires;
+
+	public void setDateExpired(LocalDate dateExpired) {
+		this.dateExpired = dateExpired;
 	}
+
 	public Double getBookRating() {
 		return bookRating;
 	}
+
 	public void setBookRating(Double bookRating) {
 		this.bookRating = bookRating;
 	}
-	public EBook getEBook() {
-		return eBook;
-	}
-	public void setEBook(EBook eBook) {
-		this.eBook = eBook;
-	}
 	@Override
     public boolean equals(Object obj){
-        if(!(obj instanceof BorrowedEBook)){
+        if(!(obj instanceof PastBorrowedAudioBook)){
             return false;
         }
-        BorrowedEBook temp = (BorrowedEBook)obj;
-        return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
+        PastBorrowedAudioBook temp = (PastBorrowedAudioBook)obj;
+        return (temp.getAudioBook().getAudioBookId() == this.getAudioBook().getAudioBookId());
     }
+	
 }

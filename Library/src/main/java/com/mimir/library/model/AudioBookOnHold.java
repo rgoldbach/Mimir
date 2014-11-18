@@ -9,17 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.joda.time.LocalDate;
-
-import com.mimir.library.globalVariables.GlobalConstants;
-
 @Entity
-@Table(name="EBookHolds")
-public class EBookOnHold {
+@Table(name="AudioBookHolds")
+public class AudioBookOnHold {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int eBookOnHoldId;
+	private int audioBookOnHoldId;
 
 	
 	@OneToOne
@@ -27,21 +23,25 @@ public class EBookOnHold {
 	private RegisteredUser user;
 	
 	@OneToOne
-	@JoinColumn(name = "eBookId")
-	private EBook eBook;
+	@JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 	
 	@Column(name = "positionInQueue")
 	private int positionInQueue;
 
-	public EBookOnHold(){}
+	public AudioBookOnHold(){}
 	
-	public EBookOnHold(EBook eBook, RegisteredUser user){
+	public AudioBookOnHold(AudioBook audioBook, RegisteredUser user){
 		this.user = user;
-		this.eBook = eBook;	
+		this.audioBook = audioBook;	
 	}
 	
-	public int getEbookOnHoldId() {
-		return eBookOnHoldId;
+	public int getAudioBookOnHoldId() {
+		return audioBookOnHoldId;
+	}
+
+	public void setAudioBookOnHoldId(int audioBookOnHoldId) {
+		this.audioBookOnHoldId = audioBookOnHoldId;
 	}
 
 	public RegisteredUser getUser() {
@@ -52,12 +52,12 @@ public class EBookOnHold {
 		this.user = user;
 	}
 
-	public EBook getEBook() {
-		return eBook;
+	public AudioBook getAudioBook() {
+		return audioBook;
 	}
 
-	public void setEBook(EBook eBook) {
-		this.eBook = eBook;
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
 	}
 
 	public int getPositionInQueue() {
@@ -70,11 +70,11 @@ public class EBookOnHold {
 	
 	@Override
     public boolean equals(Object obj){
-        if(!(obj instanceof EBookOnHold)){
+        if(!(obj instanceof AudioBookOnHold)){
             return false;
         }
-        EBookOnHold temp = (EBookOnHold)obj;
-        return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
+        AudioBookOnHold temp = (AudioBookOnHold)obj;
+        return (temp.getAudioBook().getAudioBookId() == this.getAudioBook().getAudioBookId());
     }
-
+	
 }

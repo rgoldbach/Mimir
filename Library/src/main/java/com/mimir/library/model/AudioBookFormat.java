@@ -13,16 +13,17 @@ import javax.persistence.Table;
 import org.joda.time.LocalDate;
 
 @Entity
-@Table(name="EBookFormats")
-public class EBookFormat {
+@Table(name="AudioBookFormats")
+public class AudioBookFormat {
 
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int eBookFormatId;
+	private int audioBookFormatId;
 	
 	@ManyToOne
-	@JoinColumn(name = "eBookId")
-	private EBook eBook;
+	@JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 	
 	@OneToOne
 	@JoinColumn(name = "formatId")
@@ -33,21 +34,27 @@ public class EBookFormat {
 	
 	@Column(name = "fileSize")
 	private Integer fileSize;
+	
+	@Column(name = "numOfParts")
+	private Integer numOfParts;
+	
+	@Column(name = "duration")
+	private Integer duration;
 
-	public int geteBookFormatId() {
-		return eBookFormatId;
+	public int getAudioBookFormatId() {
+		return audioBookFormatId;
 	}
 
-	public void seteBookFormatId(int eBookFormatId) {
-		this.eBookFormatId = eBookFormatId;
+	public void setAudioBookFormatId(int audioBookFormatId) {
+		this.audioBookFormatId = audioBookFormatId;
 	}
 
-	public EBook geteBook() {
-		return eBook;
+	public AudioBook getAudioBook() {
+		return audioBook;
 	}
 
-	public void seteBook(EBook eBook) {
-		this.eBook = eBook;
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
 	}
 
 	public Format getFormat() {
@@ -73,4 +80,21 @@ public class EBookFormat {
 	public void setFileSize(Integer fileSize) {
 		this.fileSize = fileSize;
 	}
+
+	public Integer getNumOfParts() {
+		return numOfParts;
+	}
+
+	public void setNumOfParts(Integer numOfParts) {
+		this.numOfParts = numOfParts;
+	}
+
+	public Integer getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Integer duration) {
+		this.duration = duration;
+	}
+	
 }

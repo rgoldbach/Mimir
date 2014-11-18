@@ -12,16 +12,57 @@ import org.springframework.stereotype.Repository;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
+import com.mimir.library.model.AudioBookOnHold;
+import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.LoginCredentials;
+import com.mimir.library.model.PastBorrowedAudioBook;
 import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.model.WishlistAudioBook;
 import com.mimir.library.model.WishlistEBook;
 
 @Repository("registeredUserDao")
 public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUserDao {
 
+	@Override
+	public AccountInfo signInUser(LoginCredentials loginCreds) {
+		Criteria userSignInCriteria = getSession().createCriteria(AccountInfo.class, "account");
+		userSignInCriteria.createAlias("account.loginCredentials", "loginCredentials");
+		userSignInCriteria.add(Restrictions.eq("loginCredentials.email", loginCreds.getEmail()));
+		userSignInCriteria.add(Restrictions.eq("loginCredentials.password", loginCreds.getPassword()));
+		return (AccountInfo) userSignInCriteria.uniqueResult();
+	}
+
+	@Override
+	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
+		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
+		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
+		System.out.println("Account id = " + accountInfo.getAccountInfoId());
+		return (RegisteredUser) userCriteria.uniqueResult();
+	}
+
+	@Override
+	public Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo) {
+		Criteria userCriteria = getSession().createCriteria(Admin.class, "admin");
+		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
+		return (Admin) userCriteria.uniqueResult();
+	}
+
+
+	@Override
+	public RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo) {
+		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
+		userCriteria.setFetchMode("eBookHolds", FetchMode.JOIN);
+		userCriteria.setFetchMode("borrowedEBooks", FetchMode.JOIN);
+		userCriteria.setFetchMode("wishlistEBooks", FetchMode.JOIN);
+		userCriteria.setFetchMode("pastBorrowedEBooks", FetchMode.JOIN);
+		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
+		System.out.println("Account id = " + accountInfo.getAccountInfoId());
+		return (RegisteredUser) userCriteria.uniqueResult();
+	}
+	
 	@Override
 	public void saveRegisteredUser(RegisteredUser user) {
 		persist(user);
@@ -73,9 +114,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		persist(borrowedEBook);
 		System.out.println("DEBUG: In saveBorrowedEBookOfSpecificUser. BorrowedEBook persisted!");
 		return GlobalConstants.DAO_SUCCESS;
-		
-	}
-	
+	}	
 	@Override
 	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook){
 		Query query = getSession().createSQLQuery("DELETE FROM BorrowedEBooks WHERE id = :id");
@@ -83,8 +122,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		System.out.println("Debug: in removeBorrowedEBookOfSpecificUser");
 		System.out.println(query.toString());
 		query.executeUpdate();
-		return GlobalConstants.DAO_SUCCESS;
-		
+		return GlobalConstants.DAO_SUCCESS;	
 	}
 
 	//PAST BORROWED EBOOKS
@@ -108,8 +146,6 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		return GlobalConstants.DAO_SUCCESS;
 	}
 	
-	
-
 	//ON HOLD EBOOKS
 	@SuppressWarnings("unchecked")
 	@Override
@@ -161,7 +197,6 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		System.out.println("DEBUG: In saveWishlistEBookOfSpecificUser. WishlistEBook persisted!");
 		return GlobalConstants.DAO_SUCCESS;	
 	}
-	
 	@Override
 	public String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook){
 		Query query = getSession().createSQLQuery("DELETE FROM WishlistEBooks WHERE id = :id");
@@ -172,44 +207,120 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		return GlobalConstants.DAO_SUCCESS;
 	}
 
+	//BORROWED AUDIOBOOKS
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BorrowedAudioBook> getBorrowedAudioBooksOfSpecificUser(RegisteredUser user) {
+		Criteria criteria = getSession().createCriteria(BorrowedAudioBook.class);
+		criteria.setFetchMode("RegisteredUsers", FetchMode.JOIN);
+		return (List<BorrowedAudioBook>) criteria.add(Restrictions.eq("user", user)).list();
+	}
+	@Override
+	public String saveBorrowedAudioBookOfSpecificUser(BorrowedAudioBook borrowedAudioBook) {
+		List<BorrowedAudioBook> userAudioBooks = getBorrowedAudioBooksOfSpecificUser(borrowedAudioBook.getUser());
+		if(userAudioBooks.contains(borrowedAudioBook)){
+			System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. User already has borrowed this book! Not adding...");
+			return "You currently are borrowing this book!";
+		}
+		System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. Check if User has AudioBOOK passed! Attempting to Persist BorrowedAudioBook...");
+		persist(borrowedAudioBook);
+		System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. BorrowedAudioBook persisted!");
+		return GlobalConstants.DAO_SUCCESS;
+	}
+	@Override
+	public String removeBorrowedAudioBookOfSpecificUser(BorrowedAudioBook borrowedAudioBook) {
+		Query query = getSession().createSQLQuery("DELETE FROM BorrowedAudioBooks WHERE id = :id");
+		query.setLong("id", borrowedAudioBook.getId());
+		System.out.println("Debug: in removeBorrowedAudioBookOfSpecificUser");
+		System.out.println(query.toString());
+		query.executeUpdate();
+		return GlobalConstants.DAO_SUCCESS;	
+	}
+
+	//PAST BORROWED AUDIOBOOKS
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PastBorrowedAudioBook> getPastBorrowedAudioBooksOfSpecificUser(RegisteredUser user) {
+		Criteria criteria = getSession().createCriteria(PastBorrowedAudioBook.class);
+		criteria.setFetchMode("RegisteredUsers", FetchMode.JOIN);
+		return (List<PastBorrowedAudioBook>) criteria.add(Restrictions.eq("user", user)).list();
+	}
+	@Override
+	public String savePastBorrowedAudioBookOfSpecificUser(PastBorrowedAudioBook pastBorrowedAudioBook) {
+		List<PastBorrowedAudioBook> userAudioBooks = getPastBorrowedAudioBooksOfSpecificUser(pastBorrowedAudioBook.getUser());
+		if(userAudioBooks.contains(pastBorrowedAudioBook)){
+			System.out.println("DEBUG: In savePastBorrowedAudioBookOfSpecificUser. User already has this AUDIOBOOK in history! Not adding...");
+			return "AudioBook already in history!";
+		}
+		System.out.println("DEBUG: In savePastBorrowedAudioBookOfSpecificUser. Check if User has AUDIOBOOK in history passed! Attempting to Persist PastBorrowedAudioBook...");
+		persist(pastBorrowedAudioBook);
+		System.out.println("DEBUG: In savePastBorrowedAudioBookOfSpecificUser. PastBorrowedAudioBook persisted!");
+		return GlobalConstants.DAO_SUCCESS;
+	}
 	
+	//ON HOLD AUDIOBOOKS
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AudioBookOnHold> getOnHoldAudioBooksOfSpecificUser(RegisteredUser user) {
+		Criteria criteria = getSession().createCriteria(AudioBookOnHold.class);
+		criteria.setFetchMode("RegisteredUsers", FetchMode.JOIN);
+		return (List<AudioBookOnHold>) criteria.add(Restrictions.eq("user", user)).list();
+	}
+	@Override
+	public String saveOnHoldAudioBookOfSpecificUser(AudioBookOnHold audioBookOnHold) {
+		//Determine the position in queue
+		int positionInQueue = getOnHoldEBooks(audioBookOnHold.getAudioBook().getAudioBookId()).size();
+		audioBookOnHold.setPositionInQueue(positionInQueue);
+		
+		List<AudioBookOnHold> userAudioBooks = getOnHoldAudioBooksOfSpecificUser(audioBookOnHold.getUser());
+		if(userAudioBooks.contains(audioBookOnHold)){
+			System.out.println("DEBUG: In saveOnHoldAudioBookOfSpecificUser. User already has this AudioBOOK on hold! Not adding...");
+			return "You already have this AudioBook on hold!";
+		}
+		System.out.println("DEBUG: In saveOnHoldAudioBookOfSpecificUser. Check if User has AudioBOOK on hold passed! Attempting to Persist AudioBookOnHold...");
+		persist(audioBookOnHold);
+		System.out.println("DEBUG: In saveOnHoldAudioBookOfSpecificUser. AudioBookOnHold persisted!");
+		return GlobalConstants.DAO_SUCCESS;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AudioBookOnHold> getOnHoldAudioBooks(int audioBookId) {
+		Criteria criteria = getSession().createCriteria(AudioBookOnHold.class);
+		criteria.addOrder(Order.asc("positionInQueue"));
+		return (List<AudioBookOnHold>) criteria.add(Restrictions.eq("eBookId", audioBookId)).list();
+	}
 	
+	//WISH-LIST AUDIOBOOKS
+	@SuppressWarnings("unchecked")
 	@Override
-	public AccountInfo signInUser(LoginCredentials loginCreds) {
-		Criteria userSignInCriteria = getSession().createCriteria(AccountInfo.class, "account");
-		userSignInCriteria.createAlias("account.loginCredentials", "loginCredentials");
-		userSignInCriteria.add(Restrictions.eq("loginCredentials.email", loginCreds.getEmail()));
-		userSignInCriteria.add(Restrictions.eq("loginCredentials.password", loginCreds.getPassword()));
-		return (AccountInfo) userSignInCriteria.uniqueResult();
+	public List<WishlistAudioBook> getWishlistAudioBooksOfSpecificUser(RegisteredUser user) {
+		Criteria criteria = getSession().createCriteria(WishlistAudioBook.class);
+		criteria.setFetchMode("RegisteredUsers", FetchMode.JOIN);
+		return (List<WishlistAudioBook>) criteria.add(Restrictions.eq("user", user)).list();
+	}
+	@Override
+	public String saveWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
+		List<WishlistAudioBook> userAudioBooks = getWishlistAudioBooksOfSpecificUser(wishlistAudioBook.getUser());
+		if(userAudioBooks.contains(wishlistAudioBook)){
+			System.out.println("DEBUG: In saveWishlistAudioBookOfSpecificUser. User already has this AudioBook in wishlist! Not adding...");
+			return "You currently are borrowing this book!";
+		}
+		System.out.println("DEBUG: In saveWishlistAudioBookOfSpecificUser. Check if User has AudioBOOK in wishlist passed! Attempting to Persist WishlistAudioBook...");
+		persist(wishlistAudioBook);
+		System.out.println("DEBUG: In saveWishlistAudioBookOfSpecificUser. WishlistAudioBook persisted!");
+		return GlobalConstants.DAO_SUCCESS;	
+	}
+	@Override
+	public String removeWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
+		Query query = getSession().createSQLQuery("DELETE FROM WishlistAudioBooks WHERE id = :id");
+		query.setLong("id", wishlistAudioBook.getId());
+		System.out.println("Debug: In removeWishlistAudioBooksOfSpecificUser");
+		System.out.println(query.toString());
+		query.executeUpdate();
+		return GlobalConstants.DAO_SUCCESS;
 	}
 
-	@Override
-	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
-		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
-		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
-		System.out.println("Account id = " + accountInfo.getAccountInfoId());
-		return (RegisteredUser) userCriteria.uniqueResult();
-	}
-
-	@Override
-	public Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo) {
-		Criteria userCriteria = getSession().createCriteria(Admin.class, "admin");
-		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
-		return (Admin) userCriteria.uniqueResult();
-	}
-
-
-	@Override
-	public RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo) {
-		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
-		userCriteria.setFetchMode("eBookHolds", FetchMode.JOIN);
-		userCriteria.setFetchMode("borrowedEBooks", FetchMode.JOIN);
-		userCriteria.setFetchMode("wishlistEBooks", FetchMode.JOIN);
-		userCriteria.setFetchMode("pastBorrowedEBooks", FetchMode.JOIN);
-		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
-		System.out.println("Account id = " + accountInfo.getAccountInfoId());
-		return (RegisteredUser) userCriteria.uniqueResult();
-	}
+	
 
 	
 

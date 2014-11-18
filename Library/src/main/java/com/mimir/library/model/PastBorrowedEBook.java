@@ -45,7 +45,6 @@ public class PastBorrowedEBook {
 	public PastBorrowedEBook(){}
 	
 	public PastBorrowedEBook(EBook eBook, RegisteredUser user){
-		//id = book.getBookId(); Not the same id, could cause an error
 		this.user = user;
 		this.eBook = eBook;	
 		this.dateExpired = new LocalDate();
@@ -80,7 +79,7 @@ public class PastBorrowedEBook {
 	}
 	@Override
     public boolean equals(Object obj){
-        if(!(obj instanceof BorrowedEBook)){
+        if(!(obj instanceof PastBorrowedEBook)){
             return false;
         }
         PastBorrowedEBook temp = (PastBorrowedEBook)obj;

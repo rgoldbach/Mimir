@@ -18,9 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.mimir.library.globalVariables.GlobalConstants;
 
 @Entity
-@Table(name="BorrowedEBooks")
-public class BorrowedEBook {
-	
+@Table(name="BorrowedAudioBooks")
+public class BorrowedAudioBook {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,8 +30,8 @@ public class BorrowedEBook {
 	private RegisteredUser user;
 	
 	@OneToOne
-    @JoinColumn(name = "eBookId")
-	private EBook eBook;
+    @JoinColumn(name = "audioBookId")
+	private AudioBook audioBook;
 	
 	@NotNull
     @DateTimeFormat(pattern="dd/MM/yyyy") 
@@ -42,45 +42,60 @@ public class BorrowedEBook {
 	@Column(name = "bookRating")
 	private Double bookRating;
 
-
-	public BorrowedEBook(){}
+	public BorrowedAudioBook(){}
 	
-	public BorrowedEBook(EBook eBook, RegisteredUser user){
+	public BorrowedAudioBook(AudioBook audioBook, RegisteredUser user){
 		this.user = user;
-		this.eBook = eBook;	
+		this.audioBook = audioBook;	
 		this.dateExpires = new LocalDate().plusDays(GlobalConstants.BORROW_BOOK_LENGTH);
 	}
 	
 	public int getId() {
 		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public RegisteredUser getUser() {
 		return user;
 	}
-	public LocalDate getDateExpired() {
+
+	public void setUser(RegisteredUser user) {
+		this.user = user;
+	}
+
+	public AudioBook getAudioBook() {
+		return audioBook;
+	}
+
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
+	}
+
+	public LocalDate getDateExpires() {
 		return dateExpires;
 	}
-	public void setDateExpired(LocalDate dateExpires) {
+
+	public void setDateExpires(LocalDate dateExpires) {
 		this.dateExpires = dateExpires;
 	}
+
 	public Double getBookRating() {
 		return bookRating;
 	}
+
 	public void setBookRating(Double bookRating) {
 		this.bookRating = bookRating;
 	}
-	public EBook getEBook() {
-		return eBook;
-	}
-	public void setEBook(EBook eBook) {
-		this.eBook = eBook;
-	}
 	@Override
     public boolean equals(Object obj){
-        if(!(obj instanceof BorrowedEBook)){
+        if(!(obj instanceof BorrowedAudioBook)){
             return false;
         }
-        BorrowedEBook temp = (BorrowedEBook)obj;
-        return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
+        BorrowedAudioBook temp = (BorrowedAudioBook)obj;
+        return (temp.getAudioBook().getAudioBookId() == this.getAudioBook().getAudioBookId());
     }
+	
 }

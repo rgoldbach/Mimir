@@ -300,6 +300,7 @@ CREATE TABLE `EBooks` (
 	`eBookId` INT NOT NULL AUTO_INCREMENT,
     `bookId` INT NOT NULL,
     `publisherId` INT NOT NULL,
+	`remainingCopies` INT NOT NULL,
     PRIMARY KEY (eBookId),
     CONSTRAINT `book_text` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
@@ -483,6 +484,7 @@ CREATE TABLE `AudioBooks` (
     `audioBookId` INT NOT NULL AUTO_INCREMENT,
 	`bookId` INT NOT NULL UNIQUE,
     `publisherId` INT NOT NULL,
+	`remainingCopies` INT NOT NULL,
     PRIMARY KEY (audioBookId),
 	CONSTRAINT `audioBook_Publisher` FOREIGN KEY (`publisherId`)
         REFERENCES `Publishers` (`publisherId`)
@@ -758,14 +760,14 @@ UNLOCK TABLES;
 
 
 LOCK TABLES `EBooks` WRITE;/* Id, BookId, PublisherId */
-INSERT INTO `EBooks` VALUES (1, 1, 1), 
-							(2, 2, 2), 
-							(3, 3, 3),
-							(4, 4, 4),
-							(5, 5, 3), 
-							(6, 6, 3), 
-							(7, 7, 3),
-							(8, 8, 3);
+INSERT INTO `EBooks` VALUES (1, 1, 1, 4), 
+							(2, 2, 2, 9), 
+							(3, 3, 3, 14),
+							(4, 4, 4, -1),
+							(5, 5, 3, 5), 
+							(6, 6, 3, 10), 
+							(7, 7, 3, 15),
+							(8, 8, 3, -1);
 UNLOCK TABLES;
 
 LOCK TABLES `Formats` WRITE;/* Id,  Format*/
@@ -848,7 +850,11 @@ LOCK TABLES `EBookLicenses` WRITE;/* Id, EBookId(FK), DownloadSiteId(FK), Number
 INSERT INTO `EBookLicenses` VALUES   (1, 1, 1, 5),
 									 (2, 2, 1, 10), 
 									 (3, 3, 1, 15), 
-									 (4, 4, 1, -1);
+									 (4, 4, 1, -1),
+								     (5, 5, 1, 5),
+									 (6, 6, 1, 10), 
+									 (7, 7, 1, 15), 
+									 (8, 8, 1, -1);
 UNLOCK TABLES;
 
 LOCK TABLES `BorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), DateExpires, BookRating */
@@ -873,15 +879,15 @@ INSERT INTO `WishlistEBooks` VALUES (1, 2, 1),
 UNLOCK TABLES;
 
 
-LOCK TABLES `AudioBooks` WRITE;/* Id, AudioBookId(FK), FormatId(FK), ReleaseDate, FileSize*/
-INSERT INTO `AudioBooks` VALUES     (1, 1, 1), 
-									(2, 2, 1), 
-									(3, 3, 1), 
-									(4, 4, 1), 
-									(5, 5, 1), 
-									(6, 6, 1), 
-									(7, 7, 1), 
-									(8, 8, 1);
+LOCK TABLES `AudioBooks` WRITE;/* Id, AudioBookId(FK), PublisherId(FK), numOfRemainingCopies*/
+INSERT INTO `AudioBooks` VALUES     (1, 1, 1, 4), 
+									(2, 2, 1, 9), 
+									(3, 3, 1, 14), 
+									(4, 4, 1, -1), 
+									(5, 5, 1, 5), 
+									(6, 6, 1, 10), 
+									(7, 7, 1, 15), 
+									(8, 8, 1, -1);
 UNLOCK TABLES;
 
 LOCK TABLES `AudioBookFormats` WRITE;/* Id, AudioBookId(FK), FormatId(FK), ReleaseDate, FileSize, NumOfParts, Duration*/
@@ -934,7 +940,11 @@ LOCK TABLES `AudioBookLicenses` WRITE;/* Id, AudioBookId(FK), DownloadSiteId(FK)
 INSERT INTO `AudioBookLicenses` VALUES   (1, 1, 1, 5),
 										 (2, 2, 1, 10), 
 										 (3, 3, 1, 15), 
-										 (4, 4, 1, -1);
+										 (4, 4, 1, -1),
+										 (5, 5, 1, 5),
+										 (6, 6, 1, 10), 
+										 (7, 7, 1, 15), 
+										 (8, 8, 1, -1);
 UNLOCK TABLES;
 
 LOCK TABLES `BorrowedAudioBooks` WRITE;/* Id, AudioBookId(FK), RegUserId(FK), DateExpires, BookRating */

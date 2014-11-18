@@ -48,6 +48,18 @@ public class RegisteredUser{
 	@OneToMany(mappedBy = "user")
 	private Set<WishlistEBook> wishlistEBooks;
 	
+	@OneToMany(mappedBy = "user")
+	private Set<BorrowedAudioBook> borrowedAudioBooks;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<PastBorrowedAudioBook> pastBorrowedAudioBooks;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<AudioBookOnHold> audioBookHolds;
+	
+	@OneToMany(mappedBy = "user")
+	private Set<WishlistAudioBook> wishlistAudioBooks;
+	
 	
 	public RegisteredUser(){
 		
@@ -143,6 +155,38 @@ public class RegisteredUser{
 	
 	public void removeFromWishlistEBooks(WishlistEBook wishlistBook){
 		this.wishlistEBooks.remove(wishlistBook);
+	}
+
+	public Set<BorrowedAudioBook> getBorrowedAudioBooks() {
+		return borrowedAudioBooks;
+	}
+
+	public void setBorrowedAudioBooks(Set<BorrowedAudioBook> borrowedAudioBooks) {
+		this.borrowedAudioBooks = borrowedAudioBooks;
+	}
+
+	public Set<PastBorrowedAudioBook> getPastBorrowedAudioBooks() {
+		return pastBorrowedAudioBooks;
+	}
+
+	public void setPastBorrowedAudioBooks(Set<PastBorrowedAudioBook> pastBorrowedAudioBooks) {
+		this.pastBorrowedAudioBooks = pastBorrowedAudioBooks;
+	}
+
+	public Set<AudioBookOnHold> getAudioBookHolds() {
+		return audioBookHolds;
+	}
+
+	public void setAudioBookHolds(Set<AudioBookOnHold> audioBookHolds) {
+		this.audioBookHolds = audioBookHolds;
+	}
+
+	public Set<WishlistAudioBook> getWishlistAudioBooks() {
+		return wishlistAudioBooks;
+	}
+
+	public void setWishlistAudioBooks(Set<WishlistAudioBook> wishlistAudioBooks) {
+		this.wishlistAudioBooks = wishlistAudioBooks;
 	}
 	
 }
