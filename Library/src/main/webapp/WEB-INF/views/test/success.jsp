@@ -1,27 +1,69 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ include file="/WEB-INF/views/library/include/tagHandlers.jsp" %>
 
 <!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-<div>
-	<h1>
-		<img width="60" src="http://img3.wikia.nocookie.net/__cb20130914143133/fallout/images/9/95/Alien_Dance.gif"/>
-			Success Page
-		<img width="60" src="http://img3.wikia.nocookie.net/__cb20130914143133/fallout/images/9/95/Alien_Dance.gif"/>
-	</h1>
-</div>
-<div>
+<html lang="en">
 
-You want to search for ${advancedSearchForm}
-<br>
-<br> Individual aspects of a search can be accessed like this...
-<br> ${advancedSearchForm.title}
-<br> ${advancedSearchForm.genre}
-<br><br>
-<br><a href="test">back</a>
-</div>
+<%@ include file="/WEB-INF/views/library/include/head.jsp" %>
+
+<body>
+
+	<%@ include file="/WEB-INF/views/library/include/navbar.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/pageHeader.jsp" %>
+
+	<!-- Main Content -->
+	<div class="container">
+<!-- Search Menu -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="btn-group">
+  							<button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
+  							<button type="button" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-th-list"></span> List</button>
+						</div>
+						Sort:
+						<select>
+ 							<option value="relevancy">Relevance</option>
+ 							<option value="titleAz">Title A-Z</option>
+							<option value="titleZa">Title Z-A</option>
+							<option value="authorAz">Author A-Z</option>
+							<option value="authorZa">Author Z-A</option>
+							<option value="releaseDate">Release Date</option>
+							<option value="addedToSite">Added to Site</option>
+							<option value="mostPopular">Most Popular</option>
+						</select>
+					</div>
+				</div>
+				<hr>
+			</div>
+		</div>
+		
+		<div class="row">
+	<!-- Search Results -->
+			<div id="searchResultContainer" class="col-md-8 col-md-offset-2">
+	<!-- Search Result -->
+				<div class="col-md-3">
+					<div class="thumbnail">
+						<img class="img-responsive" src="<c:url value="/resources/img/TestImg7.jpg" />" alt="...">
+						<div class="caption">
+							<h5>Title</h5>
+							<h6>Author(s)</h6>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+
+	<%@ include file="/WEB-INF/views/library/include/footer.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/modals.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/jsSources.jsp" %>
+	
 </body>
+
 </html>
