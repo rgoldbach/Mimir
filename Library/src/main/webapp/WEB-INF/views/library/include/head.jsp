@@ -36,5 +36,13 @@
 	<!-- Helmets Font Sheet CSS
 	<link href="<c:url value="/resources/star-rating/whhg.css" />" rel="stylesheet">  -->
 	
+	<style>
+	.resultInfo {
+    	white-space: nowrap; 
+   		width: 11em; 
+    	overflow: hidden;
+    	text-overflow: ellipsis; 
+	}
+	</style>
 	
 </head>

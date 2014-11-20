@@ -9,11 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.model.Genre;
 import com.mimir.library.service.SearchService;
+import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.service.TestLibrary;
 
 @Controller
 @RequestMapping(value = "/test")
@@ -31,9 +34,18 @@ public class TestPageController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String submitForm(Model model, AdvancedSearchForm advancedSearchForm, BindingResult result){
-		model.addAttribute("advancedSearchForm", advancedSearchForm);
-		return "/test/success";
+	public ModelAndView submitForm(Model model, AdvancedSearchForm advancedSearchForm, BindingResult result){
+		// model.addAttribute("advancedSearchForm", advancedSearchForm);
+		
+		// DO SOMETHING TO TURN SEARCH FORM INTO SEARCH RESULTS
+		
+		// DUMMY DATA 
+		TestLibrary tl = new TestLibrary();
+		ArrayList<BookDisplayableInformation> searchResults = tl.getSearchResults();
+		ModelAndView mv = new ModelAndView("/test/success");
+		mv.addObject("searchResults", searchResults);
+		
+		return mv;
 	}
 	
 	// this should somehow be done by the database

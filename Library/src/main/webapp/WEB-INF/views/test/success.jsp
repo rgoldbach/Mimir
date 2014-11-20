@@ -42,16 +42,18 @@
 		<div class="row">
 	<!-- Search Results -->
 			<div id="searchResultContainer" class="col-md-8 col-md-offset-2">
-	<!-- Search Result -->
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img class="img-responsive" src="<c:url value="/resources/img/TestImg7.jpg" />" alt="...">
-						<div class="caption">
-							<h5>Title</h5>
-							<h6>Author(s)</h6>
+				<c:forEach end="12" var="book" items = "${searchResults}">
+		<!-- Search Result -->
+					<div class="col-md-3">
+						<div class="thumbnail">
+							<img class="img-responsive" src="<c:url value="${book.imageFilePath}" />" alt="...">
+							<div class="caption">
+								<h6 class="resultInfo">${book.title}</h6>
+								<h6 class="resultInfo">AUTHORS</h6>
+							</div>
 						</div>
 					</div>
-				</div>
+				 </c:forEach>
 			</div>
 		</div>
 	</div>

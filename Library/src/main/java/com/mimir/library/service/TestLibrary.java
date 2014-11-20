@@ -176,6 +176,36 @@ public class TestLibrary {
 	public Book getLasVegas() {
 		return lasVegas;
 	}
+	
+	public ArrayList<BookDisplayableInformation> getSearchResults(){
+		ArrayList<BookDisplayableInformation> searchResults = new ArrayList<BookDisplayableInformation>();
+		searchResults.add(gameOfThrones.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+		searchResults.add(goneGirl.getBookDisplay());
+		searchResults.add(theGiver.getBookDisplay());
+		searchResults.add(divergent.getBookDisplay());
+		searchResults.add(harryPotter.getBookDisplay());
+		searchResults.add(unlucky13.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+		searchResults.add(gameOfThrones.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+		searchResults.add(goneGirl.getBookDisplay());
+		searchResults.add(theGiver.getBookDisplay());
+		searchResults.add(divergent.getBookDisplay());
+		searchResults.add(harryPotter.getBookDisplay());
+		searchResults.add(unlucky13.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+		searchResults.add(gameOfThrones.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+		searchResults.add(goneGirl.getBookDisplay());
+		searchResults.add(theGiver.getBookDisplay());
+		searchResults.add(divergent.getBookDisplay());
+		searchResults.add(harryPotter.getBookDisplay());
+		searchResults.add(unlucky13.getBookDisplay());
+		searchResults.add(faultInOurStars.getBookDisplay());
+	
+		return searchResults;
+	}
 
 	public ArrayList<BookDisplayableInformation> getNewBooks(){
 		ArrayList<BookDisplayableInformation> newBooks = new ArrayList<BookDisplayableInformation>();
