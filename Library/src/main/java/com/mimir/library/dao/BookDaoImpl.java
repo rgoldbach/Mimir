@@ -1,13 +1,17 @@
 package com.mimir.library.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mimir.library.model.AudioBook;
+import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.EBook;
@@ -33,10 +37,9 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public Book getSpecificBook(int bookId) {
-		Criteria specificBook = getSession().createCriteria(Book.class, "book");
-		specificBook.setFetchMode("authors", FetchMode.JOIN);
-		specificBook.add(Restrictions.eq("bookId", bookId));
-		return (Book) specificBook.uniqueResult();
+		Book book = (Book) getSession().get(Book.class, bookId);
+		Hibernate.initialize(book.getAuthors());
+		return book;
 	}
 
 	@Override

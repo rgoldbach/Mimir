@@ -26,7 +26,7 @@ public interface SearchDao {
 	List<AwardInfo> getAllAwards();
 	List<String> getAllAwardsAsStrings();
 	
-	List<Book> quickSearch();
-	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria);
+	List<Book> quickSearch(List<String> keywords, int firstResultIndex);
+	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex);
 	
 }

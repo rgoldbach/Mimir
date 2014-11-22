@@ -1,6 +1,7 @@
 package com.mimir.library.model;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +45,10 @@ public class Book {
 	private BookDisplayableInformation bookDisplay;
 	
 	@OneToOne(mappedBy = "book")
-	private EBook bookTextFormat;
+	private EBook eBook;
+	
+	@OneToOne(mappedBy = "book")
+	private AudioBook audioBook;
 	
 	@Column(name = "isbn")
 	private String isbn;
@@ -80,12 +84,12 @@ public class Book {
 		this.bookDisplay = bookDisplay;
 	}
 
-	public EBook getBookTextFormat() {
-		return bookTextFormat;
+	public EBook getEBook() {
+		return eBook;
 	}
 
-	public void setBookTextFormat(EBook bookTextFormat) {
-		this.bookTextFormat = bookTextFormat;
+	public void setEBook(EBook eBook) {
+		this.eBook = eBook;
 	}
 
 	public String getIsbn() {
@@ -126,6 +130,30 @@ public class Book {
 			output += "Authors are null!\n";
 		}
 		return output;
+	}
+
+	public Collection<BookGenre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(Collection<BookGenre> genres) {
+		this.genres = genres;
+	}
+
+	public Collection<BookInterestLevel> getInterestLevels() {
+		return interestLevels;
+	}
+
+	public void setInterestLevels(Collection<BookInterestLevel> interestLevels) {
+		this.interestLevels = interestLevels;
+	}
+
+	public AudioBook getAudioBook() {
+		return audioBook;
+	}
+
+	public void setAudioBook(AudioBook audioBook) {
+		this.audioBook = audioBook;
 	}
 	
 }

@@ -1,6 +1,8 @@
 package com.mimir.library.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
@@ -31,7 +33,7 @@ public class TestLibrary {
 		goneGirl = new Book();
 		BookDisplayableInformation goneGirldbi = new BookDisplayableInformation();
 		goneGirl.setBookId(1);
-		ArrayList<Author> goneGirlAuth = new ArrayList<Author>();
+		Set<Author> goneGirlAuth = new HashSet<Author>();
 		Author gillian = new Author();
 		gillian.setName("Gillian Flynn");
 		goneGirlAuth.add(gillian);
@@ -46,7 +48,7 @@ public class TestLibrary {
 		faultInOurStars = new Book();
 		BookDisplayableInformation faultInOurStarsdbi = new BookDisplayableInformation();
 		faultInOurStars.setBookId(2);
-		ArrayList<Author> faultInOurStarsAuth = new ArrayList<Author>();
+		Set<Author> faultInOurStarsAuth = new HashSet<Author>();
 		Author green = new Author();
 		green.setName("John Green");
 		faultInOurStarsAuth.add(green);
@@ -61,7 +63,7 @@ public class TestLibrary {
 		gameOfThrones = new Book();
 		BookDisplayableInformation gameOfThronesdbi = new BookDisplayableInformation();
 		gameOfThrones.setBookId(3);
-		ArrayList<Author> gameOfThronesAuth = new ArrayList<Author>();
+		Set<Author> gameOfThronesAuth = new HashSet<Author>();
 		Author martin = new Author();
 		martin.setName("George R.R. Martin");
 		gameOfThronesAuth.add(martin);
@@ -76,7 +78,7 @@ public class TestLibrary {
 		theGiver = new Book();
 		BookDisplayableInformation theGiverdbi = new BookDisplayableInformation();
 		theGiver.setBookId(4);
-		ArrayList<Author> theGiverAuth = new ArrayList<Author>();
+		Set<Author> theGiverAuth = new HashSet<Author>();
 		Author lowry = new Author();
 		lowry.setName("Lois Lowry");
 		theGiverAuth.add(lowry);
@@ -91,7 +93,7 @@ public class TestLibrary {
 		divergent = new Book();
 		BookDisplayableInformation divergentdbi = new BookDisplayableInformation();
 		divergent.setBookId(5);
-		ArrayList<Author> divergentAuth = new ArrayList<Author>();
+		Set<Author> divergentAuth = new HashSet<Author>();
 		Author roth = new Author();
 		roth.setName("Veronica Roth");
 		divergentAuth.add(roth);
@@ -106,7 +108,7 @@ public class TestLibrary {
 		harryPotter = new Book();
 		BookDisplayableInformation harryPotterdbi = new BookDisplayableInformation();
 		harryPotter.setBookId(6);
-		ArrayList<Author> harryPotterAuth = new ArrayList<Author>();
+		Set<Author> harryPotterAuth = new HashSet<Author>();
 		Author rolling = new Author();
 		rolling.setName("J.K. Rolling");
 		harryPotterAuth.add(rolling);
@@ -121,7 +123,7 @@ public class TestLibrary {
 		unlucky13 = new Book();
 		BookDisplayableInformation unlucky13dbi = new BookDisplayableInformation();
 		unlucky13.setBookId(7);
-		ArrayList<Author> unlucky13Auth = new ArrayList<Author>();
+		Set<Author> unlucky13Auth = new HashSet<Author>();
 		Author patterson= new Author();
 		patterson.setName("James Patterson");
 		unlucky13Auth.add(patterson);

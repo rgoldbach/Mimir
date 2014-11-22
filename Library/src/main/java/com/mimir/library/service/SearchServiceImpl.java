@@ -1,5 +1,6 @@
 package com.mimir.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,11 +74,42 @@ public class SearchServiceImpl implements SearchService{
 		return dao.getAllAwardsAsStrings();
 	}
 	@Override
-	public List<Book> quickSearch() {
-		return dao.quickSearch();
+	public List<Book> quickSearch(String keyword, int firstResultIndex) {
+		if(keyword.trim().equals("")) return null;
+		System.out.println("Debug - Creating Keywords: ");
+		List<String> keywords = this.seperateKeywords(keyword);
+		return dao.quickSearch(keywords, firstResultIndex);
 	}
 	@Override
-	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria) {
-		return dao.advancedSearch(advancedSearchCriteria);
+	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex) {
+		return dao.advancedSearch(advancedSearchCriteria, firstResultIndex);
 	}
+	
+	public List<String> seperateKeywords(String keyword){
+		System.out.println("Debug - Keywords: ");
+        List<String> keywords = new ArrayList<String>();
+        keyword = keyword.trim();
+		for(int i = 0; i < keyword.length(); i++){
+	            if(keyword.charAt(i) == '"'){
+	                int endQuoteIndex = keyword.indexOf("\"", (i+1));
+	                if(endQuoteIndex != -1){
+	                	System.out.println(keyword.substring((i+1), endQuoteIndex) + " ");
+	                    keywords.add(keyword.substring((i+1), endQuoteIndex));
+	                    i = endQuoteIndex;
+	                }
+	            }
+	            else if(keyword.charAt(i) != ' '){
+	                int endIndex = keyword.indexOf(" ", (i+1));
+	                if(endIndex == -1){
+	                	System.out.println(keyword.substring((i), keyword.length()) + " ");
+	                    keywords.add(keyword.substring((i), keyword.length()));
+	                    return keywords;
+	                }
+	                System.out.println(keyword.substring((i), endIndex) + " ");
+	                keywords.add(keyword.substring((i), endIndex));
+	                i = endIndex;
+	            }
+	        }
+        return keywords;
+    }
 }

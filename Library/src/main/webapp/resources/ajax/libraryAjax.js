@@ -140,7 +140,7 @@ function signInOrOut() {
 }
 
 function returnBook(whichBook){
-	console.log(whichBook)
+	console.log(whichBook);
 	json = "";
 	$.ajax({
 	      url: "return?whichBook="+whichBook,

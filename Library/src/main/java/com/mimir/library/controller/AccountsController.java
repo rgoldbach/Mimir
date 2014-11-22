@@ -91,11 +91,8 @@ public class AccountsController {
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.POST)
 	public @ResponseBody String signOut(@RequestBody String todo, HttpSession session) {
-		System.out.println("in signin controller");
-		//Do some sort of authentication, for now, just assume they are a valid user.
+		System.out.println("Debug: User is signing out");
 		
-		
-		//Get a default user for now
 		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, null);
 		return "signoutsuccess";
 

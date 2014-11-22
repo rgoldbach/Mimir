@@ -112,9 +112,9 @@ DROP TABLE IF EXISTS `UserAccountInfo`;
 /*BOOK INFORMATION */
 /***************************************************************/
 
-
 DROP TABLE IF EXISTS `Authors`;
-CREATE TABLE `Authors` (
+DROP TABLE IF EXISTS `BAuthors`;
+CREATE TABLE `BAuthors` (
     `authorId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
     `description` VARCHAR(50) NOT NULL,
@@ -142,7 +142,7 @@ CREATE TABLE `AuthorAwards` (
         REFERENCES `AwardInfo` (`awardId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `authorToAuthor` FOREIGN KEY (`authorId`)
-        REFERENCES `Authors` (`authorId`)
+        REFERENCES `BAuthors` (`authorId`)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -162,7 +162,7 @@ CREATE TABLE `Authors_Books` (
     `authorId` INT NOT NULL,
     PRIMARY KEY (bookId, authorId),
     CONSTRAINT `author_book_map` FOREIGN KEY (`authorId`)
-        REFERENCES `Authors` (`authorId`)
+        REFERENCES `BAuthors` (`authorId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT `book_author_map` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
@@ -636,8 +636,8 @@ LOCK TABLES `Admins` WRITE;/* Id, AccountInfoId(FK) */
 INSERT INTO `Admins` VALUES (1, 3);
 UNLOCK TABLES;
 
-LOCK TABLES `Authors` WRITE;/* Id, Name, Description */
-INSERT INTO `Authors` VALUES (1, 'Stephen Hawking', 'Description would be here.'), 
+LOCK TABLES `BAuthors` WRITE;/* Id, Name, Description */
+INSERT INTO `BAuthors` VALUES (1, 'Stephen Hawking', 'Description would be here.'), 
 							 (2, 'Lois Lowry', 'Description would go here.'), 
 							 (3, 'George R.R. Martin', 'Description would go here.'), 
 							 (4, 'J.K. Rowling', 'Description would go here.'),

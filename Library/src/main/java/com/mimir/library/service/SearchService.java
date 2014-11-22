@@ -26,7 +26,7 @@ public interface SearchService {
 	List<AwardInfo> getAllAwards();
 	List<String> getAllAwardsAsStrings();
 	
-	List<Book> quickSearch();
-	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria);
+	List<Book> quickSearch(String keyword, int firstResultIndex);
+	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex);
 	
 }

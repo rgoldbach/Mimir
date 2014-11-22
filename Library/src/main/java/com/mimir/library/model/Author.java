@@ -1,7 +1,9 @@
 package com.mimir.library.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Authors")
+@Table(name="BAuthors")
 public class Author {
 
 	@Id
@@ -39,7 +41,7 @@ public class Author {
 	public Author(String name, String description){
 		this.name = name;
 		this.description = description;
-		this.setBooks(new LinkedList<Book>());
+		this.setBooks(new HashSet<Book>());
 	}
 
 	public int getAuthorId() {

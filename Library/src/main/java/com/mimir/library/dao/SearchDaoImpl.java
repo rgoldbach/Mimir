@@ -1,12 +1,20 @@
 package com.mimir.library.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import com.mimir.library.model.AdvancedSearchForm;
+import com.mimir.library.model.Author;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.Format;
@@ -93,13 +101,39 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		Query query = getSession().createSQLQuery("SELECT title FROM AwardInfo");
 		return (List<String>) query.list();
 	}
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Book> quickSearch() {
-		return null;
+	public List<Book> quickSearch(List<String> keywords, int firstResultIndex) {
+		Criteria criteria = getSession().createCriteria(Book.class, "book");
+		//Creating aliases to reference the tables that will be searched against...
+		criteria.createAlias("book.bookDisplay", "b");
+		criteria.createAlias("book.authors", "a");
+		criteria.createAlias("book.genres", "bg");
+		criteria.createAlias("bg.genre", "g");
+		//Matches each keyword with the name of each attribute, the number multiplied by keywords.size() is the number 
+		//of different restrictions we are adding for each keyword. 
+		Criterion[] restrictions = new Criterion[(keywords.size()*3)];
+		int index = 0;
+		for(String keyword : keywords){
+			restrictions[index++] = Restrictions.like("b.title", ("%"+keyword+"%"));
+			restrictions[index++] = Restrictions.like("a.name", ("%"+keyword+"%"));
+			restrictions[index++] = Restrictions.like("g.genre", ("%"+keyword+"%"));
+		}
+		//Adds the criterion to the query
+		criteria.add(Restrictions.or(restrictions));
+		//Since we have multiple joins, we only want one distinct root entity instead of multiple...
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<Book> books = (List<Book>) criteria.list();
+		//So there are no lazy exceptions! 
+		for(Book b : books){
+			Hibernate.initialize(b.getAuthors());
+			Hibernate.initialize(b.getGenres());
+		}
+		return books;
 	}
 
 	@Override
-	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria) {
+	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex) {
 		return null;
 	}
 }

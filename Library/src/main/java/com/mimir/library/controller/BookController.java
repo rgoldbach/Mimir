@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
@@ -44,7 +45,10 @@ public class BookController {
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println(whichBook);
 		ModelAndView mv = new ModelAndView("library/bookModal");		
-		Book book = libraryService.getSpecificBook(whichBook);		
+		Book book = libraryService.getSpecificBook(whichBook);
+		for(Author a : book.getAuthors()){
+			System.out.println(a.getName());
+		}
 		session.setAttribute("viewBook", book);
 		mv.addObject("book", book);
 		return mv;

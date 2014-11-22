@@ -72,7 +72,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Library Card Number</label>
 							<div class="col-sm-5">
-								<input type="text" class="form-control" name="libraryCardNumber"
+								<input id="libraryCardNumberReg" type="text" class="form-control" name="libraryCardNumber"
 									placeholder="123456789"
 									data-bv-message="The library card number is not valid"
 									data-bv-notempty="true"
@@ -90,7 +90,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="firstName"
+								<input id="firstNameReg" type="text" class="form-control" name="firstName"
 									placeholder="William" data-bv-notempty="true"
 									data-bv-notempty-message="The first name is required and cannot be empty" />
 							</div>
@@ -99,7 +99,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="lastName"
+								<input id="lastNameReg" type="text" class="form-control" name="lastName"
 									placeholder="Shakespeare" data-bv-notempty="true"
 									data-bv-notempty-message="The last name is required and cannot be empty" />
 							</div>
@@ -108,7 +108,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
-								<input class="form-control" name="email" type="text"
+								<input id="emailReg" class="form-control" name="email" type="text"
 									placeholder="will@shakespeare.com"
 									data-bv-notempty="true"
 									data-bv-regexp="true" data-bv-regexp-regexp="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
@@ -119,7 +119,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Password</label>
 							<div class="col-sm-5">
-								<input type="password" class="form-control" name="password"
+								<input id="passwordReg" type="password" class="form-control" name="password"
 									data-bv-notempty="true"
 									data-bv-notempty-message="The password is required and cannot be empty"
 									data-bv-different="true" data-bv-different-field="username"
@@ -142,7 +142,7 @@
 
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-primary">Register</button>
+						<button id="register" name="register" type="submit" class="btn btn-primary">Register</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>
