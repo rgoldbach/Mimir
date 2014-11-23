@@ -24,7 +24,7 @@ public class SearchController {
 	@Autowired
 	SearchService searchService;
  
-	@RequestMapping("/quicksearch")
+	@RequestMapping("/quickSearch")
 	public ModelAndView quickSearch(
 			@RequestParam(value = "query", required = false, defaultValue = "") String query, HttpSession session) {
 		System.out.println("Quick Search for " + query);

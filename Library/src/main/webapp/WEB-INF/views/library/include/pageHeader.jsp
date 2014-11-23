@@ -7,9 +7,9 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<br>
-				<form:form id="searchForm" class="form-horizontal" method="GET" commandName="advancedSearchForm" action="quickSearch">
 					<div class="site-heading">
 <!-- Start Basic Search -->
+					<form method="POST" action="quickSearch">
 						<div class="form-group">
 							<div class="input-group input-group-lg">
 								<div class="input-group-btn">
@@ -24,19 +24,21 @@
 								</div>
 	<!-- Quick Search -->
 								
-								<input id="quickSearch" type="search" name="query" class="form-control">
+								<input id="quickSearchInput" type="search" name="query" class="form-control">
 	<!-- Quick/Advanced Search Submit -->
 								<span class="input-group-btn">
-									<button type="submit" value="submit" class="btn btn-default" type="button">
+									<button id="quickSearchButton" type="submit" value="submit" class="btn btn-default quickSearch" type="button">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
 								</span>
 							</div>
 						</div>
+					</form>
 <!-- Start Advanced Search -->
 						<div id="advancedSearch" class="collapse">
 							<div class="panel panel-default">
 								<div class="panel-body">
+								<form:form class="form-horizontal" method="POST" commandName="advancedSearchForm" action="advancedSearch">
 	<!-- Book Information Inputs -->
 									<div class="form-group">
 										<div class="col-md-7">
@@ -221,12 +223,17 @@
       										</select>
 										</div>
 									</div>
+									<div class="form-group">
+										<button type="submit" type="button" class="btn btn-default">
+											<span class="glyphicon glyphicon-search"></span>
+										</button>
+									</div>
+									</form:form>
 								</div>
 							</div>
 <!-- End Advanced Search -->
 						</div>
 					</div>
-				</form:form>
 			</div>
 		</div>
 	</div>
