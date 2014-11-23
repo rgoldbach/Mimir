@@ -42,7 +42,7 @@
 		<div class="row">
 	<!-- Search Results -->
 			<div id="searchResultContainer" class="col-md-8 col-md-offset-2">
-				<c:forEach end="12" var="book" items = "${searchResults}">
+				<c:forEach end="11" var="book" items = "${searchResults}">
 		<!-- Search Result -->
 					<div class="col-md-3">
 						<div class="thumbnail">
@@ -65,6 +65,7 @@
 	<%@ include file="/WEB-INF/views/library/include/modals.jsp" %>
 
 	<%@ include file="/WEB-INF/views/library/include/jsSources.jsp" %>
+
 	
 </body>
 
