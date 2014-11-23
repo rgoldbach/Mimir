@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!-- Page Header -->
 <header class="search-header"
 	style="background-image: url('<c:url value="/resources/img/lib-bg-sm.jpg" />')">
@@ -5,7 +7,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<br>
-				<form id="searchForm" class="form-horizontal" action="quickSearch" method="GET">
+				<form:form id="searchForm" class="form-horizontal" method="GET" commandName="advancedSearchForm" action="quickSearch">
 					<div class="site-heading">
 <!-- Start Basic Search -->
 						<div class="form-group">
@@ -25,7 +27,7 @@
 								<input id="quickSearch" type="search" name="query" class="form-control">
 	<!-- Quick/Advanced Search Submit -->
 								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default" type="button">
+									<button type="submit" value="submit" class="btn btn-default" type="button">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
 								</span>
@@ -49,7 +51,7 @@
 											</label>
 										</div>
 										<div class="col-md-10">
-											<input id="title" type="search" class="form-control">
+											<form:input id="title" path="title" type="search" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
@@ -59,7 +61,7 @@
 											</label>
 										</div>
 										<div class="col-md-10">
-											<input id="author" type="search" class="form-control">
+											<form:input id="author" path="author" type="search" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
@@ -69,13 +71,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="genre" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+      										<form:select title="&nbsp;" path="genre" id="genre" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${genres}" />
+				       						</form:select>
 										</div>
 		<!-- Language Input -->
 										<div class="col-md-2">
@@ -83,13 +81,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="language" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+											<form:select title="&nbsp;" path="language" id="language" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${languages}" />
+				       						</form:select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -99,13 +93,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="publisher" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+											<form:select title="&nbsp;" path="publisher" id="publisher" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${publishers}" />
+				       						</form:select>
 										</div>
 		<!-- Awards Input -->
 										<div class="col-md-2">
@@ -113,13 +103,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="awards" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+											<form:select title="&nbsp;" path="award" id="award" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${awards}" />
+				       						</form:select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -129,13 +115,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="added" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+											<form:select title="&nbsp;" path="added" id="added" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${addeds}" />
+				       						</form:select>
 										</div>
 		<!-- Format Input -->
 										<div class="col-md-2">
@@ -143,13 +125,9 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<select id="format" class="selectpicker" data-live-search="true" title="" data-width="100%" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+											<form:select title="&nbsp;" path="format" id="format" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${formats}" />
+				       						</form:select>
 										</div>
 									</div>
 	<!-- Reading Level Inputs -->
@@ -248,7 +226,7 @@
 <!-- End Advanced Search -->
 						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>
