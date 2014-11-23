@@ -1,8 +1,5 @@
 package com.mimir.library.model;
 
-import java.util.Collection;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +10,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,15 +29,17 @@ public class BookDisplayableInformation {
 	@JoinColumn(name = "bookId")
 	private Book book;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name = "title")
 	private String title;
 	
 	@Column(name = "description")
 	private String description;
 	
+	
     @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "dateAdded")
-	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateAdded;
 	
 	@Column(name = "imageFilePath")

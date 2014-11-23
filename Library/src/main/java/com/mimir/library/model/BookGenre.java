@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.IndexedEmbedded;
+
 @Entity
 @Table(name = "BookGenres")
 public class BookGenre {
@@ -21,6 +23,7 @@ public class BookGenre {
 	@JoinColumn(name="bookId")
 	private Book book;
 	
+	@IndexedEmbedded
 	@OneToOne
 	@JoinColumn(name="genreId")
 	private Genre genre;

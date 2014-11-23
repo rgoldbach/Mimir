@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.sql.JoinType;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.errors.EmptyQueryException;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.enums.SearchType;
+import com.mimir.library.enums.SortType;
+import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AdvancedSearchForm;
-import com.mimir.library.model.Author;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.Format;
@@ -22,10 +23,20 @@ import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
 import com.mimir.library.model.Publisher;
+import com.mimir.library.searchHelpers.CriteriaManager;
 
 @Repository("searchDao")
 public class SearchDaoImpl extends AbstractDao implements SearchDao{
 
+	public void initHibernateSearch(){
+		FullTextSession fullTextSession = Search.getFullTextSession(getSession());
+		try {
+			fullTextSession.createIndexer().startAndWait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Genre> getAllGenres() {
@@ -101,39 +112,82 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		Query query = getSession().createSQLQuery("SELECT title FROM AwardInfo");
 		return (List<String>) query.list();
 	}
-	@SuppressWarnings("unchecked")
+	
 	@Override
-	public List<Book> quickSearch(List<String> keywords, int firstResultIndex) {
-		Criteria criteria = getSession().createCriteria(Book.class, "book");
-		//Creating aliases to reference the tables that will be searched against...
-		criteria.createAlias("book.bookDisplay", "b");
-		criteria.createAlias("book.authors", "a");
-		criteria.createAlias("book.genres", "bg");
-		criteria.createAlias("bg.genre", "g");
-		//Matches each keyword with the name of each attribute, the number multiplied by keywords.size() is the number 
-		//of different restrictions we are adding for each keyword. 
-		Criterion[] restrictions = new Criterion[(keywords.size()*3)];
-		int index = 0;
-		for(String keyword : keywords){
-			restrictions[index++] = Restrictions.like("b.title", ("%"+keyword+"%"));
-			restrictions[index++] = Restrictions.like("a.name", ("%"+keyword+"%"));
-			restrictions[index++] = Restrictions.like("g.genre", ("%"+keyword+"%"));
+	public List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType) {
+		return null;
+	}
+	
+	@Override
+	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex) {
+		return null;
+	}
+	
+	
+	@Override
+	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
+		List<Book> books = new ArrayList<Book>();
+		if(sortType == SortType.Relevance && searchType != SearchType.Advanced){
+			System.out.println("DEBUG - Using Hibernate Search...");
+			books = performHibernateSearch(searchKeyword, firstResultIndex);
 		}
-		//Adds the criterion to the query
-		criteria.add(Restrictions.or(restrictions));
-		//Since we have multiple joins, we only want one distinct root entity instead of multiple...
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		List<Book> books = (List<Book>) criteria.list();
-		//So there are no lazy exceptions! 
+		else{
+			System.out.println("DEBUG - Using Criteria Search...");
+			books = performCriteriaSearch(searchKeyword, firstResultIndex, searchType, sortType);
+		}
+		
+		this.initializeBooks(books);
+		
+		return books;
+	}
+	
+	private void initializeBooks(List<Book> books){
 		for(Book b : books){
 			Hibernate.initialize(b.getAuthors());
 			Hibernate.initialize(b.getGenres());
 		}
-		return books;
+	}
+	
+	//Helper methods...
+	
+	@SuppressWarnings("unchecked")
+	private List<Book> performCriteriaSearch(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
+		CriteriaManager critManager = new CriteriaManager(searchKeyword, firstResultIndex, searchType, sortType);
+		Criteria criteria = getSession().createCriteria(Book.class, "book");
+		criteria = critManager.getCriteria(criteria);
+		return (List<Book>) criteria.list();
 	}
 
-	@Override
-	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex) {
-		return null;
+	
+	private List<Book> performHibernateSearch(String searchKeyword, int firstResultIndex) {
+		String[] quickSearchCriteria = {"bookDisplay.title", "authors.name", "genres.genre.genre"};
+		List<Book> books =  hibernateSearch(searchKeyword, quickSearchCriteria, firstResultIndex);
+		if(books == null) return null;
+		return books;
+	}
+	
+	public List<Book> hibernateSearch(String keyword, String[] matchingAttributes, int firstResultIndex){
+		FullTextSession fullTextSession = Search.getFullTextSession(getSession());
+		QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
+		org.apache.lucene.search.Query luceneQuery;
+		try{
+			luceneQuery = qb
+					  .keyword()
+					  .onFields(matchingAttributes)
+					  .matching(keyword)
+					  .createQuery();
+		}catch(EmptyQueryException e){
+			System.out.println("DEBUG - Query Exception! Aborting search...");
+			return null;
+		}
+		
+		Query query = fullTextSession.createFullTextQuery(luceneQuery, Book.class);
+		query.setFirstResult(firstResultIndex);
+		query.setMaxResults(GlobalConstants.MAX_SEARCH_RESULTS);
+		
+		@SuppressWarnings("unchecked")
+		List<Book> result = (List<Book>) query.list();
+		System.out.println("DEBUG - " + result.size() + " results found!");
+		return result;
 	}
 }

@@ -14,6 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
 @Entity
 @Table(name="BAuthors")
 public class Author {
@@ -22,6 +27,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int authorId;
 	
+	@Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
 	@Column(name = "name")
 	private String name;
 	

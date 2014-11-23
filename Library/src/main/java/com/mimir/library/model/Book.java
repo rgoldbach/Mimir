@@ -1,7 +1,6 @@
 package com.mimir.library.model;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,7 +16,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+
+
 @Entity
+@Indexed
 @Table(name="Books")
 public class Book {
 
@@ -25,6 +30,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookId;
 	
+	@IndexedEmbedded
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Authors_Books", joinColumns = { 
 			@JoinColumn(name = "bookId", nullable = false, updatable = false) }, 
@@ -35,12 +41,14 @@ public class Book {
 	@OneToMany(mappedBy = "book")
 	private Collection<BookAward> awards;
 
+	@IndexedEmbedded
 	@OneToMany(mappedBy = "book")
 	private Collection<BookGenre> genres;
 	
 	@OneToMany(mappedBy = "book")
 	private Collection<BookInterestLevel> interestLevels;
 	
+	@IndexedEmbedded
 	@OneToOne(mappedBy = "book")
 	private BookDisplayableInformation bookDisplay;
 	

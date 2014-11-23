@@ -2,6 +2,8 @@ package com.mimir.library.service;
 
 import java.util.List;
 
+import com.mimir.library.enums.SearchType;
+import com.mimir.library.enums.SortType;
 import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
@@ -26,7 +28,8 @@ public interface SearchService {
 	List<AwardInfo> getAllAwards();
 	List<String> getAllAwardsAsStrings();
 	
-	List<Book> quickSearch(String keyword, int firstResultIndex);
-	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex);
+	List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType);
+	
+	void initHibernateSearch();
 	
 }

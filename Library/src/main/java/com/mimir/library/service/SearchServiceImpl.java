@@ -2,12 +2,19 @@ package com.mimir.library.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.CharArraySet;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.dao.SearchDao;
+import com.mimir.library.enums.SearchType;
+import com.mimir.library.enums.SortType;
 import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
@@ -23,6 +30,10 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Autowired
 	SearchDao dao;
+	
+	public void initHibernateSearch(){
+		dao.initHibernateSearch();
+	}
 
 	@Override
 	public List<Genre> getAllGenres() {
@@ -73,43 +84,10 @@ public class SearchServiceImpl implements SearchService{
 	public List<String> getAllAwardsAsStrings() {
 		return dao.getAllAwardsAsStrings();
 	}
-	@Override
-	public List<Book> quickSearch(String keyword, int firstResultIndex) {
-		if(keyword.trim().equals("")) return null;
-		System.out.println("Debug - Creating Keywords: ");
-		List<String> keywords = this.seperateKeywords(keyword);
-		return dao.quickSearch(keywords, firstResultIndex);
-	}
-	@Override
-	public List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex) {
-		return dao.advancedSearch(advancedSearchCriteria, firstResultIndex);
+	
+	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
+		return dao.search(searchKeyword, firstResultIndex, searchType, sortType);
 	}
 	
-	public List<String> seperateKeywords(String keyword){
-		System.out.println("Debug - Keywords: ");
-        List<String> keywords = new ArrayList<String>();
-        keyword = keyword.trim();
-		for(int i = 0; i < keyword.length(); i++){
-	            if(keyword.charAt(i) == '"'){
-	                int endQuoteIndex = keyword.indexOf("\"", (i+1));
-	                if(endQuoteIndex != -1){
-	                	System.out.println(keyword.substring((i+1), endQuoteIndex) + " ");
-	                    keywords.add(keyword.substring((i+1), endQuoteIndex));
-	                    i = endQuoteIndex;
-	                }
-	            }
-	            else if(keyword.charAt(i) != ' '){
-	                int endIndex = keyword.indexOf(" ", (i+1));
-	                if(endIndex == -1){
-	                	System.out.println(keyword.substring((i), keyword.length()) + " ");
-	                    keywords.add(keyword.substring((i), keyword.length()));
-	                    return keywords;
-	                }
-	                System.out.println(keyword.substring((i), endIndex) + " ");
-	                keywords.add(keyword.substring((i), endIndex));
-	                i = endIndex;
-	            }
-	        }
-        return keywords;
-    }
+	
 }

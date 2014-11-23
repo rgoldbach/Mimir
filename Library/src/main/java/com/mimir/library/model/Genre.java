@@ -7,6 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Store;
+
 @Entity
 @Table(name = "Genres")
 public class Genre {
@@ -15,6 +20,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int genreId;
 	
+	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
 	@Column(name = "genre")
 	private String genre;
 

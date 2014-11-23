@@ -2,6 +2,8 @@ package com.mimir.library.dao;
 
 import java.util.List;
 
+import com.mimir.library.enums.SearchType;
+import com.mimir.library.enums.SortType;
 import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
@@ -26,7 +28,10 @@ public interface SearchDao {
 	List<AwardInfo> getAllAwards();
 	List<String> getAllAwardsAsStrings();
 	
-	List<Book> quickSearch(List<String> keywords, int firstResultIndex);
+	List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType);
 	List<Book> advancedSearch(AdvancedSearchForm advancedSearchCriteria, int firstResultIndex);
 	
+	List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType);
+	
+	void initHibernateSearch();
 }
