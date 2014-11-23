@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!-- Page Header -->
 <header class="search-header"
 	style="background-image: url('<c:url value="/resources/img/lib-bg-sm.jpg" />')">
@@ -5,151 +7,140 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<br>
-				<form class="form-horizontal" action="./search" method="get">
+				<form:form id="searchForm" class="form-horizontal" method="GET" commandName="advancedSearchForm" action="quickSearch">
 					<div class="site-heading">
 <!-- Start Basic Search -->
 						<div class="form-group">
 							<div class="input-group input-group-lg">
 								<div class="input-group-btn">
-	<!-- Terms Input -->
+	<!-- Search Label -->
 									<button type="button" class="btn btn-default" disabled style="opacity:1">
-										<b>Search</b></button>
-									<button type="button" class="btn btn-default"
-										data-toggle="collapse" data-target="#advancedSearch">
+										<b>Search</b>
+									</button>
+	<!-- Switch between Quick/Advanced Search -->
+									<button type="button" class="btn btn-default" id="toggleSearch" data-toggle="collapse" data-target="#advancedSearch">
 										<span class="glyphicon glyphicon-list"></span>
 									</button>
 								</div>
-								<!--  placeholder="&quot;So many books, so little time.&quot; - Frank Zappa" -->
-								<input type="search" name="query"  class="form-control"> <span
-									class="input-group-btn">
-									<button type="submit" class="btn btn-default" type="button">
+	<!-- Quick Search -->
+								
+								<input id="quickSearch" type="search" name="query" class="form-control">
+	<!-- Quick/Advanced Search Submit -->
+								<span class="input-group-btn">
+									<button type="submit" value="submit" class="btn btn-default" type="button">
 										<span class="glyphicon glyphicon-search"></span>
 									</button>
 								</span>
 							</div>
 						</div>
-<!-- End Basic Search -->
 <!-- Start Advanced Search -->
 						<div id="advancedSearch" class="collapse">
 							<div class="panel panel-default">
 								<div class="panel-body">
 	<!-- Book Information Inputs -->
 									<div class="form-group">
-										<h2 class="col-sm-5">Book Information</h2>
+										<div class="col-md-7">
+											<label style="font-size:25px;" class="control-label">Book Information</label>
+											<label style="font-size:15px;" for="availability" class="control-label">(Available Only <input type="checkbox" id="availability">)</label>
+										</div>
 									</div>
 									<div class="form-group">
 		<!-- Title Input -->
-										<label for="title" class="col-sm-1 control-label">Title:
-										</label>
-										<div class="col-sm-11">
-											<input type="search" class="form-control" id="title">
+										<div class="col-md-2">
+											<label for="title" class="control-label">Title
+											</label>
+										</div>
+										<div class="col-md-10">
+											<form:input id="title" path="title" type="search" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- Author Input -->
-										<label for="author" class="col-sm-1 control-label">Author:
-										</label>
-										<div class="col-sm-11">
-											<input type="search" class="form-control" id="author">
+										<div class="col-md-2">
+											<label for="author" class="control-label">Author
+											</label>
+										</div>
+										<div class="col-md-10">
+											<form:input id="author" path="author" type="search" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
-		<!-- Subject Input -->
-										<label for="subject" class="col-sm-1 control-label">Genre:
+		<!-- Genre Input -->
+										<div class="col-md-2">
+											<label for="genre" class="control-label">Genre
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+										</div>
+										<div class="col-md-4">
+      										<form:select title="&nbsp;" path="genre" id="genre" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${genres}" />
+				       						</form:select>
 										</div>
 		<!-- Language Input -->
-										<label for="language" class="col-sm-1 control-label">Language:
+										<div class="col-md-2">
+											<label for="language" class="control-label">Language
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+										</div>
+										<div class="col-md-4">
+											<form:select title="&nbsp;" path="language" id="language" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${languages}" />
+				       						</form:select>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- Publisher Input -->
-										<label for="publisher" class="col-sm-1 control-label">Publisher:
+										<div class="col-md-2">
+											<label for="publisher" class="control-label">Publisher
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+										</div>
+										<div class="col-md-4">
+											<form:select title="&nbsp;" path="publisher" id="publisher" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${publishers}" />
+				       						</form:select>
 										</div>
 		<!-- Awards Input -->
-										<label for="awards" class="col-sm-1 control-label">Awards:
+										<div class="col-md-2">
+											<label for="awards" class="control-label">Awards
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+										</div>
+										<div class="col-md-4">
+											<form:select title="&nbsp;" path="award" id="award" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${awards}" />
+				       						</form:select>
 										</div>
 									</div>
 									<div class="form-group">
 		<!-- Added Input -->
-										<label for="added" class="col-sm-1 control-label">Added:
+										<div class="col-md-2">
+											<label for="added" class="control-label">Added
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
-												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
+										</div>
+										<div class="col-md-4">
+											<form:select title="&nbsp;" path="added" id="added" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${addeds}" />
+				       						</form:select>
 										</div>
 		<!-- Format Input -->
-										<label for="format" class="col-sm-1 control-label">Format:
+										<div class="col-md-2">
+											<label for="format" class="control-label">Format
 										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5" data-live-search="true" title="" multiple>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
 										</div>
-									</div>
-									<div class="form-group">
-		<!-- Availability Input -->			
-										<label for="subject" class="col-sm-2 control-label">Available
-											Only: </label>
-										<div class="col-sm-1">
-											<input type="checkbox" class="form-control" id="availability">
+										<div class="col-md-4">
+											<form:select title="&nbsp;" path="format" id="format" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+					  							<form:options items="${formats}" />
+				       						</form:select>
 										</div>
 									</div>
 	<!-- Reading Level Inputs -->
 									<div class="form-group">
-										<h2 class="col-sm-5">Reading Levels</h2>
+										<br>
 									</div>
 									<div class="form-group">
-		<!-- Interest Input -->
-										<label for="title" class="col-sm-1 control-label">Interest Level:
-										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
+		<!-- Interest -->			
+										<div class="col-md-3 col-md-offset-2">
+											<label class="control-label">Interest Level</label>
+										</div>
+										<div class="col-md-2">
+											<select id="interestLevelStart" class="selectpicker" data-width="100%">
 												<option> </option>
       											<option>1</option>
       											<option>2</option>
@@ -158,41 +149,11 @@
       											<option>5</option>
       										</select>
 										</div>
-										<div class="col-sm-1">
-										<label for="title" class="col-sm-1 control-label"> to 
-										</label>
+										<div class="col-md-1">
+											<label class="control-label"> to </label>
 										</div>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
-												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
-										</div>
-									</div>
-									<div class="form-group">
-		<!-- ATOS Input -->
-										<label for="title" class="col-sm-1 control-label">ATOS Level:
-										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
-												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
-      										</select>
-										</div>
-										<div class="col-sm-1">
-										<label for="title" class="col-sm-1 control-label"> to 
-										</label>
-										</div>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
+										<div class="col-md-2">
+											<select id="interestLevelEnd" class="selectpicker" data-width="100%">
 												<option> </option>
       											<option>1</option>
       											<option>2</option>
@@ -203,11 +164,12 @@
 										</div>
 									</div>
 									<div class="form-group">
-		<!-- Reading Input -->
-										<label for="title" class="col-sm-1 control-label">Reading Level:
-										</label>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
+		<!-- ATOS -->			
+										<div class="col-md-3 col-md-offset-2">
+											<label class="control-label">ATOS Level</label>
+										</div>
+										<div class="col-md-2">
+											<select id="atosLevelStart" class="selectpicker" data-width="100%">
 												<option> </option>
       											<option>1</option>
       											<option>2</option>
@@ -216,12 +178,40 @@
       											<option>5</option>
       										</select>
 										</div>
-										<div class="col-sm-1">
-										<label for="title" class="col-sm-1 control-label"> to 
-										</label>
+										<div class="col-md-1">
+											<label class="control-label"> to </label>
 										</div>
-										<div class="col-sm-5">
-											<select class="selectpicker" data-width="span5">
+										<div class="col-md-2">
+											<select id="atosLevelEnd" class="selectpicker" data-width="100%">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
+										</div>
+									</div>
+									<div class="form-group">
+		<!-- Reading -->			
+										<div class="col-md-3 col-md-offset-2">
+											<label class="control-label">Reading Level</label>
+										</div>
+										<div class="col-md-2">
+											<select id="readingLevelStart" class="selectpicker" data-width="100%">
+												<option> </option>
+      											<option>1</option>
+      											<option>2</option>
+      											<option>3</option>
+      											<option>4</option>
+      											<option>5</option>
+      										</select>
+										</div>
+										<div class="col-md-1">
+											<label class="control-label"> to </label>
+										</div>
+										<div class="col-md-2">
+											<select id="readingLevelEnd" class="selectpicker" data-width="100%">
 												<option> </option>
       											<option>1</option>
       											<option>2</option>
@@ -236,7 +226,7 @@
 <!-- End Advanced Search -->
 						</div>
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>

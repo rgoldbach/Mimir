@@ -24,6 +24,20 @@
 	
 	<script>
 		$(document).ready(function() {
-    	$('#registerForm').bootstrapValidator();});
+    		$('#registerForm').bootstrapValidator();
+    		 $('.selectpicker').selectpicker('.selectpicker'); 
+    		 
+    		// Clears the quicksearch form, disables/enables the quicksearch, changes from quicksearch/advancedsearch
+    		$('#toggleSearch').click(function(){
+    			$('#quickSearch').val('');
+    			$('#quickSearch').prop('disabled',!$('#quickSearch').prop('disabled'));
+    			if($('#searchForm').attr('action') == 'quickSearch'){
+    				$('#searchForm').attr('action','advancedSearch');
+    			}
+    			else{
+    				$('#searchForm').attr('action','quickSearch');
+    			}
+   			});
+		});
 	</script>
 	
