@@ -141,24 +141,25 @@ function signInOrOut() {
     return false;
 }
 
-function returnBook(whichBook){
+function returnBook(whichBook, bookFormat){
 	console.log(whichBook);
 	json = "";
 	$.ajax({
-	      url: "return?whichBook="+whichBook,
-	      data: json,
-	      type: "GET",
-	       
-	      beforeSend: function(xhr) {
-	          xhr.setRequestHeader("Accept", "application/json");
-	          xhr.setRequestHeader("Content-Type", "application/json");
-	      },
-	      complete: function(result) {
-	    	//removes book gui	 
-	    	// if successful
-	    	$('#bookshelfBook'+whichBook).remove();
-
-	      }
+		headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'url' : "return?whichBook="+whichBook+"&bookFormat="+bookFormat,
+        'type' : "GET",
+        'complete' : function(result) {
+        	if(result.status === 200){
+        		console.log(result.status);
+    	    	if(result.status == 200){
+    	    		$('#bookshelfBook'+whichBook).remove();
+    	    	}
+        		
+        	}              	              	
+        }
 	  });	
 }
 

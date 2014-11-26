@@ -170,6 +170,10 @@ public class RegisteredUser{
 	public void setBorrowedAudioBooks(Set<BorrowedAudioBook> borrowedAudioBooks) {
 		this.borrowedAudioBooks = borrowedAudioBooks;
 	}
+	
+	public void removeFromBorrowedAudioBooks(BorrowedAudioBook borrowedAudioBook){
+		this.borrowedAudioBooks.remove(borrowedAudioBook);
+	}
 
 	public Set<PastBorrowedAudioBook> getPastBorrowedAudioBooks() {
 		return pastBorrowedAudioBooks;
@@ -186,6 +190,10 @@ public class RegisteredUser{
 	public void setAudioBookHolds(Set<AudioBookOnHold> audioBookHolds) {
 		this.audioBookHolds = audioBookHolds;
 	}
+	
+	public void removeFromAudioBookHolds(AudioBookOnHold audioBookOnHold){
+		this.audioBookHolds.remove(audioBookOnHold);
+	}
 
 	public Set<WishlistAudioBook> getWishlistAudioBooks() {
 		return wishlistAudioBooks;
@@ -193,6 +201,10 @@ public class RegisteredUser{
 
 	public void setWishlistAudioBooks(Set<WishlistAudioBook> wishlistAudioBooks) {
 		this.wishlistAudioBooks = wishlistAudioBooks;
+	}
+	
+	public void removeFromWishlistAudioBooks(WishlistAudioBook wishlistAudioBooks){
+		this.wishlistAudioBooks.remove(wishlistAudioBooks);
 	}
 
 	public String getUserCode() {

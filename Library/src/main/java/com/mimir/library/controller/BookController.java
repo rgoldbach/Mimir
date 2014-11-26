@@ -17,6 +17,7 @@ import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LibraryService;
@@ -149,18 +150,45 @@ public class BookController {
 	}
 	
 	@RequestMapping("/return")
-	public String returnBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
+	@ResponseBody
+	public String returnBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+							 @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+							 HttpSession session){
 		String message = GlobalConstants.DAO_SUCCESS;
-		System.out.println("Request to return book " + whichBook);
+		System.out.println("Request to return book " + whichBook);	
+		//Determine which book format
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			message = returnEBook(session, whichBook);
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			message = returnAudioBook(session, whichBook);
+		}	
+		return message;
+	}
+	
+	private String returnEBook(HttpSession session, int whichBook){
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		Set<BorrowedEBook> bookshelf =(Set<BorrowedEBook>) currentUser.getBorrowedEBooks();
 		BorrowedEBook bookToReturn = null;
 		for(BorrowedEBook book: bookshelf){
-			if(book.getEBook().getEBookId()==whichBook)
+			if(book.getEBook().getEBookId() == whichBook)
 				bookToReturn = book;
 		}
 		currentUser.removeFromBorrowedEBooks(bookToReturn);
-		message = userService.removeBorrowedEBookOfSpecificUser(bookToReturn);
+		String message = userService.returnBorrowedEBook(bookToReturn);
+		return message;
+	}
+	
+	private String returnAudioBook(HttpSession session, int whichBook){
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		Set<BorrowedAudioBook> bookshelf =(Set<BorrowedAudioBook>) currentUser.getBorrowedAudioBooks();
+		BorrowedAudioBook bookToReturn = null;
+		for(BorrowedAudioBook book: bookshelf){
+			if(book.getAudioBook().getAudioBookId() == whichBook)
+				bookToReturn = book;
+		}
+		currentUser.removeFromBorrowedAudioBooks(bookToReturn);
+		String message = userService.returnBorrowedAudioBook(bookToReturn);
 		return message;
 	}
 	

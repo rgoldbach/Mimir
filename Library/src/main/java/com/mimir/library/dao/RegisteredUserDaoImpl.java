@@ -112,7 +112,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
 		List<BorrowedEBook> userEBooks = getBorrowedEBooksOfSpecificUser(borrowedEBook.getUser());
-		if(userEBooks.contains(borrowedEBook)){
+		if(userEBooks != null && userEBooks.contains(borrowedEBook)){
 			System.out.println("DEBUG: In saveBorrowedEBookOfSpecificUser. User already has borrowed this book! Not adding...");
 			return "You currently are borrowing this book!";
 		}
@@ -142,7 +142,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String savePastBorrowedEBookOfSpecificUser(PastBorrowedEBook pastBorrowedEBook) {
 		List<PastBorrowedEBook> userEBooks = getPastBorrowedEBooksOfSpecificUser(pastBorrowedEBook.getUser());
-		if(userEBooks.contains(pastBorrowedEBook)){
+		if(userEBooks != null && userEBooks.contains(pastBorrowedEBook)){
 			System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. User already has this EBOOK in history! Not adding...");
 			return "EBook already in history!";
 		}
@@ -167,7 +167,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		eBookOnHold.setPositionInQueue(positionInQueue);
 		
 		List<EBookOnHold> userEBooks = getOnHoldEBooksOfSpecificUser(eBookOnHold.getUser());
-		if(userEBooks.contains(eBookOnHold)){
+		if(userEBooks != null && userEBooks.contains(eBookOnHold)){
 			System.out.println("DEBUG: In saveOnHoldEBookOfSpecificUser. User already has this EBOOK on hold! Not adding...");
 			return "You already have this EBook on hold!";
 		}
@@ -194,7 +194,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String saveWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook) {
 		List<WishlistEBook> userEBooks = getWishlistEBooksOfSpecificUser(wishlistEBook.getUser());
-		if(userEBooks.contains(wishlistEBook)){
+		if(userEBooks != null && userEBooks.contains(wishlistEBook)){
 			System.out.println("DEBUG: In saveWishlistEBookOfSpecificUser. User already has this EBook in wishlist! Not adding...");
 			return "You currently are borrowing this book!";
 		}
@@ -224,7 +224,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String saveBorrowedAudioBookOfSpecificUser(BorrowedAudioBook borrowedAudioBook) {
 		List<BorrowedAudioBook> userAudioBooks = getBorrowedAudioBooksOfSpecificUser(borrowedAudioBook.getUser());
-		if(userAudioBooks.contains(borrowedAudioBook)){
+		if(userAudioBooks != null && userAudioBooks.contains(borrowedAudioBook)){
 			System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. User already has borrowed this book! Not adding...");
 			return "You currently are borrowing this book!";
 		}
@@ -254,7 +254,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String savePastBorrowedAudioBookOfSpecificUser(PastBorrowedAudioBook pastBorrowedAudioBook) {
 		List<PastBorrowedAudioBook> userAudioBooks = getPastBorrowedAudioBooksOfSpecificUser(pastBorrowedAudioBook.getUser());
-		if(userAudioBooks.contains(pastBorrowedAudioBook)){
+		if(userAudioBooks != null && userAudioBooks.contains(pastBorrowedAudioBook)){
 			System.out.println("DEBUG: In savePastBorrowedAudioBookOfSpecificUser. User already has this AUDIOBOOK in history! Not adding...");
 			return "AudioBook already in history!";
 		}
@@ -279,7 +279,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		audioBookOnHold.setPositionInQueue(positionInQueue);
 		
 		List<AudioBookOnHold> userAudioBooks = getOnHoldAudioBooksOfSpecificUser(audioBookOnHold.getUser());
-		if(userAudioBooks.contains(audioBookOnHold)){
+		if(userAudioBooks != null && userAudioBooks.contains(audioBookOnHold)){
 			System.out.println("DEBUG: In saveOnHoldAudioBookOfSpecificUser. User already has this AudioBOOK on hold! Not adding...");
 			return "You already have this AudioBook on hold!";
 		}
@@ -307,7 +307,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public String saveWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
 		List<WishlistAudioBook> userAudioBooks = getWishlistAudioBooksOfSpecificUser(wishlistAudioBook.getUser());
-		if(userAudioBooks.contains(wishlistAudioBook)){
+		if(userAudioBooks != null && userAudioBooks.contains(wishlistAudioBook)){
 			System.out.println("DEBUG: In saveWishlistAudioBookOfSpecificUser. User already has this AudioBook in wishlist! Not adding...");
 			return "You currently are borrowing this book!";
 		}
