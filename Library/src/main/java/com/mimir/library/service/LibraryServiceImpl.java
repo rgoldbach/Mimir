@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.dao.BookDao;
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.EBook;
@@ -102,6 +103,11 @@ public class LibraryServiceImpl implements LibraryService{
 	@Override
 	public EBook getSpecificEBook(int bookId) {
 		return dao.getSpecificEBook(bookId);
+	}
+
+	@Override
+	public AudioBook getSpecificAudioBook(int audioBookId) {
+		return dao.getSpecificAudioBook(audioBookId);
 	}
 	
 }

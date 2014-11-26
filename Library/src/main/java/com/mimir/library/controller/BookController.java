@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
@@ -57,24 +58,38 @@ public class BookController {
 	@RequestMapping(value ="/borrow")
 	@ResponseBody
 	public String borrowBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
+			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+			@RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+			HttpSession session){
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
 		String message = "";
+		BorrowedEBook borrowedEBook = null;
+		BorrowedAudioBook borrowedAudioBook = null;
 		if(currentUser!=null){
-			System.out.println("Request to borrow " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
-			BorrowedEBook rentedEBook = new BorrowedEBook(libraryService.getSpecificEBook(whichBook), currentUser);
-			message = userService.saveBorrowedEBookOfSpecificUser(rentedEBook);
+			System.out.println("Request to borrow " + bookFormat + " " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
+			if(bookFormat.equals(GlobalConstants.EBOOK)){
+				borrowedEBook = new BorrowedEBook(libraryService.getSpecificEBook(whichBook), currentUser);
+				message = userService.saveBorrowedEBookOfSpecificUser(borrowedEBook);	
+			}
+			else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+				borrowedAudioBook = new BorrowedAudioBook(libraryService.getSpecificAudioBook(whichBook), currentUser);
+				message = userService.saveBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
+			}
 			if(message.equals(GlobalConstants.DAO_SUCCESS)){
-				//Borrowed EBook persisted...
-				//adds book for  current session
-				currentUser.addBookToBookshelf(rentedEBook);
+				System.out.println("DEBUG - Successfully borrowed book!");
+				//Borrowed EBook persisted...Adds book for  current session
+				if(bookFormat.equals(GlobalConstants.EBOOK)){
+					currentUser.addBookToBookshelf(borrowedEBook);
+				}
+				else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+					currentUser.addBookToBookshelf(borrowedAudioBook);
+				}
+				session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, currentUser);	
 			}
 			else{
-				//Borrowed EBook not persisted...
-				//Reason why is already stored in message
+				//Borrowed EBook not persisted...Reason why is already stored in message
 			}	
-		}	
-		//return message		
+		}		
 		return message;
 		
 	}

@@ -23,6 +23,9 @@ public class RegisteredUser{
 	@Column(name = "libraryCard")
 	private String libraryCardNumber;
 	
+	@Column(name = "userCode")
+	private String userCode;
+	
 	@OneToOne
 	@JoinColumn(name = "accountInfoId")
 	private AccountInfo accountInfo;
@@ -109,7 +112,10 @@ public class RegisteredUser{
 	public void addBookToBookshelf(BorrowedEBook bookToBorrow){
 		borrowedEBooks.add(bookToBorrow);
 	}
-
+	public void addBookToBookshelf(BorrowedAudioBook bookToBorrow){
+		borrowedAudioBooks.add(bookToBorrow);
+	}
+	
 	public AccountInfo getAccountInfo() {
 		return accountInfo;
 	}
@@ -187,6 +193,14 @@ public class RegisteredUser{
 
 	public void setWishlistAudioBooks(Set<WishlistAudioBook> wishlistAudioBooks) {
 		this.wishlistAudioBooks = wishlistAudioBooks;
+	}
+
+	public String getUserCode() {
+		return userCode;
+	}
+
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
 	}
 	
 }

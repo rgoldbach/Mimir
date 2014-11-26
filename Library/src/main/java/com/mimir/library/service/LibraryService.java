@@ -2,6 +2,7 @@ package com.mimir.library.service;
 
 import java.util.List;
 
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.EBook;
@@ -31,6 +32,7 @@ public interface LibraryService {
 	
 	Book getSpecificBook(int bookId);
 	EBook getSpecificEBook(int bookId);
+	AudioBook getSpecificAudioBook(int audioBookId);
 	
 	BookDisplayableInformation getBookDisplay(int bookId);
 	

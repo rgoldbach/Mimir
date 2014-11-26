@@ -61,4 +61,18 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		specificBook.add(Restrictions.eq("book.bookId", audioBookId));
 		return (AudioBook) specificBook.uniqueResult();
 	}
+
+	@Override
+	public void decrementAudioBookAvailableCopies(AudioBook aBook) {
+		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()-1));
+		getSession().merge(aBook);
+		System.out.println("DEBUG - AudioBook remaining copies decremented.");
+	}
+
+	@Override
+	public void decrementEBookAvailableCopies(EBook eBook) {
+		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()-1));
+		getSession().merge(eBook);
+		System.out.println("DEBUG - EBook remaining copies decremented.");
+	}
 }
