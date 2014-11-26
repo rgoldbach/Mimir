@@ -20,6 +20,7 @@ public class AdminController {
 	@RequestMapping(value ="addBook", method = RequestMethod.GET)
 	public String addBook() {
 		return "admin/addBook";
+
 	}
 	
 	@RequestMapping(value ="addBooks", method = RequestMethod.GET)

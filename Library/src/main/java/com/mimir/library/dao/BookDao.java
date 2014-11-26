@@ -24,4 +24,6 @@ public interface BookDao {
 	
 	void decrementAudioBookAvailableCopies(AudioBook aBook);
 	void decrementEBookAvailableCopies(EBook eBook);
+	void incrementAudioBookAvailableCopies(AudioBook aBook);
+	void incrementEBookAvailableCopies(EBook eBook);
 }

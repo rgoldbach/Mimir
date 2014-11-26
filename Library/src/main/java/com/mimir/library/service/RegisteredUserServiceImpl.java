@@ -109,6 +109,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		}
 		PastBorrowedEBook pastBook = new PastBorrowedEBook(borrowedEBook);
 		String message = dao.removeBorrowedEBookOfSpecificUser(borrowedEBook);
+		bookDao.incrementEBookAvailableCopies(borrowedEBook.getEBook());
 		dao.savePastBorrowedEBookOfSpecificUser(pastBook);
 		return message;
 	}
@@ -213,6 +214,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		}
 		PastBorrowedAudioBook pastBook = new PastBorrowedAudioBook(borrowedAudioBook);
 		String message = dao.removeBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
+		bookDao.incrementAudioBookAvailableCopies(borrowedAudioBook.getAudioBook());
 		dao.savePastBorrowedAudioBookOfSpecificUser(pastBook);
 		return message;
 	}

@@ -778,7 +778,9 @@ INSERT INTO `Formats` VALUES (1, 'Kindle'),
 						     (2, 'EPub'), 
 							 (3, 'MP3'),
 							 (4, 'MP3'),
-							 (5, 'WMA');
+							 (5, 'WMA'),
+							 (6, '.html'),
+							 (7, '.pdf');
 UNLOCK TABLES;
 
 LOCK TABLES `EBookFormats` WRITE;/* Id, EBookId(FK), FormatId(FK), ReleaseDate, FileSize*/

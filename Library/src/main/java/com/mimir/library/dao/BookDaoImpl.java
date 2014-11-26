@@ -75,4 +75,16 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		getSession().merge(eBook);
 		System.out.println("DEBUG - EBook remaining copies decremented.");
 	}
+
+	@Override
+	public void incrementAudioBookAvailableCopies(AudioBook aBook) {
+		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()+1));
+		getSession().merge(aBook);
+	}
+
+	@Override
+	public void incrementEBookAvailableCopies(EBook eBook) {
+		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()+1));
+		getSession().merge(eBook);
+	}
 }
