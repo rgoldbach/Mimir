@@ -47,6 +47,13 @@ public class PastBorrowedAudioBook {
 		this.audioBook = audioBook;	
 		this.dateExpired = new LocalDate();
 	}
+	
+	public PastBorrowedAudioBook(BorrowedAudioBook borrowedAudioBook){
+		this.user = borrowedAudioBook.getUser();
+		this.audioBook = borrowedAudioBook.getAudioBook();
+		this.dateExpired = borrowedAudioBook.getDateExpires();
+		this.bookRating = borrowedAudioBook.getBookRating();
+	}
 
 	public int getId() {
 		return id;

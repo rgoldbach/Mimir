@@ -32,12 +32,18 @@ public class LamazonService {
 		return response;		
 	}
 	
-	public boolean deleteBookKey(int bookId){
-		return false;
+	public boolean deleteBookKey(int bookId, String userCode, String bookFormatType){
+		String url = delBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookFormatType=" + bookFormatType;
+		System.out.println("DEBUG - Sending Http Request to " + url);
+		String response = sendHttpGet(url);
+		System.out.println("DEBUG - Delete From Lamazon returned: " + Boolean.parseBoolean(response.trim()) + " " + Boolean.parseBoolean(response));
+		return Boolean.parseBoolean(response.trim());
 	}
 	
-	public void goToBookPage(){
-		
+	public void goToBookPage(int bookId, String userCode, String bookKey, String bookFormatType){
+		String url = delBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookFormatType=" + bookFormatType;
+		System.out.println("DEBUG - Sending Http Request to " + url);
+		sendHttpGet(url);
 	}
 	
 	private final String USER_AGENT = "Mozilla/5.0";

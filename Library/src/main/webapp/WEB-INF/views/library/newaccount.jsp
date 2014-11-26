@@ -44,7 +44,7 @@
 											</h4>
 										
 											<!-- Rating -->
-											<button onclick = "returnBook(${element.bookDisplayId})"class="btn btn-danger">Return</button>
+											<button onclick = "returnBook(${element.bookDisplayId}, 'EBook')"class="btn btn-danger">Return</button>
 											<br>
 										</div>
 								</div>

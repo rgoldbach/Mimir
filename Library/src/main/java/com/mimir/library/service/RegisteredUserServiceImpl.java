@@ -82,7 +82,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		//Generate the book key from Llamazon...
 		System.out.println("DEBUG - Generating Key from Lamazon");
 		LamazonService ls = new LamazonService();
-		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
+		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
 		if(bookKey == null){
 			return "Could not connect to Llamazon";
 		}
@@ -99,8 +99,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		return response;
 	}
 	@Override
-	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook){
-		return dao.removeBorrowedEBookOfSpecificUser(borrowedEBook);
+	public String returnBorrowedEBook(BorrowedEBook borrowedEBook){
+		//Delete the book key on the lamazon site
+		System.out.println("DEBUG - Deleting Key from Lamazon");
+		LamazonService ls = new LamazonService();
+		boolean isReturned = ls.deleteBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
+		if(!isReturned){
+			return "Unable to return book!";
+		}
+		PastBorrowedEBook pastBook = new PastBorrowedEBook(borrowedEBook);
+		String message = dao.removeBorrowedEBookOfSpecificUser(borrowedEBook);
+		dao.savePastBorrowedEBookOfSpecificUser(pastBook);
+		return message;
 	}
 
 	//PAST BORROWED EBOOKS
@@ -193,9 +203,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	}
 
 	@Override
-	public String removeBorrowedAudioBookOfSpecificUser(
-			BorrowedAudioBook borrowedAudioBook) {
-		return dao.removeBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
+	public String returnBorrowedAudioBook(BorrowedAudioBook borrowedAudioBook) {
+		//Delete the book key on the lamazon site
+		System.out.println("DEBUG - Deleting Key from Lamazon");
+		LamazonService ls = new LamazonService();
+		boolean isReturned = ls.deleteBookKey(borrowedAudioBook.getAudioBook().getBook().getBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
+		if(!isReturned){
+			return "Unable to return book!";
+		}
+		PastBorrowedAudioBook pastBook = new PastBorrowedAudioBook(borrowedAudioBook);
+		String message = dao.removeBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
+		dao.savePastBorrowedAudioBookOfSpecificUser(pastBook);
+		return message;
 	}
 
 	@Override
