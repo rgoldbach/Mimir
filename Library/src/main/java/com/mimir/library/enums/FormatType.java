@@ -4,5 +4,7 @@ public enum FormatType {
 	WMA,
 	MP3,
 	Kindle,
-	ePub
+	EPub,
+	Html,
+	Pdf
 }

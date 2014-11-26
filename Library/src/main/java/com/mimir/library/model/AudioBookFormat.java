@@ -10,7 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="AudioBookFormats")
@@ -29,7 +31,9 @@ public class AudioBookFormat {
 	@JoinColumn(name = "formatId")
 	private Format format;
 	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name = "releaseDate")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate releaseDate;
 	
 	@Column(name = "fileSize")

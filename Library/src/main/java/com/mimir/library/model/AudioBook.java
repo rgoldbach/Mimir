@@ -35,13 +35,13 @@ public class AudioBook {
 	private Collection<AudioBookOnHold> booksOnHold;
 	
 	@OneToMany(mappedBy = "audioBook")
-	private Collection<AudioBookFormat> eBookFormats;
+	private Collection<AudioBookFormat> audioBookFormats;
 	
 	@OneToMany(mappedBy = "audioBook")
 	private Collection<AudioBookLanguage> languages;
 	
 	@OneToMany(mappedBy = "audioBook")
-	private Collection<AudioBookLicense> eBookLicenses;
+	private Collection<AudioBookLicense> audioBookLicenses;
 	
 	@Column(name = "remainingCopies")
 	private Integer remainingCopies;
@@ -86,12 +86,12 @@ public class AudioBook {
 		this.booksOnHold = booksOnHold;
 	}
 
-	public Collection<AudioBookFormat> geteBookFormats() {
-		return eBookFormats;
+	public Collection<AudioBookFormat> getAudioBookFormats() {
+		return audioBookFormats;
 	}
 
-	public void seteBookFormats(Collection<AudioBookFormat> eBookFormats) {
-		this.eBookFormats = eBookFormats;
+	public void setAudioBookFormats(Collection<AudioBookFormat> audioBookFormats) {
+		this.audioBookFormats = audioBookFormats;
 	}
 
 	public Collection<AudioBookLanguage> getLanguages() {
@@ -102,12 +102,12 @@ public class AudioBook {
 		this.languages = languages;
 	}
 
-	public Collection<AudioBookLicense> geteBookLicenses() {
-		return eBookLicenses;
+	public Collection<AudioBookLicense> getAudioBookLicenses() {
+		return audioBookLicenses;
 	}
 
-	public void seteBookLicenses(Collection<AudioBookLicense> eBookLicenses) {
-		this.eBookLicenses = eBookLicenses;
+	public void setAudioBookLicenses(Collection<AudioBookLicense> audioBookLicenses) {
+		this.audioBookLicenses = audioBookLicenses;
 	}
 
 	public Integer getRemainingCopies() {

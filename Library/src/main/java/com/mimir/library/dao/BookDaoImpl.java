@@ -53,17 +53,24 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	public EBook getSpecificEBook(int bookId) {
 		Criteria specificBook = getSession().createCriteria(EBook.class, "eBook");
 		specificBook.add(Restrictions.eq("book.bookId", bookId));
-		return (EBook) specificBook.uniqueResult();
+		EBook eBook = (EBook) specificBook.uniqueResult();
+		Hibernate.initialize(eBook.geteBookFormats());
+		Hibernate.initialize(eBook.getLanguages());
+		return eBook;
 	}
 	@Override
 	public AudioBook getSpecificAudioBook(int audioBookId) {
 		Criteria specificBook = getSession().createCriteria(AudioBook.class, "audioBook");
 		specificBook.add(Restrictions.eq("book.bookId", audioBookId));
-		return (AudioBook) specificBook.uniqueResult();
+		AudioBook audioBook = (AudioBook) specificBook.uniqueResult();
+		Hibernate.initialize(audioBook.getAudioBookFormats());
+		Hibernate.initialize(audioBook.getLanguages());
+		return audioBook;
 	}
 
 	@Override
 	public void decrementAudioBookAvailableCopies(AudioBook aBook) {
+		if(aBook.getRemainingCopies().intValue() == -1) return;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()-1));
 		getSession().merge(aBook);
 		System.out.println("DEBUG - AudioBook remaining copies decremented.");
@@ -71,6 +78,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void decrementEBookAvailableCopies(EBook eBook) {
+		if(eBook.getRemainingCopies().intValue() == -1) return;
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()-1));
 		getSession().merge(eBook);
 		System.out.println("DEBUG - EBook remaining copies decremented.");
@@ -78,12 +86,14 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void incrementAudioBookAvailableCopies(AudioBook aBook) {
+		if(aBook.getRemainingCopies().intValue() == -1) return;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()+1));
 		getSession().merge(aBook);
 	}
 
 	@Override
 	public void incrementEBookAvailableCopies(EBook eBook) {
+		if(eBook.getRemainingCopies().intValue() == -1) return;
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()+1));
 		getSession().merge(eBook);
 	}

@@ -777,10 +777,9 @@ LOCK TABLES `Formats` WRITE;/* Id,  Format*/
 INSERT INTO `Formats` VALUES (1, 'Kindle'), 
 						     (2, 'EPub'), 
 							 (3, 'MP3'),
-							 (4, 'MP3'),
-							 (5, 'WMA'),
-							 (6, '.html'),
-							 (7, '.pdf');
+							 (4, 'WMA'),
+							 (5, 'Html'),
+							 (6, 'Pdf');
 UNLOCK TABLES;
 
 LOCK TABLES `EBookFormats` WRITE;/* Id, EBookId(FK), FormatId(FK), ReleaseDate, FileSize*/
@@ -896,16 +895,16 @@ INSERT INTO `AudioBooks` VALUES     (1, 1, 1, 4),
 UNLOCK TABLES;
 
 LOCK TABLES `AudioBookFormats` WRITE;/* Id, AudioBookId(FK), FormatId(FK), ReleaseDate, FileSize, NumOfParts, Duration*/
-INSERT INTO `AudioBookFormats` VALUES (1, 1, 1, '2011-05-04', null, 2, 4002), 
-								  (2, 1, 2, '2011-05-04', 4210, 3, 4001),
-								  (3, 2, 1, '2011-05-05', null, 4, 4003), 
-								  (4, 2, 2, '1993-04-26', 1204, 3, 4004),
-								  (5, 3, 2, '2006-10-31', 954419, 4, 4005),
-								  (6, 4, 2, '2012-03-29', 237016, 1, 4006),
-								  (7, 5, 1, '2012-05-04', null, 2, 4007),
-								  (8, 6, 1, '2005-05-05', null, 3, 4008),
-								  (9, 7, 1, '2008-10-31', null, 7, 4009),
-								  (19, 8, 1, '2002-03-29', null, 6, 4009);
+INSERT INTO `AudioBookFormats` VALUES (1, 1, 3, '2011-05-04', null, 2, 4002), 
+								  (2, 1, 4, '2011-05-04', 4210, 3, 4001),
+								  (3, 2, 3, '2011-05-05', null, 4, 4003), 
+								  (4, 2, 4, '1993-04-26', 1204, 3, 4004),
+								  (5, 3, 3, '2006-10-31', 954419, 4, 4005),
+								  (6, 4, 4, '2012-03-29', 237016, 1, 4006),
+								  (7, 5, 4, '2012-05-04', null, 2, 4007),
+								  (8, 6, 3, '2005-05-05', null, 3, 4008),
+								  (9, 7, 4, '2008-10-31', null, 7, 4009),
+								  (19, 8, 3, '2002-03-29', null, 6, 4009);
 UNLOCK TABLES;
 
 LOCK TABLES `AudioBookLanguages` WRITE;/* Id,  AudioBookId(FK), LanguageId(FK)*/

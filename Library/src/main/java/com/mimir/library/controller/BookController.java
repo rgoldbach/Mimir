@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.AudioBook;
+import com.mimir.library.model.AudioBookFormat;
+import com.mimir.library.model.AudioBookLanguage;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.EBook;
+import com.mimir.library.model.EBookFormat;
+import com.mimir.library.model.EBookLanguage;
+import com.mimir.library.model.Format;
 import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
@@ -242,4 +251,62 @@ public class BookController {
 		return "BookNotFound";
 	}
 	
+	@RequestMapping("/changeBookFormatInfo")
+	@ResponseBody
+	public JSONObject changeFormatInfo(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+							   @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+							   HttpSession session){
+		System.out.println("DEBUG - Changing book info on page for " + whichBook + " in " + bookFormat + " format.");
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			EBook book = libraryService.getSpecificEBook(whichBook);
+			System.out.println(book == null);
+			return constructJsonObject(book);
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			AudioBook book = libraryService.getSpecificAudioBook(whichBook);
+			System.out.println(book == null);
+			return constructJsonObject(book);
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private JSONObject constructJsonObject(EBook eBook){
+		JSONObject json = new JSONObject();
+		json.put("publisherName", eBook.getPublisher().getName());
+		json.put("rating", eBook.getBookRating().getRating());
+		json.put("remainingCopies", eBook.getRemainingCopies());
+		JSONArray formats = new JSONArray();
+		for(EBookFormat f : eBook.geteBookFormats()){
+			formats.add(f.getFormat().getFormatType());	
+		}
+		json.put("formats", formats);
+		JSONArray languages = new JSONArray();
+		for(EBookLanguage l : eBook.getLanguages()){
+			languages.add(l.getLanguage().getLanguage());
+		}
+		json.put("languages", languages);
+		System.out.println(json);
+		return json;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private JSONObject constructJsonObject(AudioBook audioBook){
+		JSONObject json = new JSONObject();
+		json.put("publisherName", audioBook.getPublisher().getName());
+		json.put("rating", audioBook.getBookRating().getRating());
+		json.put("remainingCopies", audioBook.getRemainingCopies());
+		JSONArray formats = new JSONArray();
+		for(AudioBookFormat f : audioBook.getAudioBookFormats()){
+			formats.add(f.getFormat().getFormatType());	
+		}
+		json.put("formats", formats);
+		JSONArray languages = new JSONArray();
+		for(AudioBookLanguage l : audioBook.getLanguages()){
+			languages.add(l.getLanguage().getLanguage());
+		}
+		json.put("languages", languages);
+		System.out.println(json);
+		return json;
+	}
 }

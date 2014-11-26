@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class LamazonService {
 
-	private String lHome = "http://localhost:8080/Lamazon/";
+	private String lHome = "http://localhost:8080/Llamazon/";
 	private String lDataContr = "data/";
 	private String lBookContr = "book/";
 	private String lGet = "create?";

@@ -130,6 +130,12 @@
             <version>3.0.0.CR1</version>
         </dependency>
         
+        <!-- JSON helper -->
+        <dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+  		</dependency>
 	</dependencies>
  
  

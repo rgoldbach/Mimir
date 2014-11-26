@@ -43,7 +43,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 			}
 			out.println("<h4>Choose Format:</h4>");
 			out.println("<div class='col-md-6'>");
-			out.println("<select id='borrowedBookFormat' class='form-control' data-width='100%'>");
+			out.println("<select id='borrowedBookFormat' onchange='changeBookFormatInfo()' class='form-control' data-width='100%'>");
 			if(currentBook.getEBook() != null)
 				out.println("<option selected='selected' value='EBook'>EBook</option>");
       		if(currentBook.getAudioBook() != null){

@@ -229,7 +229,7 @@ function changeUserInfo() {
         'data' : JSON.stringify(json),
         'type' : "POST",
         'complete' : function(result) {
-        	console.log(result)
+        	console.log(result);
         	if(result.status === 200){
         		if(result.responseText === "failure"){
         			$('#changeInfoError').text("The New Passwords Did Not Match");
@@ -245,6 +245,42 @@ function changeUserInfo() {
         		}
         	}
 
+        }
+    });  
+    return false;
+}
+
+function changeBookFormatInfo() {
+	
+	var currentBook = $('#currentBook').val();
+    var whichFormat = $('#borrowedBookFormat').val();
+
+    $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        'url' : "changeBookFormatInfo?whichBook="+currentBook+"&bookFormat=" + whichFormat,
+        'type' : "GET",
+        'complete' : function(result) {
+        	if(result.status === 200){
+        		var json = result.responseText;
+        		console.log(json);
+        		obj = JSON.parse(json);
+        		console.log(obj.remainingCopies);
+        		console.log(obj.formats.length);
+        		console.log(obj.languages[0]);
+        		if(result.responseText === "signoutsuccess"){
+        			window.location.replace("/Library/");
+        		}
+        		else if(result.responseText === "signinfailure"){
+        			$('#signInError').text("Invalid login information. Please try again.");
+        		}
+        		else if(result.responseText === "admin"){
+        			window.location.replace("/Library/admin/");
+        		}
+        		
+        	}              	              	
         }
     });  
     return false;
