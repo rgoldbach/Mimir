@@ -22,6 +22,10 @@
 	<br>
 		<b>Levels</b>: Interest Level, ATOS Level, Reading Level
 	</p>
+	
+	<h5><a href="results?query=J.K. Rowling">Displaying Search Results Testing</a></h5>
+		
+	<!--  
 	<form:form method="POST" commandName="advancedSearchForm">
 		<table>
 			<tr>
@@ -80,6 +84,7 @@
 			<tr>
 		</table>
 	</form:form>
+	-->
 </div>
 </body>
 </html>

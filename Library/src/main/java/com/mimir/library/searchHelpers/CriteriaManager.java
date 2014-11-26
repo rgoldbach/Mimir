@@ -47,7 +47,7 @@ public class CriteriaManager {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
 		//Control size and location of output
-		criteria.setMaxResults(GlobalConstants.MAX_SEARCH_RESULTS);
+		criteria.setMaxResults(GlobalConstants.MAX_RESULTS);
 		criteria.setFirstResult(firstResultIndex);
 		
 		return criteria;

@@ -1,0 +1,116 @@
+<%@ include file="/WEB-INF/views/library/include/tagHandlers.jsp" %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%@ include file="/WEB-INF/views/library/include/head.jsp" %>
+
+<body>
+
+	<%@ include file="/WEB-INF/views/library/include/navbar.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/pageHeader.jsp" %>
+
+	<!-- Main Content -->
+	<div class="container">
+<!-- Search Menu -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-lg-3">
+						<!-- Switch between Cover and List display -->
+						<div class="btn-group btn-group-lg">
+  							<button id="coverDisplay" type="button" class="active btn btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
+  							<button id="listDisplay" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> List</button>
+						</div>
+						<br>
+						<!-- Hey, this probably shouldn't be hard coded! -->
+						<select class="selectpicker" data-width="190px">
+							<optgroup label="Sort By">
+ 								<option value="relevancy">Relevance</option>
+ 								<option value="titleAz">Title A-Z</option>
+								<option value="titleZa">Title Z-A</option>
+								<option value="authorAz">Author A-Z</option>
+								<option value="authorZa">Author Z-A</option>
+								<option value="releaseDate">Release Date</option>
+								<option value="addedToSite">Added to Site</option>
+								<option value="mostPopular">Most Popular</option>
+							</optgroup>
+						</select>
+					</div>
+					<div class="col-lg-9">
+						<!-- If there are any, use ${message} to display the number of results! -->
+						<p style="font-size:20px;" class="text-left">${message}</p>
+						<hr>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+		<!-- Display Results in 'Cover' View -->
+			<div id="coverResultContainer" class="col-md-8 col-md-offset-2">
+				<c:forEach end="3" var="book" items = "${resultPage}">
+					<div class="searchResult col-md-3">
+						<div class="thumbnail">
+						<img class="img-responsive" src="<c:url value='${book.bookDisplay.imageFilePath}' />" alt="...">
+						<div class="caption">
+							<h6 class="resultInfo">${book.bookDisplay.title}</h6>
+							<h6 class="resultInfo">Authors</h6>
+						</div>
+					</div>
+				</div>
+ 			</c:forEach>
+			</div>
+		<!-- Display Results in 'List' View -->
+			<div id="listResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
+				LIST RESULTS
+			</div>
+		<!-- No results found. Display message and perhaps suggest another search? -->
+			<div id="coverResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
+				${message}
+			</div>
+		</div>
+		
+		<!-- Request more results. If no / no more results found, don't show this. -->
+		<div class="row">
+			<div class="col-md-2 col-md-offset-5">
+				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block" data-loading-text="Loading...">More</button>
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+
+	<%@ include file="/WEB-INF/views/library/include/footer.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/modals.jsp" %>
+
+	<%@ include file="/WEB-INF/views/library/include/jsSources.jsp" %>
+
+	<script>
+	$(document).ready(function() {
+		$('#coverDisplay').click(function(){
+			$('#listResultContainer').hide();
+			$('#coverResultContainer').show();
+			$('#listDisplay').removeClass('active');
+			$('#coverDisplay').addClass('active');
+		});
+		$('#listDisplay').click(function(){
+			$('#coverResultContainer').hide();
+			$('#listResultContainer').show();
+			$('#coverDisplay').removeClass('active');
+			$('#listDisplay').addClass('active');
+		});
+		$('#moreResults').click(function(){
+			$('#moreResults').button('loading');
+			// DO SHIT TO LOAD MORE RESULTS
+			// $('#moreResults').button('reset');
+		});
+		
+	});
+	</script>
+	
+</body>
+
+</html>

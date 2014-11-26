@@ -113,9 +113,52 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		return (List<String>) query.list();
 	}
 	
+	// See http://docs.jboss.org/hibernate/search/4.5/reference/en-US/html/search-query.html
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType) {
-		return null;
+		// Debug Input: "J.K. Rowling", firstResultIndex = 0, sortType = SortType.Relevance
+		/* Quick Search on
+		 	- Title			complete
+		 	- Author		complete
+		 	- Genre			complete
+		 	- Language		?
+		 	- Publisher		?
+		 	- Awards		?
+		 	- Format		?
+		 */
+		
+		// The names of these classes/tables really need to be cleaned up imo...
+		String[] fields = {"bookDisplay.title", "authors.name", "genres.genre.genre"};
+		
+		org.hibernate.search.
+			FullTextSession ftSession = Search.getFullTextSession(getSession());
+		
+		QueryBuilder qB = ftSession.getSearchFactory()
+			    			.buildQueryBuilder().forEntity(Book.class).get();
+		
+		org.apache.lucene.search.
+			Query luceneQuery; 
+		try{
+			luceneQuery = qB
+					  .keyword()
+					  .onFields(fields)
+					  .matching(keyword)
+					  .createQuery();
+		}catch(EmptyQueryException e){
+			System.out.println("Aw, something went wrong!");
+			return null;
+		}
+		
+		org.hibernate.search.
+			FullTextQuery ftQuery = ftSession.createFullTextQuery(luceneQuery, Book.class);
+		
+		// Is there really any reason to pass this "firstResultIndex"? I mean, it's always going to be 0!
+		ftQuery.setFirstResult(firstResultIndex);
+		ftQuery.setMaxResults(GlobalConstants.MAX_RESULTS);
+		
+		// ftQuery.getResultSize() if for some reason you want the size of the results.
+		return (List<Book>) ftQuery.list();
 	}
 	
 	@Override
@@ -166,6 +209,8 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		return books;
 	}
 	
+	
+	
 	public List<Book> hibernateSearch(String keyword, String[] matchingAttributes, int firstResultIndex){
 		FullTextSession fullTextSession = Search.getFullTextSession(getSession());
 		QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Book.class).get();
@@ -181,9 +226,14 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 			return null;
 		}
 		
+		// Anthony, I'm not sure if you intended to use "Query" here, a lot of the 
+		// tutorials I've seen use org.hibernate.search.FullTextQuery
+		// not sure if that matters tho and you did this for a special reason
+		// yes i know how to multi line comment but i'm too lazy
+		// yolo
 		Query query = fullTextSession.createFullTextQuery(luceneQuery, Book.class);
 		query.setFirstResult(firstResultIndex);
-		query.setMaxResults(GlobalConstants.MAX_SEARCH_RESULTS);
+		query.setMaxResults(GlobalConstants.MAX_RESULTS);
 		
 		@SuppressWarnings("unchecked")
 		List<Book> result = (List<Book>) query.list();

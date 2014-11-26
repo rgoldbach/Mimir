@@ -88,6 +88,11 @@ public class SearchServiceImpl implements SearchService{
 	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
 		return dao.search(searchKeyword, firstResultIndex, searchType, sortType);
 	}
+
+	@Override
+	public List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType) {
+		return dao.quickSearch(keyword, firstResultIndex, sortType);
+	}
 	
 	
 }

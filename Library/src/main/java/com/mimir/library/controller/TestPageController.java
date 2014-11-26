@@ -1,54 +1,90 @@
 package com.mimir.library.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.enums.SearchType;
+import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
-import com.mimir.library.model.AdvancedSearchForm;
-import com.mimir.library.model.Genre;
+import com.mimir.library.model.Author;
+import com.mimir.library.model.Book;
+import com.mimir.library.model.BookGenre;
 import com.mimir.library.service.SearchService;
-import com.mimir.library.model.BookDisplayableInformation;
-import com.mimir.library.service.TestLibrary;
 
 @Controller
-@RequestMapping(value = "/test")
 public class TestPageController {
 	
 	@Autowired
 	SearchService searchService;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/results")
+	public ModelAndView getResults(@RequestParam (required = false) String query, HttpSession session) {
+		ModelAndView mv = new ModelAndView("/test/results");
+		if(query != null) {
+			List<Book> results = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
+			if(results == null) {
+				return new ModelAndView("/test/results", "message", "No results found.");
+			}
+			PagedListHolder<Book> pagedResults = new PagedListHolder<Book>(results);
+			pagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+			session.setAttribute("pagedResults", pagedResults);
+			
+			List<Book> resultPage = pagedResults.getPageList();
+			System.out.println(resultPage);
+			mv.addObject("resultPage", resultPage);
+			
+			return mv;
+		}
+		else {
+			PagedListHolder<Book> pagedResults = (PagedListHolder<Book>) session.getAttribute("pagedResults");
+			if(pagedResults == null) {
+				return new ModelAndView("/test/results", "message", "Your session has timed out.");
+			}
+			else{
+				if(!pagedResults.isLastPage()){
+					pagedResults.nextPage();
+				}
+				List<Book> resultPage = pagedResults.getPageList();
+				return new ModelAndView("/test/results", "resultPage", resultPage);
+			}
+		}
+	}
+	
+	public void debugPrint(List<Book> books){
+		System.out.println("Number of books = " + books.size());
+		for(Book x : books){
+			System.out.println("Book Found: ");
+			System.out.println("Book Title: " + x.getBookDisplay().getTitle());
+			for(Author a : x.getAuthors()){
+				System.out.println("Book Author: " + a.getName());
+			}
+			for(BookGenre g : x.getGenres()){
+				System.out.println("Book Genre: " + g.getGenre().getGenre());
+			}
+		}
+	}
+	
+	@RequestMapping(value = "/test")
 	public String initForm(Model model) {
+		/*
 		AdvancedSearchForm advancedSearchForm = new AdvancedSearchForm();
 		model.addAttribute("advancedSearchForm", advancedSearchForm);
 		initModelLists(model);
+		*/
 		return "/test/index";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView submitForm(Model model, AdvancedSearchForm advancedSearchForm, BindingResult result){
-		// model.addAttribute("advancedSearchForm", advancedSearchForm);
-		
-		// DO SOMETHING TO TURN SEARCH FORM INTO SEARCH RESULTS
-		
-		// DUMMY DATA 
-		TestLibrary tl = new TestLibrary();
-		ArrayList<BookDisplayableInformation> searchResults = tl.getSearchResults();
-		ModelAndView mv = new ModelAndView("/test/success");
-		mv.addObject("searchResults", searchResults);
-		
-		return mv;
-	}
-	
-	// this should somehow be done by the database
+	/* this should somehow be done by the database
 	private void initModelLists(Model model) {
 		
 		//Gives you a list of Genre Objects.
@@ -71,7 +107,7 @@ public class TestPageController {
 		for(int i = 0; i < GlobalConstants.DATE_ADDED_FOR_SEARCH.length; i++){
 			addedList.add(GlobalConstants.DATE_ADDED_FOR_SEARCH[i]);
 		}
-		/*List<String> languageList = new ArrayList<String>();
+		List<String> languageList = new ArrayList<String>();
 			languageList.add("language test 1");
 			languageList.add("language test 2");
 			languageList.add("language test 3");
@@ -93,7 +129,7 @@ public class TestPageController {
 			formatList.add("format test 1");
 			formatList.add("format test 2");
 			formatList.add("format test 3");
-			formatList.add("format test 4");*/
+			formatList.add("format test 4");
 			
 		model.addAttribute("genres", genreList3PointO);
 		model.addAttribute("languages", languageList);
@@ -102,4 +138,5 @@ public class TestPageController {
 		model.addAttribute("addeds", addedList);
 		model.addAttribute("formats", formatList);
 	}
+	*/
 }

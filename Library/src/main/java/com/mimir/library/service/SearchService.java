@@ -29,6 +29,7 @@ public interface SearchService {
 	List<String> getAllAwardsAsStrings();
 	
 	List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType);
+	List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType);
 	
 	void initHibernateSearch();
 	
