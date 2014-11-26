@@ -142,6 +142,9 @@ function signInOrOut() {
 }
 
 function returnBook(whichBook, bookFormat){
+	if(!confirm("Are you sure you want to return this book?")){
+		return;
+	}
 	console.log(whichBook);
 	json = "";
 	$.ajax({
@@ -158,6 +161,25 @@ function returnBook(whichBook, bookFormat){
     	    		$('#bookshelfBook'+whichBook).remove();
     	    	}
         		
+        	}              	              	
+        }
+	  });	
+}
+
+function downloadBook(whichBook, bookFormat){
+	console.log(whichBook);
+	json = "";
+	$.ajax({
+		headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'url' : "download?whichBook="+whichBook+"&bookFormat="+bookFormat,
+        'type' : "GET",
+        'complete' : function(result) {
+        	if(result.status === 200 && result.responseText != "Error"){
+        		console.log(result.status);	
+        		window.location.href = result.responseText;
         	}              	              	
         }
 	  });	

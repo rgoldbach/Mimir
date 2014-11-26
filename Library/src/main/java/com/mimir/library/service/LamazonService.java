@@ -40,10 +40,10 @@ public class LamazonService {
 		return Boolean.parseBoolean(response.trim());
 	}
 	
-	public void goToBookPage(int bookId, String userCode, String bookKey, String bookFormatType){
-		String url = delBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookFormatType=" + bookFormatType;
-		System.out.println("DEBUG - Sending Http Request to " + url);
-		sendHttpGet(url);
+	public String getBookPageUrl(int bookId, String userCode, String bookKey, String bookFormatType){
+		String url = goBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookKey=" + bookKey + "&bookFormatType=" + bookFormatType;
+		System.out.println("DEBUG - Book page url " + url);
+		return url;
 	}
 	
 	private final String USER_AGENT = "Mozilla/5.0";

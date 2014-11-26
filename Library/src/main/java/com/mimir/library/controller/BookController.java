@@ -20,6 +20,7 @@ import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
+import com.mimir.library.service.LamazonService;
 import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.RegisteredUserService;
  
@@ -209,6 +210,36 @@ public class BookController {
 		return message;
 	}
 	
+	@RequestMapping("/download")
+	@ResponseBody
+	public String downloadBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+							   @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+							   HttpSession session){
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		if(currentUser == null) return "Error";
+		LamazonService ls = new LamazonService();
+		String bookKey = getBookKey(whichBook, bookFormat, currentUser);
+		return ls.getBookPageUrl(whichBook, currentUser.getUserCode(), bookKey, bookFormat);
+	}
 	
+	private String getBookKey(int bookId, String bookFormat, RegisteredUser user){
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			Set<BorrowedEBook> borrowedBooks = user.getBorrowedEBooks();
+			for(BorrowedEBook book : borrowedBooks){
+				if(book.getEBook().getEBookId() == bookId){
+					return book.getEBookCode();
+				}
+			}
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			Set<BorrowedAudioBook> borrowedBooks = user.getBorrowedAudioBooks();
+			for(BorrowedAudioBook book : borrowedBooks){
+				if(book.getAudioBook().getAudioBookId() == bookId){
+					return book.getAudioBookCode();
+				}
+			}
+		}
+		return "BookNotFound";
+	}
 	
 }
