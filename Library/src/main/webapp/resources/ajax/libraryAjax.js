@@ -1,13 +1,15 @@
 function borrowBook(){
 	
       var currentBook = $('#currentBook').val();
+      var bookFormat = $('#borrowedBookFormat').val();
       var json = { 
-    		  		"whichBook" : currentBook
+    		  		"whichBook" : currentBook,
+    		  		"bookFormat" : bookFormat
     		  	};
       json = JSON.stringify(json);
       console.log(json); 
       $.ajax({
-        url: "borrow?whichBook="+currentBook,
+        url: "borrow?whichBook="+currentBook+"&bookFormat="+bookFormat,
         data: json,
         type: "GET",
          

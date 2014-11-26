@@ -41,6 +41,9 @@ public class BorrowedEBook {
 	
 	@Column(name = "bookRating")
 	private Double bookRating;
+	
+	@Column(name = "eBookKey")
+	private String eBookCode;
 
 
 	public BorrowedEBook(){}
@@ -83,4 +86,12 @@ public class BorrowedEBook {
         BorrowedEBook temp = (BorrowedEBook)obj;
         return (temp.getEBook().getEBookId() == this.getEBook().getEBookId());
     }
+
+	public String getEBookCode() {
+		return eBookCode;
+	}
+
+	public void setEBookCode(String eBookCode) {
+		this.eBookCode = eBookCode;
+	}
 }

@@ -20,5 +20,9 @@ public class GlobalConstants {
 	
 	//SEARCHING
 	public static final int MAX_SEARCH_RESULTS = 25;
+	
+	//BOOK FORMATS
+	public static final String EBOOK = "EBook";
+	public static final String AUDIOBOOK = "AudioBook";
 
 }

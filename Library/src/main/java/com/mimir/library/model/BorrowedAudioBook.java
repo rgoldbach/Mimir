@@ -41,6 +41,9 @@ public class BorrowedAudioBook {
 	
 	@Column(name = "bookRating")
 	private Double bookRating;
+	
+	@Column(name = "audioBookKey")
+	private String audioBookCode;
 
 	public BorrowedAudioBook(){}
 	
@@ -97,5 +100,13 @@ public class BorrowedAudioBook {
         BorrowedAudioBook temp = (BorrowedAudioBook)obj;
         return (temp.getAudioBook().getAudioBookId() == this.getAudioBook().getAudioBookId());
     }
+
+	public String getAudioBookCode() {
+		return audioBookCode;
+	}
+
+	public void setAudioBookCode(String audioBookCode) {
+		this.audioBookCode = audioBookCode;
+	}
 	
 }

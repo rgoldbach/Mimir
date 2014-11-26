@@ -86,6 +86,7 @@ CREATE TABLE `RegisteredUsers` (
     `regUserId` INT NOT NULL AUTO_INCREMENT,
 	`accountInfoId` INT NOT NULL,
     `libraryCard` VARCHAR(50) NOT NULL,
+	`userCode` VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY (regUserId),
 	CONSTRAINT `user_account_info_map` FOREIGN KEY (`accountInfoId`)
         REFERENCES `AccountInfo` (`accountInfoId`)
@@ -433,6 +434,7 @@ CREATE TABLE `BorrowedEBooks` (
     `regUserId` INT NOT NULL,
     `dateExpires` DATE NOT NULL,
     `bookRating` DECIMAL,
+	`eBookKey` VARCHAR(80) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `user_current_books` FOREIGN KEY (`regUserId`)
         REFERENCES `RegisteredUsers` (`regUserId`)
@@ -572,6 +574,7 @@ CREATE TABLE `BorrowedAudioBooks` (
     `regUserId` INT NOT NULL,
     `dateExpires` DATE NOT NULL,
     `bookRating` DECIMAL,
+	`audioBookKey` VARCHAR(80) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `AudioBooks_user_current_books` FOREIGN KEY (`regUserId`)
         REFERENCES `RegisteredUsers` (`regUserId`)
@@ -628,8 +631,8 @@ INSERT INTO `LoginCreds` VALUES (1, 1, 'Test1', 'password'),
 UNLOCK TABLES;
 
 LOCK TABLES `RegisteredUsers` WRITE;/* Id, AccountInfoId(FK), libraryCard */
-INSERT INTO `RegisteredUsers` VALUES (1, 1,'1234567890'), 
-									 (2, 2,'0987654321');
+INSERT INTO `RegisteredUsers` VALUES (1, 1,'1234567890', '037ef4c1-7ed9-4c06-8a43-366d56f948d4'), 
+									 (2, 2,'0987654321', '14fddd55-c887-476b-a727-2ea716d02b13');
 UNLOCK TABLES;
 
 LOCK TABLES `Admins` WRITE;/* Id, AccountInfoId(FK) */
@@ -858,10 +861,10 @@ INSERT INTO `EBookLicenses` VALUES   (1, 1, 1, 5),
 UNLOCK TABLES;
 
 LOCK TABLES `BorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), DateExpires, BookRating */
-INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2015-09-09', null), 
-									(2, 2, 1, '2015-09-09', null), 
-									(3, 3, 1, '2015-09-09', 4), 
-									(4, 4, 2, '2015-09-09', null);
+INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2015-09-09', null , '285323a6-8cac-4b3d-9e2d-4f5db06b960c'), 
+									(2, 2, 1, '2015-09-09', null, '7ed4070e-c57c-433e-9997-46b8d9a65327'), 
+									(3, 3, 1, '2015-09-09', 4, '9f0fdde7-32f2-41e9-89d3-e6cdb172b777'), 
+									(4, 4, 2, '2015-09-09', null, '9bb70be6-fbeb-492c-98bf-7620a738ed24');
 UNLOCK TABLES;
 
 LOCK TABLES `PastBorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), BookRating */
@@ -948,10 +951,10 @@ INSERT INTO `AudioBookLicenses` VALUES   (1, 1, 1, 5),
 UNLOCK TABLES;
 
 LOCK TABLES `BorrowedAudioBooks` WRITE;/* Id, AudioBookId(FK), RegUserId(FK), DateExpires, BookRating */
-INSERT INTO `BorrowedAudioBooks` VALUES (1, 1, 1, '2015-09-09', null), 
-										(2, 2, 1, '2015-09-09', null), 
-										(3, 3, 1, '2015-09-09', 4), 
-										(4, 4, 2, '2015-09-09', null);
+INSERT INTO `BorrowedAudioBooks` VALUES (1, 1, 1, '2015-09-09', null, 'b0b98b0a-88e8-48cb-9b76-cfb2861de666'), 
+										(2, 2, 1, '2015-09-09', null , '239630d0-c87d-4ee5-b6b1-9fbf53c049dc'), 
+										(3, 3, 1, '2015-09-09', 4 , '156e26d9-23dc-4a87-b533-36ff06350996'), 
+										(4, 4, 2, '2015-09-09', null, 'c263603e-b815-435e-8a4f-a1df16db755e');
 UNLOCK TABLES;
 
 LOCK TABLES `PastBookshelfAudioBooks` WRITE;/* Id, AudioBookId(FK), RegUserId(FK), BookRating */

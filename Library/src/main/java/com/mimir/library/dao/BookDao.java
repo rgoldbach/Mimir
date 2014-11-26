@@ -22,5 +22,6 @@ public interface BookDao {
 	
 	BookDisplayableInformation getBookDisplay(int bookId);
 	
-	
+	void decrementAudioBookAvailableCopies(AudioBook aBook);
+	void decrementEBookAvailableCopies(EBook eBook);
 }
