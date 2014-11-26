@@ -182,3 +182,45 @@ function removeFromWishlist(whichBook){
 	
 	
 }
+
+function changeUserInfo() {
+    var url = "changeUserInfo";
+    var json = "";
+    json = {
+                "libraryCardNumber" : $('#changeLibraryCardNumber').val(),
+                "firstName" : $('#changeFirstName').val(),
+                "lastName" : $('#changeLastName').val(),
+                "email" : $('#changeEmail').val(),
+                "currentPassword": $('#changeCurrentPassword').val(),
+                "password" : $('#changePassword').val(),
+                "passwordConfirm" : $('#changePasswordConfirm').val()
+    };
+    $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        'url' : url,
+        'data' : JSON.stringify(json),
+        'type' : "POST",
+        'complete' : function(result) {
+        	console.log(result)
+        	if(result.status === 200){
+        		if(result.responseText === "failure"){
+        			$('#changeInfoError').text("The New Passwords Did Not Match");
+        			$('#changeCurrentPassword').val("");
+        		}
+        		else if(result.responseText === "invalid"){
+        			$('#changeInfoError').text("Please Enter Your Correct Current Password");
+        			$('#changeCurrentPassword').val("");
+        		}
+        		else{	
+        			$('#changeInfoError').text("Info Successfuly Changed");
+        			$('#changeCurrentPassword').val("");
+        		}
+        	}
+
+        }
+    });  
+    return false;
+}

@@ -13,7 +13,8 @@ import com.mimir.library.model.WishlistEBook;
 
 public interface RegisteredUserService {
 
-void saveRegisteredUser(RegisteredUser user);
+	void saveRegisteredUser(RegisteredUser user);
+	void updateRegisteredUser(RegisteredUser user);
 	
 	List<RegisteredUser> getAllUsers();
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);

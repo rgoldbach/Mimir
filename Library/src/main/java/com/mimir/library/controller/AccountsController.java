@@ -18,6 +18,7 @@ import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.ChangeUserInfo;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
@@ -54,6 +55,35 @@ public class AccountsController {
 		}
 		mv.addObject("wishlistBooks", wishlistBooks);
 		return mv;
+	}
+	
+	@RequestMapping(value = "changeUserInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public String changeUserInformation(@RequestBody ChangeUserInfo info, HttpSession session){
+		System.out.println(info.getEmail());
+		System.out.println(info.getFirstName());
+		System.out.println(info.getPassword());
+		if(!info.getPassword().equals(info.getPasswordConfirm())){
+			return "failure";
+		}
+		
+		
+		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		if(!info.getCurrentPassword().equals(user.getAccountInfo().getLoginCredentials().getPassword())){
+			return "invalid";
+		}
+		
+		AccountInfo userInfo = user.getAccountInfo();
+		LoginCredentials loginCreds = userInfo.getLoginCredentials();
+		userInfo.setFirstName(info.getFirstName());
+		userInfo.setLastName(info.getLastName());
+		loginCreds.setEmail(info.getEmail());
+		loginCreds.setPassword(info.getPassword());
+		userInfo.setLoginCredentials(loginCreds);
+		user.setAccountInfo(userInfo);
+		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
+		service.updateRegisteredUser(user);
+		return "Success";
 	}
 	
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
@@ -97,4 +127,6 @@ public class AccountsController {
 		return "signoutsuccess";
 
 	}
+	
+	
 }

@@ -235,16 +235,18 @@
 						<hr>
 						<div class="well">
 
-				<form id="accountInfoForm" method="post" class="form-horizontal"
+				<form  class="form-horizontal"
 					data-bv-message="This value is not valid"
 					data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
 					data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
 					data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-					
+						<div class="form-group">
+								<span id="changeInfoError" class="formerror"></span>
+							</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Library Card Number</label>
 							<div class="col-sm-5">
-								<input type="text" class="form-control" name="libraryCardNumber"
+								<input type="text" class="form-control" name="libraryCardNumber" id = "changeLibraryCardNumber"
 									value="<c:out value="${currentUser.libraryCardNumber}" />"
 									disabled />
 							</div>
@@ -253,7 +255,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="firstName"
+								<input type="text" class="form-control" name="firstName" id = "changeFirstName"
 									value=<c:out value="${currentUser.accountInfo.firstName}"/> />
 							</div>
 						</div>
@@ -261,7 +263,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="lastName"
+								<input type="text" class="form-control" name="lastName" id = "changeLastName"
 									value=<c:out value="${currentUser.accountInfo.lastName}"/> />
 							</div>
 						</div>
@@ -269,17 +271,17 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Email address</label>
 							<div class="col-sm-5">
-								<input class="form-control" name="email" type="text"
+								<input class="form-control" name="email" type="text" id = "changeEmail"
 									value="<c:out value="${currentUser.accountInfo.loginCredentials.email}" />"
 									data-bv-regexp="true" data-bv-regexp-regexp="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$"
 									data-bv-regexp-message="The input is not a valid email address" />
 							</div>
 						</div>
-
+						
 						<div class="form-group">
-							<label class="col-sm-3 control-label">Password</label>
+							<label class="col-sm-3 control-label">New Password</label>
 							<div class="col-sm-5">
-								<input type="password" class="form-control" name="password"
+								<input type="password" class="form-control" name="password" id = "changePassword"
 									value="<c:out value="${currentUser.accountInfo.loginCredentials.password}" />"
 									data-bv-different="true" data-bv-different-field="username"
 									data-bv-different-message="The password cannot be the same as username" />
@@ -288,10 +290,10 @@
 						
 						<div class="form-group">
 							
-							<label class="col-sm-3 control-label">Confirm password</label>
+							<label class="col-sm-3 control-label">Confirm New Password</label>
 							<div class="col-sm-5">
 								<input type="password" class="form-control"
-									name="confirmPassword" 
+									name="confirmPassword" id = "changePasswordConfirm"
 									value="<c:out value="${currentUser.accountInfo.loginCredentials.password}" />"
 									data-bv-notempty="true"
 									data-bv-notempty-message="The confirm password is required and cannot be empty"
@@ -300,12 +302,21 @@
 							</div>
 						</div>
 						
+						
 						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-3">
-								<button type="submit" class="btn btn-primary">Save Changes</button>
+							<label class="col-sm-3 control-label">Current Password</label>
+							<div class="col-sm-5">
+								<input type="password" class="form-control" name="password" id = "changeCurrentPassword"
+									value=""
+									data-bv-different="true" data-bv-different-field="username"
+									data-bv-different-message="The password cannot be the same as username" />
 							</div>
 						</div>
 					</form>
+							<div class="col-sm-offset-4 col-sm-3">
+								<button onclick = "changeUserInfo()"  class="btn btn-primary">Save Changes</button>
+							</div>
+					
 						</div>
 					</div>
 				</div>

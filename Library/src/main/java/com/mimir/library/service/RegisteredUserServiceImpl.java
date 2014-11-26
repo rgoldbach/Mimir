@@ -27,6 +27,13 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public void saveRegisteredUser(RegisteredUser user) {
 		dao.saveRegisteredUser(user);	
 	}
+	
+	@Override
+	public void updateRegisteredUser(RegisteredUser user) {
+		dao.updateRegisteredUser(user);	
+	}
+	
+	
 
 	@Override
 	public List<RegisteredUser> getAllUsers() {

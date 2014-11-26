@@ -67,6 +67,12 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public void saveRegisteredUser(RegisteredUser user) {
 		persist(user);
 	}
+	
+	@Override public void updateRegisteredUser(RegisteredUser user){
+		 getSession().merge(user);
+		 getSession().merge(user.getAccountInfo());
+		 getSession().merge(user.getAccountInfo().getLoginCredentials());
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
