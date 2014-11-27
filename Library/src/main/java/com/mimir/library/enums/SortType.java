@@ -8,5 +8,6 @@ public enum SortType {
 	AuthorAtoZ,
 	AuthorZtoA,
 	ReleaseDate,
-	AddedToSite
+	AddedToSite,
+	MostPopular
 }

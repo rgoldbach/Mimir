@@ -23,6 +23,8 @@ import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
 import com.mimir.library.model.Publisher;
+import com.mimir.library.search.SearchManager;
+import com.mimir.library.search.SearchResult;
 
 @Service("searchService")
 @Transactional
@@ -86,12 +88,20 @@ public class SearchServiceImpl implements SearchService{
 	}
 	
 	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
-		return dao.search(searchKeyword, firstResultIndex, searchType, sortType);
+		List<Book> results = dao.search(searchKeyword, firstResultIndex, searchType, sortType);
+		SearchManager searchManager = new SearchManager();
+		List<SearchResult> searchResults = searchManager.analyzeSearch(results);
+		System.out.println("DEBUG - Search Results - " + searchResults.size());
+		for(SearchResult sr : searchResults){
+			sr.print();
+		}
+		return results;
 	}
 
 	@Override
 	public List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType) {
-		return dao.quickSearch(keyword, firstResultIndex, sortType);
+		List<Book> results = dao.quickSearch(keyword, firstResultIndex, sortType);
+		return results;
 	}
 	
 	
