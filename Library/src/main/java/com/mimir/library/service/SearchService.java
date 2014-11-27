@@ -12,6 +12,7 @@ import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
 import com.mimir.library.model.Publisher;
+import com.mimir.library.search.SearchResult;
 
 public interface SearchService {
 
@@ -28,7 +29,7 @@ public interface SearchService {
 	List<AwardInfo> getAllAwards();
 	List<String> getAllAwardsAsStrings();
 	
-	List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType);
+	List<SearchResult> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType);
 	List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType);
 	
 	void initHibernateSearch();

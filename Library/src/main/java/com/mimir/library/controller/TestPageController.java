@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
-import com.mimir.library.model.Book;
+import com.mimir.library.search.SearchResult;
 import com.mimir.library.service.SearchService;
 
 @Controller
@@ -34,11 +34,17 @@ public class TestPageController {
 	@RequestMapping(value = "/results")
 	public ModelAndView initResults(String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView("/test/results");
-		List<Book> results = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
-		PagedListHolder<Book> pagedResults = new PagedListHolder<Book>(results);
+		
+		// Obtain results
+		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
+		
+		// Page results
+		PagedListHolder<SearchResult> pagedResults = new PagedListHolder<SearchResult>(searchResults);
 		pagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+		
+		// Add paged results to Session
 		session.setAttribute("pagedResults", pagedResults);
-		session.setAttribute("message", results.size() + " results found for '" + query + "'");
+		session.setAttribute("message", searchResults.size() + " results found for '" + query + "'");
 		return mv;
 	}
 	
@@ -46,17 +52,17 @@ public class TestPageController {
 	@RequestMapping(value = "/loadResults")
 	@ResponseBody
 	public JSONObject loadResults(HttpSession session){
-		PagedListHolder<Book> pagedResults = (PagedListHolder<Book>) session.getAttribute("pagedResults");
-		List<Book> results = pagedResults.getPageList();
+		PagedListHolder<SearchResult> pagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
+		List<SearchResult> results = pagedResults.getPageList();
 		
 		JSONObject jResultPage = new JSONObject();
 		JSONArray jResults = new JSONArray();
 		
-		for(Book result : results){
+		for(SearchResult result : results){
 			JSONObject jBook = new JSONObject();
-			jBook.put("isbn", result.getIsbn());
-			jBook.put("imgPath", result.getBookDisplay().getImageFilePath());
-			jBook.put("title", result.getBookDisplay().getTitle());
+			jBook.put("imgPath", result.getImgPath());
+			jBook.put("title", result.getTitle());
+			jBook.put("format", result.getFormat());
 			jResults.add(jBook);
 		}
 		
