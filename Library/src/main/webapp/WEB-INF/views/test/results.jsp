@@ -54,35 +54,7 @@
 			</div>
 		<!-- Display Results in 'List' View -->
 			<div id="listResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-				<div class="row">
-					<div class="col-md-12">
-						<h3>Title by <a href="#">Authors</a></h3>
-					</div>
-					<div class="thumbnail col-md-2">
-						<img class="img-responsive" src="/Library/resources/img/TestImg4.jpg" alt="...">
-					</div>
-					
-					<div class="col-md-2">
-						<p  style="font-size:15px;">
-							<span class="glyphicon glyphicon-tags"></span>
-							<a href="#"> Tag</a>,
-							<br><a href="#">Tag</a>,
-							<br><a href="#">Tag</a>
-						</p>
-					</div>
-					<div class="col-md-8">
-						<p  style="font-size:13px;">
-							Jonas's world is perfect. Everything is under control.
-							There is no war or fear of pain. There are no choices. Every
-							person is assigned a role in the community. When Jonas turns 12
-							he is singled out to receive special training from The Giver. The
-							Giver alone holds the memories of the...
-						</p>
-					</div>
-					<div class="col-md-12">
-						<hr>
-					</div>
-				</div>
+			
 			</div>
 		</div>
 		

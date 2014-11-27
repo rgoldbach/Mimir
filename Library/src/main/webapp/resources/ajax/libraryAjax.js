@@ -15,12 +15,23 @@ function moreResults(){
         					coverResults += '<h6>Authors</h6>';
         				coverResults += '</div>';
         			coverResults += '</div>';
-        		coverResults += '</div>';
-        		
+            		coverResults += '</div>';
+            		
+            		listResults += '<div class="col-md-12"><h3>' + this.title + ' by <a href="#"> Authors</a></h3></div>';
+            		listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
+            		listResults += '<div class="col-md-2"><p  style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
+            			listResults += '<a href="#"> Tag</a>,';
+            			listResults += '<br><a href="#">Tag</a>,';
+            			listResults += '<br><a href="#">Tag</a>';
+            		listResults += '</p></div>';
+        		listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
+        			listResults += 'Jonas\'s world is perfect. Everything is under control. There is no war or fear of pain. There are no choices. Everyperson is assigned a role in the community. When Jonas turns 12 he is singled out to receive special training from The Giver. The Giver alone holds the memories of the...';
+        		listResults += '</p></div>';
+				listResults += '<div class="col-md-12"><hr></div>';
         		
         	});
         	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);
-        	
+        	$(listResults).hide().appendTo('#listResultContainer').fadeIn(1000);
         	
         	if(jResultPage.isLastPage){
         		$('#moreResults').hide();
