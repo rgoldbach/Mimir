@@ -1,5 +1,6 @@
 package com.mimir.library.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 
 import org.hibernate.search.annotations.Indexed;
@@ -63,6 +65,16 @@ public class Book {
 	
 	@Column(name = "seriesName")
 	private String seriesName;
+	
+	public Book(){
+		this.audioBook = new AudioBook();
+		this.eBook = new EBook();
+		this.authors = new ArrayList<Author>();
+		this.awards = new ArrayList<BookAward>();
+		this.bookDisplay = new BookDisplayableInformation();
+		this.genres = new ArrayList<BookGenre>();
+		this.interestLevels = new ArrayList<BookInterestLevel>();
+	}
 
 	public int getBookId() {
 		return bookId;

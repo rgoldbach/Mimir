@@ -29,6 +29,10 @@ public class AudioBookLicense {
 	@Column(name = "numberOfCopiesForDownload")
 	private int numberOfCopiesForDownload;
 
+	public AudioBookLicense(){
+		
+	}
+	
 	public int getAudioBookLicenseId() {
 		return audioBookLicenseId;
 	}

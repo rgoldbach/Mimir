@@ -3,12 +3,17 @@ package com.mimir.library.search;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Book;
 
 public class SearchManager {
 	
-	public SearchManager(){}
+	SortManager sortManager;
+	
+	public SearchManager(){
+		sortManager = new SortManager();
+	}
 	
 	public List<SearchResult> analyzeSearch(List<Book> books){
 		List<SearchResult> searchResults = new ArrayList<SearchResult>();
@@ -34,5 +39,9 @@ public class SearchManager {
 		return searchResults;
 	}
 
+	public void sort(SortType sortType, List<SearchResult> searchResults){
+		sortManager.sort(sortType, searchResults);
+	}
+	
 	
 }

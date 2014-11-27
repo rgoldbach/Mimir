@@ -4,6 +4,9 @@
 
 	<!-- Bootstrap -->
 	<script src="<c:url value="/resources/bootstrap/js/bootstrap.js" />"></script>
+	
+	<!-- Bootstrap Validator -->
+	<script src="<c:url value="/resources/bootstrapValidator/js/bootstrapValidator.js" />"></script>
 
 	<!-- metisMenu -->
 	<script src="<c:url value="/resources/metisMenu/js/metisMenu.js" />"></script>
