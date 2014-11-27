@@ -32,6 +32,7 @@
 	</div>
 	<div class="modal-body">
 		<input id = "currentBook" type="hidden" value="${ebook.book.bookId}">
+		<input id ="borrowedBookFormat" type = "hidden" value ="EBook">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 			<!-- Portfolio Item Row -->
