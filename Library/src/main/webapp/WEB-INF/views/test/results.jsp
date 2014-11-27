@@ -50,32 +50,46 @@
 		<div class="row">
 		<!-- Display Results in 'Cover' View -->
 			<div id="coverResultContainer" class="col-md-8 col-md-offset-2">
-				<c:forEach end="3" var="book" items = "${resultPage}">
-					<div class="searchResult col-md-3">
-						<div class="thumbnail">
-						<img class="img-responsive" src="<c:url value='${book.bookDisplay.imageFilePath}' />" alt="...">
-						<div class="caption">
-							<h6 class="resultInfo">${book.bookDisplay.title}</h6>
-							<h6 class="resultInfo">Authors</h6>
-						</div>
-					</div>
-				</div>
- 			</c:forEach>
+				
 			</div>
 		<!-- Display Results in 'List' View -->
 			<div id="listResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-				LIST RESULTS
-			</div>
-		<!-- No results found. Display message and perhaps suggest another search? -->
-			<div id="coverResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-				${message}
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Title by <a href="#">Authors</a></h3>
+					</div>
+					<div class="thumbnail col-md-2">
+						<img class="img-responsive" src="/Library/resources/img/TestImg4.jpg" alt="...">
+					</div>
+					
+					<div class="col-md-2">
+						<p  style="font-size:15px;">
+							<span class="glyphicon glyphicon-tags"></span>
+							<a href="#"> Tag</a>,
+							<br><a href="#">Tag</a>,
+							<br><a href="#">Tag</a>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<p  style="font-size:13px;">
+							Jonas's world is perfect. Everything is under control.
+							There is no war or fear of pain. There are no choices. Every
+							person is assigned a role in the community. When Jonas turns 12
+							he is singled out to receive special training from The Giver. The
+							Giver alone holds the memories of the...
+						</p>
+					</div>
+					<div class="col-md-12">
+						<hr>
+					</div>
+				</div>
 			</div>
 		</div>
 		
 		<!-- Request more results. If no / no more results found, don't show this. -->
 		<div class="row">
 			<div class="col-md-2 col-md-offset-5">
-				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block" data-loading-text="Loading...">More</button>
+				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block">More</button>
 			</div>
 		</div>
 	</div>
@@ -90,6 +104,8 @@
 
 	<script>
 	$(document).ready(function() {
+		moreResults();
+		
 		$('#coverDisplay').click(function(){
 			$('#listResultContainer').hide();
 			$('#coverResultContainer').show();
@@ -103,9 +119,9 @@
 			$('#listDisplay').addClass('active');
 		});
 		$('#moreResults').click(function(){
-			$('#moreResults').button('loading');
-			// DO SHIT TO LOAD MORE RESULTS
-			// $('#moreResults').button('reset');
+			$('#moreResults').hide();
+			moreResults();
+			$('#moreResults').show();
 		});
 		
 	});

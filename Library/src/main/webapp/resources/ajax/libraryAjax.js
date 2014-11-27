@@ -1,8 +1,39 @@
-function borrowBook(){
-	
-      var currentBook = $('#currentBook').val();
-      var bookFormat = $('#borrowedBookFormat').val();
-      var json = { 
+function moreResults(){
+    $.ajax({
+        url: 'loadResults',
+        type: 'GET',
+        success: function(jResultPage) {
+        	var coverResults = '';
+        	var listResults = '';
+        	
+        	$(jResultPage.jResults).each(function(index){
+        		coverResults += '<div class="col-md-3">';
+        			coverResults += '<div class="thumbnail">';
+        				coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
+        				coverResults += '<div class="caption">';
+        					coverResults += '<h6>' + this.title + '</h6>';
+        					coverResults += '<h6>Authors</h6>';
+        				coverResults += '</div>';
+        			coverResults += '</div>';
+        		coverResults += '</div>';
+        		
+        		
+        	});
+        	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);
+        	
+        	
+        	if(jResultPage.isLastPage){
+        		$('#moreResults').hide();
+        	}
+        }
+  	});	
+  }
+
+  function borrowBook(){
+  	
+        var currentBook = $('#currentBook').val();
+        var bookFormat = $('#borrowedBookFormat').val();
+        var json = { 
     		  		"whichBook" : currentBook,
     		  		"bookFormat" : bookFormat
     		  	};
