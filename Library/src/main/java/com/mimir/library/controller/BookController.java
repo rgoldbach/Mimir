@@ -46,7 +46,7 @@ public class BookController {
 	public ModelAndView showMessage(
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook) {
 		System.out.println("in controller");
- 
+		
 		ModelAndView mv = new ModelAndView("library/book");
 		mv.addObject("whichBook", whichBook);
 		return mv;
@@ -57,11 +57,11 @@ public class BookController {
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
 		System.out.println(whichBook);
 		ModelAndView mv = new ModelAndView("library/bookModal");		
+		EBook ebook = libraryService.getSpecificEBook(whichBook);
 		Book book = libraryService.getSpecificBook(whichBook);
-		for(Author a : book.getAuthors()){
-			System.out.println(a.getName());
-		}
+
 		session.setAttribute("viewBook", book);
+		mv.addObject("ebook", ebook);
 		mv.addObject("book", book);
 		return mv;
 	}

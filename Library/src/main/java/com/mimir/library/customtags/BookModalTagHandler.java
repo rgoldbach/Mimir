@@ -12,6 +12,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistEBook;
 
@@ -31,6 +32,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 			Set<BorrowedEBook> bookshelf = user.getBorrowedEBooks();
 			Set<WishlistEBook> wishlistBooks = user.getWishlistEBooks();
 			Book currentBook = (Book)session.getAttribute("viewBook");
+			EBook currentEBook = currentBook.getEBook();
 			boolean inBookshelf = false;
 			boolean inWishlist = false;
 			for(BorrowedEBook testBook : bookshelf){
@@ -41,6 +43,7 @@ public class BookModalTagHandler extends SimpleTagSupport {
 				if(testBook.getEBook().getBook().getBookId() == currentBook.getBookId())
 					inWishlist = true;
 			}
+			/*
 			out.println("<h4>Choose Format:</h4>");
 			out.println("<div class='col-md-6'>");
 			out.println("<select id='borrowedBookFormat' onchange='changeBookFormatInfo()' class='form-control' data-width='100%'>");
@@ -51,13 +54,17 @@ public class BookModalTagHandler extends SimpleTagSupport {
       		}
       		out.println("</select>");
 			out.println("</div><br/><br/>");
+			*/
 			out.println("<h4>Rating</h4>");
-			out.println("<input onclick='rateBook()' id='input-21b' value='0' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
+			out.println("<input onclick='rateBook()' id='input-21b' value='" + currentEBook.getBookRating().getRating() + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
 			if(inBookshelf){
 				out.println("<button onclick = 'borrowBook()' disabled = 'disabled' id='borrowBookButton' class='bg-primary btn-lg'>In Bookshelf</button>");
 			}
 			else
-				out.println("<button onclick = 'borrowBook()' id='borrowBookButton' class='bg-primary btn-lg'>Borrow</button>");
+				if(currentEBook.getRemainingCopies()==0)
+					out.println("<button onclick = 'holdBook()' id='holdBookButton' class='bg-primary btn-lg'>Hold</button>");
+				else
+					out.println("<button onclick = 'borrowBook()' id='borrowBookButton' class='bg-primary btn-lg'>Borrow</button>");
 			if(inWishlist)
 				out.println("<button onclick= 'wishlistBook()' disabled = 'disabled' id = 'wishlistBookButton' class='bg-info btn-sm'>In Wishlist</button>");
 			else
