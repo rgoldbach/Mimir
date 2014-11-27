@@ -13,4 +13,9 @@
       <tag-class>com.mimir.library.customtags.BookModalTagHandler</tag-class>
       <body-content>scriptless</body-content>
   </tag>
+  <tag>
+  	<name>AudioBookModal</name>
+  	<tag-class>com.mimir.library.customtags.AudioBookModalTagHandler</tag-class>
+  	<body-content>scriptless</body-content>
+  </tag>
 </taglib>

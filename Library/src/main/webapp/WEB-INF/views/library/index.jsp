@@ -26,7 +26,7 @@
 								<div class="row">
 									<c:forEach begin="0" end="3" var="book" items = "${topBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}" class="thumbnail"><img
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -40,7 +40,7 @@
 								<div class="row">
 									<c:forEach begin="4" end="7" var="book" items = "${topBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}" class="thumbnail"><img
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -70,7 +70,7 @@
 								<div class="row">
 									<c:forEach begin="0" end="3" var="book" items = "${newBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}" class="thumbnail"><img
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -84,7 +84,7 @@
 								<div class="row">
 									<c:forEach begin="4" end="7" var="book" items = "${newBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}" class="thumbnail"><img
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -113,26 +113,13 @@
 
 							<div class="item active">
 								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg1.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg2.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg3.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
+									<c:forEach begin="0" end="3" var="book" items = "${topAudioBooks}">
+                    					<div class="col-md-3">
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+												src="<c:url value="${book.imageFilePath}" />" alt="Image"
+												style="max-width: 100%;"></a>
+										</div>
+                    				</c:forEach>
 								</div>
 								<!--.row-->
 							</div>
@@ -140,58 +127,17 @@
 
 							<div class="item">
 								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
+									<c:forEach begin="4" end="7" var="book" items = "${topAudioBooks}">
+                    					<div class="col-md-3">
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+												src="<c:url value="${book.imageFilePath}" />" alt="Image"
+												style="max-width: 100%;"></a>
+										</div>
+                    				</c:forEach>
 								</div>
 								<!--.row-->
 							</div>
 							<!--.item-->
-
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
-
 						</div>
 						<!--.carousel-inner-->
 						<a data-slide="prev" href="#audioBooksMostPopularCarousel"
@@ -211,26 +157,13 @@
 
 							<div class="item active">
 								<div class="row">
-									<div class="col-md-3">
-										<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=1" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg4.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestAudioImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
+									<c:forEach begin="0" end="3" var="book" items = "${newAudioBooks}">
+                    					<div class="col-md-3">
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+												src="<c:url value="${book.imageFilePath}" />" alt="Image"
+												style="max-width: 100%;"></a>
+										</div>
+                    				</c:forEach>
 								</div>
 								<!--.row-->
 							</div>
@@ -238,58 +171,17 @@
 
 							<div class="item">
 								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg5.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg6.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg7.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg8.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
+									<c:forEach begin="0" end="3" var="book" items = "${newAudioBooks}">
+                    					<div class="col-md-3">
+											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+												src="<c:url value="${book.imageFilePath}" />" alt="Image"
+												style="max-width: 100%;"></a>
+										</div>
+                    				</c:forEach>
 								</div>
 								<!--.row-->
 							</div>
 							<!--.item-->
-
-							<div class="item">
-								<div class="row">
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg9.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg10.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg11.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-									<div class="col-md-3">
-										<a href="book" class="thumbnail"><img
-											src="<c:url value="/resources/img/TestImg12.jpg" />" alt="Image"
-											style="max-width: 100%;"></a>
-									</div>
-								</div>
-								<!--.row-->
-							</div>
-							<!--.item-->
-
 						</div>
 						<!--.carousel-inner-->
 						<a data-slide="prev" href="#audioBooksNewArrivalsCarousel"

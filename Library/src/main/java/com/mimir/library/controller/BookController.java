@@ -54,15 +54,24 @@ public class BookController {
 	
 	@RequestMapping("/bookModal")
 	public ModelAndView openBookModal(
-			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
+			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+			HttpSession session){
 		System.out.println(whichBook);
-		ModelAndView mv = new ModelAndView("library/bookModal");		
-		EBook ebook = libraryService.getSpecificEBook(whichBook);
 		Book book = libraryService.getSpecificBook(whichBook);
-
 		session.setAttribute("viewBook", book);
-		mv.addObject("ebook", ebook);
-		mv.addObject("book", book);
+		ModelAndView mv = null;
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			mv = new ModelAndView("library/bookModal");		
+			EBook ebook = libraryService.getSpecificEBook(whichBook);
+			mv.addObject("ebook", ebook);
+		}
+		if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			mv = new ModelAndView("library/audioBookModal");
+			AudioBook audioBook = libraryService.getSpecificAudioBook(whichBook);
+			mv.addObject("audiobook", audioBook);
+		}
+		
 		return mv;
 	}
 	
