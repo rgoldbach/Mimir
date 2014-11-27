@@ -38,8 +38,8 @@
 	
 	<style>
 	.resultInfo {
-    	white-space: nowrap; 
-   		width: 11em; 
+    	white-space: nowrap;
+   		width: 100%; 
     	overflow: hidden;
     	text-overflow: ellipsis; 
 	}
