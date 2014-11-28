@@ -1,13 +1,7 @@
 package com.mimir.library.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.util.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mimir.library.dao.SearchDao;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
-import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.Format;
@@ -87,15 +80,15 @@ public class SearchServiceImpl implements SearchService{
 		return dao.getAllAwardsAsStrings();
 	}
 	
-	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
+	public List<SearchResult> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
 		List<Book> results = dao.search(searchKeyword, firstResultIndex, searchType, sortType);
+		
 		SearchManager searchManager = new SearchManager();
 		List<SearchResult> searchResults = searchManager.analyzeSearch(results);
-		System.out.println("DEBUG - Search Results - " + searchResults.size());
-		for(SearchResult sr : searchResults){
-			sr.print();
-		}
-		return results;
+		
+		System.out.println(searchResults);
+		
+		return searchResults;
 	}
 
 	@Override

@@ -20,27 +20,35 @@
 					<div class="col-lg-3">
 						<!-- Switch between Cover and List display -->
 						<div class="btn-group btn-group-lg">
-  							<button id="coverDisplay" type="button" class="active btn btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
+  							<button id="coverDisplay" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
   							<button id="listDisplay" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> List</button>
 						</div>
 						<br>
 						<!-- Hey, this probably shouldn't be hard coded! -->
-						<select class="selectpicker" data-width="190px">
+						<select id="sortBy" class="selectpicker" data-width="190px">
 							<optgroup label="Sort By">
- 								<option value="relevancy">Relevance</option>
- 								<option value="titleAz">Title A-Z</option>
-								<option value="titleZa">Title Z-A</option>
-								<option value="authorAz">Author A-Z</option>
-								<option value="authorZa">Author Z-A</option>
+ 								<option value="relevance">Relevance</option>
+ 								<option value="highestRated">Highest Rated</option>
+ 								<option value="titleAtoZ">Title A-Z</option>
+								<option value="titleZtoA">Title Z-A</option>
+								<option value="authorAtoZ">Author A-Z</option>
+								<option value="authorZtoA">Author Z-A</option>
 								<option value="releaseDate">Release Date</option>
 								<option value="addedToSite">Added to Site</option>
 								<option value="mostPopular">Most Popular</option>
 							</optgroup>
 						</select>
+						<br>
+						<select id="filterBy" class="selectpicker" data-width="190px">
+							<optgroup label="Filter By">
+								<option value="noFilter">No Filter</option>
+ 								<option data-icon="glyphicon glyphicon-book" value="eBookOnly">eBook Only</option>
+ 								<option data-icon="glyphicon glyphicon-headphones" value="audioOnly">Audio Only</option>
+ 							</optgroup>
+						</select>
 					</div>
 					<div class="col-lg-9">
-						<!-- If there are any, use ${message} to display the number of results! -->
-						<p style="font-size:20px;" class="text-left">${message}</p>
+						<p class="text-left">${message}</p>
 						<hr>
 					</div>
 				</div>
@@ -50,32 +58,18 @@
 		<div class="row">
 		<!-- Display Results in 'Cover' View -->
 			<div id="coverResultContainer" class="col-md-8 col-md-offset-2">
-				<c:forEach end="3" var="book" items = "${resultPage}">
-					<div class="searchResult col-md-3">
-						<div class="thumbnail">
-						<img class="img-responsive" src="<c:url value='${book.bookDisplay.imageFilePath}' />" alt="...">
-						<div class="caption">
-							<h6 class="resultInfo">${book.bookDisplay.title}</h6>
-							<h6 class="resultInfo">Authors</h6>
-						</div>
-					</div>
-				</div>
- 			</c:forEach>
+				<!-- Results appended -->
 			</div>
 		<!-- Display Results in 'List' View -->
-			<div id="listResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-				LIST RESULTS
-			</div>
-		<!-- No results found. Display message and perhaps suggest another search? -->
-			<div id="coverResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-				${message}
+			<div id="listResultContainer" class="col-md-8 col-md-offset-2" >
+				<!-- Results appended -->
 			</div>
 		</div>
 		
 		<!-- Request more results. If no / no more results found, don't show this. -->
 		<div class="row">
 			<div class="col-md-2 col-md-offset-5">
-				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block" data-loading-text="Loading...">More</button>
+				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block">More (#)</button>
 			</div>
 		</div>
 	</div>
@@ -90,24 +84,108 @@
 
 	<script>
 	$(document).ready(function() {
-		$('#coverDisplay').click(function(){
-			$('#listResultContainer').hide();
-			$('#coverResultContainer').show();
-			$('#listDisplay').removeClass('active');
-			$('#coverDisplay').addClass('active');
-		});
-		$('#listDisplay').click(function(){
-			$('#coverResultContainer').hide();
-			$('#listResultContainer').show();
-			$('#coverDisplay').removeClass('active');
-			$('#listDisplay').addClass('active');
-		});
-		$('#moreResults').click(function(){
-			$('#moreResults').button('loading');
-			// DO SHIT TO LOAD MORE RESULTS
-			// $('#moreResults').button('reset');
+		// Get the first page of search results
+		moreResults();
+		// Init result view
+		$('#coverDisplay').addClass('active');
+		$('#listResultContainer').hide();
+		
+		// Toggle between cover and list
+		$('#coverDisplay, #listDisplay').click(function(){
+			if($(this).attr('id') == 'coverDisplay'){
+				$(this).addClass('active');
+				$('#listDisplay').removeClass('active');
+				$('#listResultContainer').hide();
+				$('#coverResultContainer').show();
+			}
+			else{
+				$(this).addClass('active');
+				$('#coverDisplay').removeClass('active');
+				$('#coverResultContainer').hide();
+				$('#listResultContainer').show();
+			}
 		});
 		
+		// Load more results
+		$('#moreResults').click(function(){
+			moreResults();
+		});
+		
+		// Sort search results
+		$('#sortBy').change(function(){
+			// Get the sort type
+			var sortType = $(this).val();
+			
+			// Empty the current results
+			$('#coverResultContainer').empty();
+			$('#listResultContainer').empty();
+
+			// Update the search results
+			
+		    $.ajax({
+		        url:	'sortResults?sortType='+sortType,
+		        type:	'GET',
+		        success: function() {
+		        	// Get the first page of search results
+					moreResults();
+		        }
+		  	});	
+		});
+		
+		function moreResults(){
+		    $.ajax({
+		        url:	'loadResults',
+		        type:	'GET',
+		        success: function(jResultPage) {
+		        	console.log(jResultPage);
+		        	var coverResults = '';
+		        	var listResults = '';
+		        	// For each result...
+		        	$(jResultPage.jResults).each(function(index){
+		        		// Generate the cover result html
+		        		coverResults += '<div class="col-md-3">';
+		    				coverResults += '<div class="thumbnail">';
+		    					coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
+		    					coverResults += '<div class="caption">'; 
+									coverResults += '<h6 class="resultInfo">' + this.title + '</h6>';
+									coverResults += '<h6 class="resultInfo">' + this.format + '</h6>';
+									coverResults += '<h6>Authors</h6>';
+								coverResults += '</div>';
+								coverResults += '</div>';
+								coverResults += '</div>';
+				    	// Generate the list result html
+								listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#"> Authors</a></h3></div>';
+								listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
+				        			listResults += '<div class="col-md-2"><p  style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
+				        				listResults += '<a href="#"> Tag</a>,';
+				        				listResults += '<br><a href="#">Tag</a>,';
+				        				listResults += '<br><a href="#">Tag</a>';
+				        				listResults += '</p></div>';
+				        			listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
+				        				listResults += this.description;
+				        				listResults += '</p></div>';
+				        		listResults += '<div class="col-md-12"><hr></div>';
+				    		
+				        	});
+		        	
+		        			// Show results
+				        	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);
+				        	$(listResults).hide().appendTo('#listResultContainer').fadeIn(1000);
+				        	
+				        	// If the more button's hidden (if the last search hid it)
+				        	if($('#moreResults').css('display') == 'none'){
+				        		$('#moreResults').show();
+				        	}
+				        	// Hide the more button if there's no more results
+				        	if(jResultPage.remainingResults == 0){
+				        		$('#moreResults').hide();
+				        	}
+				        	else{
+				        		$('#moreResults').html('More ('+ jResultPage.remainingResults + ')');
+				        	}
+		        }
+		  	});	
+		  }
 	});
 	</script>
 	

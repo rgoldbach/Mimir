@@ -27,6 +27,7 @@ public class SearchController {
 	@RequestMapping("/quickSearch")
 	public ModelAndView quickSearch(
 			@RequestParam(value = "query", required = false, defaultValue = "") String query, HttpSession session) {
+		/*
 		System.out.println("Quick Search for " + query);
 		
 		//Always set the first index to 0 every time a new search is made. 
@@ -53,7 +54,8 @@ public class SearchController {
 		
 		ModelAndView mv = new ModelAndView("library/search");
 		mv.addObject("message", message);
-		
+		*/
+		ModelAndView mv = new ModelAndView("library/search");
 		return mv;
 	}
 	

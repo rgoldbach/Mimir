@@ -1,5 +1,6 @@
 package com.mimir.library.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -47,6 +48,11 @@ public class EBook {
 	private Integer remainingCopies;
 	
 	public EBook(){
+		this.publisher = new Publisher();
+		this.bookRating = new EBookRating();
+		this.eBookFormats = new ArrayList<EBookFormat>();
+		this.languages = new ArrayList<EBookLanguage>();
+		this.eBookLicenses = new ArrayList<EBookLicense>();
 		
 	}
 	

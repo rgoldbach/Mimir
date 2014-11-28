@@ -42,6 +42,10 @@ public class SearchResult {
 	
 	private List<String> formatNames;
 	
+	private String imgPath;
+	
+	private String description;
+	
 	public SearchResult(){}
 	
 	public SearchResult(Book book, String format, int relevanceScore){
@@ -60,6 +64,8 @@ public class SearchResult {
 			this.isAvailable = (book.getEBook().getRemainingCopies() != 0);
 			this.genreNames = getGenreNames(book.getGenres());
 			this.formatNames = getEBookFormatNames(book.getEBook().geteBookFormats());
+			this.imgPath = book.getBookDisplay().getImageFilePath();
+			this.description = book.getBookDisplay().getDescription();
 			
 		}else if(format.equals(GlobalConstants.AUDIOBOOK)){
 			
@@ -76,6 +82,8 @@ public class SearchResult {
 			this.isAvailable = (book.getAudioBook().getRemainingCopies() != 0);
 			this.genreNames = getGenreNames(book.getGenres());
 			this.formatNames = getAudioBookFormatNames(book.getAudioBook().getAudioBookFormats());
+			this.imgPath = book.getBookDisplay().getImageFilePath();
+			this.description = book.getBookDisplay().getDescription();
 			
 		}
 	}
@@ -211,6 +219,22 @@ public class SearchResult {
 
 	public void setMostPopularScore(int mostPopularScore) {
 		this.mostPopularScore = mostPopularScore;
+	}
+	
+	public String getImgPath(){
+		return imgPath;
+	}
+	
+	public String setImgPath(String imgPath){
+		return this.imgPath = imgPath;
+	}
+	
+	public String getDescription(){
+		return description;
+	}
+	
+	public String setDescription(String description){
+		return this.description = description;
 	}
 	
 	public void print(){

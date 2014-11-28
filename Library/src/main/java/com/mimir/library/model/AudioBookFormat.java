@@ -36,6 +36,10 @@ public class AudioBookFormat {
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate releaseDate;
 	
+	public AudioBookFormat(){
+		
+	}
+	
 	@Column(name = "fileSize")
 	private Integer fileSize;
 	

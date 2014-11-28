@@ -1,8 +1,8 @@
-function borrowBook(){
-	
-      var currentBook = $('#currentBook').val();
-      var bookFormat = $('#borrowedBookFormat').val();
-      var json = { 
+  function borrowBook(){
+  	
+        var currentBook = $('#currentBook').val();
+        var bookFormat = $('#borrowedBookFormat').val();
+        var json = { 
     		  		"whichBook" : currentBook,
     		  		"bookFormat" : bookFormat
     		  	};

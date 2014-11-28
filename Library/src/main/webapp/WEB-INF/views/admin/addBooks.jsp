@@ -28,13 +28,15 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <form id="multForm" class="form-inline">
+             
+            <form id="multForm" class="form-inline" method="POST" action="uploadFile" enctype="multipart/form-data">
 
                 <!-- File Button --> 
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="filebutton"></label>
                   <div class="col-md-4">
-                    <input id="filebutton" name="filebutton" type="file">
+                    <input id="filebutton" name="file" type="file" class="btn">
+                    Name: <input type="text" name="name">
                   </div>
                 </div>
                 
@@ -42,7 +44,7 @@
                 <div class="form-group">
                   <label class="col-md-4 control-label" for="submit"></label>
                   <div class="col-md-4">
-                    <button id="orderSubmit" name="submit" class="btn btn-info">Upload</button>
+                    <button id="orderSubmit" name="submit" value="Upload" class="btn btn-info">Upload</button>
                   </div>
                 </div>
 

@@ -1,5 +1,6 @@
 package com.mimir.library.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -41,7 +42,7 @@ public class Author {
 	private Collection<Book> books;
 	
 	public Author(){
-		
+		this.awards = new ArrayList<AuthorAward>();
 	}
 	
 	public Author(String name, String description){

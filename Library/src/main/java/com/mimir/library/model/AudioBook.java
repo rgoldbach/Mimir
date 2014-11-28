@@ -1,5 +1,6 @@
 package com.mimir.library.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -45,6 +46,15 @@ public class AudioBook {
 	
 	@Column(name = "remainingCopies")
 	private Integer remainingCopies;
+	
+	public AudioBook(){
+		this.audioBookFormats = new ArrayList<AudioBookFormat>();
+		this.audioBookLicenses = new ArrayList<AudioBookLicense>();
+		this.bookRating = new AudioBookRating();
+		this.booksOnHold = new ArrayList<AudioBookOnHold>();
+		this.languages = new ArrayList<AudioBookLanguage>();
+		this.publisher = new Publisher();
+	}
 
 	public int getAudioBookId() {
 		return audioBookId;
