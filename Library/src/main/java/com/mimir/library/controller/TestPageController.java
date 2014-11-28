@@ -76,10 +76,13 @@ public class TestPageController {
 		jResultPage.put("jResults", jResults);
 		
 		// Represent if last page
-		if(pagedResults.isLastPage())
-			jResultPage.put("isLastPage", true);
-		else
-			jResultPage.put("isLastPage", false);
+		if(pagedResults.isLastPage()){
+			jResultPage.put("remainingResults", 0);
+		}
+		else{
+			int remainingResults = (pagedResults.getNrOfElements() - ((pagedResults.getPage()+1) * GlobalConstants.RESULTS_PER_QUERY));
+			jResultPage.put("remainingResults", remainingResults);
+		}
 		
 		pagedResults.nextPage();
 		
@@ -137,7 +140,6 @@ public class TestPageController {
 		PagedListHolder<SearchResult> sortedPagedResults = new PagedListHolder<SearchResult>(results);
 		sortedPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
 		session.setAttribute("pagedResults", sortedPagedResults);
-		
 		// Probably going to need to return something here maybe idk who cares 
 		return "";
 		
