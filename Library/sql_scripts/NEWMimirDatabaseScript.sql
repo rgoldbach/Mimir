@@ -207,7 +207,7 @@ CREATE TABLE `BookDisplayInfo` (
     `title` VARCHAR(50) NOT NULL,
     `description` VARCHAR(300) NOT NULL,
     `dateAdded` DATE NOT NULL,
-    `imageFilePath` VARCHAR(50) NOT NULL,
+    `imageFilePath` VARCHAR(500) NOT NULL,
     PRIMARY KEY (bookDisplayId),
     CONSTRAINT `bookDisplayDeterminedBy` FOREIGN KEY (`bookId`)
         REFERENCES `Books` (`bookId`)
@@ -400,10 +400,6 @@ DROP TABLE IF EXISTS `DownloadSites`;
 CREATE TABLE `DownloadSites` (
     `downloadSiteId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
-	`baseUrl` VARCHAR(100) NOT NULL,
-	`downloadUrl` VARCHAR(100) NOT NULL,
-	`bookKeyUrl` VARCHAR(100) NOT NULL,
-	`publicKey` VARCHAR(100) NOT NULL,
     PRIMARY KEY (downloadSiteId)
 );
 
@@ -731,9 +727,14 @@ INSERT INTO `BookGenres` VALUES (1, 1, 1),
 UNLOCK TABLES;
 
 LOCK TABLES `InterestLevels` WRITE;/* Id, InterestLevel */
-INSERT INTO `InterestLevels` VALUES (1, 'Adult'), 
-									(2, 'High School'), 
-									(3, 'Young Adults');
+INSERT INTO `InterestLevels` VALUES (1, 'Kindergarten'), 
+									(2, 'Elementary'), 
+									(3, 'MiddleSchool'),
+								    (4, 'HighSchool'), 
+									(5, 'College'), 
+									(6, 'YoungAdult'),
+									(7, 'Adult'); 
+
 UNLOCK TABLES;
 
 LOCK TABLES `InterestLevelInterests` WRITE;/* Id, InterestLevelId(FK), RegUserId(FK)*/
@@ -846,7 +847,7 @@ UNLOCK TABLES;
 
 
 LOCK TABLES `DownloadSites` WRITE;/* Id, Name, Baseurl, DownloadUrl, BookKeyUrl, PublicKey */
-INSERT INTO `DownloadSites` VALUES   (1, 'Lamazon', 'Not_Implemented_Yet', 'Not_Implemented_Yet', 'Not_Implemented_Yet', 'Not_Implemented_Yet');
+INSERT INTO `DownloadSites` VALUES   (1, 'Lamazon');
 UNLOCK TABLES;
 
 

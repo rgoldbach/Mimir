@@ -29,5 +29,13 @@ public class DownloadSite {
 	
 	@Column(name = "publicKey")
 	private String publicKey;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }

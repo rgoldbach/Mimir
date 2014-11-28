@@ -8,12 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.model.AudioBook;
+import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.EBook;
+import com.mimir.library.model.Format;
 import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
+import com.mimir.library.model.Publisher;
 
 @Service("libraryService")
 @Transactional
@@ -24,8 +27,7 @@ public class LibraryServiceImpl implements LibraryService{
 
 	@Override
 	public void saveBook(Book book) {
-		// TODO Auto-generated method stub
-		
+		dao.saveBook(book);
 	}
 
 	@Override
@@ -108,6 +110,36 @@ public class LibraryServiceImpl implements LibraryService{
 	@Override
 	public AudioBook getSpecificAudioBook(int audioBookId) {
 		return dao.getSpecificAudioBook(audioBookId);
+	}
+
+	@Override
+	public Genre getGenre(String genreName) {
+		return dao.getGenre(genreName);
+	}
+
+	@Override
+	public InterestLevel getInterestLevel(String interestLevel) {
+		return dao.getInterestLevel(interestLevel);
+	}
+
+	@Override
+	public Language getLanguage(String language) {
+		return dao.getLanguage(language);
+	}
+
+	@Override
+	public Publisher getPublisher(String publisherName) {
+		return dao.getPublisher(publisherName);
+	}
+
+	@Override
+	public Format getFormat(String format) {
+		return dao.getFormat(format);
+	}
+
+	@Override
+	public AwardInfo getAwardInfo(String awardTitle, String year) {
+		return dao.getAwardInfo(awardTitle, year);
 	}
 	
 }

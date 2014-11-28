@@ -21,14 +21,13 @@ public class Language {
 	private int languageId;
 	
 	@Column(name = "language")
-	@Enumerated(EnumType.STRING)
-	private LanguageName language;
+	private String language;
 
-	public LanguageName getLanguage() {
+	public String getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(LanguageName language) {
+	public void setLanguage(String language) {
 		this.language = language;
 	}
 

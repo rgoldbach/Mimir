@@ -11,6 +11,10 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,14 +26,31 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AddBookForm;
+import com.mimir.library.model.AudioBookFormat;
+import com.mimir.library.model.AudioBookLanguage;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.AuthorAward;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BookAward;
+import com.mimir.library.model.BookGenre;
+import com.mimir.library.model.BookInterestLevel;
+import com.mimir.library.model.DownloadSite;
+import com.mimir.library.model.EBookFormat;
+import com.mimir.library.model.EBookLanguage;
+import com.mimir.library.model.Format;
+import com.mimir.library.model.Genre;
+import com.mimir.library.model.InterestLevel;
+import com.mimir.library.model.Language;
+import com.mimir.library.model.Publisher;
+import com.mimir.library.service.LibraryService;
 
 // Temporary until Signing in is figured out 
 @Controller
 public class AdminController {
+	
+	@Autowired
+	LibraryService service;
 	
 	@RequestMapping("admin")
 	public ModelAndView showMessage(HttpSession session){
@@ -73,9 +94,7 @@ public class AdminController {
             	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             	System.out.println("About to analyze file..");
             	String response = analyzeFile(bufferedReader);
-            	
- 
-                return "";
+                return response;
             } catch (Exception e) {
                 return "You failed to upload file => " + e.getMessage();
             }
@@ -89,9 +108,9 @@ public class AdminController {
 	private static String authors = "Authors-";
 	private static String authAwar = "AuthorAwards-";
 	private static String authAwarFin = "AuthorAwardsFinished";
-	private static String authAwarTit = "Title:";
-	private static String authAwarDesc = "Description:";
-	private static String authAwarYear = "Year:";
+	private static String awarTit = "Title:";
+	private static String awarDesc = "Description:";
+	private static String awarYear = "Year:";
 	private static String authFin = "AuthorFinished";
 	private static String isbn = "ISBN-";
 	private static String seriesName = "SeriesName-";
@@ -102,128 +121,328 @@ public class AdminController {
 	private static String intrstLvls = "InterestLevels-";
 	private static String ePublisher = "EBookPublisher-";
 	private static String aPublisher = "AudioBookPublisher-";
-	private static String format = "Format-";
-	private static String ebookFormats = "EBookFormats";
-	private static String type = "Type-";
-	private static String release = "Release-";
-	private static String fileSize = "FileSize-";
+	private static String ebookFormats = "EBookFormats-";
+	private static String type = "Type:";
+	private static String release = "ReleaseDate:";
+	private static String fileSize = "FileSize:";
 	private static String endEbookFormats = "EndEBookFormats";
-	private static String audioBookFormats = "AudioBookFormats";
-	private static String numOfParts = "NumOfParts-";
-	private static String duration = "Duration-";
+	private static String audioBookFormats = "AudioBookFormats-";
+	private static String numOfParts = "NumOfParts:";
+	private static String duration = "Duration:";
 	private static String endAudioBookFormats = "EndAudioBookFormats";
 	private static String languages = "Languages-";
 	private static String downloadSite = "DownloadSite-";
-	private static String ebookNumCopies = "EBookNumberOfCopies-";
-	private static String audioBookNumCopies = "AudioBookNumberOfCopies-";
+	private static String downloadSiteName = "Name:";
+	private static String ebookNumCopies = "EBookNumOfCopies:";
+	private static String audioBookNumCopies = "AudioBookNumbOfCopies:";
+	private static String endDownloadSite = "EndDownloadSite";
 	
 	private String analyzeFile(BufferedReader bufferedReader){
-		Book book = new Book();
+		Book book;
+		String response = "";
 		String line = "";
     	try {
-    		System.out.println("Parsing Title..");
     		line = bufferedReader.readLine();
-    		parseTitle(line, book);
-    		System.out.println("Parsing Description..");
-    		line = bufferedReader.readLine();
-    		parseDescription(line, book);
-    		System.out.println("Parsing Authors..");
-    		line = bufferedReader.readLine();
-    		while(!line.equals(authFin)){
-    			parseAuthors(line, book);
-    			System.out.println("Parsing Author Awards..");
-    			line = bufferedReader.readLine();
-    			while(!line.equals(authAwarFin)){
-    				parseAuthorAward(line, book);
-    				line = bufferedReader.readLine();
-    			}
-    		}
-    		System.out.println("Parsing Isbn..");
-    		line = bufferedReader.readLine();
-    		parseIsbn(line, book);
-    		System.out.println("Success");
-    		line = bufferedReader.readLine();
-    		parseSeriesName(line, book);
-    		line = bufferedReader.readLine();
-    		while(!line.equals(bookAwardsFin)){
-        		parseBookAwards(line, book);
+    		while(!(line.equalsIgnoreCase("Finished"))){
+    			book = new Book();
         		line = bufferedReader.readLine();
-    		}
-    		addTodaysDate(book);
-    		line = bufferedReader.readLine();
-    		parseImageFile(line, book);
-    		line = bufferedReader.readLine();
-    		parseGenres(line, book);
-    		line = bufferedReader.readLine();
-    		parseInterestLevels(line, book);
-    		line = bufferedReader.readLine();
-    		parseEBookPublisher(line, book);
-    		line = bufferedReader.readLine();
-    		parseAudioBookPublisher(line, book);
-    		line = bufferedReader.readLine();
-    		while(!line.equals(endEbookFormats)){
-        		parseEBookFormat(line, book);
+        		System.out.println(line);
+        		parseTitle(line, book);
         		line = bufferedReader.readLine();
-    		}
-    		line = bufferedReader.readLine();
-    		while(!line.equals(endAudioBookFormats)){
-        		parseAudioBookFormat(line, book);
+        		System.out.println(line);
+        		parseDescription(line, book);
         		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		while(!line.trim().equalsIgnoreCase(authFin)){
+        			System.out.println(line + " matching " + authFin + " results to " + (line.equalsIgnoreCase(authFin)));
+        			parseAuthors(line, book);
+        			line = bufferedReader.readLine();
+            		System.out.println(line);
+        			while(!line.equalsIgnoreCase(authAwarFin)){
+        				parseAuthorAward(line, book);
+        				line = bufferedReader.readLine();
+                		System.out.println(line);
+        			}
+        			line = bufferedReader.readLine();
+        			System.out.println(line);
+        		}
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseIsbn(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseSeriesName(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		while(!line.trim().equalsIgnoreCase(bookAwardsFin)){
+            		parseBookAwards(line, book);
+            		line = bufferedReader.readLine();
+            		System.out.println(line);
+        		}
+        		addTodaysDate(book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseImageFile(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseGenres(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseInterestLevels(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseEBookPublisher(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseAudioBookPublisher(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		while(!line.trim().equalsIgnoreCase(endEbookFormats)){
+            		parseEBookFormat(line, book);
+            		line = bufferedReader.readLine();
+            		System.out.println(line);
+        		}
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		while(!line.trim().equalsIgnoreCase(endAudioBookFormats)){
+            		parseAudioBookFormat(line, book);
+            		line = bufferedReader.readLine();
+            		System.out.println(line);
+        		}
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		parseLanguages(line, book);
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		while(!line.trim().equalsIgnoreCase(endDownloadSite)){
+        			parseDownloadSite(line, book);
+            		line = bufferedReader.readLine();
+            		System.out.println(line);
+        		}
+        		line = bufferedReader.readLine();
+        		System.out.println(line);
+        		service.saveBook(book);
+        		response += "Book Added: " + book.getBookDisplay().getTitle() + " \n";
     		}
-    		line = bufferedReader.readLine();
-    		parseLanguages(line, book);
-    		line = bufferedReader.readLine();
-    		parseDownloadSite(line, book);
-    		line = bufferedReader.readLine();
-    		parseEBookCopies(line, book);
-    		line = bufferedReader.readLine();
-    		parseAudioBookCopies(line, book);   		
-    		
 		} catch (IOException e) {
 			System.out.println("Error Parsing File At Line " + line);
 			return "Error Parsing File At Line " + line;
 		}
-		return GlobalConstants.DAO_SUCCESS;	
-	}
-
-	private void parseAudioBookCopies(String line, Book book) {
-		
-	}
-
-	private void parseEBookCopies(String line, Book book) {
-		
+		return response;	
 	}
 
 	private void parseDownloadSite(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(downloadSite)){
+			throw new IllegalArgumentException();
+		}
+		if(line.equals("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(downloadSite.length(), line.length());
+		String[] downloadSiteInfo = restOfLine.split("_");
+		if(downloadSiteInfo.length != 3){
+			throw new IllegalArgumentException();
+		}
+		if(!downloadSiteInfo[0].contains(downloadSiteName)){
+			throw new IllegalArgumentException();
+		}
+		DownloadSite dls = new DownloadSite();
+		dls.setName(downloadSiteInfo[0].substring(downloadSiteName.length(), downloadSiteInfo[0].length()));
+		if(!downloadSiteInfo[1].contains(ebookNumCopies)){
+			throw new IllegalArgumentException();
+		}
+		book.getEBook().setRemainingCopies(new Integer(downloadSiteInfo[1].substring(ebookNumCopies.length(), downloadSiteInfo[1].length())));
+		if(!downloadSiteInfo[2].contains(audioBookNumCopies)){
+			throw new IllegalArgumentException();
+		}
+		book.getAudioBook().setRemainingCopies(new Integer(downloadSiteInfo[2].substring(audioBookNumCopies.length(), downloadSiteInfo[2].length())));
 	}
 
 	private void parseLanguages(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(languages)){
+			throw new IllegalArgumentException();
+		}
+		if(line.equals("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(languages.length(), line.length());
+		String[] languages = restOfLine.split("_");
+		for(String languageName : languages){
+			Language language = service.getLanguage(languageName);
+			EBookLanguage ebl = new EBookLanguage();
+			AudioBookLanguage abl = new AudioBookLanguage();
+			ebl.setLanguage(language);
+			abl.setLanguage(language);
+			book.getEBook().getLanguages().add(ebl);
+			book.getAudioBook().getLanguages().add(abl);
+		}
 	}
 
 	private void parseAudioBookFormat(String line, Book book) {
-		
+		AudioBookFormat abf = new AudioBookFormat();
+		line = line.trim();
+		if(!line.contains(audioBookFormats)){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(audioBookFormats.length(), line.length());
+		if(restOfLine.equals("null")){
+			throw new IllegalArgumentException();
+		}
+		String[] formatInfo = restOfLine.split("_");
+		if(formatInfo.length != 5){
+			throw new IllegalArgumentException();
+		}
+		if(!formatInfo[0].contains(type)){
+			throw new IllegalArgumentException();
+		}
+		System.out.println(formatInfo[0].substring(type.length(), formatInfo[0].length()));
+		Format f = service.getFormat(formatInfo[0].substring(type.length(), formatInfo[0].length()));
+		if(f == null) throw new IllegalArgumentException("Invalid Audio Format Type");
+		abf.setFormat(f);
+		if(!formatInfo[1].contains(release)){
+			throw new IllegalArgumentException();
+		}
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy");
+		LocalDate date = LocalDate.parse(formatInfo[1].substring(release.length(), formatInfo[1].length()), dtf);
+		abf.setReleaseDate(date);
+		if(!formatInfo[2].contains(fileSize)){
+			throw new IllegalArgumentException();
+		}
+		abf.setFileSize(new Integer(formatInfo[2].substring(fileSize.length(), formatInfo[2].length())));
+		if(!formatInfo[3].contains(numOfParts)){
+			throw new IllegalArgumentException();
+		}
+		abf.setNumOfParts(new Integer(formatInfo[3].substring(numOfParts.length(), formatInfo[3].length())));
+		if(!formatInfo[4].contains(duration)){
+			throw new IllegalArgumentException();
+		}
+		abf.setDuration(new Integer(formatInfo[4].substring(duration.length(), formatInfo[4].length())));
+		book.getAudioBook().getAudioBookFormats().add(abf);
 	}
 
 	private void parseEBookFormat(String line, Book book) {
-		
+		EBookFormat ebf = new EBookFormat();
+		line = line.trim();
+		if(!line.contains(ebookFormats)){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(ebookFormats.length(), line.length());
+		if(restOfLine.equals("null")){
+			throw new IllegalArgumentException();
+		}
+		String[] formatInfo = restOfLine.split("_");
+		if(formatInfo.length != 3){
+			throw new IllegalArgumentException();
+		}
+		if(!formatInfo[0].contains(type)){
+			throw new IllegalArgumentException();
+		}
+		Format f = service.getFormat(formatInfo[0].substring(type.length(), formatInfo[0].length()));
+		if(f == null) throw new IllegalArgumentException("Invalid Audio Format Type");
+		ebf.setFormat(f);
+		if(!formatInfo[1].contains(release)){
+			throw new IllegalArgumentException();
+		}
+		DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy");
+		LocalDate date = LocalDate.parse(formatInfo[1].substring(release.length(), formatInfo[1].length()), dtf);
+		ebf.setReleaseDate(date);
+		System.out.println(formatInfo[1]);
+		if(!formatInfo[2].contains(fileSize)){
+			throw new IllegalArgumentException();
+		}
+		ebf.setFileSize(new Integer(formatInfo[2].substring(fileSize.length(), formatInfo[2].length())));
+		System.out.println(formatInfo[2]);
+		book.getEBook().geteBookFormats().add(ebf);
 	}
 
 	private void parseAudioBookPublisher(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(aPublisher)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(aPublisher.length(), line.length())).equalsIgnoreCase("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(aPublisher.length(), line.length());
+		Publisher publisher = service.getPublisher(restOfLine);
+		if(publisher == null){
+			publisher = new Publisher();
+			publisher.setName(restOfLine);
+		}
+		book.getAudioBook().setPublisher(publisher);
 	}
 
 	private void parseEBookPublisher(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(ePublisher)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(ePublisher.length(), line.length())).equalsIgnoreCase("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = (line.substring(ePublisher.length(), line.length()));
+		Publisher publisher = service.getPublisher(restOfLine);
+		if(publisher == null){
+			publisher = new Publisher();
+			publisher.setName(restOfLine);
+		}
+		book.getEBook().setPublisher(publisher);
 	}
 
 	private void parseInterestLevels(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(intrstLvls)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(intrstLvls.length(), line.length())).equalsIgnoreCase("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = (line.substring(intrstLvls.length(), line.length()));
+		String[] interestLevels = restOfLine.split("_");
+		for(String interestLevelname : interestLevels){
+			BookInterestLevel il = new BookInterestLevel();
+			InterestLevel interestLevel = service.getInterestLevel(interestLevelname);
+			if(interestLevel == null){
+				System.out.println("InterestLevel is null");
+				interestLevel = new InterestLevel();
+				interestLevel.setInterestLevel(interestLevelname);
+				il.setInterestLevel(interestLevel);
+				book.getInterestLevels().add(il);
+			}
+			else{
+				System.out.println("InterestLevel is not null");
+				il.setInterestLevel(interestLevel);
+				book.getInterestLevels().add(il);
+			}
+		}
 	}
 
 	private void parseGenres(String line, Book book) {
-		
+		line = line.trim();
+		if(!line.contains(genres)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(genres.length(), line.length())).equalsIgnoreCase("null")){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(genres.length(), line.length());
+		String[] genres = restOfLine.split("_");
+		for(String genreName : genres){
+			BookGenre bg = new BookGenre();
+			Genre genre = service.getGenre(genreName);
+			if(genre == null){
+				genre = new Genre();
+				genre.setGenre(genreName);
+				bg.setGenre(genre);
+				book.getGenres().add(bg);
+			}
+			else{
+				bg.setGenre(genre);
+				book.getGenres().add(bg);
+			}
+		}
 	}
 
 	private void parseImageFile(String line, Book book) {
@@ -231,24 +450,73 @@ public class AdminController {
 		if(!line.contains(imgPath)){
 			throw new IllegalArgumentException();
 		}
+		if((line.substring(imgPath.length(), line.length())).equalsIgnoreCase("null")){
+			throw new IllegalArgumentException();
+		}
 		book.getBookDisplay().setImageFilePath(line.substring(imgPath.length(), line.length()));
 	}
 
 	private void addTodaysDate(Book book) {
-		
+		LocalDate today = new LocalDate();
+		book.getBookDisplay().setDateAdded(today);;
 	}
 
 	private void parseBookAwards(String line, Book book) {
-		
+		BookAward award = new BookAward();
+		AwardInfo awardInfo = new AwardInfo();
+		line = line.trim();
+		if(!line.contains(bookAwards)){
+			throw new IllegalArgumentException();
+		}
+		String restOfLine = line.substring(bookAwards.length(), line.length());
+		if(restOfLine.equals("null")){
+			return;
+		}
+		String[] awrdInfo = restOfLine.split("_");
+		if(awrdInfo.length != 3){
+			throw new IllegalArgumentException();
+		}
+		if(!awrdInfo[0].contains(awarTit)){
+			throw new IllegalArgumentException();
+		}
+		String title = awrdInfo[0].substring(awarTit.length(), awrdInfo[0].length());
+		awardInfo.setTitle(title);
+		if(!awrdInfo[1].contains(awarDesc)){
+			throw new IllegalArgumentException();
+		}
+		awardInfo.setDescription(awrdInfo[1].substring(awarDesc.length(), awrdInfo[1].length()));
+		if(!awrdInfo[2].contains(awarYear)){
+			throw new IllegalArgumentException();
+		}
+		String year = awrdInfo[2].substring(awarYear.length(), awrdInfo[2].length());
+		awardInfo.setYear(year);
+		AwardInfo awardInfo2 = service.getAwardInfo(title, year);
+		if(awardInfo2 != null){
+			award.setAwardInfo(awardInfo2);
+		}
+		else{
+			award.setAwardInfo(awardInfo);	
+		}
+		book.getAwards().add(award);
 	}
 
 	private void parseSeriesName(String line, Book book) throws IOException {
-		throw new IOException();
+		line = line.trim();
+		if(!line.contains(seriesName)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(seriesName.length(), line.length())).equalsIgnoreCase("null")){
+			return;
+		}
+		book.setSeriesName(line.substring(seriesName.length(), line.length()));
 	}
 
 	private void parseIsbn(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(isbn)){
+			throw new IllegalArgumentException();
+		}
+		if((line.substring(isbn.length(), line.length())).equalsIgnoreCase("null")){
 			throw new IllegalArgumentException();
 		}
 		book.setIsbn(line.substring(isbn.length(), line.length()));
@@ -262,23 +530,35 @@ public class AdminController {
 			throw new IllegalArgumentException();
 		}
 		String restOfLine = line.substring(authAwar.length(), line.length());
+		if(restOfLine.equals("null")){
+			return;
+		}
 		String[] awrdInfo = restOfLine.split("_");
 		if(awrdInfo.length != 3){
 			throw new IllegalArgumentException();
 		}
-		if(!awrdInfo[0].contains("Title:")){
+		if(!awrdInfo[0].contains(awarTit)){
 			throw new IllegalArgumentException();
 		}
-		awardInfo.setTitle(awrdInfo[0].substring("Title:".length(), awrdInfo[0].length()));
-		if(!awrdInfo[1].contains("Description:")){
+		String title = awrdInfo[0].substring(awarTit.length(), awrdInfo[0].length());
+		awardInfo.setTitle(title);
+		if(!awrdInfo[1].contains(awarDesc)){
 			throw new IllegalArgumentException();
 		}
-		awardInfo.setDescription(awrdInfo[1].substring("Description:".length(), awrdInfo[1].length()));
-		if(!awrdInfo[2].contains("Year:")){
+		awardInfo.setDescription(awrdInfo[1].substring(awarDesc.length(), awrdInfo[1].length()));
+		if(!awrdInfo[2].contains(awarYear)){
 			throw new IllegalArgumentException();
 		}
-		awardInfo.setYear(awrdInfo[2].substring("Year:".length(), awrdInfo[2].length()));
-		award.setAwardInfo(awardInfo);
+		String year = awrdInfo[2].substring(awarYear.length(), awrdInfo[2].length());
+		awardInfo.setYear(year);
+		//If award already exists
+		AwardInfo awardInfo2 = service.getAwardInfo(title, year);
+		if(awardInfo2 != null){
+			award.setAwardInfo(awardInfo2);
+		}
+		else{
+			award.setAwardInfo(awardInfo);	
+		}
 		Iterator<Author> it = book.getAuthors().iterator();
 		Author author = null;
 		while(it.hasNext()){
@@ -295,6 +575,9 @@ public class AdminController {
 		}
 		String restOfLine = line.substring(authors.length(), line.length());
 		String[] authorInfo = restOfLine.split("_");
+		if(restOfLine.equals("null")){
+			throw new IllegalArgumentException();
+		}
 		if(authorInfo.length != 2){
 			throw new IllegalArgumentException();
 		}
@@ -314,12 +597,18 @@ public class AdminController {
 		if(!line.contains(desc)){
 			throw new IllegalArgumentException();
 		}
+		if(line.equals("null")){
+			throw new IllegalArgumentException();
+		}
 		book.getBookDisplay().setDescription(line.substring(desc.length(), line.length()));
 	}
 
 	private void parseTitle(String line, Book book){
 		line = line.trim();
 		if(!line.contains(title)){
+			throw new IllegalArgumentException();
+		}
+		if(line.equals("null")){
 			throw new IllegalArgumentException();
 		}
 		book.getBookDisplay().setTitle(line.substring(title.length(), line.length()));
