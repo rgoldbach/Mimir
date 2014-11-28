@@ -149,10 +149,10 @@
 					coverResults += '<div class="ayyyLmao">';
 					coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
 					if(this.format == 'AudioBook'){
-						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-headphones"></span><span>';
+						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-headphones"></span></span>';
 					}
 					if(this.format == 'EBook'){
-						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-book"></span><span>';
+						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-book"></span></span>';
 					}
 					coverResults += '</div>';
 					coverResults += '<div class="caption">'; 
@@ -162,7 +162,14 @@
 			coverResults += '</div>';
 		coverResults += '</div>';
 		// Generate the list result html
-				listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#">'+ this.authors + '</a></h3></div>';
+				listResults += '<div class="col-md-12"><h3>'+ this.title + ' by <a href="#">'+ this.authors + '</a> ';
+					if(this.format == 'AudioBook'){
+						listResults += '<span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span>';
+					}
+					if(this.format == 'EBook'){
+						listResults += '<span class="label label-default"><span class="glyphicon glyphicon-book"></span></span>';
+					}
+				listResults += '</h3></div>';
 				listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
 	    			listResults += '<div class="col-md-2"><p style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
 		        				listResults += '<a href="#"> Tag</a>,';
