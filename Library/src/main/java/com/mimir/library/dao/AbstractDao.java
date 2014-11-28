@@ -24,4 +24,12 @@ public abstract class AbstractDao {
     public void save(Object entity){
     	getSession().save(entity);
     }
+    
+    public void saveOrUpdate(Object entity){
+    	getSession().saveOrUpdate(entity);
+    }
+    
+    public void merge(Object entity){
+    	getSession().merge(entity);
+    }
 }

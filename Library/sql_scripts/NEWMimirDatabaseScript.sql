@@ -118,7 +118,7 @@ DROP TABLE IF EXISTS `BAuthors`;
 CREATE TABLE `BAuthors` (
     `authorId` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50) NOT NULL,
-    `description` VARCHAR(50) NOT NULL,
+    `description` VARCHAR(500) NOT NULL,
     PRIMARY KEY (authorId)
 );
 
@@ -172,9 +172,10 @@ CREATE TABLE `Authors_Books` (
 
 DROP TABLE IF EXISTS `BookAwards`;
 CREATE TABLE `BookAwards` (
+	`bookAwardId` INT NOT NULL AUTO_INCREMENT,
     `awardId` INT NOT NULL,
     `bookId` INT NOT NULL,
-    PRIMARY KEY (awardId , bookId),
+    PRIMARY KEY (bookAwardId),
     CONSTRAINT `bookawardToAward` FOREIGN KEY (`awardId`)
         REFERENCES `AwardInfo` (`awardId`)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -678,7 +679,7 @@ INSERT INTO `Authors_Books` VALUES (1, 1),
 UNLOCK TABLES;
 
 LOCK TABLES `BookAwards` WRITE; /* AwardId(FK), BookId(FK)*/
-INSERT INTO `BookAwards` VALUES (2, 4);
+INSERT INTO `BookAwards` VALUES (1, 2, 4);
 UNLOCK TABLES;
 
 LOCK TABLES `BookDisplayInfo` WRITE;/* Id, BookId(FK), Title, Description, DateAdded, ImageFilePath */

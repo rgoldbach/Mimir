@@ -9,7 +9,7 @@ ISBN-1111222237930
 SeriesName-null
 BookAwards-null
 BookAwardsFinished
-ImageFilePath-http://www.metropolisplus.com/superman/SupermanJLBColorWeb.jpg
+ImageFilePath-http://img3.wikia.nocookie.net/__cb20100419210629/marvel_dc/images/1/14/Superman_0002.jpg
 Genres-Fiction_Action
 InterestLevels-College
 EBookPublisher-DC Comics
@@ -22,5 +22,29 @@ EndAudioBookFormats
 Languages-English_Spanish
 DownloadSite-Name:Llamazon_EBookNumOfCopies:10_AudioBookNumbOfCopies:10
 EndDownloadSite
+NewBook
+Title-Llamas, The Most Majestic Animal
+Description-What's not to love about llamas. Just look at them.
+Authors-Name:Llama Lover_Description:He loves llamas so much he devoted his entire life to studying these animals.
+AuthorAwards-null
+AuthorAwardsFinished
+AuthorFinished 
+ISBN-1111222243213
+SeriesName-Llamas
+BookAwards-Title:Good Book Award_Description:Description here_Year:2014
+BookAwards-Title:Llama Award_Description:Best Llama_Year:2014
+BookAwardsFinished
+ImageFilePath-http://a.dilcdn.com/bl/wp-content/uploads/sites/8/2013/08/LlamaStyle1.jpg
+Genres-Comedy
+InterestLevels-Adult
+EBookPublisher-Llama World
+AudioBookPublisher-Listen To Llamas
+EBookFormats-Type:Kindle_ReleaseDate:11/20/2014_FileSize:12345
+EBookFormats-Type:Html_ReleaseDate:11/20/2014_FileSize:15433
+EndEBookFormats
+AudioBookFormats-Type:MP3_ReleaseDate:11/20/2014_FileSize:32424_NumOfParts:18_Duration:430
+EndAudioBookFormats
+Languages-English_Chinese
+DownloadSite-Name:Llamazon_EBookNumOfCopies:10_AudioBookNumbOfCopies:10
+EndDownloadSite
 Finished
-
