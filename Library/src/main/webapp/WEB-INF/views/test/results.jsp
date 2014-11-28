@@ -42,8 +42,8 @@
 						<select id="filterBy" class="selectpicker" data-width="190px">
 							<optgroup label="Filter By">
 								<option value="noFilter">No Filter</option>
- 								<option data-icon="glyphicon glyphicon-book" value="eBookOnly">eBook Only</option>
- 								<option data-icon="glyphicon glyphicon-headphones" value="audioOnly">Audio Only</option>
+ 								<option value="eBookOnly" data-icon="glyphicon glyphicon-book" value="eBookOnly">eBook Only</option>
+ 								<option value="audioOnly" data-icon="glyphicon glyphicon-headphones" value="audioOnly">Audio Only</option>
  							</optgroup>
 						</select>
 					</div>
@@ -121,13 +121,31 @@
 			$('#listResultContainer').empty();
 
 			// Update the search results
-			
-		    $.ajax({
+			$.ajax({
 		        url:	'sortResults?sortType='+sortType,
 		        type:	'GET',
 		        success: function() {
 		        	// Get the first page of search results
 					moreResults();
+		        }
+		  	});	
+		});
+		
+		$('#filterBy').change(function(){
+			// Get the fitler type
+			var filterType = $(this).val();
+			
+			// Empty the current results
+			$('#coverResultContainer').empty();
+			$('#listResultContainer').empty();
+			
+			// Update the search results
+			$.ajax({
+		        url:	'filterResults?filterType='+filterType,
+		        type:	'GET',
+		        success: function() {
+		        	// Sort the results if they were sorted
+		        	moreResults();
 		        }
 		  	});	
 		});

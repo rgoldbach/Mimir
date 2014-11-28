@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.enums.FilterType;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
@@ -40,13 +42,15 @@ public class TestPageController {
 		// Obtain results
 		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
 		
+		// Store original results 
+		List<SearchResult> originalSearchResults = new ArrayList<SearchResult>(searchResults);
+		session.setAttribute("originalResults", originalSearchResults);
+		
 		// Page results
 		PagedListHolder<SearchResult> pagedResults = new PagedListHolder<SearchResult>(searchResults);
 		pagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+		session.setAttribute("pagedResults", pagedResults); 
 		
-		// Add paged results to Session
-		session.setAttribute("pagedResults", pagedResults);
-
 		// Add message
 		mv.addObject("message", searchResults.size() + " results found for '" + query + "'");
 		
@@ -144,9 +148,55 @@ public class TestPageController {
 		PagedListHolder<SearchResult> sortedPagedResults = new PagedListHolder<SearchResult>(results);
 		sortedPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
 		session.setAttribute("pagedResults", sortedPagedResults);
-		// Probably going to need to return something here maybe idk who cares 
-		return "";
 		
+		return "";
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/filterResults")
+	@ResponseBody
+	public String filterResults(@RequestParam(value="filterType") String type, HttpSession session){
+		// Determine the filter type
+		FilterType filterType;
+		switch (type){
+			case "noFilter":
+				filterType = FilterType.NoFilter;
+				break;
+			case "eBookOnly":
+				filterType = FilterType.EBookOnly;
+				break;
+			case "audioOnly":
+				filterType = FilterType.AudioOnly;
+				break;
+			default:
+				filterType = FilterType.NoFilter;
+				break;
+		}
+		
+		if(filterType == FilterType.NoFilter){
+			// Get copy of original results
+			List<SearchResult> originalResults = new ArrayList<SearchResult>((ArrayList<SearchResult>) session.getAttribute("originalResults"));
+			
+			// Store original results
+			PagedListHolder<SearchResult> originalPagedResults = new PagedListHolder<SearchResult>(originalResults);
+			originalPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+			session.setAttribute("pagedResults", originalPagedResults);
+		}
+		else{
+			// Get the unsorted filtered from the Session
+			PagedListHolder<SearchResult> unfilteredPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
+			List<SearchResult> results = unfilteredPagedResults.getSource();
+			
+			// Filter the results
+			SearchManager sm = new SearchManager();
+			sm.filter(filterType, results);
+			
+			// Store the new filtered results in the Session
+			PagedListHolder<SearchResult> filteredPagedResults = new PagedListHolder<SearchResult>(results);
+			filteredPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+			session.setAttribute("pagedResults", filteredPagedResults);
+		}
+		
+		return "";
+	}
 }

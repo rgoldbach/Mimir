@@ -2,7 +2,9 @@ package com.mimir.library.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
+import com.mimir.library.enums.FilterType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Book;
@@ -32,16 +34,35 @@ public class SearchManager {
 			if(eBookResult != null){
 				searchResults.add(eBookResult);
 			}
-			if(audioBookResult != null){
+			if (audioBookResult != null) {
 				searchResults.add(audioBookResult);
 			}
 		}
 		return searchResults;
 	}
 
-	public void sort(SortType sortType, List<SearchResult> searchResults){
+	public void sort(SortType sortType, List<SearchResult> searchResults) {
 		sortManager.sort(sortType, searchResults);
 	}
-	
-	
+
+	public void filter(FilterType filterType, List<SearchResult> searchResults) {
+		ListIterator<SearchResult> lIter = searchResults.listIterator();
+		if (filterType == FilterType.EBookOnly) {
+			while (lIter.hasNext()) {
+				SearchResult searchResult = lIter.next();
+				if (!(searchResult.getFormat() == "EBook")) {
+					lIter.remove();
+				}
+			}
+		}
+		if (filterType == FilterType.AudioOnly) {
+			while (lIter.hasNext()) {
+				SearchResult searchResult =	lIter.next();
+				if (!(searchResult.getFormat() == "Audio")) {
+					lIter.remove();
+				}
+			}
+		}
+	}
+
 }
