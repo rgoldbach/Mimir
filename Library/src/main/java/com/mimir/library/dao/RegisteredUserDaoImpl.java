@@ -25,7 +25,15 @@ import com.mimir.library.model.WishlistEBook;
 
 @Repository("registeredUserDao")
 public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUserDao {
-
+	
+	
+	@Override
+	public int getMaxAccountInfoId(){
+		Criteria crit = getSession().createCriteria(AccountInfo.class);
+		crit.addOrder(Order.desc("accountInfoId"));
+		crit.setMaxResults(1);
+		return ((AccountInfo) crit.uniqueResult()).getAccountInfoId();
+	}
 	@Override
 	public AccountInfo signInUser(LoginCredentials loginCreds) {
 		Criteria userSignInCriteria = getSession().createCriteria(AccountInfo.class, "account");
@@ -66,6 +74,11 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public void saveRegisteredUser(RegisteredUser user) {
 		persist(user);
+	}
+	
+	@Override
+	public void saveAccountInfo(AccountInfo info){
+		persist(info);
 	}
 	
 	@Override public void updateRegisteredUser(RegisteredUser user){

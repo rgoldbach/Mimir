@@ -285,3 +285,57 @@ function changeBookFormatInfo() {
     });  
     return false;
 }
+
+function registerUser(){
+	validation = true
+	var libraryCardNumber = $('#libraryCardNumberReg').val()
+	var firstName = $('#firstNameReg').val()
+	var lastName =  $('#lastNameReg').val()
+	var password = $('#passwordReg').val()
+	var confirmPass = $('#passwordConfirmReg').val()
+	if(libraryCardNumber.length != 9)
+		validation = false
+	if(password !== confirmPass)
+		validation = false
+	if(! /^\d+$/.test(libraryCardNumber))
+		validation = false
+	if(lastName === "")
+		validation = false
+	if (firstName === "")
+		validation = false
+	console.log(/^\d+$/.test(libraryCardNumber))
+	console.log(validation)
+	console.log(password)	
+	console.log(confirmPass)
+	var url = "register";
+	var json = "";
+	json = {
+			"libraryCardNumber" : $('#libraryCardNumberReg').val(),
+	        "firstName" : $('#firstNameReg').val(),
+	        "lastName" : $('#lastNameReg').val(),
+	        "email" : $('#emailReg').val(),
+	        "password" : password,
+	};
+	if(validation){
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+			},
+			'url' : url,
+			'data' : JSON.stringify(json),
+			'type' : "POST",
+			'complete' : function(result) {
+				console.log(result);
+				if(result.status === 200){
+					if(result.responseText === "success"){
+						window.location.replace("/Library/");
+					}
+				}
+				return false;
+
+			}
+		});  
+		return false;	
+	}
+}
