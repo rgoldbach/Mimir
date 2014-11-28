@@ -16,7 +16,57 @@ function bookModal(id, type){
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         complete: function(result) {
-        	console.log(result);
+        	if(result.status === 200){
+        	    $('#bookModal').modal('show');
+        	    var book = result.responseJSON;
+        	    console.log(book);
+        	    $('#bookModalImage').html( "<img class='img-responsive' src='"+book.imageFilePath+"'  alt=''>");
+        	    $('#bookModalTitle').html(book.title);
+        	    $('#bookModalDescription').html(book.description);
+        	    $('#bookModalPublisher').html(book.publisher);
+        	    $('#currentBook').val(book.id);
+        	    $('#borrowedBookFormat').val(book.type);
+        
+        	    $('#bookModalAuthor').html('by <span id = "bookModalFormat" style="float: right"> Available Languages: </span>')
+        	    for(author in book.authors){
+        	    	$('#bookModalAuthor').append("<a>"+book.authors[author]+"   </a>");
+        	    }
+        	    $('#bookModalFormat').html('Available Formats: ')
+        	    for (format in book.formatTypes){
+        	    	$('#bookModalFormat').append("<a>"+book.formatTypes[format]+"   </a>");
+        	    }
+        	    $('#bookModalLangauge').html('Available Languages: ')
+        	    for (i in book.languages){
+        	    	$('#bookModalLangauge').append("<a>"+book.languages[i]+"   </a>");
+
+        	    }
+        	    $("#bookModalControls").html('');
+        	    if(book.loggedIn){
+        	    	$("#bookModalControls").append("<h4>Rating</h4>");
+        	    	$("#bookModalControls").append("<input onclick='rateBook()' id='input-21b' value='" + book.rating + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
+        	    
+        	    	if(book.available){
+        	    		if(book.inBookshelf){
+                	    	$("#bookModalControls").append("<button onclick = 'borrowBook()' disabled = 'disabled' id='borrowBookButton' class='bg-primary btn-lg'>In Bookshelf</button>");
+        	    		}
+                	    else{
+                	    	$("#bookModalControls").append("<button onclick = 'borrowBook()' id='borrowBookButton' class='bg-primary btn-lg'>Borrow</button>");
+                	    }
+        	    	}
+        	    	else{
+            	    	$("#bookModalControls").append("<button onclick = 'holdBook()' id='holdBookButton' class='bg-primary btn-lg'>Hold</button>");
+        	    	}
+        	    	if(book.inWishlist){
+            	    	$("#bookModalControls").append("<button onclick= 'wishlistBook()' disabled = 'disabled' id = 'wishlistBookButton' class='bg-info btn-sm'>In Wishlist</button>");
+        	    	}
+        	    	else{
+            	    	$("#bookModalControls").append("<button onclick= 'wishlistBook()' id = 'wishlistBookButton' class='bg-info btn-sm'>Wishlist</button>");
+        	    	}
+                	    	
+        	    	
+        	    
+        	    }
+        	}
         }
     });
 }  
