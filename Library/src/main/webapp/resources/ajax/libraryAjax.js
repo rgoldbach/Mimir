@@ -5,8 +5,9 @@ function moreResults(){
         success: function(jResultPage) {
         	var coverResults = '';
         	var listResults = '';
-
+        	// For each result...
         	$(jResultPage.jResults).each(function(index){
+        		// Generate the cover result html
         		coverResults += '<div class="col-md-3">';
     				coverResults += '<div class="thumbnail">';
     					coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
@@ -15,28 +16,35 @@ function moreResults(){
 							coverResults += '<h6 class="resultInfo">' + this.format + '</h6>';
 							coverResults += '<h6>Authors</h6>';
 						coverResults += '</div>';
-					coverResults += '</div>';
-				coverResults += '</div>';
-    		
-				listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#"> Authors</a></h3></div>';
-				listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
-        			listResults += '<div class="col-md-2"><p  style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
-        				listResults += '<a href="#"> Tag</a>,';
-        				listResults += '<br><a href="#">Tag</a>,';
-        				listResults += '<br><a href="#">Tag</a>';
-        				listResults += '</p></div>';
-        			listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
-        				listResults += this.description;
-        				listResults += '</p></div>';
-        		listResults += '<div class="col-md-12"><hr></div>';
-    		
-        	});
-        	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);
-        	$(listResults).hide().appendTo('#listResultContainer').fadeIn(1000);
+						coverResults += '</div>';
+						coverResults += '</div>';
+		    	// Generate the list result html
+						listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#"> Authors</a></h3></div>';
+						listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
+		        			listResults += '<div class="col-md-2"><p  style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
+		        				listResults += '<a href="#"> Tag</a>,';
+		        				listResults += '<br><a href="#">Tag</a>,';
+		        				listResults += '<br><a href="#">Tag</a>';
+		        				listResults += '</p></div>';
+		        			listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
+		        				listResults += this.description;
+		        				listResults += '</p></div>';
+		        		listResults += '<div class="col-md-12"><hr></div>';
+		    		
+		        	});
         	
-        	if(jResultPage.isLastPage){
-        		$('#moreResults').hide();
-        	}
+        			// Show results
+		        	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);
+		        	$(listResults).hide().appendTo('#listResultContainer').fadeIn(1000);
+		        	
+		        	// If the more button's hidden (if the last search hid it)
+		        	if($('#moreResults').css('display') == 'none'){
+		        		$('#moreResults').show();
+		        	}
+		        	// Hide the more button if there's no more results
+		        	if(jResultPage.isLastPage){
+		        		$('#moreResults').hide();
+		        	}
         }
   	});	
   }

@@ -20,7 +20,7 @@
 					<div class="col-lg-3">
 						<!-- Switch between Cover and List display -->
 						<div class="btn-group btn-group-lg">
-  							<button id="coverDisplay" type="button" class="active btn btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
+  							<button id="coverDisplay" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th"></span> Cover</button>
   							<button id="listDisplay" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th-list"></span> List</button>
 						</div>
 						<br>
@@ -58,18 +58,18 @@
 		<div class="row">
 		<!-- Display Results in 'Cover' View -->
 			<div id="coverResultContainer" class="col-md-8 col-md-offset-2">
-				
+				<!-- Results appended -->
 			</div>
 		<!-- Display Results in 'List' View -->
-			<div id="listResultContainer" class="col-md-8 col-md-offset-2" style="display:none;">
-			
+			<div id="listResultContainer" class="col-md-8 col-md-offset-2" >
+				<!-- Results appended -->
 			</div>
 		</div>
 		
 		<!-- Request more results. If no / no more results found, don't show this. -->
 		<div class="row">
 			<div class="col-md-2 col-md-offset-5">
-				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block">More</button>
+				<button id="moreResults" type="button" class="btn btn-default btn-lg btn-block">More (#)</button>
 			</div>
 		</div>
 	</div>
@@ -84,30 +84,46 @@
 
 	<script>
 	$(document).ready(function() {
+		// Get the first page of search results
 		moreResults();
+		// Init result view
+		$('#coverDisplay').addClass('active');
+		$('#listResultContainer').hide();
 		
-		$('#coverDisplay').click(function(){
-			$('#listResultContainer').hide();
-			$('#coverResultContainer').show();
-			$('#listDisplay').removeClass('active');
-			$('#coverDisplay').addClass('active');
+		// Toggle between cover and list
+		$('#coverDisplay, #listDisplay').click(function(){
+			if($(this).attr('id') == 'coverDisplay'){
+				$(this).addClass('active');
+				$('#listDisplay').removeClass('active');
+				$('#listResultContainer').hide();
+				$('#coverResultContainer').show();
+			}
+			else{
+				$(this).addClass('active');
+				$('#coverDisplay').removeClass('active');
+				$('#coverResultContainer').hide();
+				$('#listResultContainer').show();
+			}
 		});
-		$('#listDisplay').click(function(){
-			$('#coverResultContainer').hide();
-			$('#listResultContainer').show();
-			$('#coverDisplay').removeClass('active');
-			$('#listDisplay').addClass('active');
-		});
+		
+		// Load more results
 		$('#moreResults').click(function(){
-			$('#moreResults').hide();
 			moreResults();
-			$('#moreResults').show();
 		});
+		
+		// Sort search results
 		$('#sortBy').change(function(){
+			// Get the sort type
 			var sortType = $(this).val();
+			
+			// Empty the current results
 			$('#coverResultContainer').empty();
 			$('#listResultContainer').empty();
+
+			// Update the search results
 			$.get('sortResults?sortType='+sortType);
+			
+			// Get the first page of search results
 			moreResults();
 		});
 	});
