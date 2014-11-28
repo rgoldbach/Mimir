@@ -1,6 +1,6 @@
 package com.mimir.library.controller;
  
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,14 +21,14 @@ import com.mimir.library.model.AudioBookFormat;
 import com.mimir.library.model.AudioBookLanguage;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BookModel;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.EBookFormat;
 import com.mimir.library.model.EBookLanguage;
-import com.mimir.library.model.Format;
-import com.mimir.library.model.PastBorrowedEBook;
 import com.mimir.library.model.RegisteredUser;
+import com.mimir.library.model.WishlistAudioBook;
 import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LamazonService;
 import com.mimir.library.service.LibraryService;
@@ -57,6 +58,7 @@ public class BookController {
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
 			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 			HttpSession session){
+		
 		System.out.println(whichBook);
 		Book book = libraryService.getSpecificBook(whichBook);
 		session.setAttribute("viewBook", book);
@@ -73,6 +75,117 @@ public class BookController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping(value ="/bookModalTest", method = RequestMethod.GET)
+	@ResponseBody
+	public BookModel testModal(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+			HttpSession session){
+		Book book = libraryService.getSpecificBook(whichBook);
+		session.setAttribute("viewBook", book);
+		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
+		BookModel bookModel = new BookModel();
+		if(user == null)
+			bookModel.setLoggedIn(false);
+		else
+			bookModel.setLoggedIn(true);
+		
+		boolean inBookshelf = false;
+		boolean inWishlist = false;		
+		bookModel.setType(bookFormat);
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+
+			EBook ebook = libraryService.getSpecificEBook(whichBook);
+			bookModel.setImageFilePath(ebook.getBook().getBookDisplay().getImageFilePath());
+			bookModel.setId(ebook.getEBookId());
+			bookModel.setTitle(ebook.getBook().getBookDisplay().getTitle());
+			bookModel.setDescription(ebook.getBook().getBookDisplay().getDescription());
+			bookModel.setPublisher(ebook.getPublisher().getName());
+			bookModel.setRating(ebook.getBookRating().getRating());
+			if(ebook.getRemainingCopies() == 0)
+				bookModel.setAvailable(false);
+			else
+				bookModel.setAvailable(true);
+			
+			ArrayList<String> authors = new ArrayList<String>();
+			for (Author author : ebook.getBook().getAuthors()){
+				authors.add(author.getName());
+			}
+			bookModel.setAuthors(authors);
+			
+			ArrayList<String> languages = new ArrayList<String>();
+			for(EBookLanguage lang : ebook.getLanguages()){
+				languages.add(lang.getLanguage().getLanguage());
+			}
+			bookModel.setLanguages(languages);
+			
+			ArrayList<String> formats = new ArrayList<String>();
+			for(EBookFormat format: ebook.geteBookFormats()){
+				formats.add(format.getFormat().getFormatType());
+			}
+			bookModel.setFormatTypes(formats);
+			
+			if(user!=null){
+				for(BorrowedEBook testBook : user.getBorrowedEBooks()){
+					if(testBook.getEBook().getBook().getBookId() == whichBook)
+						inBookshelf = true;
+				}
+				bookModel.setInBookshelf(inBookshelf);
+				for(WishlistEBook testBook : user.getWishlistEBooks()){
+					if(testBook.getEBook().getBook().getBookId() == whichBook)
+						inWishlist = true;
+				}
+				bookModel.setInWishlist(inWishlist);
+			}
+		}
+		if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			//define AudioBook
+			AudioBook audioBook = libraryService.getSpecificAudioBook(whichBook);
+			bookModel.setImageFilePath(audioBook.getBook().getBookDisplay().getImageFilePath());
+			bookModel.setId(audioBook.getAudioBookId());
+			bookModel.setTitle(audioBook.getBook().getBookDisplay().getTitle());
+			bookModel.setDescription(audioBook.getBook().getBookDisplay().getDescription());
+			bookModel.setPublisher(audioBook.getPublisher().getName());
+			bookModel.setRating(audioBook.getBookRating().getRating());
+			if(audioBook.getRemainingCopies() == 0)
+				bookModel.setAvailable(false);
+			else
+				bookModel.setAvailable(true);
+
+			ArrayList<String> authors = new ArrayList<String>();
+			for (Author author : audioBook.getBook().getAuthors()){
+				authors.add(author.getName());
+			}
+			bookModel.setAuthors(authors);
+			
+			ArrayList<String> languages = new ArrayList<String>();
+			for(AudioBookLanguage lang : audioBook.getLanguages()){
+				languages.add(lang.getLanguage().getLanguage());
+			}
+			bookModel.setLanguages(languages);
+			
+			ArrayList<String> formats = new ArrayList<String>();
+			for(AudioBookFormat format: audioBook.getAudioBookFormats()){
+				formats.add(format.getFormat().getFormatType());
+			}
+			bookModel.setFormatTypes(formats);
+			if(user!=null){
+				for(BorrowedAudioBook testBook : user.getBorrowedAudioBooks()){
+					if(testBook.getAudioBook().getBook().getBookId() == whichBook)
+						inBookshelf = true;
+				}
+				bookModel.setInBookshelf(inBookshelf);
+				for(WishlistAudioBook testBook : user.getWishlistAudioBooks()){
+					if(testBook.getAudioBook().getBook().getBookId() == whichBook)
+						inWishlist = true;
+				}
+				bookModel.setInWishlist(inWishlist);
+			}
+		}
+		
+		return bookModel;
+		
 	}
 	
 	@RequestMapping(value ="/borrow")

@@ -26,7 +26,7 @@
 								<div class="row">
 									<c:forEach begin="0" end="3" var="book" items = "${topBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
+											<a data-toggle="modal" onclick = "bookModal('${book.bookDisplayId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -40,7 +40,7 @@
 								<div class="row">
 									<c:forEach begin="4" end="7" var="book" items = "${topBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=EBook" class="thumbnail"><img
+											<a data-toggle="modal" onclick = "bookModal('${book.bookDisplayId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -115,7 +115,7 @@
 								<div class="row">
 									<c:forEach begin="0" end="3" var="book" items = "${topAudioBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+											<a data-toggle="modal" onclick = "bookModal('${book.bookDisplayId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>
@@ -129,7 +129,7 @@
 								<div class="row">
 									<c:forEach begin="4" end="7" var="book" items = "${topAudioBooks}">
                     					<div class="col-md-3">
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${book.bookDisplayId}&bookFormat=AudioBook" class="thumbnail"><img
+											<a data-toggle="modal" onclick = "bookModal('${book.bookDisplayId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
 												style="max-width: 100%;"></a>
 										</div>

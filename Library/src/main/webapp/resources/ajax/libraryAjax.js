@@ -1,4 +1,27 @@
-  function borrowBook(){
+function bookModal(id, type){
+	var url = "bookModalTest?whichBook="+id+"&bookFormat="+type;
+	var json = {
+			"whichBook" : id,
+			"bookFormat" : type
+	}
+	
+	json = JSON.stringify(json)
+	$.ajax({
+        url: url,
+        data: json,
+        type: "GET",
+         
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+        },
+        complete: function(result) {
+        	console.log(result);
+        }
+    });
+}  
+
+function borrowBook(){
   	
         var currentBook = $('#currentBook').val();
         var bookFormat = $('#borrowedBookFormat').val();
