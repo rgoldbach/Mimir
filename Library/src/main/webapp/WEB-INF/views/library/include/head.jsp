@@ -46,7 +46,7 @@
 	
 	.ayyyLmaoContent {
 		color: #FFFFFF;
-    	padding: 6px;
+    	padding: 5%;
     	font-size: 120%;
     	top: 0%;
     	left: 78%;
