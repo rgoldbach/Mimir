@@ -55,10 +55,10 @@ public class SearchManager {
 				}
 			}
 		}
-		if (filterType == FilterType.AudioOnly) {
+		else if (filterType == FilterType.AudioOnly) {
 			while (lIter.hasNext()) {
 				SearchResult searchResult =	lIter.next();
-				if (!(searchResult.getFormat() == "Audio")) {
+				if (!(searchResult.getFormat() == "AudioBook")) {
 					lIter.remove();
 				}
 			}

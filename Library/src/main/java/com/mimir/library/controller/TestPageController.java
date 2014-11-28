@@ -43,13 +43,7 @@ public class TestPageController {
 		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
 		
 		// Store original results 
-		List<SearchResult> originalSearchResults = new ArrayList<SearchResult>(searchResults);
-		session.setAttribute("originalResults", originalSearchResults);
-		
-		// Page results
-		PagedListHolder<SearchResult> pagedResults = new PagedListHolder<SearchResult>(searchResults);
-		pagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
-		session.setAttribute("pagedResults", pagedResults); 
+		session.setAttribute("originalResults", searchResults); 
 		
 		// Add message
 		mv.addObject("message", searchResults.size() + " results found for '" + query + "'");
@@ -101,9 +95,9 @@ public class TestPageController {
 	@RequestMapping(value = "/sortResults")
 	@ResponseBody
 	public String sortResults(@RequestParam(value="sortType") String type, HttpSession session){
-		// Get the unsorted results from the Session
-		PagedListHolder<SearchResult> unsortedPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
-		List<SearchResult> results = unsortedPagedResults.getSource();
+		// Get the unsorted original results from the Session
+		List<SearchResult> originalResults = (List<SearchResult>) session.getAttribute("originalResults");
+		List<SearchResult> results = new ArrayList<SearchResult>(originalResults);
 		
 		// Determine the sort type
 		SortType sortType;
@@ -173,24 +167,15 @@ public class TestPageController {
 				break;
 		}
 		
-		if(filterType == FilterType.NoFilter){
-			// Get copy of original results
-			List<SearchResult> originalResults = new ArrayList<SearchResult>((ArrayList<SearchResult>) session.getAttribute("originalResults"));
-			
-			// Store original results
-			PagedListHolder<SearchResult> originalPagedResults = new PagedListHolder<SearchResult>(originalResults);
-			originalPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
-			session.setAttribute("pagedResults", originalPagedResults);
-		}
-		else{
+		if(filterType != FilterType.NoFilter){
 			// Get the unsorted filtered from the Session
 			PagedListHolder<SearchResult> unfilteredPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
 			List<SearchResult> results = unfilteredPagedResults.getSource();
-			
+						
 			// Filter the results
 			SearchManager sm = new SearchManager();
 			sm.filter(filterType, results);
-			
+						
 			// Store the new filtered results in the Session
 			PagedListHolder<SearchResult> filteredPagedResults = new PagedListHolder<SearchResult>(results);
 			filteredPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
