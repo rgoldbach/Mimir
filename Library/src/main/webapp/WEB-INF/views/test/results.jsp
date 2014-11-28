@@ -132,6 +132,7 @@
 		  	});	
 		});
 		
+		// Load more results
 		function moreResults(){
 		    $.ajax({
 		        url:	'loadResults',
@@ -143,30 +144,36 @@
 		        	// For each result...
 		        	$(jResultPage.jResults).each(function(index){
 		        		// Generate the cover result html
-		        		coverResults += '<div class="col-md-3">';
-		    				coverResults += '<div class="thumbnail">';
-		    					coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
-		    					coverResults += '<div class="caption">'; 
-									coverResults += '<h6 class="resultInfo">' + this.title + '</h6>';
-									coverResults += '<h6 class="resultInfo">' + this.format + '</h6>';
-									coverResults += '<h6>Authors</h6>';
-								coverResults += '</div>';
-								coverResults += '</div>';
-								coverResults += '</div>';
-				    	// Generate the list result html
-								listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#"> Authors</a></h3></div>';
-								listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
-				        			listResults += '<div class="col-md-2"><p  style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
-				        				listResults += '<a href="#"> Tag</a>,';
-				        				listResults += '<br><a href="#">Tag</a>,';
-				        				listResults += '<br><a href="#">Tag</a>';
-				        				listResults += '</p></div>';
-				        			listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
-				        				listResults += this.description;
+		        coverResults += '<div class="col-md-3">';
+	    			coverResults += '<div class="thumbnail">';
+					coverResults += '<div class="ayyyLmao">';
+					coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
+					if(this.format == 'AudioBook'){
+						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-headphones"></span><span>';
+					}
+					if(this.format == 'EBook'){
+						coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-book"></span><span>';
+					}
+					coverResults += '</div>';
+					coverResults += '<div class="caption">'; 
+					coverResults += '<h6 class="resultInfo">' + this.title + '</h6>';
+					coverResults += '<h6 class="resultInfo">' + this.authors + '</h6>';
+				coverResults += '</div>';
+			coverResults += '</div>';
+		coverResults += '</div>';
+		// Generate the list result html
+				listResults += '<div class="col-md-12"><h3>' + this.title + ' ' +  this.format + ' by <a href="#">'+ this.authors + '</a></h3></div>';
+				listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
+	    			listResults += '<div class="col-md-2"><p style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
+		        				listResults += '<a href="#"> Tag</a>,';
+		        				listResults += '<br><a href="#">Tag</a>,';
+		        				listResults += '<br><a href="#">Tag</a>';
+	        				listResults += '</p></div>';
+			        			listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
+			        				listResults += this.description;
 				        				listResults += '</p></div>';
 				        		listResults += '<div class="col-md-12"><hr></div>';
-				    		
-				        	});
+					});
 		        	
 		        			// Show results
 				        	$(coverResults).hide().appendTo('#coverResultContainer').fadeIn(1000);

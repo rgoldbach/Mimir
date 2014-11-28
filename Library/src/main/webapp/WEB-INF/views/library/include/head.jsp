@@ -44,6 +44,19 @@
     	text-overflow: ellipsis; 
 	}
 	
+	.ayyyLmaoContent {
+		color: #FFFFFF;
+    	padding: 6px;
+    	font-size: 120%;
+    	top: 0%;
+    	left: 78%;
+    	position: absolute;
+	}
+
+	.ayyyLmao{
+    	position:relative;
+	}
+	
 	</style>
 	
 </head>

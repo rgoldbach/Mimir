@@ -68,6 +68,10 @@ public class TestPageController {
 			JSONObject jBook = new JSONObject();
 			jBook.put("imgPath", result.getImgPath());
 			jBook.put("title", result.getTitle());
+			JSONArray jAuthors = new JSONArray();
+				List<String> authors = result.getAuthorNames();
+				jAuthors.addAll(authors);
+				jBook.put("authors", jAuthors);
 			jBook.put("format", result.getFormat());
 			jBook.put("description", result.getDescription());
 			jResults.add(jBook);
