@@ -57,7 +57,7 @@
 	<div class="modal fade" id="registerModal" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="registerForm" method="post" class="form-horizontal"
+				<form id="registerForm" class="form-horizontal"
 					data-bv-message="This value is not valid"
 					data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
 					data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
@@ -130,7 +130,7 @@
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Retype password</label>
 							<div class="col-sm-5">
-								<input type="password" class="form-control"
+								<input type="password" class="form-control" id = "passwordConfirmReg"
 									name="confirmPassword" data-bv-notempty="true"
 									data-bv-notempty-message="The confirm password is required and cannot be empty"
 									data-bv-identical="true" data-bv-identical-field="password"
@@ -142,7 +142,7 @@
 
 					</div>
 					<div class="modal-footer">
-						<button id="register" name="register" type="submit" class="btn btn-primary">Register</button>
+						<button id="register" onclick = "registerUser()" name="register" class="btn btn-primary">Register</button>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>

@@ -17,11 +17,12 @@ import com.mimir.library.model.WishlistEBook;
 
 public interface RegisteredUserDao {
 
+	void saveAccountInfo(AccountInfo info);
 	void saveRegisteredUser(RegisteredUser user);
 	void updateRegisteredUser(RegisteredUser user);
 	List<RegisteredUser> getAllUsers();
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);
-	
+	int getMaxAccountInfoId();
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);

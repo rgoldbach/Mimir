@@ -19,10 +19,10 @@ public interface RegisteredUserService {
 
 	void saveRegisteredUser(RegisteredUser user);
 	void updateRegisteredUser(RegisteredUser user);
-	
+	void saveAccountInfo(AccountInfo info);
 	List<RegisteredUser> getAllUsers();
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);
-	
+	int getMaxAccountInfoId();
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);

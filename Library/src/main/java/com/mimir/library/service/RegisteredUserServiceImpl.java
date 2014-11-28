@@ -38,12 +38,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public void saveRegisteredUser(RegisteredUser user) {
 		dao.saveRegisteredUser(user);	
 	}
-	
+	@Override
+	public void saveAccountInfo(AccountInfo info){
+		dao.saveAccountInfo(info);
+	}
 	@Override
 	public void updateRegisteredUser(RegisteredUser user) {
 		dao.updateRegisteredUser(user);	
 	}
-	
+	@Override 
+	public int getMaxAccountInfoId(){
+		return dao.getMaxAccountInfoId();
+	}
 	
 
 	@Override
