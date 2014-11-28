@@ -25,22 +25,30 @@
 						</div>
 						<br>
 						<!-- Hey, this probably shouldn't be hard coded! -->
-						<select class="selectpicker" data-width="190px">
+						<select id="sortBy" class="selectpicker" data-width="190px">
 							<optgroup label="Sort By">
- 								<option value="relevancy">Relevance</option>
- 								<option value="titleAz">Title A-Z</option>
-								<option value="titleZa">Title Z-A</option>
-								<option value="authorAz">Author A-Z</option>
-								<option value="authorZa">Author Z-A</option>
+ 								<option value="relevance">Relevance</option>
+ 								<option value="highestRated">Highest Rated</option>
+ 								<option value="titleAtoZ">Title A-Z</option>
+								<option value="titleZtoA">Title Z-A</option>
+								<option value="authorAtoZ">Author A-Z</option>
+								<option value="authorZtoA">Author Z-A</option>
 								<option value="releaseDate">Release Date</option>
 								<option value="addedToSite">Added to Site</option>
 								<option value="mostPopular">Most Popular</option>
 							</optgroup>
 						</select>
+						<br>
+						<select id="filterBy" class="selectpicker" data-width="190px">
+							<optgroup label="Filter By">
+								<option value="noFilter">No Filter</option>
+ 								<option data-icon="glyphicon glyphicon-book" value="eBookOnly">eBook Only</option>
+ 								<option data-icon="glyphicon glyphicon-headphones" value="audioOnly">Audio Only</option>
+ 							</optgroup>
+						</select>
 					</div>
 					<div class="col-lg-9">
-						<!-- If there are any, use ${message} to display the number of results! -->
-						<p style="font-size:20px;" class="text-left">${message}</p>
+						<p class="text-left">${message}</p>
 						<hr>
 					</div>
 				</div>
@@ -95,7 +103,13 @@
 			moreResults();
 			$('#moreResults').show();
 		});
-		
+		$('#sortBy').change(function(){
+			var sortType = $(this).val();
+			$('#coverResultContainer').empty();
+			$('#listResultContainer').empty();
+			$.get('sortResults?sortType='+sortType);
+			moreResults();
+		});
 	});
 	</script>
 	

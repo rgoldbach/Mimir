@@ -44,6 +44,8 @@ public class SearchResult {
 	
 	private String imgPath;
 	
+	private String description;
+	
 	public SearchResult(){}
 	
 	public SearchResult(Book book, String format, int relevanceScore){
@@ -63,6 +65,7 @@ public class SearchResult {
 			this.genreNames = getGenreNames(book.getGenres());
 			this.formatNames = getEBookFormatNames(book.getEBook().geteBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
+			this.description = book.getBookDisplay().getDescription();
 			
 		}else if(format.equals(GlobalConstants.AUDIOBOOK)){
 			
@@ -80,6 +83,7 @@ public class SearchResult {
 			this.genreNames = getGenreNames(book.getGenres());
 			this.formatNames = getAudioBookFormatNames(book.getAudioBook().getAudioBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
+			this.description = book.getBookDisplay().getDescription();
 			
 		}
 	}
@@ -225,6 +229,13 @@ public class SearchResult {
 		return this.imgPath = imgPath;
 	}
 	
+	public String getDescription(){
+		return description;
+	}
+	
+	public String setDescription(String description){
+		return this.description = description;
+	}
 	
 	public void print(){
 		System.out.println("bookid "+bookId);
