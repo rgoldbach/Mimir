@@ -46,7 +46,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		for(Author author : book.getAuthors()){
 			for(AuthorAward aa : author.getAwards()){
 				aa.setAuthor(author);
-				save(aa.getAwardInfo());
+				saveOrUpdate(aa.getAwardInfo());
 				save(aa);
 			}
 		}
@@ -54,7 +54,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		//Book Awards
 		for(BookAward ba : book.getAwards()){
 			ba.setBook(book);
-			save(ba.getAwardInfo());
+			saveOrUpdate(ba.getAwardInfo());
 			save(ba);
 		}
 		//Book Genres
