@@ -101,6 +101,7 @@ public class Book {
 	}
 
 	public void setBookDisplay(BookDisplayableInformation bookDisplay) {
+		bookDisplay.setBook(this);
 		this.bookDisplay = bookDisplay;
 	}
 

@@ -36,7 +36,7 @@
                   <label class="col-md-4 control-label" for="filebutton"></label>
                   <div class="col-md-4">
                     <input id="filebutton" name="file" type="file" class="btn">
-                    Name: <input type="text" name="name">
+                    <input type="text" class="hidden" name="name">
                   </div>
                 </div>
                 

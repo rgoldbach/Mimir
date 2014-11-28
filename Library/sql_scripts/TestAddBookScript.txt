@@ -1,0 +1,26 @@
+NewBook
+Title-Super Man, An Autobiography
+Description-This is the story about Super Man, the man who is Super.
+Authors-Name:Super Man_Description:He's Strong
+AuthorAwards-Title:Strongest Author Award_Description:The Strongest Author_Year:2014
+AuthorAwardsFinished
+AuthorFinished 
+ISBN-1111222237930
+SeriesName-null
+BookAwards-null
+BookAwardsFinished
+ImageFilePath-http://www.metropolisplus.com/superman/SupermanJLBColorWeb.jpg
+Genres-Fiction_Action
+InterestLevels-College
+EBookPublisher-DC Comics
+AudioBookPublisher-DC Comics Audio
+EBookFormats-Type:Kindle_ReleaseDate:11/20/2014_FileSize:12345
+EBookFormats-Type:Html_ReleaseDate:11/20/2014_FileSize:15433
+EndEBookFormats
+AudioBookFormats-Type:MP3_ReleaseDate:11/20/2014_FileSize:32424_NumOfParts:18_Duration:430
+EndAudioBookFormats
+Languages-English_Spanish
+DownloadSite-Name:Llamazon_EBookNumOfCopies:10_AudioBookNumbOfCopies:10
+EndDownloadSite
+Finished
+

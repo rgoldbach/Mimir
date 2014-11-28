@@ -6,5 +6,6 @@ public enum Interest {
 	MiddleSchool,
 	HighSchool,
 	College,
+	YoungAdult,
 	Adult
 }
