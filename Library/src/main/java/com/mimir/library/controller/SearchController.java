@@ -34,7 +34,7 @@ public class SearchController {
 		ModelAndView mv = new ModelAndView("/library/search");
 		
 		// Obtain results
-		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
+		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.TitleAtoZ);
 		
 		// Store original results 
 		session.setAttribute("originalResults", searchResults); 

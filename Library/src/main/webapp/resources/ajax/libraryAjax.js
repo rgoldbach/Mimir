@@ -181,7 +181,7 @@ function signInOrOut() {
         			$('#signInError').text("Invalid login information. Please try again.");
         		}
         		else if(result.responseText === "admin"){
-        			window.location.replace("/Library/admin/");
+        			window.location.replace("/Library/admin");
         		}
         		else{
         			location.reload();  
