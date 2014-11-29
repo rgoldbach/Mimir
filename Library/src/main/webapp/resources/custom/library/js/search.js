@@ -79,7 +79,12 @@
 																function(index) {
 																	// Generate the cover result html
 																	coverResults += '<div class="col-md-3">';
-																	coverResults += '<div class="thumbnail">';
+																	if (this.format == 'AudioBook') {
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'AudioBook\')">';
+																	}
+																	if (this.format == 'EBook') {
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'EBook\')">';
+																	}
 																	coverResults += '<div class="ayyyLmao">';
 																	coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
 																	if (this.format == 'AudioBook') {
@@ -91,27 +96,27 @@
 																	coverResults += '</div>';
 																	coverResults += '<div class="caption">';
 																	coverResults += '<h6 class="resultInfo">'
-																			+ this.title
-																			+ '</h6>';
-																	coverResults += '<h6 class="resultInfo">'
-																			+ this.authors
-																			+ '</h6>';
-																	coverResults += '</div>';
-																	coverResults += '</div>';
-																	coverResults += '</div>';
-																	// Generate the list result html
-																	listResults += '<div class="col-md-12"><h3>'
-																			+ this.title
-																			+ ' by <a href="#">'
-																			+ this.authors
-																			+ '</a> ';
-																	if (this.format == 'AudioBook') {
-																		listResults += '<span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span>';
-																	}
-																	if (this.format == 'EBook') {
-																		listResults += '<span class="label label-default"><span class="glyphicon glyphicon-book"></span></span>';
-																	}
-																	listResults += '</h3></div>';
+																		+ this.title 
+																		+ '</h6>';
+																coverResults += '<h6 class="resultInfo">'
+																		+ this.authors
+																		+ '</h6>';
+																coverResults += '</div>';
+																coverResults += '</a>';
+																coverResults += '</div>';
+																// Generate the list result html
+																listResults += '<div class="col-md-12"><h3>'
+																		+ this.title
+																		+ ' by <a href="#">'
+																		+ this.authors
+																		+ '</a> ';
+																if (this.format == 'AudioBook') {
+																	listResults += '<span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span>';
+																}
+																if (this.format == 'EBook') {
+																	listResults += '<span class="label label-default"><span class="glyphicon glyphicon-book"></span></span>';
+																}
+																listResults += '</h3></div>';
 																	listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="' + this.imgPath + '" alt="..."></div>';
 																	listResults += '<div class="col-md-2"><p style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
 																	listResults += '<a href="#"> Tag</a>,';
@@ -120,8 +125,14 @@
 																	listResults += '</p></div>';
 																	listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
 																	listResults += this.description;
-																	listResults += '</p></div>';
-																	listResults += '<div class="col-md-12"><hr></div>';
+																	listResults += '</p>';
+																if (this.format == 'AudioBook') {
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'AudioBook\')">More</button>';
+																	}
+																if (this.format == 'EBook') {
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'EBook\')">More</button>';
+																	}
+																	listResults += '</div><div class="col-md-12"><hr></div>';
 																});
 
 												// Show results

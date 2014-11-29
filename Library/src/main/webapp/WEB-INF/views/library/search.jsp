@@ -47,6 +47,23 @@
  							</optgroup>
 						</select>
 					</div>
+					<div class="col-lg-7">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default" disabled style="opacity:1">
+										<b>Search results</b>
+									</button>
+								</div>
+								<input type="search" name="query" class="form-control">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default" type="button">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
 					<div class="col-lg-9">
 						<p class="text-left">${message}</p>
 						<hr>
