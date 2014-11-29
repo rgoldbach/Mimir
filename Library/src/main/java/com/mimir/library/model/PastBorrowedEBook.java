@@ -53,7 +53,7 @@ public class PastBorrowedEBook {
 	public PastBorrowedEBook(BorrowedEBook borrowedEBook){
 		this.user = borrowedEBook.getUser();
 		this.eBook = borrowedEBook.getEBook();
-		this.dateExpired = borrowedEBook.getDateExpired();
+		this.dateExpired = borrowedEBook.getDateExpires();
 		this.bookRating = borrowedEBook.getBookRating();
 	}
 

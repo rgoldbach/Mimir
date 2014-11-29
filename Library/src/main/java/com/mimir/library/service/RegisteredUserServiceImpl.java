@@ -284,15 +284,17 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	}
 
 	@Override
-	public String saveWishlistAudioBookOfSpecificUser(
-			WishlistAudioBook wishlistAudioBook) {
+	public String saveWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
 		return dao.saveWishlistAudioBookOfSpecificUser(wishlistAudioBook);
 	}
 
 	@Override
-	public String removeWishlistAudioBookOfSpecificUser(
-			WishlistAudioBook wishlistAudioBook) {
+	public String removeWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
 		return dao.removeWishlistAudioBookOfSpecificUser(wishlistAudioBook);
+	}
+	@Override
+	public List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser) {
+		return dao.getRecommendedBooksForUser(currentUser);
 	}
 	
 }

@@ -60,10 +60,10 @@ public class BorrowedEBook {
 	public RegisteredUser getUser() {
 		return user;
 	}
-	public LocalDate getDateExpired() {
+	public LocalDate getDateExpires() {
 		return dateExpires;
 	}
-	public void setDateExpired(LocalDate dateExpires) {
+	public void setDateExpires(LocalDate dateExpires) {
 		this.dateExpires = dateExpires;
 	}
 	public Double getBookRating() {

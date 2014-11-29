@@ -1,6 +1,7 @@
 package com.mimir.library.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,6 +9,7 @@ import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,8 @@ import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookOnHold;
+import com.mimir.library.model.Book;
+import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
@@ -31,8 +35,7 @@ import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LamazonService;
 
 @Repository("registeredUserDao")
-public class RegisteredUserDaoImpl extends AbstractDao implements
-		RegisteredUserDao {
+public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUserDao {
 
 	@Override
 	public int getMaxAccountInfoId() {
@@ -114,7 +117,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements
 		recentlyAddedEBooks.add(Restrictions.eq("user", currentUser));
 		List<BorrowedEBook> eBooks = recentlyAddedEBooks.list();
 		for (BorrowedEBook eBook : eBooks) {
-			BasicBookInfo rab = new BasicBookInfo(eBook);
+			BasicBookInfo rab = new BasicBookInfo(eBook.getEBook());
 			recentlyAddedBooks.add(rab);
 		}
 		// Add AudioBooks
@@ -124,7 +127,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements
 		recentlyAddedAudioBooks.add(Restrictions.eq("user", currentUser));
 		List<BorrowedAudioBook> aBooks = recentlyAddedAudioBooks.list();
 		for (BorrowedAudioBook aBook : aBooks) {
-			BasicBookInfo rab = new BasicBookInfo(aBook);
+			BasicBookInfo rab = new BasicBookInfo(aBook.getAudioBook());
 			recentlyAddedBooks.add(rab);
 		}
 		return recentlyAddedBooks;
@@ -507,5 +510,84 @@ public class RegisteredUserDaoImpl extends AbstractDao implements
 		System.out.println(query.toString());
 		query.executeUpdate();
 		return GlobalConstants.DAO_SUCCESS;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser) {
+		int totalRecommendedBooks = 8;
+		List<BasicBookInfo> recommendedBooks = new ArrayList<BasicBookInfo>();
+		List<BorrowedEBook> borrowedEBooks = (List<BorrowedEBook>) getSession().createCriteria(BorrowedEBook.class, "borrowedE")
+				.add(Restrictions.eq("user", currentUser))
+				.addOrder(Order.desc("dateExpires"))
+				.list();
+		if(borrowedEBooks != null){
+			BorrowedEBook mostRecentEBook = borrowedEBooks.get(0);
+			List<Book> books = (List<Book>) getSession().createCriteria(Book.class, "book")
+					.createAlias("book.genres", "bookGenre")
+					.createAlias("bookGenre.genre", "genre")
+					.add(Restrictions.eq("genre.genre", mostRecentEBook.getEBook().getBook().getGenres().iterator().next().getGenre().getGenre()))
+					.list();
+			Iterator<Book> it = books.iterator();
+			while(totalRecommendedBooks > 0){
+				if(!it.hasNext()){
+					break;
+				}
+				Book book = it.next();
+				boolean canAdd = true;
+				for(BorrowedEBook e : currentUser.getBorrowedEBooks()){
+					if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
+						canAdd = false;
+					}
+				}
+				for(PastBorrowedEBook e : currentUser.getPastBorrowedEBooks()){
+					if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
+						canAdd = false;
+					}
+				}
+				if(canAdd){
+					recommendedBooks.add(new BasicBookInfo(book.getEBook()));	
+					totalRecommendedBooks--;	
+				}
+			}
+		}
+		List<BorrowedAudioBook> borrowedAudioBooks = (List<BorrowedAudioBook>) getSession().createCriteria(BorrowedAudioBook.class, "borrowedA")
+				.add(Restrictions.eq("user", currentUser))
+				.addOrder(Order.desc("dateExpires"))
+				.list();
+		if(borrowedAudioBooks != null){
+			BorrowedAudioBook mostRecentAudioBook = borrowedAudioBooks.get(0);
+			List<Book> books = (List<Book>) getSession().createCriteria(Book.class, "book")
+					.createAlias("book.genres", "bookGenre")
+					.createAlias("bookGenre.genre", "genre")
+					.add(Restrictions.eq("genre.genre", mostRecentAudioBook.getAudioBook().getBook().getGenres().iterator().next().getGenre().getGenre()))
+					.list();
+			Iterator<Book> it = books.iterator();
+			while(totalRecommendedBooks > 0){
+				if(!it.hasNext()){
+					break;
+				}
+				Book book = it.next();
+				boolean canAdd = true;
+				for(BorrowedAudioBook a : currentUser.getBorrowedAudioBooks()){
+					if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
+						canAdd = false;
+					}
+				}
+				for(PastBorrowedAudioBook a : currentUser.getPastBorrowedAudioBooks()){
+					if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
+						canAdd = false;
+					}
+				}
+				if(canAdd){
+					recommendedBooks.add(new BasicBookInfo(book.getAudioBook()));	
+					totalRecommendedBooks--;	
+				}
+			}
+		}
+		for(BasicBookInfo b : recommendedBooks){
+			System.out.println("Recommended " + b.getBookTitle());
+		}
+		return recommendedBooks;
 	}
 }

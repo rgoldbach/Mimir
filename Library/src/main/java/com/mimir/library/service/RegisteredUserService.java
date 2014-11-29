@@ -76,4 +76,7 @@ public interface RegisteredUserService {
 	RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo);
 	RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo);
 	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
+	
+	//Recommended Books
+	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
 }

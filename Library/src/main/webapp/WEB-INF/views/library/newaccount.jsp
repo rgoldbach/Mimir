@@ -88,6 +88,9 @@
 								</div>
 								<div id="collapseAvailable" class="panel-collapse collapse">
 									<div class="panel-body">
+										<c:if test="${empty recentlyAdded}">
+											<i>You have no recently added books!</i>
+										</c:if>
 										<c:forEach items="${recentlyAdded}" var="recentlyAdded">
 											<div id="recentlyAdded${recentlyAdded.format}${recentlyAdded.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
 												<h4 id="recentlyAddedFormat${recentlyAdded.format}${recentlyAdded.bookId}">${recentlyAdded.format}</h4>
@@ -114,6 +117,9 @@
 								</div>
 								<div id="collapsePending" class="panel-collapse collapse">
 									<div class="panel-body">
+										<c:if test="${empty pending}">
+											<i>You have no books on hold!</i>
+										</c:if>
 										<c:forEach items="${pending}" var="pending">
 											<div id="pending${pending.format}${pending.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
 												<h4 id="pendingFormat${pending.format}${pending.bookId}">${pending.format}</h4>
@@ -137,7 +143,7 @@
 							</div>
 						</div>
 					</div>
-		<!-- Lists -->
+					<!-- Lists -->
 					<div class="tab-pane col-md-11" id="tab_bookLists">
 						<h1>Book Lists</h1>
 						<hr>
@@ -153,22 +159,25 @@
 									</div>
 									<div id="collapseWishlisted" class="panel-collapse collapse">
 										<div class="panel-body">
+											<c:if test="${empty wishlistBooks}">
+												<i>You have no books on hold!</i>
+											</c:if>
 											<c:forEach items="${wishlistBooks}" var="element">
-								<div id = "wishlistBook${element.bookDisplayId}" class="col-md-4">
-										<div>
-											<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}"> 
-												<img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> 
-											</a>
-											<h3>
-												<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}">
-													<c:out value="${element.getTitle()}" />
-												</a>
-											</h3>
-											<button onclick="removeFromWishlist(${element.bookDisplayId})" btn btn-danger">Remove</button>
-											<br>
-										</div>
-								</div>
-							</c:forEach>
+												<div id = "wishlistBook${element.bookDisplayId}" class="col-md-4">
+													<div>
+														<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}"> 
+															<img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> 
+														</a>
+														<h3>
+															<a data-toggle="modal" data-target = "#bookModal" href="bookModal?whichBook=${element.bookDisplayId}">
+																<c:out value="${element.getTitle()}" />
+															</a>
+														</h3>
+														<button onclick="removeFromWishlist(${element.bookDisplayId})" btn btn-danger">Remove</button>
+														<br>
+													</div>
+												</div>
+											</c:forEach>
 										</div>
 									</div>
 								</div>
@@ -196,7 +205,23 @@
 									</div>
 									<div id="collapseRecommended" class="panel-collapse collapse">
 										<div class="panel-body">
-											<i>There are no books recommended for you.</i>
+											<c:if test="${empty recommended}">
+												<i>No recommended books!</i>
+											</c:if>
+											<c:forEach items="${recommended}" var="recommended">
+												<div id="pending${recommended.format}${recommended.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="pendingFormat${recommended.format}${recommended.bookId}">${recommended.format}</h4>
+													<a data-toggle="modal"  onclick = "bookModal('${recommended.bookId}', '${recommended.format}')"> 
+														<img width="100px"src="<c:url value="${recommended.imageFilePath}" />">
+													</a>
+													<h4>
+														<a href="#">${recommended.bookTitle}</a>
+													</h4>
+													<h5>
+														<a href="#">${recommended.author}</a>
+													</h5>
+												</div>
+											</c:forEach>
 										</div>
 									</div>
 								</div>

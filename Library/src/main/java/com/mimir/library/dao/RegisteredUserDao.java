@@ -76,4 +76,7 @@ public interface RegisteredUserDao {
 	String removeOnHoldEBook(EBookOnHold eBookOnHold);
 	String removeOnHoldAudioBook(AudioBookOnHold holdToRemove);
 	
+	//Recommended
+	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
+	
 }

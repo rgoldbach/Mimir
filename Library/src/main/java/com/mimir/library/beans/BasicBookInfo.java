@@ -1,8 +1,10 @@
 package com.mimir.library.beans;
 
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.EBook;
 
 public class BasicBookInfo {
 
@@ -20,20 +22,28 @@ public class BasicBookInfo {
 		
 	}
 	
-	public BasicBookInfo(BorrowedEBook eBook) {
+	/*public BasicBookInfo(BorrowedEBook eBook) {
 		this.bookId = eBook.getEBook().getBook().getBookId();
 		this.bookTitle = eBook.getEBook().getBook().getBookDisplay().getTitle();
 		this.imageFilePath = eBook.getEBook().getBook().getBookDisplay().getImageFilePath();
 		this.author = eBook.getEBook().getBook().getAuthors().iterator().next().getName();
 		this.format = GlobalConstants.EBOOK;
+	}*/
+	
+	public BasicBookInfo(AudioBook audioBook) {
+		this.bookId = audioBook.getBook().getBookId();
+		this.bookTitle = audioBook.getBook().getBookDisplay().getTitle();
+		this.imageFilePath = audioBook.getBook().getBookDisplay().getImageFilePath();
+		this.author = audioBook.getBook().getAuthors().iterator().next().getName();
+		this.format = GlobalConstants.AUDIOBOOK;
 	}
 	
-	public BasicBookInfo(BorrowedAudioBook audioBook) {
-		this.bookId = audioBook.getAudioBook().getBook().getBookId();
-		this.bookTitle = audioBook.getAudioBook().getBook().getBookDisplay().getTitle();
-		this.imageFilePath = audioBook.getAudioBook().getBook().getBookDisplay().getImageFilePath();
-		this.author = audioBook.getAudioBook().getBook().getAuthors().iterator().next().getName();
-		this.format = GlobalConstants.AUDIOBOOK;
+	public BasicBookInfo(EBook eBook){
+		this.bookId = eBook.getBook().getBookId();
+		this.bookTitle = eBook.getBook().getBookDisplay().getTitle();
+		this.imageFilePath = eBook.getBook().getBookDisplay().getImageFilePath();
+		this.author = eBook.getBook().getAuthors().iterator().next().getName();
+		this.format = GlobalConstants.EBOOK;
 	}
 
 	public int getBookId() {
