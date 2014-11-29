@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.beans.RecentlyAddedBook;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.ChangeUserInfo;
 import com.mimir.library.model.LoginCredentials;
@@ -39,15 +41,27 @@ public class AccountsController {
 			ModelAndView mv = new ModelAndView("error");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView("library/newaccount");
-		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		Set<BorrowedEBook> books = currentUser.getBorrowedEBooks();
-		for(BorrowedEBook book: books){
-			bookshelfBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
-		}
-		mv.addObject("bookshelfBooks", bookshelfBooks);
+		ModelAndView mv = new ModelAndView("library/newaccount");
 		
+		//Recently Added
+		RecentlyAddedBook rab = new RecentlyAddedBook();
+		rab.setBookId(0);
+		rab.setBookTitle("Test Book Name");
+		rab.setImageFilePath("/resources/img/TestImg6.jpg");
+		rab.setFormat("eBook");
+		rab.setAuthor("Test Author Name");
+		ArrayList<RecentlyAddedBook> rabList = new ArrayList<RecentlyAddedBook>();
+		rabList.add(rab);
+		mv.addObject("recentlyAdded", rabList);
+		mv.addObject("recentlyAddedSize", rabList.size());
+		//Current eBooks
+		ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
+		mv.addObject("bookshelfBooks", bookshelfEBooks);
+		//Current Audio Books
+		ArrayList<BookDisplayableInformation> bookshelfAudioBooks = getBookshelfAudioBooks(currentUser);
+		mv.addObject("bookshelfBooks", bookshelfAudioBooks);
+		//Current AudioBooks
 		ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
 		Set<WishlistEBook> waitBooks = currentUser.getWishlistEBooks();
 		for(WishlistEBook book: waitBooks){
@@ -55,6 +69,23 @@ public class AccountsController {
 		}
 		mv.addObject("wishlistBooks", wishlistBooks);
 		return mv;
+	}
+	
+	private ArrayList<BookDisplayableInformation> getBookshelfEBooks(RegisteredUser currentUser){
+		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
+		Set<BorrowedEBook> books = currentUser.getBorrowedEBooks();
+		for(BorrowedEBook book: books){
+			bookshelfBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
+		}
+		return bookshelfBooks;
+	}
+	private ArrayList<BookDisplayableInformation> getBookshelfAudioBooks(RegisteredUser currentUser){
+		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
+		Set<BorrowedAudioBook> books = currentUser.getBorrowedAudioBooks();
+		for(BorrowedAudioBook book: books){
+			bookshelfBooks.add(bookService.getSpecificBook(book.getAudioBook().getAudioBookId()).getBookDisplay());
+		}
+		return bookshelfBooks;
 	}
 	
 	@RequestMapping(value = "changeUserInfo", method = RequestMethod.POST)

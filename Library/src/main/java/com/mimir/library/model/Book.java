@@ -32,8 +32,9 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int bookId;
 	
+	//Eager because we will always want authors...
 	@IndexedEmbedded
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "Authors_Books", joinColumns = { 
 			@JoinColumn(name = "bookId", nullable = false, updatable = false) }, 
 			inverseJoinColumns = { @JoinColumn(name = "authorId", 

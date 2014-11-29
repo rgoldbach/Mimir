@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -62,13 +63,20 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo) {
 		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
-		userCriteria.setFetchMode("eBookHolds", FetchMode.JOIN);
-		userCriteria.setFetchMode("borrowedEBooks", FetchMode.JOIN);
-		userCriteria.setFetchMode("wishlistEBooks", FetchMode.JOIN);
-		userCriteria.setFetchMode("pastBorrowedEBooks", FetchMode.JOIN);
 		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
-		System.out.println("Account id = " + accountInfo.getAccountInfoId());
-		return (RegisteredUser) userCriteria.uniqueResult();
+		RegisteredUser user = (RegisteredUser) userCriteria.uniqueResult();
+		initializeUser(user);
+		return user;
+	}
+	private void initializeUser(RegisteredUser user){
+		Hibernate.initialize(user.getAudioBookHolds());
+		Hibernate.initialize(user.getBorrowedAudioBooks());
+		Hibernate.initialize(user.getBorrowedEBooks());
+		Hibernate.initialize(user.geteBookHolds());
+		Hibernate.initialize(user.getPastBorrowedAudioBooks());
+		Hibernate.initialize(user.getPastBorrowedEBooks());
+		Hibernate.initialize(user.getWishlistAudioBooks());
+		Hibernate.initialize(user.getWishlistEBooks());
 	}
 	
 	@Override

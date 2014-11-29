@@ -27,32 +27,52 @@
 			</div>
 			<div class="col-md-9 col-md-offset-1">
 				<div class="tab-content">
-	<!-- Bookshelf -->
+					<!-- Bookshelf -->
 					<div class="tab-pane col-md-11 active" id="tab_bookshelf">
 						<h1>Bookshelf</h1>
 						<hr>
 						<div>
-							<c:forEach items="${bookshelfBooks}" var="element">
-								<div id = "bookshelfBook${element.bookDisplayId}" class="col-md-4">
+							<c:forEach items="${currentUser.getBorrowedEBooks()}" var="element">
+								<div id = "bookshelfBook${element.getEBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
-											<a href="#"> <img width="175px" src="<c:out value="${element.getImageFilePath()}"/>"> </a>
-											<h3>
-												<a href="#"><c:out value="${element.getTitle()}" /></a>
-											</h3>
+											<h3>eBook</h3>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getBook().getBookId()}', 'EBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
 											<h4>
-											<a href="#"><c:out value="${element.getBook().getAuthors()[0].getName()}" /></a>
+												<a href="#"><c:out value="${element.getEBook().getBook().getBookDisplay().getTitle()}" /></a>
 											</h4>
+											<h5>
+											<a href="#"><c:out value="${element.getEBook().getBook().getAuthors()[0].getName()}" /></a>
+											</h5>
 										
 											<!-- Rating -->
-											<button onclick = "downloadBook(${element.bookDisplayId}, 'EBook')"class="btn btn-primary">Download</button>
-											<button onclick = "returnBook(${element.bookDisplayId}, 'EBook')"class="btn btn-danger">Return</button>
+											<button onclick = "downloadBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-primary">Download</button>
+											<button onclick = "returnBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-danger">Return</button>
 											<br>
 										</div>
 								</div>
-							</c:forEach>	
+							</c:forEach>
+							<c:forEach items="${currentUser.getBorrowedAudioBooks()}" var="element">
+								<div id = "bookshelfBook${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
+										<div>
+											<h3>AudioBook</h3>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getBook().getBookId()}', 'AudioBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
+											<h4>
+												<a href="#"><c:out value="${element.getAudioBook().getBook().getBookDisplay().getTitle()}" /></a>
+											</h4>
+											<h5>
+											<a href="#"><c:out value="${element.getAudioBook().getBook().getAuthors()[0].getName()}" /></a>
+											</h5>
+										
+											<!-- Rating -->
+											<button onclick = "downloadBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-primary">Download</button>
+											<button onclick = "returnBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-danger">Return</button>
+											<br>
+										</div>
+								</div>
+							</c:forEach>		
 						</div>
 					</div>
-		<!-- Holds -->
+					<!-- Holds -->
 					<div class="tab-pane col-md-11" id="tab_bookHolds">
 						<h1>Book Holds</h1>
 						<hr>
@@ -61,26 +81,28 @@
 								<div class="panel-heading" id="available">
 									<h4 class="panel-title">
 										<a class="collapsed" data-toggle="collapse"
-											data-parent="#holds" href="#collapseAvailable"> Available
-											<span class="label label-success">1</span>
+											data-parent="#holds" href="#collapseAvailable"> Recently Added
+											<span class="label label-success">${recentlyAddedSize}</span>
 										</a>
 									</h4>
 								</div>
 								<div id="collapseAvailable" class="panel-collapse collapse">
 									<div class="panel-body">
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg3.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-success">Borrow</button>
-											<br> <br>
-										</div>
+										<c:forEach items="${recentlyAdded}" var="recentlyAdded">
+											<div class="col-md-3" style="margin-bottom: 1cm;">
+												<h4>${recentlyAdded.format}</h4>
+												<a href="#"> 
+													<img width="100px"src="<c:url value="${recentlyAdded.imageFilePath}" />">
+												</a>
+												<h4>
+													<a href="#">${recentlyAdded.bookTitle}</a>
+												</h4>
+												<h5>
+													<a href="#">${recentlyAdded.author}</a>
+												</h5>
+												<button class="btn btn-success">Borrow</button>
+											</div>
+										</c:forEach>
 									</div>
 								</div>
 							</div>

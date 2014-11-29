@@ -15,7 +15,7 @@ public class AudioBookOnHold {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int audioBookOnHoldId;
+	private int audioBookHoldId;
 
 	
 	@OneToOne
@@ -36,12 +36,12 @@ public class AudioBookOnHold {
 		this.audioBook = audioBook;	
 	}
 	
-	public int getAudioBookOnHoldId() {
-		return audioBookOnHoldId;
+	public int getAudioBookHoldId() {
+		return audioBookHoldId;
 	}
 
-	public void setAudioBookOnHoldId(int audioBookOnHoldId) {
-		this.audioBookOnHoldId = audioBookOnHoldId;
+	public void setAudioBookOnHoldId(int audioBookHoldId) {
+		this.audioBookHoldId = audioBookHoldId;
 	}
 
 	public RegisteredUser getUser() {
