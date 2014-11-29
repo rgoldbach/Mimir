@@ -9,7 +9,7 @@
 				<br>
 					<div class="site-heading">
 <!-- Start Basic Search -->
-					<form method="POST" action="quickSearch">
+					<form method="GET" action="search">
 						<div class="form-group">
 							<div class="input-group input-group-lg">
 								<div class="input-group-btn">

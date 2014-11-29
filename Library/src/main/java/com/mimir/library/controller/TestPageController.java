@@ -35,7 +35,7 @@ public class TestPageController {
 		return "/test/index";
 	}
 	
-	@RequestMapping(value = "/results")
+	@RequestMapping(value = "/restResults")
 	public ModelAndView initResults(String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView("/test/results");
 		
@@ -52,7 +52,7 @@ public class TestPageController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/loadResults")
+	@RequestMapping(value = "/testLoadResults")
 	@ResponseBody
 	public JSONObject loadResults(HttpSession session){
 		PagedListHolder<SearchResult> pagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
@@ -92,7 +92,7 @@ public class TestPageController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/sortResults")
+	@RequestMapping(value = "/testSortResults")
 	@ResponseBody
 	public String sortResults(@RequestParam(value="sortType") String type, HttpSession session){
 		// Get the unsorted original results from the Session
@@ -147,7 +147,7 @@ public class TestPageController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/filterResults")
+	@RequestMapping(value = "/testFilterResults")
 	@ResponseBody
 	public String filterResults(@RequestParam(value="filterType") String type, HttpSession session){
 		// Determine the filter type
