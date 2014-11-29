@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mimir.library.beans.BasicBookInfo;
+import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
@@ -39,7 +40,7 @@ public class AccountsController {
 	@RequestMapping("/account")
 	public ModelAndView showMessage(HttpSession session) {
 		if(session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER) == null){
-			ModelAndView mv = new ModelAndView("error");
+			ModelAndView mv = new ModelAndView("library/error");
 			return mv;
 		}
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
@@ -51,14 +52,13 @@ public class AccountsController {
 		mv.addObject("recentlyAddedSize", recentlyAddedBooks.size());
 		
 		//Pending 
-		List<BasicBookInfo> booksOnHold = service.getPendingBooksOfUser(currentUser);
+		List<BasicOnHoldBookInfo> booksOnHold = service.getPendingBooksOfUser(currentUser);
+		mv.addObject("pending", booksOnHold);
+		
 		//Current eBooks
-		ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
-		mv.addObject("bookshelfBooks", bookshelfEBooks);
-		//Current Audio Books
-		ArrayList<BookDisplayableInformation> bookshelfAudioBooks = getBookshelfAudioBooks(currentUser);
-		mv.addObject("bookshelfBooks", bookshelfAudioBooks);
-		//Current AudioBooks
+		/*ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
+		mv.addObject("bookshelfBooks", bookshelfEBooks);*/
+
 		ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
 		Set<WishlistEBook> waitBooks = currentUser.getWishlistEBooks();
 		for(WishlistEBook book: waitBooks){

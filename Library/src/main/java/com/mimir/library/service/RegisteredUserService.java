@@ -3,6 +3,7 @@ package com.mimir.library.service;
 import java.util.List;
 
 import com.mimir.library.beans.BasicBookInfo;
+import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBookOnHold;
@@ -29,7 +30,7 @@ public interface RegisteredUserService {
 	RegisteredUser getSpecificUser(int id);
 	
 	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
-	List<BasicBookInfo> getPendingBooksOfUser(RegisteredUser currentUser);
+	List<BasicOnHoldBookInfo> getPendingBooksOfUser(RegisteredUser currentUser);
 	
 	//Borrowed EBooks
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);
@@ -44,6 +45,7 @@ public interface RegisteredUserService {
 	List<EBookOnHold> getOnHoldEBooksOfSpecificUser(RegisteredUser user);
 	String saveOnHoldEBookOfSpecificUser(EBookOnHold eBookOnHold);
 	List<EBookOnHold> getOnHoldEBooks(int eBookId);
+	String removeOnHoldEBook(EBookOnHold eBookOnHold);
 	
 	//Wish-list EBooks
 	List<WishlistEBook> getWishlistEBooksOfSpecificUser(RegisteredUser user);
@@ -63,6 +65,7 @@ public interface RegisteredUserService {
 	List<AudioBookOnHold> getOnHoldAudioBooksOfSpecificUser(RegisteredUser user);
 	String saveOnHoldAudioBookOfSpecificUser(AudioBookOnHold audioBookOnHold);
 	List<AudioBookOnHold> getOnHoldAudioBooks(int audioBookId);
+	String removeOnHoldAudioBook(AudioBookOnHold holdToRemove);
 	
 	//Wish-list AudioBooks
 	List<WishlistAudioBook> getWishlistAudioBooksOfSpecificUser(RegisteredUser user);

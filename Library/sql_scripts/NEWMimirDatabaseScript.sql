@@ -769,11 +769,11 @@ LOCK TABLES `EBooks` WRITE;/* Id, BookId, PublisherId */
 INSERT INTO `EBooks` VALUES (1, 1, 1, 4), 
 							(2, 2, 2, 9), 
 							(3, 3, 3, 14),
-							(4, 4, 4, -1),
+							(4, 4, 4, -5),
 							(5, 5, 3, 5), 
 							(6, 6, 3, 10), 
 							(7, 7, 3, 15),
-							(8, 8, 3, -1);
+							(8, 8, 3, 1);
 UNLOCK TABLES;
 
 LOCK TABLES `Formats` WRITE;/* Id,  Format*/
@@ -890,11 +890,11 @@ LOCK TABLES `AudioBooks` WRITE;/* Id, AudioBookId(FK), PublisherId(FK), numOfRem
 INSERT INTO `AudioBooks` VALUES     (1, 1, 1, 4), 
 									(2, 2, 1, 9), 
 									(3, 3, 1, 14), 
-									(4, 4, 1, -1), 
+									(4, 4, 1, -5), 
 									(5, 5, 1, 5), 
 									(6, 6, 1, 10), 
 									(7, 7, 1, 15), 
-									(8, 8, 1, -1);
+									(8, 8, 1, 1);
 UNLOCK TABLES;
 
 LOCK TABLES `AudioBookFormats` WRITE;/* Id, AudioBookId(FK), FormatId(FK), ReleaseDate, FileSize, NumOfParts, Duration*/

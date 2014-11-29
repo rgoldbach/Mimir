@@ -114,71 +114,24 @@
 								</div>
 								<div id="collapsePending" class="panel-collapse collapse">
 									<div class="panel-body">
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg6.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-danger">Remove</button>
-											<br> <br>
-										</div>
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg7.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-danger">Remove</button>
-											<br> <br>
-										</div>
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg4.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-danger">Remove</button>
-											<br> <br>
-										</div>
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg5.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-danger">Remove</button>
-											<br> <br>
-										</div>
-										<div class="col-md-3">
-											<a href="#"> <img width="100px"
-												src="<c:url value="/resources/img/TestImg7.jpg" />">
-											</a>
-											<h4>
-												<a href="#">Title</a>
-											</h4>
-											<h5>
-												<a href="#">Author</a>
-											</h5>
-											<button class="btn btn-danger">Remove</button>
-											<br> <br>
-										</div>
+										<c:forEach items="${pending}" var="pending">
+											<div id="pending${pending.format}${pending.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
+												<h4 id="pendingFormat${pending.format}${pending.bookId}">${pending.format}</h4>
+												<a href="#"> 
+													<img width="100px"src="<c:url value="${pending.imageFilePath}" />">
+												</a>
+												<h4>
+													<a href="#">${pending.bookTitle}</a>
+												</h4>
+												<h5>
+													<a href="#">${pending.author}</a>
+												</h5>
+												<h5>
+													<span>Queue Position: ${pending.positionInQueue}</span>
+												</h5>
+												<button class="btn btn-danger" onclick="removeHold(${pending.bookId}, '${pending.format}')">Remove</button>
+											</div>
+										</c:forEach>
 									</div>
 								</div>
 							</div>

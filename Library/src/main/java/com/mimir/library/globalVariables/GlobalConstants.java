@@ -26,5 +26,8 @@ public class GlobalConstants {
 	//BOOK FORMATS
 	public static final String EBOOK = "EBook";
 	public static final String AUDIOBOOK = "AudioBook";
+	
+	//Unlimited book downloads
+	public static int UNLIMITED = -5;
 
 }

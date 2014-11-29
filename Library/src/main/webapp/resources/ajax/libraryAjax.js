@@ -288,6 +288,57 @@ function removeFromWishlist(whichBook){
 	
 	
 }
+function holdBook(whichBook, bookFormat){
+	var currentBook = $('#currentBook').val();
+    var bookFormat = $('#borrowedBookFormat').val();
+	console.log(whichBook);
+	json = "";
+	$.ajax({
+		headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'url' : "holdBook?whichBook="+currentBook+"&bookFormat="+bookFormat,
+        'type' : "GET",
+        'complete' : function(result) {
+        	if(result.status === 200){
+    			if(result.responseText == "Success"){
+    				$('#holdBookButton').prop('disabled', true);
+    	        	$('#holdBookButton').html("Book On Hold");
+    			}
+        			
+        	}              	              	
+        }
+	  });	
+}
+function removeHold(whichBook, bookFormat){
+	if(!confirm("Are you sure you want to delete this hold?")){
+		return;
+	}
+	console.log(whichBook);
+	json = "";
+	$.ajax({
+		headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'url' : "removeFromHolds?whichBook="+whichBook+"&bookFormat="+bookFormat,
+        'type' : "GET",
+        'complete' : function(result) {
+        	if(result.status === 200){
+        			if(result.responseText == "Success"){
+    	    			$('#pending'+bookFormat+''+whichBook).remove();	
+        			}
+        			else if(result.responseText == "library/error"){
+        				window.location.replace("/library/error");
+        			}
+        			else{
+        				alert("Error: " + result.responseText);
+        			}
+        	}              	              	
+        }
+	  });	
+}
 
 function changeUserInfo() {
     var url = "changeUserInfo";

@@ -1,5 +1,6 @@
 package com.mimir.library.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.beans.BasicBookInfo;
+import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.dao.RegisteredUserDao;
 import com.mimir.library.globalVariables.GlobalConstants;
@@ -58,10 +60,19 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
 		return dao.getRecentlyAddedBooksOfUser(currentUser);
 	}
-	public List<BasicBookInfo>  getPendingBooksOfUser(RegisteredUser currentUser){
+	public List<BasicOnHoldBookInfo>  getPendingBooksOfUser(RegisteredUser currentUser){
+		List<BasicOnHoldBookInfo> pendingBooks = new ArrayList<BasicOnHoldBookInfo>();
 		Set<EBookOnHold> eBooksOnHold = currentUser.geteBookHolds();
 		Set<AudioBookOnHold> audioBooksOnHold = currentUser.getAudioBookHolds();
-		return null;
+		for(EBookOnHold eBook : eBooksOnHold){
+			BasicOnHoldBookInfo pendingBook = new BasicOnHoldBookInfo(eBook);
+			pendingBooks.add(pendingBook);
+		}
+		for(AudioBookOnHold audioBook : audioBooksOnHold){
+			BasicOnHoldBookInfo pendingBook = new BasicOnHoldBookInfo(audioBook);
+			pendingBooks.add(pendingBook);
+		}
+		return pendingBooks;
 	}
 
 	@Override
@@ -111,9 +122,6 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		System.out.println("DEBUG - Lamazon returned " + bookKey);
 		//Persist
 		String response = dao.saveBorrowedEBookOfSpecificUser(borrowedEBook);
-		if(response.equals(GlobalConstants.DAO_SUCCESS)){
-			bookDao.decrementEBookAvailableCopies(borrowedEBook.getEBook());
-		}
 		return response;
 	}
 	@Override
@@ -127,7 +135,6 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		}
 		PastBorrowedEBook pastBook = new PastBorrowedEBook(borrowedEBook);
 		String message = dao.removeBorrowedEBookOfSpecificUser(borrowedEBook);
-		bookDao.incrementEBookAvailableCopies(borrowedEBook.getEBook());
 		dao.savePastBorrowedEBookOfSpecificUser(pastBook);
 		return message;
 	}
@@ -155,6 +162,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	@Override
 	public List<EBookOnHold> getOnHoldEBooks(int eBookId) {
 		return dao.getOnHoldEBooks(eBookId);
+	}
+	
+	public String removeOnHoldEBook(EBookOnHold eBookOnHold) {
+		return dao.removeOnHoldEBook(eBookOnHold);
 	}
 	//WISH-LIST EBOOKS
 	@Override
@@ -215,9 +226,6 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		borrowedAudioBook.setAudioBookCode(bookKey);
 		//Persist
 		String response = dao.saveBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
-		if(response.equals(GlobalConstants.DAO_SUCCESS)){
-			bookDao.decrementAudioBookAvailableCopies(borrowedAudioBook.getAudioBook());
-		}
 		return response;
 	}
 
@@ -232,7 +240,6 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		}
 		PastBorrowedAudioBook pastBook = new PastBorrowedAudioBook(borrowedAudioBook);
 		String message = dao.removeBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
-		bookDao.incrementAudioBookAvailableCopies(borrowedAudioBook.getAudioBook());
 		dao.savePastBorrowedAudioBookOfSpecificUser(pastBook);
 		return message;
 	}
@@ -265,7 +272,11 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public List<AudioBookOnHold> getOnHoldAudioBooks(int audioBookId) {
 		return dao.getOnHoldAudioBooks(audioBookId);
 	}
-
+	@Override
+	public String removeOnHoldAudioBook(AudioBookOnHold holdToRemove) {
+		return dao.removeOnHoldAudioBook(holdToRemove);
+	}
+	
 	@Override
 	public List<WishlistAudioBook> getWishlistAudioBooksOfSpecificUser(
 			RegisteredUser user) {

@@ -19,6 +19,7 @@ import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookFormat;
 import com.mimir.library.model.AudioBookLanguage;
+import com.mimir.library.model.AudioBookOnHold;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookModel;
@@ -27,6 +28,7 @@ import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.EBookFormat;
 import com.mimir.library.model.EBookLanguage;
+import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.WishlistAudioBook;
 import com.mimir.library.model.WishlistEBook;
@@ -325,7 +327,9 @@ public class BookController {
 	}
 	
 	@RequestMapping("/removeFromWishlist")
-	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
+	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+									 @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+									 HttpSession session){
 		String message = GlobalConstants.DAO_SUCCESS;
 		System.out.println("Request to remove wishlist book " + whichBook);
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
@@ -341,6 +345,93 @@ public class BookController {
 		return message;
 	}
 	
+	@RequestMapping("/holdBook")
+	@ResponseBody
+	public String placeBookOnHold(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+			  					  @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+			  					  HttpSession session){
+		String message = "Error";
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			message = placeEBookOnHold(session, whichBook);
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			message = placeAudioBookOnHold(session, whichBook);
+		}	
+		return message;
+	}
+	private String placeAudioBookOnHold(HttpSession session, int whichBook) {
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		//Check if user is borrowing this book
+		Set<BorrowedAudioBook> borrowedBooks = currentUser.getBorrowedAudioBooks();
+		for(BorrowedAudioBook book : borrowedBooks){
+			if(book.getAudioBook().getBook().getBookId() == whichBook){
+				return "You are currently borrowing this book!";
+			}
+		}
+		AudioBookOnHold audioBookOnHold = new AudioBookOnHold(libraryService.getSpecificAudioBook(whichBook), currentUser);
+		String message = userService.saveOnHoldAudioBookOfSpecificUser(audioBookOnHold);
+		currentUser.getAudioBookHolds().add(audioBookOnHold);
+		return message;
+	}
+	private String placeEBookOnHold(HttpSession session, int whichBook) {
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		//Check if user is borrowing this book
+		Set<BorrowedEBook> borrowedBooks = currentUser.getBorrowedEBooks();
+		for(BorrowedEBook book : borrowedBooks){
+			if(book.getEBook().getBook().getBookId() == whichBook){
+				return "You are currently borrowing this book!";
+			}
+		}
+		EBookOnHold eBookOnHold = new EBookOnHold(libraryService.getSpecificEBook(whichBook), currentUser);
+		String message = userService.saveOnHoldEBookOfSpecificUser(eBookOnHold);
+		currentUser.geteBookHolds().add(eBookOnHold);
+		return message;
+	}
+
+	@RequestMapping("/removeFromHolds")
+	@ResponseBody
+	public String removeFromHolds(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+								  @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+								  HttpSession session){
+		String message = GlobalConstants.DAO_SUCCESS;
+		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		if(currentUser == null){
+			return "library/error";
+		}
+		if(bookFormat.equals(GlobalConstants.EBOOK.toString())){
+			EBookOnHold holdToRemove = getEBookHoldToRemove(currentUser, whichBook);
+			if(holdToRemove == null){
+				return "HoldNotFound";
+			}
+			message = userService.removeOnHoldEBook(holdToRemove);
+		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK.toString())){
+			AudioBookOnHold holdToRemove = getAudioBookHoldToRemove(currentUser, whichBook);
+			if(holdToRemove == null){
+				return "HoldNotFound";
+			}
+			message = userService.removeOnHoldAudioBook(holdToRemove);
+		}
+		return message;
+	}
+	private AudioBookOnHold getAudioBookHoldToRemove(RegisteredUser currentUser, int bookId) {
+		Set<AudioBookOnHold> onHoldAudioBooks = currentUser.getAudioBookHolds();
+		for(AudioBookOnHold onHold : onHoldAudioBooks){
+			if(onHold.getAudioBook().getBook().getBookId() == bookId){
+				return onHold;
+			}
+		}
+		return null;
+	}
+	private EBookOnHold getEBookHoldToRemove(RegisteredUser currentUser, int bookId) {
+		Set<EBookOnHold> onHoldEBooks = currentUser.geteBookHolds();
+		for(EBookOnHold onHold : onHoldEBooks){
+			if(onHold.getEBook().getBook().getBookId() == bookId){
+				return onHold;
+			}
+		}
+		return null;
+	}
+
 	@RequestMapping("/download")
 	@ResponseBody
 	public String downloadBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,

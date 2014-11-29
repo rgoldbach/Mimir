@@ -73,5 +73,7 @@ public interface RegisteredUserDao {
 	RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo);
 	RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo);
 	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
+	String removeOnHoldEBook(EBookOnHold eBookOnHold);
+	String removeOnHoldAudioBook(AudioBookOnHold holdToRemove);
 	
 }

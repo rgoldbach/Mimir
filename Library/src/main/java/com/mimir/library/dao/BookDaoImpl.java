@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.mimir.library.enums.FormatType;
+import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookFormat;
 import com.mimir.library.model.AudioBookLanguage;
@@ -169,7 +170,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void decrementAudioBookAvailableCopies(AudioBook aBook) {
-		if(aBook.getRemainingCopies().intValue() == -1) return;
+		if(aBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()-1));
 		getSession().merge(aBook);
 		System.out.println("DEBUG - AudioBook remaining copies decremented.");
@@ -177,7 +178,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void decrementEBookAvailableCopies(EBook eBook) {
-		if(eBook.getRemainingCopies().intValue() == -1) return;
+		if(eBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()-1));
 		getSession().merge(eBook);
 		System.out.println("DEBUG - EBook remaining copies decremented.");
@@ -185,14 +186,14 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void incrementAudioBookAvailableCopies(AudioBook aBook) {
-		if(aBook.getRemainingCopies().intValue() == -1) return;
+		if(aBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()+1));
 		getSession().merge(aBook);
 	}
 
 	@Override
 	public void incrementEBookAvailableCopies(EBook eBook) {
-		if(eBook.getRemainingCopies().intValue() == -1) return;
+		if(eBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()+1));
 		getSession().merge(eBook);
 	}

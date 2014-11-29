@@ -8,9 +8,9 @@
 </head>
 <body>
 	<center>
-	<h3>You are not logged in. Please go back to the homepage.</h3>
+	<h3>You are not logged in or are unauthorized to view this page.</h3>
 	<br/>
-	<a href="index.jsp">Go back to homepage</a>
+	<a href="/Library">Go back to homepage</a>
 	</center>
 </body>
 </html>
