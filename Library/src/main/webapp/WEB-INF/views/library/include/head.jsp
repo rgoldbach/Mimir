@@ -46,13 +46,12 @@
 	
 	.ayyyLmaoContent {
 		color: #FFFFFF;
-    	padding: 5%;
     	font-size: 120%;
     	top: 0%;
-    	left: 78%;
+    	left: 77%;
     	position: absolute;
 	}
-
+	
 	.ayyyLmao{
     	position:relative;
 	}
@@ -60,3 +59,4 @@
 	</style>
 	
 </head>
+	

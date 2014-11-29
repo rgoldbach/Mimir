@@ -167,10 +167,10 @@
 																	coverResults += '<div class="ayyyLmao">';
 																	coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
 																	if (this.format == 'AudioBook') {
-																		coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-headphones"></span></span>';
+																		coverResults += '<span class="ayyyLmaoContent"><span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span></span>';
 																	}
 																	if (this.format == 'EBook') {
-																		coverResults += '<span class="ayyyLmaoContent"><span class="glyphicon glyphicon-book"></span></span>';
+																		coverResults += '<span class="ayyyLmaoContent"><span class="label label-default"><span class="glyphicon glyphicon-book"></span></span></span>';
 																	}
 																	coverResults += '</div>';
 																	coverResults += '<div class="caption">';
