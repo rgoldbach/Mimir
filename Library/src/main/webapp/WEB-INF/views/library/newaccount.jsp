@@ -33,7 +33,7 @@
 						<hr>
 						<div>
 							<c:forEach items="${currentUser.getBorrowedEBooks()}" var="element">
-								<div id = "bookshelfBook${element.getEBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
+								<div id = "bookshelfEBook${element.getEBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>eBook</h3>
 											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getBook().getBookId()}', 'EBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
@@ -52,7 +52,7 @@
 								</div>
 							</c:forEach>
 							<c:forEach items="${currentUser.getBorrowedAudioBooks()}" var="element">
-								<div id = "bookshelfBook${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
+								<div id = "bookshelfAudioBook${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>AudioBook</h3>
 											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getBook().getBookId()}', 'AudioBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
@@ -82,15 +82,15 @@
 									<h4 class="panel-title">
 										<a class="collapsed" data-toggle="collapse"
 											data-parent="#holds" href="#collapseAvailable"> Recently Added
-											<span class="label label-success">${recentlyAddedSize}</span>
+											<span id="recentlyAddedSize" class="label label-success">${recentlyAddedSize}</span>
 										</a>
 									</h4>
 								</div>
 								<div id="collapseAvailable" class="panel-collapse collapse">
 									<div class="panel-body">
 										<c:forEach items="${recentlyAdded}" var="recentlyAdded">
-											<div class="col-md-3" style="margin-bottom: 1cm;">
-												<h4>${recentlyAdded.format}</h4>
+											<div id="recentlyAdded${recentlyAdded.format}${recentlyAdded.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
+												<h4 id="recentlyAddedFormat${recentlyAdded.format}${recentlyAdded.bookId}">${recentlyAdded.format}</h4>
 												<a href="#"> 
 													<img width="100px"src="<c:url value="${recentlyAdded.imageFilePath}" />">
 												</a>
@@ -100,7 +100,6 @@
 												<h5>
 													<a href="#">${recentlyAdded.author}</a>
 												</h5>
-												<button class="btn btn-success">Borrow</button>
 											</div>
 										</c:forEach>
 									</div>

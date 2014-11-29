@@ -2,6 +2,7 @@ package com.mimir.library.service;
 
 import java.util.List;
 
+import com.mimir.library.beans.RecentlyAddedBook;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBookOnHold;
@@ -26,6 +27,8 @@ public interface RegisteredUserService {
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);
+	
+	List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	
 	//Borrowed EBooks
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);

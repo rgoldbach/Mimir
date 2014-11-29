@@ -1,6 +1,7 @@
 package com.mimir.library.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -45,16 +46,9 @@ public class AccountsController {
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		
 		//Recently Added
-		RecentlyAddedBook rab = new RecentlyAddedBook();
-		rab.setBookId(0);
-		rab.setBookTitle("Test Book Name");
-		rab.setImageFilePath("/resources/img/TestImg6.jpg");
-		rab.setFormat("eBook");
-		rab.setAuthor("Test Author Name");
-		ArrayList<RecentlyAddedBook> rabList = new ArrayList<RecentlyAddedBook>();
-		rabList.add(rab);
-		mv.addObject("recentlyAdded", rabList);
-		mv.addObject("recentlyAddedSize", rabList.size());
+		List<RecentlyAddedBook> recentlyAddedBooks = service.getRecentlyAddedBooksOfUser(currentUser);
+		mv.addObject("recentlyAdded", recentlyAddedBooks);
+		mv.addObject("recentlyAddedSize", recentlyAddedBooks.size());
 		//Current eBooks
 		ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
 		mv.addObject("bookshelfBooks", bookshelfEBooks);

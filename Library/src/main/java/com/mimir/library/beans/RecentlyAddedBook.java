@@ -1,5 +1,9 @@
 package com.mimir.library.beans;
 
+import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.BorrowedAudioBook;
+import com.mimir.library.model.BorrowedEBook;
+
 public class RecentlyAddedBook {
 
 	private int bookId;
@@ -11,6 +15,22 @@ public class RecentlyAddedBook {
 	private String author;
 	
 	private String format;
+
+	public RecentlyAddedBook(BorrowedEBook eBook) {
+		this.bookId = eBook.getEBook().getBook().getBookId();
+		this.bookTitle = eBook.getEBook().getBook().getBookDisplay().getTitle();
+		this.imageFilePath = eBook.getEBook().getBook().getBookDisplay().getImageFilePath();
+		this.author = eBook.getEBook().getBook().getAuthors().iterator().next().getName();
+		this.format = GlobalConstants.EBOOK;
+	}
+	
+	public RecentlyAddedBook(BorrowedAudioBook audioBook) {
+		this.bookId = audioBook.getAudioBook().getBook().getBookId();
+		this.bookTitle = audioBook.getAudioBook().getBook().getBookDisplay().getTitle();
+		this.imageFilePath = audioBook.getAudioBook().getBook().getBookDisplay().getImageFilePath();
+		this.author = audioBook.getAudioBook().getBook().getAuthors().iterator().next().getName();
+		this.format = GlobalConstants.AUDIOBOOK;
+	}
 
 	public int getBookId() {
 		return bookId;

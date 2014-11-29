@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mimir.library.beans.RecentlyAddedBook;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.dao.RegisteredUserDao;
 import com.mimir.library.globalVariables.GlobalConstants;
@@ -13,6 +14,7 @@ import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookOnHold;
+import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
@@ -51,6 +53,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		return dao.getMaxAccountInfoId();
 	}
 	
+	@Override
+	public List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
+		return dao.getRecentlyAddedBooksOfUser(currentUser);
+	}
 
 	@Override
 	public List<RegisteredUser> getAllUsers() {

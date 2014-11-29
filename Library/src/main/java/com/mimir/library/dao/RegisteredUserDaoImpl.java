@@ -1,5 +1,6 @@
 package com.mimir.library.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -8,8 +9,10 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.beans.RecentlyAddedBook;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
@@ -93,6 +96,33 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		 getSession().merge(user);
 		 getSession().merge(user.getAccountInfo());
 		 getSession().merge(user.getAccountInfo().getLoginCredentials());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
+		List<RecentlyAddedBook> recentlyAddedBooks = new ArrayList<RecentlyAddedBook>();
+		//Add EBooks
+		Criteria recentlyAddedEBooks = getSession().createCriteria(BorrowedEBook.class);
+		LocalDate eDate = new LocalDate().plusDays(GlobalConstants.BORROW_BOOK_LENGTH);
+		recentlyAddedEBooks.add(Restrictions.eq("dateExpires", eDate));
+		recentlyAddedEBooks.add(Restrictions.eq("user", currentUser));
+		List<BorrowedEBook> eBooks = recentlyAddedEBooks.list();
+		for(BorrowedEBook eBook : eBooks){
+			RecentlyAddedBook rab = new RecentlyAddedBook(eBook);
+			recentlyAddedBooks.add(rab);
+		}
+		//Add AudioBooks
+		Criteria recentlyAddedAudioBooks = getSession().createCriteria(BorrowedAudioBook.class);
+		LocalDate aDate = new LocalDate().plusDays(GlobalConstants.BORROW_BOOK_LENGTH);
+		recentlyAddedAudioBooks.add(Restrictions.eq("dateExpires", aDate));
+		recentlyAddedAudioBooks.add(Restrictions.eq("user", currentUser));
+		List<BorrowedAudioBook> aBooks = recentlyAddedAudioBooks.list();
+		for(BorrowedAudioBook aBook : aBooks){
+			RecentlyAddedBook rab = new RecentlyAddedBook(aBook);
+			recentlyAddedBooks.add(rab);
+		}
+		return recentlyAddedBooks;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -346,9 +376,4 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		query.executeUpdate();
 		return GlobalConstants.DAO_SUCCESS;
 	}
-
-	
-
-	
-
 }

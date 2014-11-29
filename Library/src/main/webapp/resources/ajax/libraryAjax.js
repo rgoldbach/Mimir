@@ -231,7 +231,14 @@ function returnBook(whichBook, bookFormat){
         	if(result.status === 200){
         		console.log(result.status);
     	    	if(result.status == 200){
-    	    		$('#bookshelfBook'+whichBook).remove();
+    	    		$('#bookshelf'+bookFormat+''+whichBook).remove();
+    	    		console.log($('#recentlyAddedFormat'+bookFormat+''+whichBook).text());
+    	    		console.log(bookFormat);
+    	    		if($('#recentlyAddedFormat'+bookFormat+''+whichBook).text() == bookFormat){
+    	    			$('#recentlyAdded'+bookFormat+''+whichBook).remove();
+    	    			var a = parseInt($('#recentlyAddedSize').text()) - 1;
+    	    			$('#recentlyAddedSize').text(a);
+    	    		}
     	    	}
         		
         	}              	              	
