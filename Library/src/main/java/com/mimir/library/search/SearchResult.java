@@ -68,7 +68,7 @@ public class SearchResult {
 			this.formatNames = getEBookFormatNames(book.getEBook().geteBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			this.setDisplayId(book.getBookDisplay().getBookDisplayId());
+			this.displayId = book.getBookDisplay().getBookDisplayId();
 			
 		}else if(format.equals(GlobalConstants.AUDIOBOOK)){
 			
@@ -87,7 +87,7 @@ public class SearchResult {
 			this.formatNames = getAudioBookFormatNames(book.getAudioBook().getAudioBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			this.setDisplayId(book.getBookDisplay().getBookDisplayId());
+			this.displayId = book.getBookDisplay().getBookDisplayId();
 			
 		}
 	}
