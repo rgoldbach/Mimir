@@ -238,6 +238,7 @@ function returnBook(whichBook, bookFormat){
     	    			$('#recentlyAdded'+bookFormat+''+whichBook).remove();
     	    			var a = parseInt($('#recentlyAddedSize').text()) - 1;
     	    			$('#recentlyAddedSize').text(a);
+    	    			changeRecentlyAddedSizeColor();
     	    		}
     	    	}
         		

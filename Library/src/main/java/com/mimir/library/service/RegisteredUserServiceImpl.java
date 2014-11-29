@@ -1,12 +1,13 @@
 package com.mimir.library.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mimir.library.beans.RecentlyAddedBook;
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.dao.RegisteredUserDao;
 import com.mimir.library.globalVariables.GlobalConstants;
@@ -54,8 +55,13 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	}
 	
 	@Override
-	public List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
+	public List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
 		return dao.getRecentlyAddedBooksOfUser(currentUser);
+	}
+	public List<BasicBookInfo>  getPendingBooksOfUser(RegisteredUser currentUser){
+		Set<EBookOnHold> eBooksOnHold = currentUser.geteBookHolds();
+		Set<AudioBookOnHold> audioBooksOnHold = currentUser.getAudioBookHolds();
+		return null;
 	}
 
 	@Override

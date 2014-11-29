@@ -4,7 +4,7 @@ import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 
-public class RecentlyAddedBook {
+public class BasicBookInfo {
 
 	private int bookId;
 	
@@ -16,7 +16,11 @@ public class RecentlyAddedBook {
 	
 	private String format;
 
-	public RecentlyAddedBook(BorrowedEBook eBook) {
+	public BasicBookInfo(){
+		
+	}
+	
+	public BasicBookInfo(BorrowedEBook eBook) {
 		this.bookId = eBook.getEBook().getBook().getBookId();
 		this.bookTitle = eBook.getEBook().getBook().getBookDisplay().getTitle();
 		this.imageFilePath = eBook.getEBook().getBook().getBookDisplay().getImageFilePath();
@@ -24,7 +28,7 @@ public class RecentlyAddedBook {
 		this.format = GlobalConstants.EBOOK;
 	}
 	
-	public RecentlyAddedBook(BorrowedAudioBook audioBook) {
+	public BasicBookInfo(BorrowedAudioBook audioBook) {
 		this.bookId = audioBook.getAudioBook().getBook().getBookId();
 		this.bookTitle = audioBook.getAudioBook().getBook().getBookDisplay().getTitle();
 		this.imageFilePath = audioBook.getAudioBook().getBook().getBookDisplay().getImageFilePath();

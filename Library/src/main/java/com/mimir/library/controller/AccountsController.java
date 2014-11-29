@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mimir.library.beans.RecentlyAddedBook;
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
@@ -46,9 +46,12 @@ public class AccountsController {
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		
 		//Recently Added
-		List<RecentlyAddedBook> recentlyAddedBooks = service.getRecentlyAddedBooksOfUser(currentUser);
+		List<BasicBookInfo> recentlyAddedBooks = service.getRecentlyAddedBooksOfUser(currentUser);
 		mv.addObject("recentlyAdded", recentlyAddedBooks);
 		mv.addObject("recentlyAddedSize", recentlyAddedBooks.size());
+		
+		//Pending 
+		List<BasicBookInfo> booksOnHold = service.getPendingBooksOfUser(currentUser);
 		//Current eBooks
 		ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
 		mv.addObject("bookshelfBooks", bookshelfEBooks);

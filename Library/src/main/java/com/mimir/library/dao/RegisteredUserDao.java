@@ -2,7 +2,7 @@ package com.mimir.library.dao;
 
 import java.util.List;
 
-import com.mimir.library.beans.RecentlyAddedBook;
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBookOnHold;
@@ -28,7 +28,7 @@ public interface RegisteredUserDao {
 	
 	RegisteredUser getSpecificUser(int id);
 	
-	List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
+	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	
 	//Borrowed EBooks
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);

@@ -12,7 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
-import com.mimir.library.beans.RecentlyAddedBook;
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
@@ -100,8 +100,8 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<RecentlyAddedBook> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
-		List<RecentlyAddedBook> recentlyAddedBooks = new ArrayList<RecentlyAddedBook>();
+	public List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
+		List<BasicBookInfo> recentlyAddedBooks = new ArrayList<BasicBookInfo>();
 		//Add EBooks
 		Criteria recentlyAddedEBooks = getSession().createCriteria(BorrowedEBook.class);
 		LocalDate eDate = new LocalDate().plusDays(GlobalConstants.BORROW_BOOK_LENGTH);
@@ -109,7 +109,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		recentlyAddedEBooks.add(Restrictions.eq("user", currentUser));
 		List<BorrowedEBook> eBooks = recentlyAddedEBooks.list();
 		for(BorrowedEBook eBook : eBooks){
-			RecentlyAddedBook rab = new RecentlyAddedBook(eBook);
+			BasicBookInfo rab = new BasicBookInfo(eBook);
 			recentlyAddedBooks.add(rab);
 		}
 		//Add AudioBooks
@@ -119,7 +119,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		recentlyAddedAudioBooks.add(Restrictions.eq("user", currentUser));
 		List<BorrowedAudioBook> aBooks = recentlyAddedAudioBooks.list();
 		for(BorrowedAudioBook aBook : aBooks){
-			RecentlyAddedBook rab = new RecentlyAddedBook(aBook);
+			BasicBookInfo rab = new BasicBookInfo(aBook);
 			recentlyAddedBooks.add(rab);
 		}
 		return recentlyAddedBooks;

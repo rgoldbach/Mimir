@@ -582,7 +582,8 @@ CREATE TABLE `BorrowedAudioBooks` (
 );
 
 DROP TABLE IF EXISTS `PastBookshelfAudioBooks`;
-CREATE TABLE `PastBookshelfAudioBooks` (
+DROP TABLE IF EXISTS `PastBorrowedAudioBooks`;
+CREATE TABLE `PastBorrowedAudioBooks` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `audioBookId` INT NOT NULL,
     `regUserId` INT NOT NULL,
@@ -960,8 +961,8 @@ INSERT INTO `BorrowedAudioBooks` VALUES (1, 1, 1, '2015-09-09', null, 'b0b98b0a-
 										(4, 4, 2, '2015-09-09', null, 'c263603e-b815-435e-8a4f-a1df16db755e');
 UNLOCK TABLES;
 
-LOCK TABLES `PastBookshelfAudioBooks` WRITE;/* Id, AudioBookId(FK), RegUserId(FK), BookRating */
-INSERT INTO `PastBookshelfAudioBooks` VALUES (1, 4, 1, '2015-09-09', null), 
+LOCK TABLES `PastBorrowedAudioBooks` WRITE;/* Id, AudioBookId(FK), RegUserId(FK), BookRating */
+INSERT INTO `PastBorrowedAudioBooks` VALUES (1, 4, 1, '2015-09-09', null), 
 											 (2, 3, 1, '2015-09-09', null), 
 											 (3, 2, 1, '2015-09-09', 4), 
 											 (4, 1, 2, '2015-09-09', null);

@@ -351,6 +351,15 @@
 	<%@ include file="/WEB-INF/views/library/include/modals.jsp"%>
 		
 	<%@ include file="/WEB-INF/views/library/include/jsSources.jsp"%>
+	
+	<script>
+	function changeRecentlyAddedSizeColor(){
+		if(parseInt($('#recentlyAddedSize').text()) == 0){
+			$('#recentlyAddedSize').removeClass('label-success').addClass('label-danger');
+		}	
+	}
+	changeRecentlyAddedSizeColor();
+	</script>
 
 </body>
 
