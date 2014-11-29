@@ -147,7 +147,7 @@ public class AccountsController {
 				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is an admin.");		
 				Admin admin = service.getSpecificAdminFromAccountInfo(currentUserAccountInfo);
 				if(admin != null){
-					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, admin);
+					session.setAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER, admin);
 					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
 					return "admin";
 				}	    
