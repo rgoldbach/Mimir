@@ -245,28 +245,41 @@ public class BookController {
 	}
 	
 	@RequestMapping("/wishlist")
-	public String wishlistBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, HttpSession session){
-		System.out.println("Request to wishtlist " + whichBook);
+	@ResponseBody
+	public String wishlistBook(@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+							   @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+							   HttpSession session){
+		System.out.println("Request to wishlist " + whichBook);
 		String message = "";
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		WishlistEBook wishBook = new WishlistEBook(libraryService.getSpecificEBook(whichBook), currentUser);
-		message = userService.saveWishlistEBookOfSpecificUser(wishBook);
-		System.out.println(currentUser.getWishlistEBooks().size());
-		if(message.equals(GlobalConstants.DAO_SUCCESS)){
-			//adds book for current session
-			currentUser.addBookToWishlist(wishBook);
-			//Wish-list EBook persisted...
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			message = addeEBookWishlist(currentUser, whichBook);
 		}
-		else{
-			//Wish-list EBook not persisted...
-			//Reason why is already stored in message
-		}	
-		
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			message = addAudioBookWishlist(currentUser, whichBook);
+		}
 		return message;
 		
 	}
 	
+	private String addAudioBookWishlist(RegisteredUser currentUser,int whichBook) {
+		WishlistAudioBook wishBook = new WishlistAudioBook(libraryService.getSpecificAudioBook(whichBook), currentUser);
+		String message = userService.saveWishlistAudioBookOfSpecificUser(wishBook);
+		if(message.equals(GlobalConstants.DAO_SUCCESS)){
+			currentUser.addBookToWishlist(wishBook);
+		}
+		return message;	
+	}
+
+	private String addeEBookWishlist(RegisteredUser currentUser, int whichBook) {
+		WishlistEBook wishBook = new WishlistEBook(libraryService.getSpecificEBook(whichBook), currentUser);
+		String message = userService.saveWishlistEBookOfSpecificUser(wishBook);
+		if(message.equals(GlobalConstants.DAO_SUCCESS)){
+			currentUser.addBookToWishlist(wishBook);
+		}
+		return message;	
+	}
+
 	@RequestMapping("/ratebook")
 	public String rateBook(
 			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook, 
@@ -327,12 +340,34 @@ public class BookController {
 	}
 	
 	@RequestMapping("/removeFromWishlist")
+	@ResponseBody
 	public String removeFromWishList(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, 
 									 @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 									 HttpSession session){
-		String message = GlobalConstants.DAO_SUCCESS;
+		String message = "";
 		System.out.println("Request to remove wishlist book " + whichBook);
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			message = removeEBookWishlist(currentUser, whichBook);
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			message = removeAudioBookWishlist(currentUser, whichBook);
+		}
+		return message;
+	}
+
+	private String removeAudioBookWishlist(RegisteredUser currentUser,int whichBook) {
+		Set<WishlistAudioBook> wishlistBooks = (Set<WishlistAudioBook>) currentUser.getWishlistAudioBooks();
+		WishlistAudioBook bookToRemove = null;
+		for(WishlistAudioBook book: wishlistBooks){
+			if(book.getAudioBook().getAudioBookId() == whichBook)
+				bookToRemove = book;
+		}
+		currentUser.removeFromWishlistAudioBooks(bookToRemove);
+		return userService.removeWishlistAudioBookOfSpecificUser(bookToRemove);
+	}
+
+	private String removeEBookWishlist(RegisteredUser currentUser, int whichBook) {
 		Set<WishlistEBook> wishlistBooks = (Set<WishlistEBook>) currentUser.getWishlistEBooks();
 		WishlistEBook bookToRemove = null;
 		for(WishlistEBook book: wishlistBooks){
@@ -340,11 +375,9 @@ public class BookController {
 				bookToRemove = book;
 		}
 		currentUser.removeFromWishlistEBooks(bookToRemove);
-		message = userService.removeWishlistEBookOfSpecificUser(bookToRemove);
-		
-		return message;
+		return userService.removeWishlistEBookOfSpecificUser(bookToRemove);
 	}
-	
+
 	@RequestMapping("/holdBook")
 	@ResponseBody
 	public String placeBookOnHold(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook, 

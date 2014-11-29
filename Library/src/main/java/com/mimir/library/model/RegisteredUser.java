@@ -127,6 +127,9 @@ public class RegisteredUser{
 	public void addBookToWishlist(WishlistEBook bookToAdd){
 		wishlistEBooks.add(bookToAdd);
 	}
+	public void addBookToWishlist(WishlistAudioBook wishBook) {
+		wishlistAudioBooks.add(wishBook);
+	}
 
 	public int getRegUserId() {
 		return regUserId;

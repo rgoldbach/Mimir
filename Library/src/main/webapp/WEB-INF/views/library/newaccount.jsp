@@ -159,7 +159,26 @@
 									</div>
 									<div id="collapseWishlisted" class="panel-collapse collapse">
 										<div class="panel-body">
-											<c:if test="${empty wishlistBooks}">
+											<c:if test="${empty wishlist}">
+												<i>You have no books on hold!</i>
+											</c:if>
+											<c:forEach items="${wishlist}" var="element">
+												<div id="wishlist${element.format}${element.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="wishlistFormat${element.format}${element.bookId}">${element.format}</h4>
+													<a data-toggle="modal"  onclick = "bookModal('${element.bookId}', '${element.format}')"> 
+														<img width="100px"src="<c:url value="${element.imageFilePath}" />">
+													</a>
+													<h4>
+														<a href="#">${element.bookTitle}</a>
+													</h4>
+													<h5>
+														<a href="#">${element.author}</a>
+													</h5>
+
+													<button class="btn btn-danger" onclick="removeFromWishlist(${element.bookId}, '${element.format}')">Remove</button>
+												</div>
+											</c:forEach>
+											<!--<c:if test="${empty wishlistBooks}">
 												<i>You have no books on hold!</i>
 											</c:if>
 											<c:forEach items="${wishlistBooks}" var="element">
@@ -177,7 +196,7 @@
 														<br>
 													</div>
 												</div>
-											</c:forEach>
+											</c:forEach>-->
 										</div>
 									</div>
 								</div>

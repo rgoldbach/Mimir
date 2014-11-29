@@ -296,5 +296,18 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser) {
 		return dao.getRecommendedBooksForUser(currentUser);
 	}
+	@Override
+	public List<BasicBookInfo> getWishlistBooksOfUser(RegisteredUser currentUser) {
+		List<BasicBookInfo> wishlist = new ArrayList<BasicBookInfo>();
+		Set<WishlistEBook> eBooks = currentUser.getWishlistEBooks();
+		Set<WishlistAudioBook> aBooks = currentUser.getWishlistAudioBooks();
+		for(WishlistEBook e : eBooks){
+			wishlist.add(new BasicBookInfo(e.getEBook()));
+		}
+		for(WishlistAudioBook a : aBooks){
+			wishlist.add(new BasicBookInfo(a.getAudioBook()));
+		}
+		return wishlist;
+	}
 	
 }
