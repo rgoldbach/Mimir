@@ -101,13 +101,14 @@ function borrowBook(){
 function wishlistBook(){
 	
     var currentBook = $('#currentBook').val();
+    var bookFormat = $('#borrowedBookFormat').val();
     var json = { 
   		  		"whichBook" : currentBook
   		  	};
     json = JSON.stringify(json);
     console.log(json); 
     $.ajax({
-      url: "wishlist?whichBook="+currentBook,
+      url: "wishlist?whichBook="+currentBook+"&bookFormat="+bookFormat,
       data: json,
       type: "GET",
        
@@ -266,12 +267,13 @@ function downloadBook(whichBook, bookFormat){
 	  });	
 }
 
-function removeFromWishlist(whichBook){
+function removeFromWishlist(whichBook, bookFormat){
+	if(!confirm("Are you sure you want to delete this from your wishlist?")){
+		return;
+	}
 	console.log(whichBook);
-	json = "";
 	$.ajax({
-	      url: "removeFromWishlist?whichBook="+whichBook,
-	      data: json,
+	      url: "removeFromWishlist?whichBook="+whichBook+"&bookFormat="+bookFormat,
 	      type: "GET",
 	       
 	      beforeSend: function(xhr) {
@@ -279,10 +281,13 @@ function removeFromWishlist(whichBook){
 	          xhr.setRequestHeader("Content-Type", "application/json");
 	      },
 	      complete: function(result) {
-	    	//removes book gui	
-	    	//if successful
-	    	 console.log("wishlistBook"+whichBook);
-	    	$('#wishlistBook'+whichBook).remove();
+	    	 console.log('#wishlist'+bookFormat+''+whichBook);
+	    	 if(result.responseText == "Success"){
+		    	 $('#wishlist'+bookFormat+''+whichBook).remove(); 
+	    	 }
+	    	 else{
+	    		 alert(result.responseText);
+	    	 }
 	      }
 	  });	
 	

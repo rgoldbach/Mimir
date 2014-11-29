@@ -79,4 +79,5 @@ public interface RegisteredUserService {
 	
 	//Recommended Books
 	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
+	List<BasicBookInfo> getWishlistBooksOfUser(RegisteredUser currentUser);
 }

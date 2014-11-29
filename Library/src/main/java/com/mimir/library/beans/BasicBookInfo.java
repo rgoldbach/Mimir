@@ -8,6 +8,9 @@ import com.mimir.library.model.EBook;
 
 public class BasicBookInfo {
 
+	public static final int MAX_TITLE_LENGTH = 14;
+	public static final int MAX_AUTHOR_LENGTH = 16;
+	
 	private int bookId;
 	
 	private String bookTitle;
@@ -22,27 +25,31 @@ public class BasicBookInfo {
 		
 	}
 	
-	/*public BasicBookInfo(BorrowedEBook eBook) {
-		this.bookId = eBook.getEBook().getBook().getBookId();
-		this.bookTitle = eBook.getEBook().getBook().getBookDisplay().getTitle();
-		this.imageFilePath = eBook.getEBook().getBook().getBookDisplay().getImageFilePath();
-		this.author = eBook.getEBook().getBook().getAuthors().iterator().next().getName();
-		this.format = GlobalConstants.EBOOK;
-	}*/
-	
 	public BasicBookInfo(AudioBook audioBook) {
 		this.bookId = audioBook.getBook().getBookId();
 		this.bookTitle = audioBook.getBook().getBookDisplay().getTitle();
+		if(this.bookTitle.length() > MAX_TITLE_LENGTH){
+			this.bookTitle = this.bookTitle.substring(0, MAX_TITLE_LENGTH) + "..";
+		}
 		this.imageFilePath = audioBook.getBook().getBookDisplay().getImageFilePath();
 		this.author = audioBook.getBook().getAuthors().iterator().next().getName();
+		if(this.author.length() > MAX_AUTHOR_LENGTH){
+			this.author = this.author.substring(0, MAX_AUTHOR_LENGTH) + "..";
+		}
 		this.format = GlobalConstants.AUDIOBOOK;
 	}
 	
 	public BasicBookInfo(EBook eBook){
 		this.bookId = eBook.getBook().getBookId();
 		this.bookTitle = eBook.getBook().getBookDisplay().getTitle();
+		if(this.bookTitle.length() > MAX_TITLE_LENGTH){
+			this.bookTitle = this.bookTitle.substring(0, MAX_TITLE_LENGTH) + "..";
+		}
 		this.imageFilePath = eBook.getBook().getBookDisplay().getImageFilePath();
 		this.author = eBook.getBook().getAuthors().iterator().next().getName();
+		if(this.author.length() > MAX_AUTHOR_LENGTH){
+			this.author = this.author.substring(0, MAX_AUTHOR_LENGTH) + "..";
+		}
 		this.format = GlobalConstants.EBOOK;
 	}
 
@@ -60,6 +67,9 @@ public class BasicBookInfo {
 
 	public void setBookTitle(String bookTitle) {
 		this.bookTitle = bookTitle;
+		if(this.bookTitle.length() > MAX_TITLE_LENGTH){
+			this.bookTitle = this.bookTitle.substring(0, MAX_TITLE_LENGTH) + "..";
+		}
 	}
 
 	public String getImageFilePath() {
@@ -76,6 +86,9 @@ public class BasicBookInfo {
 
 	public void setAuthor(String author) {
 		this.author = author;
+		if(this.author.length() > MAX_AUTHOR_LENGTH){
+			this.author = this.author.substring(0, MAX_AUTHOR_LENGTH) + "..";
+		}
 	}
 
 	public String getFormat() {
