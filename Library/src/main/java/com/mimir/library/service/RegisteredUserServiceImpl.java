@@ -310,4 +310,14 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		return wishlist;
 	}
 	
+	@Override
+	public void updateBorrowedBook(BorrowedEBook book){
+		dao.updateBorrowedBook(book);
+	}
+	
+	@Override
+	public void updateBorrowedBook(BorrowedAudioBook book){
+		dao.updateBorrowedBook(book);
+	}
+	
 }

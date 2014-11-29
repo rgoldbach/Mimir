@@ -299,7 +299,7 @@ public class BookController {
 			for(BorrowedEBook eBook : user.getBorrowedEBooks()){
 				if(eBook.getEBook().getEBookId() == whichBook)
 					eBook.setBookRating(rating);
-					userService.saveBorrowedEBookOfSpecificUser(eBook);
+					userService.updateBorrowedBook(eBook);
 			}
 			
 			EBook book = libraryService.getSpecificEBook(whichBook);
@@ -312,6 +312,7 @@ public class BookController {
 			System.out.println(bookRating.getNumberOfRatings());
 			System.out.println(bookRating.getSumOfRatings());
 			System.out.println(bookRating.getRating());
+			libraryService.updateBookRating(bookRating);
 			return bookRating.getRating();
 			//PERSIST BOOKRATING
 			//PERSIST USER
@@ -322,11 +323,12 @@ public class BookController {
 			for(BorrowedAudioBook audioBook : user.getBorrowedAudioBooks()){
 				if(audioBook.getAudioBook().getAudioBookId()== whichBook)
 					audioBook.setBookRating(rating);
-					userService.saveBorrowedAudioBookOfSpecificUser(audioBook);
+					userService.updateBorrowedBook(audioBook);
 			}
 			AudioBook book = libraryService.getSpecificAudioBook(whichBook);
 			AudioBookRating audioBookRating= book.getBookRating();
 			audioBookRating.addRating(rating);
+			libraryService.updateBookRating(audioBookRating);
 			return audioBookRating.getRating();
 			
 			

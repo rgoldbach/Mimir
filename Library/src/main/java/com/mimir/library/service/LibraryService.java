@@ -3,9 +3,11 @@ package com.mimir.library.service;
 import java.util.List;
 
 import com.mimir.library.model.AudioBook;
+import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BookRating;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.Format;
 import com.mimir.library.model.Genre;
@@ -45,5 +47,8 @@ public interface LibraryService {
 	Publisher getPublisher(String publisherName);
 	Format getFormat(String format);
 	AwardInfo getAwardInfo(String awardTitle, String year);
+	
+	void updateBookRating(BookRating rating);
+	void updateBookRating(AudioBookRating rating);
 	
 }

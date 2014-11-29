@@ -79,4 +79,7 @@ public interface RegisteredUserDao {
 	//Recommended
 	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
 	
+	void updateBorrowedBook(BorrowedEBook book);
+	void updateBorrowedBook(BorrowedAudioBook book);
+	
 }

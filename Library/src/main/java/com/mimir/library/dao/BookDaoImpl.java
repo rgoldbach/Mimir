@@ -1,12 +1,6 @@
 package com.mimir.library.dao;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -25,6 +19,7 @@ import com.mimir.library.model.BookAward;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BookInterestLevel;
+import com.mimir.library.model.BookRating;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.EBookFormat;
 import com.mimir.library.model.EBookLanguage;
@@ -35,7 +30,6 @@ import com.mimir.library.model.InterestLevel;
 import com.mimir.library.model.Language;
 import com.mimir.library.model.LlamazonBook;
 import com.mimir.library.model.Publisher;
-import com.mimir.library.model.RegisteredUser;
 
 @Repository("bookDao")
 public class BookDaoImpl extends AbstractDao  implements BookDao{
@@ -244,5 +238,15 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		crit.add(Restrictions.eq("title", awardTitle));
 		crit.add(Restrictions.eq("year", year));
 		return (AwardInfo) crit.uniqueResult();
+	}
+	
+	@Override
+	public void updateBookRating(AudioBookRating rating){
+		getSession().merge(rating);
+	}
+	
+	@Override
+	public void updateBookRating(BookRating rating){
+		getSession().merge(rating);
 	}
 }

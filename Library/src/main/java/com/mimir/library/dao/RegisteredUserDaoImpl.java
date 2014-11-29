@@ -9,7 +9,6 @@ import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
@@ -21,7 +20,6 @@ import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookOnHold;
 import com.mimir.library.model.Book;
-import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
@@ -589,5 +587,13 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			System.out.println("Recommended " + b.getBookTitle());
 		}
 		return recommendedBooks;
+	}
+	@Override
+	public void updateBorrowedBook(BorrowedEBook book){
+		getSession().merge(book);
+	}
+	@Override
+	public void updateBorrowedBook(BorrowedAudioBook book){
+		getSession().merge(book);
 	}
 }

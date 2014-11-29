@@ -36,6 +36,7 @@ public interface RegisteredUserService {
 	List<BorrowedEBook> getBorrowedEBooksOfSpecificUser(RegisteredUser user);
 	String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook);
 	String returnBorrowedEBook(BorrowedEBook borrowedEBook);
+	void updateBorrowedBook(BorrowedEBook borrowedEBook);
 	
 	//Past Borrowed EBooks
 	List<PastBorrowedEBook> getPastBorrowedEBooksOfSpecificUser(RegisteredUser user);
@@ -56,6 +57,7 @@ public interface RegisteredUserService {
 	List<BorrowedAudioBook> getBorrowedAudioBooksOfSpecificUser(RegisteredUser user);
 	String saveBorrowedAudioBookOfSpecificUser(BorrowedAudioBook borrowedAudioBook);
 	String returnBorrowedAudioBook(BorrowedAudioBook borrowedAudioBook);
+	void updateBorrowedBook(BorrowedAudioBook borrowedAudioBook);
 	
 	//Past Borrowed AudioBooks
 	List<PastBorrowedAudioBook> getPastBorrowedAudioBooksOfSpecificUser(RegisteredUser user);
