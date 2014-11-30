@@ -201,21 +201,7 @@
 											</c:forEach>-->
 										</div>
 									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading" id="rated">
-										<h4 class="panel-title">
-											<a class="collapsed" data-toggle="collapse" data-parent="#lists" href="#collapseRated">
-												Rated
-											</a>
-										</h4>
-									</div>
-									<div id="collapseRated" class="panel-collapse collapse">
-										<div class="panel-body">
-											<i>You have not rated any books.</i>
-										</div>
-									</div>
-								</div>
+								</div>								
 								<div class="panel panel-default">
 									<div class="panel-heading" id="recommended">
 										<h4 class="panel-title">
