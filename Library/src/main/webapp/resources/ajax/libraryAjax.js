@@ -202,36 +202,50 @@ function signInOrOut() {
 }
 
 function returnBook(whichBook, bookFormat){
-	if(!confirm("Are you sure you want to return this book?")){
-		return;
-	}
-	console.log(whichBook);
-	json = "";
-	$.ajax({
-		headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        'url' : "return?whichBook="+whichBook+"&bookFormat="+bookFormat,
-        'type' : "GET",
-        'complete' : function(result) {
-        	if(result.status === 200){
-        		console.log(result.status);
-    	    	if(result.status == 200){
-    	    		$('#bookshelf'+bookFormat+''+whichBook).remove();
-    	    		console.log($('#recentlyAddedFormat'+bookFormat+''+whichBook).text());
-    	    		console.log(bookFormat);
-    	    		if($('#recentlyAddedFormat'+bookFormat+''+whichBook).text() == bookFormat){
-    	    			$('#recentlyAdded'+bookFormat+''+whichBook).remove();
-    	    			var a = parseInt($('#recentlyAddedSize').text()) - 1;
-    	    			$('#recentlyAddedSize').text(a);
-    	    			changeRecentlyAddedSizeColor();
-    	    		}
-    	    	}
-        		
-        	}              	              	
-        }
-	  });	
+	
+	swal({   title: "Are you sure you want to return this book?",   
+		text: "You still have time remaining.",   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#DD6B55",   
+		confirmButtonText: "Yes, return it.",   
+		closeOnConfirm: false }, 
+		function(){    
+			console.log(whichBook);
+			json = "";
+			$.ajax({
+				headers: { 
+		            'Accept': 'application/json',
+		            'Content-Type': 'application/json'
+		        },
+		        'url' : "return?whichBook="+whichBook+"&bookFormat="+bookFormat,
+		        'type' : "GET",
+		        'complete' : function(result) {
+		        	if(result.status === 200){
+		        		console.log(result.status);
+		    	    	if(result.status == 200){
+		    	    		$('#bookshelf'+bookFormat+''+whichBook).remove();
+		    	    		console.log($('#recentlyAddedFormat'+bookFormat+''+whichBook).text());
+		    	    		console.log(bookFormat);
+		    	    		if($('#recentlyAddedFormat'+bookFormat+''+whichBook).text() == bookFormat){
+		    	    			$('#recentlyAdded'+bookFormat+''+whichBook).remove();
+		    	    			var a = parseInt($('#recentlyAddedSize').text()) - 1;
+		    	    			$('#recentlyAddedSize').text(a);
+		    	    			changeRecentlyAddedSizeColor();
+		    	    		}
+		    	    		swal("Book Returned", "", "success");
+		    	    	}
+		        		
+		        	} 
+		        	else{
+		        		swal("There was a problem on our end.", "Just keep the book for now.", "error");
+		        	}
+		        }
+			  });	
+		});
+	
+	
+	
 }
 
 function downloadBook(whichBook, bookFormat){

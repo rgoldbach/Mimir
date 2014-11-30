@@ -20,3 +20,18 @@
 	<script src="<c:url value="/resources/sweetalerts/sweet-alert.js" />"></script>
 	
 	
+	<script>
+		$(document).ready(function() {
+    		$('#registerForm').bootstrapValidator();
+    		 
+    		// Clears the quicksearch form, disables/enables the quicksearch, changes from quicksearch/advancedsearch
+    		$('#toggleSearch').click(function(){
+    			$('#quickSearchInput').val('');
+    			$('#quickSearchInput').prop('disabled',!$('#quickSearchInput').prop('disabled'));
+    			$('#quickSearchButton').prop('disabled',!$('#quickSearchButton').prop('disabled'));
+    			$('#quickSearchButton').css('opacity', '1');
+   			});
+		});
+	</script>
+	
+	

@@ -72,6 +72,17 @@ public class AdminController {
 		return "admin/support";
 	}
 	
+	
+	
+	@RequestMapping(value = "banUser", method = RequestMethod.GET)
+	@ResponseBody
+	public String banUser(@RequestParam("libraryCard") String libraryCard){
+		RegisteredUser user = userService.getSpecificUser(libraryCard);
+		userService.deleteRegisteredUserById(user.getRegUserId());
+		
+		return "success";
+	}
+	
 	@RequestMapping(value ="uploadFile", method = RequestMethod.POST)
 	public @ResponseBody String uploadFileHandler(@RequestParam("name") String name,
 												  @RequestParam("file") MultipartFile file) {
@@ -124,5 +135,7 @@ public class AdminController {
 
 		
 	}
+	
+	
 	
 }

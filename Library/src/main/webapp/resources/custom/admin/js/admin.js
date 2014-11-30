@@ -45,7 +45,7 @@ function getUser(){
     		 
     		 var user = result.responseJSON
     		 if(user.libraryCardNumber ===""){
-    			 $('#userlookuperror').text("User Could Not Be Found");
+        		 sweetAlert("Oops...", "User Could Not Be Found, Are You Sure That Was The Right Library Card Number", "error");
     		 }
     		 else{
     			 $('#userLibraryCard').val(user.libraryCardNumber);
@@ -58,7 +58,7 @@ function getUser(){
     		 }
     	}
     	 else{
-    		 $('#userlookuperror').text("User Could Not Be Found");
+    		 sweetAlert("Oops...", "User Could Not Be Found, Are You Sure That Was The Right Library Card Number", "error");
     	 }
     	 console.log(result);
      }
@@ -77,22 +77,22 @@ function saveUserChanges(){
 		$('#userChangeError').text("Library Card Can Only Contain Digits");
 	}
 	if($('#userFirstName').val() === ""){
-		validation = false
+		controller = false
 		$('#userChangeError').text("First Name Cannot Be Blank");
 
 	}
 	if ($('#userLastName').val() === ""){
-		validation = false
+		controller = false
 		$('#userChangeError').text("Last Name Cannot Be Blank");
 	}
 	if ($('#userEmail').val() === ""){
-			validation = false
-			$('#userChangeError').text("Email Cannot Be Blank");
+		controller = false
+		$('#userChangeError').text("Email Cannot Be Blank");
 
 	}
 	if ($('#userPassword').val() === ""){
-			validation = false
-			$('#userChangeError').text("Password Cannot Be Blank");
+		controller = false
+		$('#userChangeError').text("Password Cannot Be Blank");
 
 	}
 				
@@ -108,27 +108,141 @@ function saveUserChanges(){
                 "passwordConfirm" : $('#userPassword').val()
     };
     console.log(json)
-    $.ajax({
-        headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json' 
-        },
-        'url' : url,
-        'data' : JSON.stringify(json),
-        'type' : "POST",
-        'complete' : function(result) {
-        	console.log(result);
-        	if(result.status === 200){	
-        			$('#userlookuperror').text("Info Successfuly Changed");
-        			$('#myModal').modal('hide');
+    
+    if(controller){
+    	$.ajax({
+        	headers: { 
+            	'Accept': 'application/json',
+            	'Content-Type': 'application/json' 
+        	},
+        	'url' : url,
+        	'data' : JSON.stringify(json),
+        	'type' : "POST",
+        	'complete' : function(result) {
+        		console.log(result);
+        		if(result.status === 200){	
+        				$('#userlookuperror').text("");
+        				$('#myModal').modal('hide');
+        				swal("Success",  $('#userFirstName').val() + "'s Account Successfully Updated.", "success")
         			
-        	}
+        		}
 
-        }
-    });  
+        	}
+    	}); 
+    }
     return false;
 }
 
 function banUser(){
+	$('#myModal').modal('hide');
+	var libraryCardNum = $('#userLibraryCard').val();
+	var url = "banUser";
+	swal({   title: "Are you sure you want to remove this account?",   
+		text: "This will remove the user account forever.",   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#DD6B55",   
+		confirmButtonText: "Yep",   
+		closeOnConfirm: false }, 
+		function(){    
+			$.ajax({
+		    	headers: { 
+		        	'Accept': 'application/json',
+		        	'Content-Type': 'application/json' 
+		    	},
+		    	'url' : "banUser?libraryCard="+libraryCardNum,
+		    	'type' : "GET",
+		    	'complete' : function(result) {
+		    		console.log(result);
+		    		if(result.status === 200){	
+		    			swal("Account Removed", "", "success");
+		    			
+		    		}
+
+		    	}
+			}); 
+			
+		});
+	
+}
+
+function registerAdmin(){
+	validation = true
+	var email =  $('#emailReg').val();
+	var firstName = $('#firstNameReg').val()
+	var lastName =  $('#lastNameReg').val()
+	var password = $('#passwordReg').val()
+	var confirmPass = $('#passwordConfirmReg').val()
+	if(password !== confirmPass){
+		validation = false
+		$('#adminregerror').text("Passwords Do Not Match");
+	}
+	if(lastName === ""){
+		validation = false
+		$('#adminregerror').text("Last Name Cannot Be Empty");
+
+	}
+	if (firstName === ""){
+		validation = false
+		$('#adminregerror').text("First Name Cannot Be Empty");
+
+	}
+	if (email === ""){
+		validation = false
+		$('#adminregerror').text("Email Cannot Be Empty");
+
+	}
+	if (password ==""){
+		validation = false
+		$('#adminregerror').text("Password Cannot Be Empty");
+
+	}
+	if(validation){
+		$('#adminregerror').text("");
+
+	}
+	
+	
+	var url = "registerAdmin";
+	
+	var json = "";
+	json = {
+			"libraryCardNumber" : "ADMIN",
+	        "firstName" : $('#firstNameReg').val(),
+	        "lastName" : $('#lastNameReg').val(),
+	        "email" : $('#emailReg').val(),
+	        "password" : password,
+	};
+	if(validation){
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+			},
+			'url' : url,
+			'data' : JSON.stringify(json),
+			'type' : "POST",
+			'complete' : function(result) {
+				console.log(result);
+				if(result.status === 200){
+					if(result.responseText === "success"){
+						$('#adminregerror').text("");
+						swal("Account Successfully Added", "", "success");
+					}
+					else{
+						$('#adminregerror').text("There Was A Problem");
+
+					}
+				}
+				else{
+					$('#adminregerror').text("There Was A Problem");
+
+				}
+				return false;
+
+			}
+		});  
+		return false;	
+	}	
 	
 }

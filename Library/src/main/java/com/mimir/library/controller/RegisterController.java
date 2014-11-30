@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.model.UserRegisterInformation;
@@ -60,6 +61,26 @@ public class RegisterController {
 		
 		System.out.print(user.getLibraryCardNumber());
 		
+		return "success";
+		
+	}
+	
+	@RequestMapping(value ="registerAdmin", method = RequestMethod.POST)
+	@ResponseBody
+	public String regAdmin(@RequestBody UserRegisterInformation regInfo, HttpSession session) {
+		AccountInfo acctInfor = new AccountInfo();
+		acctInfor.setFirstName(regInfo.getFirstName());
+		acctInfor.setLastName(regInfo.getLastName());
+		acctInfor.setAccountType(GlobalConstants.ADMIN_USER_TYPE);
+		service.saveAccountInfo(acctInfor);
+		LoginCredentials creds = new LoginCredentials();
+		creds.setEmail(regInfo.getEmail());
+		creds.setPassword(regInfo.getPassword());
+		creds.setAccountInfo(acctInfor);
+		acctInfor.setLoginCredentials(creds);
+		Admin admin = new Admin();
+		admin.setAccountInfo(acctInfor);
+		service.updateAdmin(admin);
 		return "success";
 		
 	}

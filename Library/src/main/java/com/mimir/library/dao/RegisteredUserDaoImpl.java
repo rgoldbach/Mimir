@@ -104,6 +104,12 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		getSession().merge(user.getAccountInfo().getLoginCredentials());
 	}
 
+	@Override
+	public void updateAdmin(Admin admin){
+		getSession().merge(admin);
+		getSession().merge(admin.getAccountInfo());
+		getSession().merge(admin.getAccountInfo().getLoginCredentials());
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {
@@ -147,7 +153,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 
 	@Override
 	public void deleteRegisteredUserById(int id) {
-		Query query = getSession().createSQLQuery("DELETE FROM RegisteredUser WHERE userId = :userId");
+		Query query = getSession().createSQLQuery("DELETE FROM RegisteredUsers WHERE regUserId = :userId");
 		query.setLong("userId", id);
 		query.executeUpdate();
 
