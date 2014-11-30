@@ -73,10 +73,10 @@
 					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<!-- Portfolio Item Row -->
 						<div class="row">
-							<div id="bookModalImage" class="col-md-6">
+							<div id="bookModalImage" class="col-md-4">
 								
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-8">
 								<h3>Book Description</h3>
 								<p id = "bookModalDescription"></p>
 								<br>
