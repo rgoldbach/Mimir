@@ -33,29 +33,31 @@
 							function sortThenFilter(){
 								// Get the types
 								var sortType = $('#sortBy').val();
-								var filterType = $('#filterBy').val();
-								sort(sortType, filterType);
+								var filterTypeValues = $('#filterBy').val() || [];
+								sort(sortType, filterTypeValues);
 							}
 
 							// Sort search results
-							function sort(sortType, filterType) {
+							function sort(sortType, filterTypeValues) {
 								$.ajax({
 									url : 'sortResults?sortType=' + sortType,
 									type : 'GET',
 									complete : function() {
-										filter(filterType);
-									}
+										$.each(filterTypeValues, function(index, value){
+											filter(value);
+										});
+										moreResults();
+									},
+									async: false
 								});
 							}
 
 							// Filter the results
-							function filter(filterType) {
+							function filter(filterTypeValue) {
 								$.ajax({
-									url : 'filterResults?filterType=' + filterType,
+									url : 'filterResults?filterTypeValue=' + filterTypeValue,
 									type : 'GET',
-									complete : function() {
-										moreResults();
-									}
+									async: false
 								});
 							}
 
@@ -150,7 +152,8 @@
 													$('#moreResults')
 															.html('More ('+ jResultPage.remainingResults + ')');
 												}
-											}
+											},
+											async: false
 										});
 							}
 						});

@@ -151,16 +151,16 @@ public class TestPageController {
 	@ResponseBody
 	public String filterResults(@RequestParam(value="filterType") String type, HttpSession session){
 		// Determine the filter type
-		FilterType filterType;
+		FilterType filterType = null;
 		switch (type){
 			case "noFilter":
 				filterType = FilterType.NoFilter;
 				break;
 			case "eBookOnly":
-				filterType = FilterType.EBookOnly;
+				//filterType = FilterType.EBookOnly;
 				break;
 			case "audioOnly":
-				filterType = FilterType.AudioOnly;
+				//filterType = FilterType.AudioOnly;
 				break;
 			default:
 				filterType = FilterType.NoFilter;
@@ -174,7 +174,7 @@ public class TestPageController {
 						
 			// Filter the results
 			SearchManager sm = new SearchManager();
-			sm.filter(filterType, results);
+			//sm.filter(filterType, results);
 						
 			// Store the new filtered results in the Session
 			PagedListHolder<SearchResult> filteredPagedResults = new PagedListHolder<SearchResult>(results);

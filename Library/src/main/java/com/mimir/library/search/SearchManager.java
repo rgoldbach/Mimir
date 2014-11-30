@@ -12,9 +12,11 @@ import com.mimir.library.model.Book;
 public class SearchManager {
 	
 	SortManager sortManager;
+	FilterManager filterManager;
 	
 	public SearchManager(){
 		sortManager = new SortManager();
+		filterManager = new FilterManager();
 	}
 	
 	public List<SearchResult> analyzeSearch(List<Book> books){
@@ -45,24 +47,8 @@ public class SearchManager {
 		sortManager.sort(sortType, searchResults);
 	}
 
-	public void filter(FilterType filterType, List<SearchResult> searchResults) {
-		ListIterator<SearchResult> lIter = searchResults.listIterator();
-		if (filterType == FilterType.EBookOnly) {
-			while (lIter.hasNext()) {
-				SearchResult searchResult = lIter.next();
-				if (!(searchResult.getFormat() == "EBook")) {
-					lIter.remove();
-				}
-			}
-		}
-		else if (filterType == FilterType.AudioOnly) {
-			while (lIter.hasNext()) {
-				SearchResult searchResult =	lIter.next();
-				if (!(searchResult.getFormat() == "AudioBook")) {
-					lIter.remove();
-				}
-			}
-		}
+	public void filter(List<SearchResult> searchResults, FilterType filterType, String value) {
+		filterManager.filter(searchResults, filterType, value);
 	}
 
 }

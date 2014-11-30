@@ -39,11 +39,24 @@
 							</optgroup>
 						</select>
 						<br>
-						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px">
-							<optgroup label="Filter By">
-								<option value="noFilter">No Filter</option>
- 								<option value="eBookOnly" data-icon="glyphicon glyphicon-book" value="eBookOnly">eBook Only</option>
- 								<option value="audioOnly" data-icon="glyphicon glyphicon-headphones" value="audioOnly">Audio Only</option>
+						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple>
+							<optgroup label="Format" data-max-options="1">
+ 								<option value="format?='eBookOnly'" data-icon="glyphicon glyphicon-book">eBook Only</option>
+ 								<option value="format?='audioOnly'" data-icon="glyphicon glyphicon-headphones">Audio Only</option>
+ 							</optgroup>
+ 							<optgroup label="Author" data-max-options="1">
+ 								<option value="author?='Veronica Roth'" >Veronica Roth (2)</option>
+ 								<option value="author?='Lois Lowry'">Lois Lowry (2)</option>
+ 								<option value="author?='J.K. Rowling'">J.K. Rowling (2)</option>
+ 								<option value="author?='George R.R. Martin'">George R.R. Martin (2)</option>
+ 							</optgroup>
+ 							<optgroup label="Genre" data-max-options="1">
+ 							</optgroup>
+ 							<optgroup label="Language" data-max-options="1">
+ 							</optgroup>
+ 							<optgroup label="Publisher" data-max-options="1">
+ 							</optgroup>
+ 							<optgroup label="Award" data-max-options="1">
  							</optgroup>
 						</select>
 					</div>
