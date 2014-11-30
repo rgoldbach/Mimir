@@ -46,10 +46,6 @@ public class AccountsController {
 		RegisteredUser currentUser = (RegisteredUser) session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		ModelAndView mv = new ModelAndView("library/newaccount");
 		
-		//Current eBooks
-		/*ArrayList<BookDisplayableInformation> bookshelfEBooks = getBookshelfEBooks(currentUser);
-		mv.addObject("bookshelfBooks", bookshelfEBooks);*/
-		
 		//Recently Added
 		List<BasicBookInfo> recentlyAddedBooks = service.getRecentlyAddedBooksOfUser(currentUser);
 		mv.addObject("recentlyAdded", recentlyAddedBooks);
@@ -63,14 +59,7 @@ public class AccountsController {
 		List<BasicBookInfo> wishlist = service.getWishlistBooksOfUser(currentUser);
 		mv.addObject("wishlist", wishlist);
 		
-		/*ArrayList<BookDisplayableInformation> wishlistBooks = new ArrayList<BookDisplayableInformation>();
-		Set<WishlistEBook> waitBooks = currentUser.getWishlistEBooks();
-		for(WishlistEBook book: waitBooks){
-			wishlistBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
-		}
-		mv.addObject("wishlistBooks", wishlistBooks);*/
-		
-		//Books you rated
+		//Past Borrowed
 		
 		//Recommended
 		List<BasicBookInfo> recommendedBooks = service.getRecommendedBooksForUser(currentUser);
