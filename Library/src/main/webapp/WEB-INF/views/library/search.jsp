@@ -44,13 +44,9 @@
  								<option value="format?='eBookOnly'" data-icon="glyphicon glyphicon-book">eBook Only</option>
  								<option value="format?='audioOnly'" data-icon="glyphicon glyphicon-headphones">Audio Only</option>
  							</optgroup>
- 							<optgroup label="Author" data-max-options="1">
- 								<option value="author?='Veronica Roth'" >Veronica Roth (2)</option>
- 								<option value="author?='Lois Lowry'">Lois Lowry (2)</option>
- 								<option value="author?='J.K. Rowling'">J.K. Rowling (2)</option>
- 								<option value="author?='George R.R. Martin'">George R.R. Martin (2)</option>
+ 							<optgroup id="authorFilters" label="Author" data-max-options="1">
  							</optgroup>
- 							<optgroup label="Genre" data-max-options="1">
+ 							<optgroup id="genreFilters" label="Genre" data-max-options="1">
  							</optgroup>
  							<optgroup label="Language" data-max-options="1">
  							</optgroup>

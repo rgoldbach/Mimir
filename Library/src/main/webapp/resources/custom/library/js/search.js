@@ -3,6 +3,23 @@
 							// Get the first page of search results
 							sortThenFilter();
 							
+							// Load filters
+							$.ajax({
+										url : 'loadFilters',
+										type : 'GET',
+										success : function(jFilters) {
+											$.each(jFilters.authorFilters, function(index, value){
+												$('#authorFilters').append('<option value="author?=\''+ value +'\'" >'+ value +' (2)</option>');
+											});
+											$.each(jFilters.genreFilters, function(index, value){
+												$('#genreFilters').append('<option value="genre?=\''+ value +'\'" >'+ value +' (2)</option>');
+											});
+										},
+										async: false
+									});
+							$('#filterBy').selectpicker('refresh');
+					
+							
 							// Init result view
 							$('#coverDisplay').addClass('active');
 							$('#listResultContainer').hide();
@@ -21,7 +38,7 @@
 									$('#listResultContainer').show();
 								}
 							});
-
+							
 							// Sort then Filter
 							$('.resultDisplay').change(function() {
 								// Empty the current results

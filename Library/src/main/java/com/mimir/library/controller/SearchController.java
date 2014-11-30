@@ -46,6 +46,46 @@ public class SearchController {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/loadFilters")
+	@ResponseBody
+	public JSONObject loadFilters(HttpSession session) {
+		PagedListHolder<SearchResult> pagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
+		List<SearchResult> results = pagedResults.getSource();
+
+		JSONObject jFilters = new JSONObject();
+		
+		JSONArray jAuthorFilters = new JSONArray();
+		JSONArray jGenreFilters = new JSONArray();
+		
+		// Go through each result
+		List<String> authorFilters = new ArrayList<String>();
+				
+		List<String> genreFilters = new ArrayList<String>();
+		
+		for (SearchResult sr : results) {
+			List<String> authorNames = sr.getAuthorNames();
+			for (String authorName : authorNames) {
+				if(!authorFilters.contains(authorName)){
+					authorFilters.add(authorName);
+				}
+			}
+			List<String> genreNames = sr.getGenreNames();
+			for (String genreName : genreNames) {
+				if(!genreFilters.contains(genreName)){
+					genreFilters.add(genreName);
+				}
+			}
+		}
+		
+		jAuthorFilters.addAll(authorFilters);
+		jGenreFilters.addAll(genreFilters);
+		
+		jFilters.put("authorFilters", jAuthorFilters);
+		jFilters.put("genreFilters", jGenreFilters);
+		return jFilters;
+	}
+	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/loadResults")
 	@ResponseBody
 	public JSONObject loadResults(HttpSession session){
@@ -145,8 +185,6 @@ public class SearchController {
 	@RequestMapping(value = "/filterResults")
 	@ResponseBody
 	public String filterResults(@RequestParam(value="filterTypeValue") String filterTypeValue, HttpSession session){
-
-		
 		// Get filter and value, has format filter?='value' in filterTypeValue
 		String filter = filterTypeValue.substring(0, filterTypeValue.indexOf('?'));
 		String value = filterTypeValue.substring(filterTypeValue.indexOf('=')+2, filterTypeValue.lastIndexOf('\''));;
@@ -185,7 +223,7 @@ public class SearchController {
 		
 		// Get the sorted but unfiltered results from the Session
 		PagedListHolder<SearchResult> unfilteredPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
-		List<SearchResult> results = new ArrayList<SearchResult>(unfilteredPagedResults.getSource());
+		List<SearchResult> results = unfilteredPagedResults.getSource();
 						
 		// Filter the results
 		SearchManager sm = new SearchManager();
