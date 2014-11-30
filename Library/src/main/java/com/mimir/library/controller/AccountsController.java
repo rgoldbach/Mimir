@@ -60,6 +60,8 @@ public class AccountsController {
 		mv.addObject("wishlist", wishlist);
 		
 		//Past Borrowed
+		List<BasicBookInfo> pastBooks = service.getPastBorrowedBooksOfUser(currentUser);
+		mv.addObject("pastBorrowed", pastBooks);
 		
 		//Recommended
 		List<BasicBookInfo> recommendedBooks = service.getRecommendedBooksForUser(currentUser);
