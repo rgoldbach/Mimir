@@ -144,38 +144,57 @@ public class SearchController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/filterResults")
 	@ResponseBody
-	public String filterResults(@RequestParam(value="filterType") String type, HttpSession session){
+	public String filterResults(@RequestParam(value="filterTypeValue") String filterTypeValue, HttpSession session){
+
+		
+		// Get filter and value, has format filter?='value' in filterTypeValue
+		String filter = filterTypeValue.substring(0, filterTypeValue.indexOf('?'));
+		String value = filterTypeValue.substring(filterTypeValue.indexOf('=')+2, filterTypeValue.lastIndexOf('\''));;
+
 		// Determine the filter type
 		FilterType filterType;
-		switch (type){
-			case "noFilter":
-				filterType = FilterType.NoFilter;
+		switch (filter){
+			case "format":
+				filterType = FilterType.Format;
+				if(value.equals("eBookOnly")){
+					value = GlobalConstants.EBOOK;
+				}
+				else if(value.equals("audioOnly")){
+					value = GlobalConstants.AUDIOBOOK;
+				}
 				break;
-			case "eBookOnly":
-				filterType = FilterType.EBookOnly;
+			case "author":
+				filterType = FilterType.Author;
 				break;
-			case "audioOnly":
-				filterType = FilterType.AudioOnly;
+			case "genre":
+				filterType = FilterType.Genre;
+				break;
+			case "language":
+				filterType = FilterType.Language;
+				break;
+			case "publisher":
+				filterType = FilterType.Publisher;
+				break;
+			case "award":
+				filterType = FilterType.Award;
 				break;
 			default:
 				filterType = FilterType.NoFilter;
 				break;
 		}
 		
-		if(filterType != FilterType.NoFilter){
-			// Get the unsorted filtered from the Session
-			PagedListHolder<SearchResult> unfilteredPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
-			List<SearchResult> results = unfilteredPagedResults.getSource();
+		// Get the sorted but unfiltered results from the Session
+		PagedListHolder<SearchResult> unfilteredPagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
+		List<SearchResult> results = new ArrayList<SearchResult>(unfilteredPagedResults.getSource());
 						
-			// Filter the results
-			SearchManager sm = new SearchManager();
-			sm.filter(filterType, results);
+		// Filter the results
+		SearchManager sm = new SearchManager();
+		sm.filter(results, filterType, value);
 						
-			// Store the new filtered results in the Session
-			PagedListHolder<SearchResult> filteredPagedResults = new PagedListHolder<SearchResult>(results);
-			filteredPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
-			session.setAttribute("pagedResults", filteredPagedResults);
-		}
+		// Store the new filtered results in the Session
+		PagedListHolder<SearchResult> filteredPagedResults = new PagedListHolder<SearchResult>(results);
+		filteredPagedResults.setPageSize(GlobalConstants.RESULTS_PER_QUERY);
+		session.setAttribute("pagedResults", filteredPagedResults);
 		
 		return "";
 	}

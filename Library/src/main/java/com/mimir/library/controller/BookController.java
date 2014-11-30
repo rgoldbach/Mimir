@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
  
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -97,6 +98,7 @@ public class BookController {
 		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
 			book = libraryService.getSpecificAudioBook(whichBook).getBook();
 		}
+		DecimalFormat df = new DecimalFormat("#.#");
 		session.setAttribute("viewBook", book);
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
 		BookModel bookModel = new BookModel();
@@ -116,7 +118,9 @@ public class BookController {
 			bookModel.setTitle(ebook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(ebook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(ebook.getPublisher().getName());
-			bookModel.setRating(ebook.getBookRating().getRating());
+			double temp = (ebook.getBookRating().getSumOfRatings())/(ebook.getBookRating().getNumberOfRatings());
+			df.format(temp);
+			bookModel.setRating(temp);
 			if(ebook.getRemainingCopies() == 0)
 				bookModel.setAvailable(false);
 			else
@@ -161,7 +165,9 @@ public class BookController {
 			bookModel.setTitle(audioBook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(audioBook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(audioBook.getPublisher().getName());
-			bookModel.setRating(audioBook.getBookRating().getRating());
+			double temp = (audioBook.getBookRating().getSumOfRatings())/(audioBook.getBookRating().getNumberOfRatings());
+			df.format(temp);
+			bookModel.setRating(temp);
 			if(audioBook.getRemainingCopies() == 0)
 				bookModel.setAvailable(false);
 			else
@@ -302,7 +308,7 @@ public class BookController {
 			System.out.print("TESTBOOK");
 			System.out.println(bookRating.getNumberOfRatings());
 			System.out.println(bookRating.getSumOfRatings());
-			System.out.println(bookRating.getRating());
+			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
 			bookRating.addRating(rating);
 			System.out.println(bookRating.getNumberOfRatings());
 			System.out.println(bookRating.getSumOfRatings());

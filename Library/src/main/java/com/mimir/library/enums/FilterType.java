@@ -2,6 +2,10 @@ package com.mimir.library.enums;
 
 public enum FilterType {
 	NoFilter,
-	EBookOnly,
-	AudioOnly
+	Format,
+	Author,
+	Genre,
+	Language,
+	Publisher,
+	Award
 }

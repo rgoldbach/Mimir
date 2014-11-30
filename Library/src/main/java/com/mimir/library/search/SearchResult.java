@@ -42,6 +42,12 @@ public class SearchResult {
 	
 	private List<String> formatNames;
 	
+	private List<String> languageNames;
+	
+	private String publisherName;
+	
+	private List<String> awardNames;
+	
 	private String imgPath;
 	
 	private String description;
@@ -69,6 +75,9 @@ public class SearchResult {
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
 			this.displayId = book.getBookDisplay().getBookDisplayId();
+			// this.languageNames = book.getEBook().getLanguages();
+			// this.publisherName = book.getEBook().getPublisher();
+			// this.awardNames = book.getAwards();
 			
 		}else if(format.equals(GlobalConstants.AUDIOBOOK)){
 			
@@ -88,7 +97,9 @@ public class SearchResult {
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
 			this.displayId = book.getBookDisplay().getBookDisplayId();
-			
+			// this.languageNames = book.getAudioBook().getLanguages();
+			// this.publisherName = book.getAudioBook().getPublisher();
+			// this.awardNames = book.getAwards();
 		}
 	}
 	
