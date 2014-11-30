@@ -64,7 +64,12 @@ public class BookController {
 			HttpSession session){
 		
 		System.out.println(whichBook);
-		Book book = libraryService.getSpecificBook(whichBook);
+		Book book = null;
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			book = libraryService.getSpecificEBook(whichBook).getBook();
+		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			book = libraryService.getSpecificAudioBook(whichBook).getBook();
+		}
 		session.setAttribute("viewBook", book);
 		ModelAndView mv = null;
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
@@ -86,7 +91,12 @@ public class BookController {
 	public BookModel testModal(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
 			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 			HttpSession session){
-		Book book = libraryService.getSpecificBook(whichBook);
+		Book book = null;
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			book = libraryService.getSpecificEBook(whichBook).getBook();
+		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			book = libraryService.getSpecificAudioBook(whichBook).getBook();
+		}
 		session.setAttribute("viewBook", book);
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
 		BookModel bookModel = new BookModel();
@@ -132,12 +142,12 @@ public class BookController {
 			
 			if(user!=null){
 				for(BorrowedEBook testBook : user.getBorrowedEBooks()){
-					if(testBook.getEBook().getBook().getBookId() == whichBook)
+					if(testBook.getEBook().getEBookId() == whichBook)
 						inBookshelf = true;
 				}
 				bookModel.setInBookshelf(inBookshelf);
 				for(WishlistEBook testBook : user.getWishlistEBooks()){
-					if(testBook.getEBook().getBook().getBookId() == whichBook)
+					if(testBook.getEBook().getEBookId() == whichBook)
 						inWishlist = true;
 				}
 				bookModel.setInWishlist(inWishlist);
@@ -176,12 +186,12 @@ public class BookController {
 			bookModel.setFormatTypes(formats);
 			if(user!=null){
 				for(BorrowedAudioBook testBook : user.getBorrowedAudioBooks()){
-					if(testBook.getAudioBook().getBook().getBookId() == whichBook)
+					if(testBook.getAudioBook().getAudioBookId() == whichBook)
 						inBookshelf = true;
 				}
 				bookModel.setInBookshelf(inBookshelf);
 				for(WishlistAudioBook testBook : user.getWishlistAudioBooks()){
-					if(testBook.getAudioBook().getBook().getBookId() == whichBook)
+					if(testBook.getAudioBook().getAudioBookId() == whichBook)
 						inWishlist = true;
 				}
 				bookModel.setInWishlist(inWishlist);
@@ -228,21 +238,6 @@ public class BookController {
 			}	
 		}		
 		return message;
-		
-	}
-	
-	@RequestMapping("/waitlist")
-	public String waitlistBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook, HttpSession session){
-		System.out.println("Request to waitlist " + whichBook);
-
-		//get book from service
-		
-		//add book to current users waitlist
-		
-		//return message
-		
-		return "temp";
 		
 	}
 	
@@ -442,7 +437,7 @@ public class BookController {
 		//Check if user is borrowing this book
 		Set<BorrowedAudioBook> borrowedBooks = currentUser.getBorrowedAudioBooks();
 		for(BorrowedAudioBook book : borrowedBooks){
-			if(book.getAudioBook().getBook().getBookId() == whichBook){
+			if(book.getAudioBook().getAudioBookId() == whichBook){
 				return "You are currently borrowing this book!";
 			}
 		}
@@ -456,7 +451,7 @@ public class BookController {
 		//Check if user is borrowing this book
 		Set<BorrowedEBook> borrowedBooks = currentUser.getBorrowedEBooks();
 		for(BorrowedEBook book : borrowedBooks){
-			if(book.getEBook().getBook().getBookId() == whichBook){
+			if(book.getEBook().getEBookId() == whichBook){
 				return "You are currently borrowing this book!";
 			}
 		}
@@ -494,7 +489,7 @@ public class BookController {
 	private AudioBookOnHold getAudioBookHoldToRemove(RegisteredUser currentUser, int bookId) {
 		Set<AudioBookOnHold> onHoldAudioBooks = currentUser.getAudioBookHolds();
 		for(AudioBookOnHold onHold : onHoldAudioBooks){
-			if(onHold.getAudioBook().getBook().getBookId() == bookId){
+			if(onHold.getAudioBook().getAudioBookId() == bookId){
 				return onHold;
 			}
 		}
@@ -503,7 +498,7 @@ public class BookController {
 	private EBookOnHold getEBookHoldToRemove(RegisteredUser currentUser, int bookId) {
 		Set<EBookOnHold> onHoldEBooks = currentUser.geteBookHolds();
 		for(EBookOnHold onHold : onHoldEBooks){
-			if(onHold.getEBook().getBook().getBookId() == bookId){
+			if(onHold.getEBook().getEBookId() == bookId){
 				return onHold;
 			}
 		}

@@ -190,7 +190,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	
 	private void generateLamazonKeyForEBook(BorrowedEBook borrowedEBook) {
 		LamazonService ls = new LamazonService();
-		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
+		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getEBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
 		if (bookKey == null) {
 			System.out.println("DEBUG - Book Key is null");
 			return;
@@ -204,10 +204,18 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 
 	@Override
 	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
+		System.out.println("DEBUG - Deleting Lamazon Key");
+		//DELETE LAMAZON KEY
+		LamazonService ls = new LamazonService();
+		boolean isReturned = ls.deleteBookKey(borrowedEBook.getEBook().getEBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
+		if(!isReturned){
+			return "Unable to return book!";
+		}
+		
+		//DELETE BORROWED EBOOK
 		Query query = getSession().createSQLQuery("DELETE FROM BorrowedEBooks WHERE id = :id");
 		query.setLong("id", borrowedEBook.getId());
-		
-		int bookId = borrowedEBook.getEBook().getBook().getBookId();
+		int bookId = borrowedEBook.getEBook().getEBookId();
 		int positionInQueue = 0;
 		query.executeUpdate();
 		EBook eBook = borrowedEBook.getEBook();
@@ -367,7 +375,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	
 	private void generateLamazonKeyForAudioBook(BorrowedAudioBook borrowedAudioBook) {
 		LamazonService ls = new LamazonService();
-		String bookKey = ls.getBookKey(borrowedAudioBook.getAudioBook().getBook().getBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
+		String bookKey = ls.getBookKey(borrowedAudioBook.getAudioBook().getAudioBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
 		if (bookKey == null) {
 			return;
 		}
@@ -380,12 +388,19 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 
 	@Override
 	public String removeBorrowedAudioBookOfSpecificUser(BorrowedAudioBook borrowedAudioBook) {
+		//DELETE LAMAZON KEY
+		LamazonService ls = new LamazonService();
+		boolean isReturned = ls.deleteBookKey(borrowedAudioBook.getAudioBook().getAudioBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
+		if(!isReturned){
+			return "Unable to return book!";
+		}
+		
+		//DELETE AUDIO BOOK
 		Query query = getSession().createSQLQuery("DELETE FROM BorrowedAudioBooks WHERE id = :id");
 		query.setLong("id", borrowedAudioBook.getId());
 		System.out.println("Debug: in removeBorrowedAudioBookOfSpecificUser");
-		int bookId = borrowedAudioBook.getAudioBook().getBook().getBookId();
+		int bookId = borrowedAudioBook.getAudioBook().getAudioBookId();
 		int positionInQueue = 0;
-		
 		query.executeUpdate();
 		AudioBook audioBook = borrowedAudioBook.getAudioBook();
 		
@@ -519,7 +534,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 				.add(Restrictions.eq("user", currentUser))
 				.addOrder(Order.desc("dateExpires"))
 				.list();
-		if(borrowedEBooks != null){
+		if(borrowedEBooks != null && borrowedEBooks.size() != 0){
 			BorrowedEBook mostRecentEBook = borrowedEBooks.get(0);
 			List<Book> books = (List<Book>) getSession().createCriteria(Book.class, "book")
 					.createAlias("book.genres", "bookGenre")
@@ -532,20 +547,22 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 					break;
 				}
 				Book book = it.next();
-				boolean canAdd = true;
-				for(BorrowedEBook e : currentUser.getBorrowedEBooks()){
-					if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
-						canAdd = false;
+				if(book.getEBook() == null){
+					boolean canAdd = true;
+					for(BorrowedEBook e : currentUser.getBorrowedEBooks()){
+						if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
+							canAdd = false;
+						}
 					}
-				}
-				for(PastBorrowedEBook e : currentUser.getPastBorrowedEBooks()){
-					if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
-						canAdd = false;
+					for(PastBorrowedEBook e : currentUser.getPastBorrowedEBooks()){
+						if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){
+							canAdd = false;
+						}
 					}
-				}
-				if(canAdd){
-					recommendedBooks.add(new BasicBookInfo(book.getEBook()));	
-					totalRecommendedBooks--;	
+					if(canAdd){
+						recommendedBooks.add(new BasicBookInfo(book.getEBook()));	
+						totalRecommendedBooks--;	
+					}	
 				}
 			}
 		}
@@ -553,7 +570,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 				.add(Restrictions.eq("user", currentUser))
 				.addOrder(Order.desc("dateExpires"))
 				.list();
-		if(borrowedAudioBooks != null){
+		if(borrowedAudioBooks != null && borrowedAudioBooks.size() != 0){
 			BorrowedAudioBook mostRecentAudioBook = borrowedAudioBooks.get(0);
 			List<Book> books = (List<Book>) getSession().createCriteria(Book.class, "book")
 					.createAlias("book.genres", "bookGenre")
@@ -566,20 +583,22 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 					break;
 				}
 				Book book = it.next();
-				boolean canAdd = true;
-				for(BorrowedAudioBook a : currentUser.getBorrowedAudioBooks()){
-					if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
-						canAdd = false;
+				if(book.getAudioBook() != null){
+					boolean canAdd = true;
+					for(BorrowedAudioBook a : currentUser.getBorrowedAudioBooks()){
+						if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
+							canAdd = false;
+						}
 					}
-				}
-				for(PastBorrowedAudioBook a : currentUser.getPastBorrowedAudioBooks()){
-					if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
-						canAdd = false;
+					for(PastBorrowedAudioBook a : currentUser.getPastBorrowedAudioBooks()){
+						if(a.getAudioBook().getAudioBookId() == book.getAudioBook().getAudioBookId()){
+							canAdd = false;
+						}
 					}
-				}
-				if(canAdd){
-					recommendedBooks.add(new BasicBookInfo(book.getAudioBook()));	
-					totalRecommendedBooks--;	
+					if(canAdd){
+						recommendedBooks.add(new BasicBookInfo(book.getAudioBook()));	
+						totalRecommendedBooks--;	
+					}
 				}
 			}
 		}

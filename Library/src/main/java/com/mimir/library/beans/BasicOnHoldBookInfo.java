@@ -14,7 +14,7 @@ public class BasicOnHoldBookInfo extends BasicBookInfo{
 	
 	public BasicOnHoldBookInfo(EBookOnHold eBook){
 		this.setAuthor(eBook.getEBook().getBook().getAuthors().iterator().next().getName());
-		this.setBookId(eBook.getEBook().getBook().getBookId());
+		this.setBookFormatId(eBook.getEBook().getEBookId());
 		this.setBookTitle(eBook.getEBook().getBook().getBookDisplay().getTitle());
 		this.setFormat(GlobalConstants.EBOOK);
 		this.setImageFilePath(eBook.getEBook().getBook().getBookDisplay().getImageFilePath());
@@ -22,7 +22,7 @@ public class BasicOnHoldBookInfo extends BasicBookInfo{
 	}
 	public BasicOnHoldBookInfo(AudioBookOnHold audioBook){
 		this.setAuthor(audioBook.getAudioBook().getBook().getAuthors().iterator().next().getName());
-		this.setBookId(audioBook.getAudioBook().getBook().getBookId());
+		this.setBookFormatId(audioBook.getAudioBook().getAudioBookId());
 		this.setBookTitle(audioBook.getAudioBook().getBook().getBookDisplay().getTitle());
 		this.setFormat(GlobalConstants.AUDIOBOOK);
 		this.setImageFilePath(audioBook.getAudioBook().getBook().getBookDisplay().getImageFilePath());

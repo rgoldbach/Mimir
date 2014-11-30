@@ -144,7 +144,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	@Override
 	public EBook getSpecificEBook(int bookId) {
 		Criteria specificBook = getSession().createCriteria(EBook.class, "eBook");
-		specificBook.add(Restrictions.eq("book.bookId", bookId));
+		specificBook.add(Restrictions.eq("eBookId", bookId));
 		EBook eBook = (EBook) specificBook.uniqueResult();
 		Hibernate.initialize(eBook.getBook().getAuthors());
 		Hibernate.initialize(eBook.geteBookFormats());
@@ -154,7 +154,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	@Override
 	public AudioBook getSpecificAudioBook(int audioBookId) {
 		Criteria specificBook = getSession().createCriteria(AudioBook.class, "audioBook");
-		specificBook.add(Restrictions.eq("book.bookId", audioBookId));
+		specificBook.add(Restrictions.eq("audioBookId", audioBookId));
 		AudioBook audioBook = (AudioBook) specificBook.uniqueResult();
 		Hibernate.initialize(audioBook.getBook().getAuthors());
 		Hibernate.initialize(audioBook.getAudioBookFormats());

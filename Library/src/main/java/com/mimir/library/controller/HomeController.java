@@ -26,8 +26,26 @@ public class HomeController {
 	public ModelAndView goToHomePage(){
 		TestLibrary tl= new TestLibrary();
 		searchService.initHibernateSearch();
-		ArrayList<BookDisplayableInformation> newBooks = tl.getNewBooks();
-		ArrayList<BookDisplayableInformation> topBooks = tl.getTopBooks();
+		ArrayList<BookDisplayableInformation> newBooks = new ArrayList<BookDisplayableInformation>();
+		newBooks.add(libraryService.getSpecificBook(1).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(3).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(2).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(6).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(5).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(8).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(7).getBookDisplay());
+		newBooks.add(libraryService.getSpecificBook(4).getBookDisplay());
+		
+		ArrayList<BookDisplayableInformation> topBooks = new ArrayList<BookDisplayableInformation>();
+		topBooks.add(libraryService.getSpecificBook(1).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(3).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(2).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(6).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(5).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(8).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(7).getBookDisplay());
+		topBooks.add(libraryService.getSpecificBook(4).getBookDisplay());
+		
 		System.out.println("In Home Controller - Redirecting to Homepage");
 		ModelAndView mv = new ModelAndView("library/index");
 		mv.addObject("newBooks", newBooks);

@@ -83,7 +83,7 @@ public class AccountsController {
 		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
 		Set<BorrowedEBook> books = currentUser.getBorrowedEBooks();
 		for(BorrowedEBook book: books){
-			bookshelfBooks.add(bookService.getSpecificBook(book.getEBook().getEBookId()).getBookDisplay());
+			bookshelfBooks.add(bookService.getSpecificBook(book.getEBook().getBook().getBookId()).getBookDisplay());
 		}
 		return bookshelfBooks;
 	}
@@ -91,7 +91,7 @@ public class AccountsController {
 		ArrayList<BookDisplayableInformation> bookshelfBooks = new ArrayList<BookDisplayableInformation>();
 		Set<BorrowedAudioBook> books = currentUser.getBorrowedAudioBooks();
 		for(BorrowedAudioBook book: books){
-			bookshelfBooks.add(bookService.getSpecificBook(book.getAudioBook().getAudioBookId()).getBookDisplay());
+			bookshelfBooks.add(bookService.getSpecificBook(book.getAudioBook().getBook().getBookId()).getBookDisplay());
 		}
 		return bookshelfBooks;
 	}

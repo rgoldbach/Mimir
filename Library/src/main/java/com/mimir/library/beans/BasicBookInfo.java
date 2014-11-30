@@ -11,7 +11,7 @@ public class BasicBookInfo {
 	public static final int MAX_TITLE_LENGTH = 14;
 	public static final int MAX_AUTHOR_LENGTH = 16;
 	
-	private int bookId;
+	private int bookFormatId;
 	
 	private String bookTitle;
 	
@@ -26,7 +26,7 @@ public class BasicBookInfo {
 	}
 	
 	public BasicBookInfo(AudioBook audioBook) {
-		this.bookId = audioBook.getBook().getBookId();
+		this.bookFormatId = audioBook.getAudioBookId();
 		this.bookTitle = audioBook.getBook().getBookDisplay().getTitle();
 		if(this.bookTitle.length() > MAX_TITLE_LENGTH){
 			this.bookTitle = this.bookTitle.substring(0, MAX_TITLE_LENGTH) + "..";
@@ -40,7 +40,7 @@ public class BasicBookInfo {
 	}
 	
 	public BasicBookInfo(EBook eBook){
-		this.bookId = eBook.getBook().getBookId();
+		this.bookFormatId = eBook.getEBookId();
 		this.bookTitle = eBook.getBook().getBookDisplay().getTitle();
 		if(this.bookTitle.length() > MAX_TITLE_LENGTH){
 			this.bookTitle = this.bookTitle.substring(0, MAX_TITLE_LENGTH) + "..";
@@ -51,14 +51,6 @@ public class BasicBookInfo {
 			this.author = this.author.substring(0, MAX_AUTHOR_LENGTH) + "..";
 		}
 		this.format = GlobalConstants.EBOOK;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
 	}
 
 	public String getBookTitle() {
@@ -97,6 +89,14 @@ public class BasicBookInfo {
 
 	public void setFormat(String format) {
 		this.format = format;
+	}
+
+	public int getBookFormatId() {
+		return bookFormatId;
+	}
+
+	public void setBookFormatId(int bookFormatId) {
+		this.bookFormatId = bookFormatId;
 	}
 	
 }

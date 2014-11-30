@@ -33,10 +33,10 @@
 						<hr>
 						<div>
 							<c:forEach items="${currentUser.getBorrowedEBooks()}" var="element">
-								<div id = "bookshelfEBook${element.getEBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
+								<div id = "bookshelfEBook${element.getEBook().getEBookId()}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>eBook</h3>
-											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getBook().getBookId()}', 'EBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getEBookId()}', 'EBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
 											<h4>
 												<a href="#"><c:out value="${element.getEBook().getBook().getBookDisplay().getTitle()}" /></a>
 											</h4>
@@ -45,18 +45,18 @@
 											</h5>
 										
 											<!-- Rating -->
-											<button onclick = "downloadBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-primary">Download</button>
-											<button onclick = "returnBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-danger">Return</button>
+											<button onclick = "downloadBook(${element.getEBook().getEBookId()}, 'EBook')"class="btn btn-primary">Download</button>
+											<button onclick = "returnBook(${element.getEBook().getEBookId()}, 'EBook')"class="btn btn-danger">Return</button>
 											<input id='input-21b' value='${element.bookRating}' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' formattype = 'EBook' bookid =${element.getEBook().getBook().getBookId()} data-size='xs'>											
 											<br>
 										</div>
 								</div>
 							</c:forEach>
 							<c:forEach items="${currentUser.getBorrowedAudioBooks()}" var="element">
-								<div id = "bookshelfAudioBook${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}" class="col-md-4" style="margin-bottom: 1cm;">
+								<div id = "bookshelfAudioBook${element.getAudioBook().getAudioBookId()}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>AudioBook</h3>
-											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getBook().getBookId()}', 'AudioBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getAudioBookId()}', 'AudioBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
 											<h4>
 												<a href="#"><c:out value="${element.getAudioBook().getBook().getBookDisplay().getTitle()}" /></a>
 											</h4>
@@ -65,8 +65,8 @@
 											</h5>
 										
 											<!-- Rating -->
-											<button onclick = "downloadBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-primary">Download</button>
-											<button onclick = "returnBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-danger">Return</button>
+											<button onclick = "downloadBook(${element.getAudioBook().getAudioBookId()}, 'AudioBook')"class="btn btn-primary">Download</button>
+											<button onclick = "returnBook(${element.getAudioBook().getAudioBookId()}, 'AudioBook')"class="btn btn-danger">Return</button>
 											<input id='input-21b' value='${element.bookRating}' formattype = 'AudioBook' bookid =${element.getAudioBook().getBook().getBookId()} type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='xs'>
 											<br>
 										</div>
@@ -94,8 +94,8 @@
 											<i>You have no recently added books!</i>
 										</c:if>
 										<c:forEach items="${recentlyAdded}" var="recentlyAdded">
-											<div id="recentlyAdded${recentlyAdded.format}${recentlyAdded.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
-												<h4 id="recentlyAddedFormat${recentlyAdded.format}${recentlyAdded.bookId}">${recentlyAdded.format}</h4>
+											<div id="recentlyAdded${recentlyAdded.format}${recentlyAdded.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+												<h4 id="recentlyAddedFormat${recentlyAdded.format}${recentlyAdded.bookFormatId}">${recentlyAdded.format}</h4>
 												<a href="#"> 
 													<img width="100px"src="<c:url value="${recentlyAdded.imageFilePath}" />">
 												</a>
@@ -123,8 +123,8 @@
 											<i>You have no books on hold!</i>
 										</c:if>
 										<c:forEach items="${pending}" var="pending">
-											<div id="pending${pending.format}${pending.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
-												<h4 id="pendingFormat${pending.format}${pending.bookId}">${pending.format}</h4>
+											<div id="pending${pending.format}${pending.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+												<h4 id="pendingFormat${pending.format}${pending.bookFormatId}">${pending.format}</h4>
 												<a href="#"> 
 													<img width="100px"src="<c:url value="${pending.imageFilePath}" />">
 												</a>
@@ -137,7 +137,7 @@
 												<h5>
 													<span>Queue Position: ${pending.positionInQueue}</span>
 												</h5>
-												<button class="btn btn-danger" onclick="removeHold(${pending.bookId}, '${pending.format}')">Remove</button>
+												<button class="btn btn-danger" onclick="removeHold(${pending.bookFormatId}, '${pending.format}')">Remove</button>
 											</div>
 										</c:forEach>
 									</div>
@@ -165,9 +165,9 @@
 												<i>You have no books on hold!</i>
 											</c:if>
 											<c:forEach items="${wishlist}" var="element">
-												<div id="wishlist${element.format}${element.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
-													<h4 id="wishlistFormat${element.format}${element.bookId}">${element.format}</h4>
-													<a data-toggle="modal"  onclick = "bookModal('${element.bookId}', '${element.format}')"> 
+												<div id="wishlist${element.format}${element.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="wishlistFormat${element.format}${element.bookFormatId}">${element.format}</h4>
+													<a data-toggle="modal"  onclick = "bookModal('${element.bookFormatId}', '${element.format}')"> 
 														<img width="100px"src="<c:url value="${element.imageFilePath}" />">
 													</a>
 													<h4>
@@ -177,7 +177,7 @@
 														<a href="#">${element.author}</a>
 													</h5>
 
-													<button class="btn btn-danger" onclick="removeFromWishlist(${element.bookId}, '${element.format}')">Remove</button>
+													<button class="btn btn-danger" onclick="removeFromWishlist(${element.bookFormatId}, '${element.format}')">Remove</button>
 												</div>
 											</c:forEach>
 											<!--<c:if test="${empty wishlistBooks}">
@@ -230,9 +230,9 @@
 												<i>No recommended books!</i>
 											</c:if>
 											<c:forEach items="${recommended}" var="recommended">
-												<div id="pending${recommended.format}${recommended.bookId}" class="col-md-3" style="margin-bottom: 1cm;">
-													<h4 id="pendingFormat${recommended.format}${recommended.bookId}">${recommended.format}</h4>
-													<a data-toggle="modal"  onclick = "bookModal('${recommended.bookId}', '${recommended.format}')"> 
+												<div id="pending${recommended.format}${recommended.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="pendingFormat${recommended.format}${recommended.bookFormatId}">${recommended.format}</h4>
+													<a data-toggle="modal"  onclick = "bookModal('${recommended.bookFormatId}', '${recommended.format}')"> 
 														<img width="100px"src="<c:url value="${recommended.imageFilePath}" />">
 													</a>
 													<h4>
