@@ -2,6 +2,7 @@ package com.mimir.library.service;
 
 import java.util.List;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.AwardInfo;
@@ -50,5 +51,7 @@ public interface LibraryService {
 	
 	void updateBookRating(BookRating rating);
 	void updateBookRating(AudioBookRating rating);
+
+	List<AdminBook> getAllBooksForAdmin();
 	
 }

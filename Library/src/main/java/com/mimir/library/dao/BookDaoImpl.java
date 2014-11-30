@@ -1,15 +1,21 @@
 package com.mimir.library.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.enums.FormatType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookFormat;
 import com.mimir.library.model.AudioBookLanguage;
+import com.mimir.library.model.AudioBookOnHold;
 import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.AuthorAward;
@@ -20,9 +26,12 @@ import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BookInterestLevel;
 import com.mimir.library.model.BookRating;
+import com.mimir.library.model.BorrowedAudioBook;
+import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.EBookFormat;
 import com.mimir.library.model.EBookLanguage;
+import com.mimir.library.model.EBookOnHold;
 import com.mimir.library.model.EBookRating;
 import com.mimir.library.model.Format;
 import com.mimir.library.model.Genre;
@@ -250,5 +259,54 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	@Override
 	public void updateBookRating(BookRating rating){
 		getSession().merge(rating);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AdminBook> getAllBooksForAdmin() {
+		List<AdminBook> adminBooks = new ArrayList<AdminBook>();
+		List<Book> books = getSession().createCriteria(Book.class).list();
+		for(Book book: books){
+			if(book.getBookId() != 869 && book.getBookId() != 1905){
+				//EBook
+				if(book.getEBook() != null){
+					adminBooks.add(new AdminBook(book.getEBook()));
+				}
+				//AUDIOBOOK
+				if(book.getAudioBook() != null){
+					adminBooks.add(new AdminBook(book.getAudioBook()));
+				}
+			}
+		}
+		return adminBooks;
+	}
+
+	private int getTotalCopies(AudioBook audioBook) {
+		int availableCopies = audioBook.getRemainingCopies();
+		Criteria crit = getSession().createCriteria(BorrowedAudioBook.class);
+		crit.setProjection(Projections.rowCount());
+		crit.add(Restrictions.eq("audioBook.audioBookId", audioBook.getAudioBookId()));
+		int totalCopies = availableCopies + ((Long) crit.uniqueResult()).intValue();
+		return totalCopies;
+	}
+	private int getTotalCopies(EBook eBook) {
+		int availableCopies = eBook.getRemainingCopies();
+		Criteria crit = getSession().createCriteria(BorrowedEBook.class);
+		crit.setProjection(Projections.rowCount());
+		crit.add(Restrictions.eq("eBook.eBookId", eBook.getEBookId()));
+		int totalCopies = availableCopies + ((Long) crit.uniqueResult()).intValue();
+		return totalCopies;
+	}
+	private int getNumberOfHolds(AudioBook audioBook) {
+		Criteria crit = getSession().createCriteria(AudioBookOnHold.class);
+		crit.setProjection(Projections.rowCount());
+		crit.add(Restrictions.eq("audioBook.audioBookId", audioBook.getAudioBookId()));
+		return ((Long) crit.uniqueResult()).intValue();
+	}
+	private int getNumberOfHolds(EBook eBook) {
+		Criteria crit = getSession().createCriteria(EBookOnHold.class);
+		crit.setProjection(Projections.rowCount());
+		crit.add(Restrictions.eq("eBook.eBookId", eBook.getEBookId()));
+		return ((Long) crit.uniqueResult()).intValue();
 	}
 }

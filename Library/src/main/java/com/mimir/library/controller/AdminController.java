@@ -3,6 +3,7 @@ package com.mimir.library.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.ChangeUserInfo;
@@ -53,8 +55,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value ="searchBooks", method = RequestMethod.GET)
-	public String searchBooks() {
-		return "admin/searchBooks";
+	public ModelAndView searchBooks() {
+		ModelAndView mv = new ModelAndView("admin/searchBooks");
+		List<AdminBook> adminBooks = service.getAllBooksForAdmin();
+		mv.addObject("adminBooks", adminBooks);
+		return mv;
 	}
 	
 	@RequestMapping(value ="users", method = RequestMethod.GET)

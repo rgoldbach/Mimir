@@ -1,5 +1,8 @@
 package com.mimir.library.dao;
 
+import java.util.List;
+
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.AwardInfo;
@@ -39,4 +42,6 @@ public interface BookDao {
 	
 	void updateBookRating(AudioBookRating rating);
 	void updateBookRating(BookRating rating);
+
+	List<AdminBook> getAllBooksForAdmin();
 }

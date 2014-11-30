@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookRating;
@@ -151,5 +152,10 @@ public class LibraryServiceImpl implements LibraryService{
 	@Override
 	public void updateBookRating(AudioBookRating rating){
 		dao.updateBookRating(rating);
+	}
+
+	@Override
+	public List<AdminBook> getAllBooksForAdmin() {
+		return dao.getAllBooksForAdmin();
 	}
 }

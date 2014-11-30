@@ -36,12 +36,25 @@
                                                 <th>ISBN</th>
                                                 <th>Title</th>
                                                 <th>Author</th>
-                                                <th>Genres</th>
+                                                <th>Formats</th>
+                                                <th>Available Copies</th>
+                                                <th>Number of holds</th>
                                                 <th>More</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                        <c:forEach items="${adminBooks}" var="element">
+											<tr>
+                                                <td>${element.isbn}</td>
+                                                <td>${element.bookTitle}</td>
+                                                <td>${element.author}</td>
+                                                <td class="center">${element.formats}</td>
+                                                <td>${element.availableCopies}</td>
+                                                <td>${element.numberOfHolds}</td>
+                                                <td class="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Info</button></td>
+                                            </tr>
+										</c:forEach>
+                                            <!--<tr>
                                                 <td>3-43-020652-1</td>
                                                 <td>Harry Potter and the Philosopher's Stone</td>
                                                 <td>J. K. Rowling</td>
@@ -166,7 +179,7 @@
                                                 <td>Stephenie Meyer</td>
                                                 <td class="center">Romance, horrible, fantasy, young-adult fiction</td>
                                                 <td class="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Info</button></td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
