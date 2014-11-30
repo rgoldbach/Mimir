@@ -45,7 +45,7 @@ function getUser(){
     		 
     		 var user = result.responseJSON
     		 if(user.libraryCardNumber ===""){
-    			 $('#userlookuperror').text("User Could Not Be Found");
+        		 sweetAlert("Oops...", "User Could Not Be Found, Are You Sure That Was The Right Library Card Number", "error");
     		 }
     		 else{
     			 $('#userLibraryCard').val(user.libraryCardNumber);
@@ -58,7 +58,7 @@ function getUser(){
     		 }
     	}
     	 else{
-    		 $('#userlookuperror').text("User Could Not Be Found");
+    		 sweetAlert("Oops...", "User Could Not Be Found, Are You Sure That Was The Right Library Card Number", "error");
     	 }
     	 console.log(result);
      }
@@ -77,22 +77,22 @@ function saveUserChanges(){
 		$('#userChangeError').text("Library Card Can Only Contain Digits");
 	}
 	if($('#userFirstName').val() === ""){
-		validation = false
+		controller = false
 		$('#userChangeError').text("First Name Cannot Be Blank");
 
 	}
 	if ($('#userLastName').val() === ""){
-		validation = false
+		controller = false
 		$('#userChangeError').text("Last Name Cannot Be Blank");
 	}
 	if ($('#userEmail').val() === ""){
-			validation = false
-			$('#userChangeError').text("Email Cannot Be Blank");
+		controller = false
+		$('#userChangeError').text("Email Cannot Be Blank");
 
 	}
 	if ($('#userPassword').val() === ""){
-			validation = false
-			$('#userChangeError').text("Password Cannot Be Blank");
+		controller = false
+		$('#userChangeError').text("Password Cannot Be Blank");
 
 	}
 				
@@ -108,24 +108,28 @@ function saveUserChanges(){
                 "passwordConfirm" : $('#userPassword').val()
     };
     console.log(json)
-    $.ajax({
-        headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json' 
-        },
-        'url' : url,
-        'data' : JSON.stringify(json),
-        'type' : "POST",
-        'complete' : function(result) {
-        	console.log(result);
-        	if(result.status === 200){	
-        			$('#userlookuperror').text("Info Successfuly Changed");
-        			$('#myModal').modal('hide');
+    
+    if(controller){
+    	$.ajax({
+        	headers: { 
+            	'Accept': 'application/json',
+            	'Content-Type': 'application/json' 
+        	},
+        	'url' : url,
+        	'data' : JSON.stringify(json),
+        	'type' : "POST",
+        	'complete' : function(result) {
+        		console.log(result);
+        		if(result.status === 200){	
+        				$('#userlookuperror').text("");
+        				$('#myModal').modal('hide');
+        				swal("Success",  $('#userFirstName').val() + "'s Account Successfully Updated.", "success")
         			
-        	}
+        		}
 
-        }
-    });  
+        	}
+    	}); 
+    }
     return false;
 }
 
