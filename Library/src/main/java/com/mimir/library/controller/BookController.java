@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
  
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -20,9 +21,11 @@ import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookFormat;
 import com.mimir.library.model.AudioBookLanguage;
 import com.mimir.library.model.AudioBookOnHold;
+import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookModel;
+import com.mimir.library.model.BookRating;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
@@ -84,6 +87,7 @@ public class BookController {
 	public BookModel testModal(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
 			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 			HttpSession session){
+		DecimalFormat df = new DecimalFormat("#.#");
 		Book book = libraryService.getSpecificBook(whichBook);
 		session.setAttribute("viewBook", book);
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);	
@@ -104,7 +108,9 @@ public class BookController {
 			bookModel.setTitle(ebook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(ebook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(ebook.getPublisher().getName());
-			bookModel.setRating(ebook.getBookRating().getRating());
+			double temp = (ebook.getBookRating().getSumOfRatings())/(ebook.getBookRating().getNumberOfRatings());
+			df.format(temp);
+			bookModel.setRating(temp);
 			if(ebook.getRemainingCopies() == 0)
 				bookModel.setAvailable(false);
 			else
@@ -149,7 +155,9 @@ public class BookController {
 			bookModel.setTitle(audioBook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(audioBook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(audioBook.getPublisher().getName());
-			bookModel.setRating(audioBook.getBookRating().getRating());
+			double temp = (audioBook.getBookRating().getSumOfRatings())/(audioBook.getBookRating().getNumberOfRatings());
+			df.format(temp);
+			bookModel.setRating(temp);
 			if(audioBook.getRemainingCopies() == 0)
 				bookModel.setAvailable(false);
 			else
@@ -280,19 +288,62 @@ public class BookController {
 		return message;	
 	}
 
-	@RequestMapping("/ratebook")
-	public String rateBook(
-			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") String whichBook, 
-			@RequestParam(value="whichBook", required = false, defaultValue = "0") double rating){
-		System.out.println("Request to waitlist " + whichBook + "to " + rating);
+	@RequestMapping(value = "/ratebook", method = RequestMethod.GET )
+	@ResponseBody
+	public double rateBook(
+			@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, 
+			@RequestParam(value="rating", required = false, defaultValue = "0") double rating, 
+			@RequestParam(value="formatType", required = false, defaultValue = "EBook") String bookType, 
+			HttpSession session){
 		
-		//get book from service
+		System.out.println("TESTEST " + whichBook + " " + rating + " " + bookType);
+		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
+		//user.get
+		BookRating bookRating = null;
+		if(bookType.equals(GlobalConstants.EBOOK)){
+			BorrowedEBook ratedEBook = null;
+			for(BorrowedEBook eBook : user.getBorrowedEBooks()){
+				if(eBook.getEBook().getEBookId() == whichBook)
+					eBook.setBookRating(rating);
+					userService.updateBorrowedBook(eBook);
+			}
+			
+			EBook book = libraryService.getSpecificEBook(whichBook);
+			bookRating = book.getBookRating();
+			System.out.print("TESTBOOK");
+			System.out.println(bookRating.getNumberOfRatings());
+			System.out.println(bookRating.getSumOfRatings());
+			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
+			bookRating.addRating(rating);
+			System.out.println(bookRating.getNumberOfRatings());
+			System.out.println(bookRating.getSumOfRatings());
+			System.out.println(bookRating.getRating());
+			libraryService.updateBookRating(bookRating);
+			return bookRating.getRating();
+			//PERSIST BOOKRATING
+			//PERSIST USER
+		}
 		
-		//add book to current users waitlist
+		if(bookType.equals(GlobalConstants.AUDIOBOOK)){
+			BorrowedAudioBook ratedAudioBook = null;
+			for(BorrowedAudioBook audioBook : user.getBorrowedAudioBooks()){
+				if(audioBook.getAudioBook().getAudioBookId()== whichBook)
+					audioBook.setBookRating(rating);
+					userService.updateBorrowedBook(audioBook);
+			}
+			AudioBook book = libraryService.getSpecificAudioBook(whichBook);
+			AudioBookRating audioBookRating= book.getBookRating();
+			audioBookRating.addRating(rating);
+			libraryService.updateBookRating(audioBookRating);
+			return audioBookRating.getRating();
+			
+			
+			//PERSIST BOOKRATING
+			//PERSIST USER
+		}
 		
-		//return message
 		
-		return "temp";
+		return -1;
 		
 	}
 	

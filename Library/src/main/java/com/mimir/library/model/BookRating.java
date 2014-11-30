@@ -35,7 +35,7 @@ public abstract class BookRating {
 	}
 	public void addRating(double rating){
 		addToSumOfRatings(rating);
-		rating = sumOfRatings / numberOfRatings;
+		this.rating = (sumOfRatings/numberOfRatings);
 	}
 	public EBook getBookTextFormat() {
 		return bookTextFormat;

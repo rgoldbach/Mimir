@@ -47,6 +47,7 @@
 											<!-- Rating -->
 											<button onclick = "downloadBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-primary">Download</button>
 											<button onclick = "returnBook(${element.getEBook().getBook().getBookDisplay().bookDisplayId}, 'EBook')"class="btn btn-danger">Return</button>
+											<input id='input-21b' value='${element.bookRating}' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' formattype = 'EBook' bookid =${element.getEBook().getBook().getBookId()} data-size='xs'>											
 											<br>
 										</div>
 								</div>
@@ -66,6 +67,7 @@
 											<!-- Rating -->
 											<button onclick = "downloadBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-primary">Download</button>
 											<button onclick = "returnBook(${element.getAudioBook().getBook().getBookDisplay().bookDisplayId}, 'AudioBook')"class="btn btn-danger">Return</button>
+											<input id='input-21b' value='${element.bookRating}' formattype = 'AudioBook' bookid =${element.getAudioBook().getBook().getBookId()} type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='xs'>
 											<br>
 										</div>
 								</div>
@@ -199,21 +201,7 @@
 											</c:forEach>-->
 										</div>
 									</div>
-								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading" id="rated">
-										<h4 class="panel-title">
-											<a class="collapsed" data-toggle="collapse" data-parent="#lists" href="#collapseRated">
-												Rated
-											</a>
-										</h4>
-									</div>
-									<div id="collapseRated" class="panel-collapse collapse">
-										<div class="panel-body">
-											<i>You have not rated any books.</i>
-										</div>
-									</div>
-								</div>
+								</div>								
 								<div class="panel panel-default">
 									<div class="panel-heading" id="recommended">
 										<h4 class="panel-title">

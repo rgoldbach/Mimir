@@ -22,6 +22,10 @@
 	
 	<script src="<c:url value="/resources/ajax/libraryAjax.js" />"></script>
 	
+	
+	<script src="<c:url value="/resources/ajax/rating.js" />"></script>
+	
+	
 	<script>
 		$(document).ready(function() {
     		$('#registerForm').bootstrapValidator();

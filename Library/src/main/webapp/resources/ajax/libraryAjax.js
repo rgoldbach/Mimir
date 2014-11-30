@@ -41,10 +41,12 @@ function bookModal(id, type){
 
         	    }
         	    $("#bookModalControls").html('');
+        	    $("#bookModalControls").append("<h4>Rating</h4>");
+    	    	//$("#bookModalControls").append("<input onclick='rateBook()' id='input-21b' value='" + book.rating + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
+    	    	$("#bookModalControls").append("<input id='input-21b' value='"+book.rating+"' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' disabled = 'true' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
+    	    	$("#input-21b").rating();
         	    if(book.loggedIn){
-        	    	$("#bookModalControls").append("<h4>Rating</h4>");
-        	    	$("#bookModalControls").append("<input onclick='rateBook()' id='input-21b' value='" + book.rating + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
-        	    
+        	    	
         	    	if(book.available){
         	    		if(book.inBookshelf){
                 	    	$("#bookModalControls").append("<button onclick = 'borrowBook()' disabled = 'disabled' id='borrowBookButton' class='bg-primary btn-lg'>In Bookshelf</button>");
@@ -149,29 +151,6 @@ function waitlistBook(){
   });	
 }
 
-function rateBook(){
-	
-    var currentBook = $('#currentBook').val();
-    var rating = $('#input-21b').val;
-    var json = { 
-  		  		"whichBook" : currentBook
-  		  	};
-    json = JSON.stringify(json);
-    console.log(json); 
-    $.ajax({
-      url: "rate?whichBook="+currentBook+"&rating="+rating,
-      data: json,
-      type: "GET",
-       
-      beforeSend: function(xhr) {
-          xhr.setRequestHeader("Accept", "application/json");
-          xhr.setRequestHeader("Content-Type", "application/json");
-      },
-      success: function() {
-                   
-      }
-  });	
-}
 
 function signInOrOut() {
 	

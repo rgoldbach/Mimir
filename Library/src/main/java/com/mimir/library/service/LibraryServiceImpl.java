@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.model.AudioBook;
+import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BookRating;
 import com.mimir.library.model.EBook;
 import com.mimir.library.model.Format;
 import com.mimir.library.model.Genre;
@@ -142,4 +144,12 @@ public class LibraryServiceImpl implements LibraryService{
 		return dao.getAwardInfo(awardTitle, year);
 	}
 	
+	@Override
+	public void updateBookRating(BookRating rating){
+		dao.updateBookRating(rating);
+	}
+	@Override
+	public void updateBookRating(AudioBookRating rating){
+		dao.updateBookRating(rating);
+	}
 }

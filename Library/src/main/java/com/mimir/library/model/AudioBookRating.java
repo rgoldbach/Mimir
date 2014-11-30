@@ -77,4 +77,17 @@ public class AudioBookRating {
 		this.rating = rating;
 	}
 	
+	public void incrementNumberOfRatings(){
+		numberOfRatings++;
+	}
+	public void addToSumOfRatings(double rating){
+		incrementNumberOfRatings();
+		sumOfRatings += rating;
+	}
+	
+	public void addRating(double rating){
+		addToSumOfRatings(rating);
+		this.rating = sumOfRatings/numberOfRatings;
+	}
+	
 }
