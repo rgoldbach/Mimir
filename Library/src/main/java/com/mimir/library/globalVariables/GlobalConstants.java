@@ -19,7 +19,7 @@ public class GlobalConstants {
 	
 	
 	//SEARCHING
-	public static final int RESULTS_PER_QUERY = 4;
+	public static final int RESULTS_PER_QUERY = 12;
 	public static final int MAX_RESULTS = RESULTS_PER_QUERY * 10;
 	
 	

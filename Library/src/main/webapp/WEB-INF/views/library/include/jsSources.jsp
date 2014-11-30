@@ -29,7 +29,6 @@
 	<script>
 		$(document).ready(function() {
     		$('#registerForm').bootstrapValidator();
-    		 $('.selectpicker').selectpicker('.selectpicker'); 
     		 
     		// Clears the quicksearch form, disables/enables the quicksearch, changes from quicksearch/advancedsearch
     		$('#toggleSearch').click(function(){

@@ -39,7 +39,7 @@
 							</optgroup>
 						</select>
 						<br>
-						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple data-selected-text-format="count" title="Select Filter(s)">
+						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple data-selected-text-format="count" title="Select Filter(s)" data-live-search="true">
 							<optgroup label="Format" data-max-options="1">
  								<option value="format?='eBookOnly'" data-icon="glyphicon glyphicon-book">eBook Only</option>
  								<option value="format?='audioOnly'" data-icon="glyphicon glyphicon-headphones">Audio Only</option>
@@ -55,23 +55,6 @@
  							<optgroup label="Award" data-max-options="1">
  							</optgroup>
 						</select>
-					</div>
-					<div class="col-lg-7">
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-btn">
-									<button type="button" class="btn btn-default" disabled style="opacity:1">
-										<b>Search results</b>
-									</button>
-								</div>
-								<input type="search" name="query" class="form-control">
-								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default" type="button">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</span>
-							</div>
-						</div>
 					</div>
 					<div class="col-lg-9">
 						<p class="text-left">${message}</p>
