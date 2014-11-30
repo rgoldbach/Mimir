@@ -49,8 +49,8 @@ function bookModal(id, type){
         	    $("#bookModalControlsTwo").html('');
         	    $("#bookModalControls").append("<h4>User Rating</h4>");
     	    	//$("#bookModalControls").append("<input onclick='rateBook()' id='input-21b' value='" + book.rating + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
-    	    	$("#bookModalControls").append("<input id='input-21b' value='"+book.rating+"' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' disabled = 'true' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
-    	    	$("#input-21b").rating();
+    	    	$("#bookModalControls").append("<input id='input-21' value='"+book.rating+"' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' disabled = 'true' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
+    	    	$("#input-21").rating();
         	    if(book.loggedIn){
         	    	
         	    	if(book.available){
@@ -346,7 +346,34 @@ function removeHold(whichBook, bookFormat){
 }
 
 function changeUserInfo() {
-    var url = "changeUserInfo";
+    var controller = true;
+    var firstName = $('#changeFirstName').val();
+    var lastName = $('#changeLastName').val();
+    var email = $('#changeEmail').val();
+	
+    
+    if(lastName === ''){
+    	controller = false;
+		$('#changeInfoError').text("Last Name Cannot Be Empty");
+		
+    }
+    if(firstName === ''){
+    	controller = false;
+		$('#changeInfoError').text("First Name Cannot Be Empty");
+		
+    }
+    if(email === ''){
+    	controller = false;
+		$('#changeInfoError').text("Email Cannot Be Empty");
+		
+    }
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (! re.test(email)){
+		controller = false;
+		$('#changeInfoError').text("Not A Valid Email");
+
+	}
+	var url = "changeUserInfo";
     var json = "";
     json = {
                 "libraryCardNumber" : $('#changeLibraryCardNumber').val(),
@@ -357,33 +384,36 @@ function changeUserInfo() {
                 "password" : $('#changePassword').val(),
                 "passwordConfirm" : $('#changePasswordConfirm').val()
     };
-    $.ajax({
-        headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json' 
-        },
-        'url' : url,
-        'data' : JSON.stringify(json),
-        'type' : "POST",
-        'complete' : function(result) {
-        	console.log(result);
-        	if(result.status === 200){
-        		if(result.responseText === "failure"){
-        			$('#changeInfoError').text("The New Passwords Did Not Match");
-        			$('#changeCurrentPassword').val("");
-        		}
-        		else if(result.responseText === "invalid"){
-        			$('#changeInfoError').text("Please Enter Your Correct Current Password");
-        			$('#changeCurrentPassword').val("");
-        		}
-        		else{	
-        			$('#changeInfoError').text("Info Successfuly Changed");
-        			$('#changeCurrentPassword').val("");
-        		}
-        	}
+    if(controller){
+    	$.ajax({
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+            'url' : url,
+            'data' : JSON.stringify(json),
+            'type' : "POST",
+            'complete' : function(result) {
+            	console.log(result);
+            	if(result.status === 200){
+            		if(result.responseText === "failure"){
+            			$('#changeInfoError').text("The New Passwords Did Not Match");
+            			$('#changeCurrentPassword').val("");
+            		}
+            		else if(result.responseText === "invalid"){
+            			$('#changeInfoError').text("Please Enter Your Correct Current Password");
+            			$('#changeCurrentPassword').val("");
+            		}
+            		else{	
+	    	    		swal("Success", "Information Updated", "success");
+            			$('#changeInfoError').text("");
+            			$('#changeCurrentPassword').val("");
+            		}
+            	}
 
-        }
-    });  
+            }
+        });
+    }
     return false;
 }
 
@@ -440,6 +470,10 @@ function registerUser(){
 		validation = false
 	if (firstName === "")
 		validation = false
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (! re.test(email))
+		validation = false;
+		
 	console.log(/^\d+$/.test(libraryCardNumber))
 	console.log(validation)
 	console.log(password)	

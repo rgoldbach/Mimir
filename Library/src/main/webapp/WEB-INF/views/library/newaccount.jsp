@@ -275,7 +275,7 @@
 						<hr>
 						<div class="well">
 
-				<form  class="form-horizontal"
+				<form id="changeUserForm" class="form-horizontal"
 					data-bv-message="This value is not valid"
 					data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
 					data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
@@ -288,7 +288,7 @@
 							<div class="col-sm-5">
 								<input type="text" class="form-control" name="libraryCardNumber" id = "changeLibraryCardNumber"
 									value="<c:out value="${currentUser.libraryCardNumber}" />"
-									disabled />
+									disabled  />
 							</div>
 						</div>
 						
@@ -296,6 +296,8 @@
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="firstName" id = "changeFirstName"
+								data-bv-notempty="true"
+								data-bv-notempty-message="The first name is required and cannot be empty"
 									value=<c:out value="${currentUser.accountInfo.firstName}"/> />
 							</div>
 						</div>
@@ -304,6 +306,8 @@
 							<label class="col-sm-3 control-label">Last Name</label>
 							<div class="col-sm-4">
 								<input type="text" class="form-control" name="lastName" id = "changeLastName"
+								data-bv-notempty="true"
+								data-bv-notempty-message="The last name is required and cannot be empty"
 									value=<c:out value="${currentUser.accountInfo.lastName}"/> />
 							</div>
 						</div>
@@ -336,9 +340,11 @@
 									name="confirmPassword" id = "changePasswordConfirm"
 									value="<c:out value="${currentUser.accountInfo.loginCredentials.password}" />"
 									data-bv-notempty="true"
-									data-bv-notempty-message="The confirm password is required and cannot be empty"
-									data-bv-different="true" data-bv-different-field="username"
-									data-bv-different-message="The password cannot be the same as username" />
+								data-bv-notempty-message="The confirm password is required and cannot be empty"
+								data-bv-identical="true" data-bv-identical-field="password"
+								data-bv-identical-message="The password and its confirm are not the same"
+								data-bv-different="true" data-bv-different-field="username"
+								data-bv-different-message="The password cannot be the same as username"  />
 							</div>
 						</div>
 						

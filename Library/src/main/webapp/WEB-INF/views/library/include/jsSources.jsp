@@ -32,7 +32,7 @@
 	<script>
 		$(document).ready(function() {
     		$('#registerForm').bootstrapValidator();
-    		 
+    		$('#changeUserForm').bootstrapValidator();
     		// Clears the quicksearch form, disables/enables the quicksearch, changes from quicksearch/advancedsearch
     		$('#toggleSearch').click(function(){
     			$('#quickSearchInput').val('');
