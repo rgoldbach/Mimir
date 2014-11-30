@@ -27,6 +27,7 @@ function bookModal(id, type){
         	    $('#bookModalPublisher').attr('href','search?query='+book.publisher);
         	    $('#currentBook').val(book.id);
         	    $('#borrowedBookFormat').val(book.type);
+        	    $('#bookModalISBN').html('ISBN: ' + book.isbn + '<span id = "bookModalGenre" style="float: right"> Genres: </span>');
         
         	    $('#bookModalAuthor').html('by <span id = "bookModalFormat" style="float: right"> Available Languages: </span>')
         	    for(author in book.authors){
@@ -41,9 +42,12 @@ function bookModal(id, type){
         	    	$('#bookModalLangauge').append("<a href = 'search?query="+book.languages[i]+"'>"+book.languages[i]+"   </a>");
 
         	    }
+        	    for (i in book.genres){
+        	    	$('#bookModalGenre').append("<a href = 'search?query="+book.genres[i]+"'>"+book.genres[i]+"    </a>")
+        	    }
         	    $("#bookModalControls").html('');
         	    $("#bookModalControlsTwo").html('');
-        	    $("#bookModalControls").append("<h4>Rating</h4>");
+        	    $("#bookModalControls").append("<h4>User Rating</h4>");
     	    	//$("#bookModalControls").append("<input onclick='rateBook()' id='input-21b' value='" + book.rating + "' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
     	    	$("#bookModalControls").append("<input id='input-21b' value='"+book.rating+"' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' disabled = 'true' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='sm'>");
     	    	$("#input-21b").rating();

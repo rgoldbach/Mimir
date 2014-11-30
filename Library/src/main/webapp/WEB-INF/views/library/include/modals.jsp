@@ -62,8 +62,11 @@
 					Published by <a id="bookModalPublisher"></a> 
 					<span id = "bookModalLangauge" style="float: right"> Available Languages: 
 					</span>
-
-
+				</h5>
+				<h5 id= "bookModalISBN">
+				
+					<span id = "bookModalGenres" style="float: right"> Genres: 
+					</span>
 				</h5>
 			</div>
 			<div class="modal-body">
