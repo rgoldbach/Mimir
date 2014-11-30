@@ -12,14 +12,27 @@ public class BookModel {
 	private List<String> languages;
 	private List<String> authors;
 	private List<String> formatTypes;
+	private List<String> genres;
 	private double rating;
 	private boolean available;
 	private boolean inBookshelf;
 	private boolean inWishlist;
 	private boolean loggedIn;
+	private String isbn;
 	
 	
-	
+	public List<String> getGenres() {
+		return genres;
+	}
+	public void setGenres(List<String> genres) {
+		this.genres = genres;
+	}
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 	public int getId() {
 		return id;
 	}
@@ -105,6 +118,7 @@ public class BookModel {
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
+
 	
 	
 	

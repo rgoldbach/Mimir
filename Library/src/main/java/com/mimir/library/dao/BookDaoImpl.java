@@ -147,6 +147,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		specificBook.add(Restrictions.eq("eBookId", bookId));
 		EBook eBook = (EBook) specificBook.uniqueResult();
 		Hibernate.initialize(eBook.getBook().getAuthors());
+		Hibernate.initialize(eBook.getBook().getGenres());
 		Hibernate.initialize(eBook.geteBookFormats());
 		Hibernate.initialize(eBook.getLanguages());
 		return eBook;
@@ -157,6 +158,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		specificBook.add(Restrictions.eq("audioBookId", audioBookId));
 		AudioBook audioBook = (AudioBook) specificBook.uniqueResult();
 		Hibernate.initialize(audioBook.getBook().getAuthors());
+		Hibernate.initialize(audioBook.getBook().getGenres());
 		Hibernate.initialize(audioBook.getAudioBookFormats());
 		Hibernate.initialize(audioBook.getLanguages());
 		return audioBook;

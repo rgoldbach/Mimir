@@ -62,8 +62,11 @@
 					Published by <a id="bookModalPublisher"></a> 
 					<span id = "bookModalLangauge" style="float: right"> Available Languages: 
 					</span>
-
-
+				</h5>
+				<h5 id= "bookModalISBN">
+				
+					<span id = "bookModalGenres" style="float: right"> Genres: 
+					</span>
 				</h5>
 			</div>
 			<div class="modal-body">
@@ -73,8 +76,9 @@
 					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 						<!-- Portfolio Item Row -->
 						<div class="row">
-							<div id="bookModalImage" class="col-md-4">
-								
+							
+							<div id="bookModalImage" class="col-md-4" style="float:left">
+							
 							</div>
 							<div class="col-md-8">
 								<h3>Book Description</h3>

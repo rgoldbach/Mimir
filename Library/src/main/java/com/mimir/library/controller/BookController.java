@@ -24,6 +24,7 @@ import com.mimir.library.model.AudioBookOnHold;
 import com.mimir.library.model.AudioBookRating;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BookModel;
 import com.mimir.library.model.BookRating;
 import com.mimir.library.model.BorrowedAudioBook;
@@ -118,6 +119,8 @@ public class BookController {
 			bookModel.setTitle(ebook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(ebook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(ebook.getPublisher().getName());
+			bookModel.setIsbn(ebook.getBook().getIsbn());
+		
 			double temp = (ebook.getBookRating().getSumOfRatings())/(ebook.getBookRating().getNumberOfRatings());
 			double finalrating = Math.round(10.0 * temp) / 10.0;
 			bookModel.setRating(finalrating);
@@ -143,7 +146,11 @@ public class BookController {
 				formats.add(format.getFormat().getFormatType());
 			}
 			bookModel.setFormatTypes(formats);
-			
+			ArrayList<String> genres = new ArrayList<String>();
+			for(BookGenre genre : ebook.getBook().getGenres()){
+				genres.add(genre.getGenre().getGenre());
+			}
+			bookModel.setGenres(genres);
 			if(user!=null){
 				for(BorrowedEBook testBook : user.getBorrowedEBooks()){
 					if(testBook.getEBook().getEBookId() == whichBook)
@@ -162,6 +169,7 @@ public class BookController {
 			AudioBook audioBook = libraryService.getSpecificAudioBook(whichBook);
 			bookModel.setImageFilePath(audioBook.getBook().getBookDisplay().getImageFilePath());
 			bookModel.setId(audioBook.getAudioBookId());
+			bookModel.setIsbn(audioBook.getBook().getIsbn());
 			bookModel.setTitle(audioBook.getBook().getBookDisplay().getTitle());
 			bookModel.setDescription(audioBook.getBook().getBookDisplay().getDescription());
 			bookModel.setPublisher(audioBook.getPublisher().getName());
@@ -178,6 +186,12 @@ public class BookController {
 				authors.add(author.getName());
 			}
 			bookModel.setAuthors(authors);
+			
+			ArrayList<String> genres = new ArrayList<String>();
+			for(BookGenre genre : audioBook.getBook().getGenres()){
+				genres.add(genre.getGenre().getGenre());
+			}
+			bookModel.setGenres(genres);
 			
 			ArrayList<String> languages = new ArrayList<String>();
 			for(AudioBookLanguage lang : audioBook.getLanguages()){
