@@ -80,7 +80,8 @@ public interface RegisteredUserService {
 	RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo);
 	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
 	
-	//Recommended Books
+	//Book Display Stuff
 	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
 	List<BasicBookInfo> getWishlistBooksOfUser(RegisteredUser currentUser);
+	List<BasicBookInfo> getPastBorrowedBooksOfUser(RegisteredUser currentUser);
 }

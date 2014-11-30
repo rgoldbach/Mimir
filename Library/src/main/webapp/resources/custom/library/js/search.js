@@ -3,26 +3,12 @@
 							// Get the first page of search results
 							sortThenFilter();
 							
-							// Load filters
-							$.ajax({
-										url : 'loadFilters',
-										type : 'GET',
-										success : function(jFilters) {
-											$.each(jFilters.authorFilters, function(index, value){
-												$('#authorFilters').append('<option value="author?=\''+ value +'\'" >'+ value +' (2)</option>');
-											});
-											$.each(jFilters.genreFilters, function(index, value){
-												$('#genreFilters').append('<option value="genre?=\''+ value +'\'" >'+ value +' (2)</option>');
-											});
-										},
-										async: false
-									});
-							$('#filterBy').selectpicker('refresh');
-					
 							
-							// Init result view
-							$('#coverDisplay').addClass('active');
-							$('#listResultContainer').hide();
+			
+					
+					// Init result view
+					$('#coverDisplay').addClass('active');
+					$('#listResultContainer').hide();
 
 							// Toggle between cover and list
 							$('#coverDisplay, #listDisplay').click(function() {
@@ -52,6 +38,29 @@
 								var sortType = $('#sortBy').val();
 								var filterTypeValues = $('#filterBy').val() || [];
 								sort(sortType, filterTypeValues);
+								
+								
+								$('#authorFilters').html('');
+								$('#genreFilters').html('');
+								$('#filterBy').selectpicker('refresh');
+								
+								// Load filters
+								$.ajax({
+									url : 'loadFilters',
+									type : 'GET',
+									success : function(jFilterOptions) {
+										console.log(jFilterOptions.authorFilterOptions);
+										$.each(jFilterOptions.authorFilterOptions, function(index, value){
+											$('#authorFilters').append('<option value="author?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
+										});
+										$.each(jFilterOptions.genreFilterOptions, function(index, value){
+											$('#genreFilters').append('<option value="genre?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
+										});
+									},
+									async: false
+								});
+								$('#filterBy').val(filterTypeValues);
+								$('#filterBy').selectpicker('refresh');
 							}
 
 							// Sort search results
@@ -99,10 +108,10 @@
 																	// Generate the cover result html
 																	coverResults += '<div class="col-md-3">';
 																	if (this.format == 'AudioBook') {
-																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'AudioBook\')">';
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.formatId+', \'AudioBook\')">';
 																	}
 																	if (this.format == 'EBook') {
-																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'EBook\')">';
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.formatId+', \'EBook\')">';
 																	}
 																	coverResults += '<div class="ayyyLmao">';
 																	coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
@@ -146,10 +155,10 @@
 																	listResults += this.description;
 																	listResults += '</p>';
 																if (this.format == 'AudioBook') {
-																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'AudioBook\')">More</button>';
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.formatId+', \'AudioBook\')">More</button>';
 																	}
 																if (this.format == 'EBook') {
-																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'EBook\')">More</button>';
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.formatId+', \'EBook\')">More</button>';
 																	}
 																	listResults += '</div><div class="col-md-12"><hr></div>';
 																});
