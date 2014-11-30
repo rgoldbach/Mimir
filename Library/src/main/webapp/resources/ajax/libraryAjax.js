@@ -24,20 +24,21 @@ function bookModal(id, type){
         	    $('#bookModalTitle').html(book.title);
         	    $('#bookModalDescription').html(book.description);
         	    $('#bookModalPublisher').html(book.publisher);
+        	    $('#bookModalPublisher').attr('href','search?query='+book.publisher);
         	    $('#currentBook').val(book.id);
         	    $('#borrowedBookFormat').val(book.type);
         
         	    $('#bookModalAuthor').html('by <span id = "bookModalFormat" style="float: right"> Available Languages: </span>')
         	    for(author in book.authors){
-        	    	$('#bookModalAuthor').append("<a>"+book.authors[author]+"   </a>");
+        	    	$('#bookModalAuthor').append("<a href ='search?query="+book.authors[author]+"']>"+book.authors[author]+"   </a>");
         	    }
         	    $('#bookModalFormat').html('Available Formats: ')
         	    for (format in book.formatTypes){
-        	    	$('#bookModalFormat').append("<a>"+book.formatTypes[format]+"   </a>");
+        	    	$('#bookModalFormat').append("<a href = 'search?query="+book.formatTypes[format]+"'>"+book.formatTypes[format]+"   </a>");
         	    }
         	    $('#bookModalLangauge').html('Available Languages: ')
         	    for (i in book.languages){
-        	    	$('#bookModalLangauge').append("<a>"+book.languages[i]+"   </a>");
+        	    	$('#bookModalLangauge').append("<a href = 'search?query="+book.languages[i]+"'>"+book.languages[i]+"   </a>");
 
         	    }
         	    $("#bookModalControls").html('');
