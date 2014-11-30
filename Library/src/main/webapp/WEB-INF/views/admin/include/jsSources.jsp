@@ -17,6 +17,6 @@
 	
 	<!-- Custom Admin -->
 	<script src="<c:url value="/resources/custom/admin/js/admin.js" />"></script>
-		<script src="<c:url value="/resources/sweetalerts/sweet-alert.js" />"></script>
+	<script src="<c:url value="/resources/sweetalerts/sweet-alert.js" />"></script>
 	
 	

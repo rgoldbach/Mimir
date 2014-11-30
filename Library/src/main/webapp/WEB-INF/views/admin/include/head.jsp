@@ -24,6 +24,6 @@
 	<link href="<c:url value="/resources/custom/admin/css/admin.css" />" rel="stylesheet"> 
 	<script src="<c:url value="/resources/jquery/js/jquery-2.1.1.js" />"></script>
 		
-    	<link href="<c:url value="/resources/sweetalerts/sweet-alert.css" />" rel="stylesheet"> 
+    <link href="<c:url value="/resources/sweetalerts/sweet-alert.css" />" rel="stylesheet"> 
     
 </head>
