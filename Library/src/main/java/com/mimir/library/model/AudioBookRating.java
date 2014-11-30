@@ -89,5 +89,8 @@ public class AudioBookRating {
 		addToSumOfRatings(rating);
 		this.rating = sumOfRatings/numberOfRatings;
 	}
-	
+	public void updateRating(double newRating, double oldRating){
+		sumOfRatings = sumOfRatings - oldRating + newRating;
+		this.rating = (sumOfRatings/numberOfRatings);
+	}
 }
