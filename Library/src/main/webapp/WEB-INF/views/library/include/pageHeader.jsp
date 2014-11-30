@@ -145,11 +145,10 @@
 										<div class="col-md-2">
 											<select id="interestLevelStart" class="selectpicker" data-width="100%">
 												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
+      											<option>Lower Grades (K-3)</option>
+      											<option>Middle Grades (4-8)</option>
+      											<option>Middle Grades+ (6-12)</option>
+      											<option>Upper Grades (9-12)</option>
       										</select>
 										</div>
 										<div class="col-md-1">
@@ -158,11 +157,10 @@
 										<div class="col-md-2">
 											<select id="interestLevelEnd" class="selectpicker" data-width="100%">
 												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
+      											<option>Lower Grades (K-3)</option>
+      											<option>Middle Grades (4-8)</option>
+      											<option>Middle Grades+ (6-12)</option>
+      											<option>Upper Grades (9-12)</option>
       										</select>
 										</div>
 									</div>
@@ -174,11 +172,21 @@
 										<div class="col-md-2">
 											<select id="atosLevelStart" class="selectpicker" data-width="100%">
 												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
+      											<option>0.0</option>
+      											<option>1.0</option>
+      											<option>2.0</option>
+      											<option>3.0</option>
+      											<option>4.0</option>
+      											<option>5.0</option>
+      											<option>6.0</option>
+      											<option>7.0</option>
+      											<option>8.0</option>
+      											<option>9.0</option>
+      											<option>10.0</option>
+      											<option>11.0</option>
+      											<option>12.0</option>
+      											<option>13.0</option>
+      											<option>14.0+</option>
       										</select>
 										</div>
 										<div class="col-md-1">
@@ -187,11 +195,21 @@
 										<div class="col-md-2">
 											<select id="atosLevelEnd" class="selectpicker" data-width="100%">
 												<option> </option>
-      											<option>1</option>
-      											<option>2</option>
-      											<option>3</option>
-      											<option>4</option>
-      											<option>5</option>
+      											<option>0.0</option>
+      											<option>1.0</option>
+      											<option>2.0</option>
+      											<option>3.0</option>
+      											<option>4.0</option>
+      											<option>5.0</option>
+      											<option>6.0</option>
+      											<option>7.0</option>
+      											<option>8.0</option>
+      											<option>9.0</option>
+      											<option>10.0</option>
+      											<option>11.0</option>
+      											<option>12.0</option>
+      											<option>13.0</option>
+      											<option>14.0+</option>
       										</select>
 										</div>
 									</div>
@@ -203,11 +221,19 @@
 										<div class="col-md-2">
 											<select id="readingLevelStart" class="selectpicker" data-width="100%">
 												<option> </option>
+      											<option>K</option>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
       											<option>4</option>
       											<option>5</option>
+      											<option>6</option>
+      											<option>7</option>
+      											<option>8</option>
+      											<option>9</option>
+      											<option>10</option>
+      											<option>11</option>
+      											<option>12</option>
       										</select>
 										</div>
 										<div class="col-md-1">
@@ -216,11 +242,19 @@
 										<div class="col-md-2">
 											<select id="readingLevelEnd" class="selectpicker" data-width="100%">
 												<option> </option>
+      											<option>K</option>
       											<option>1</option>
       											<option>2</option>
       											<option>3</option>
       											<option>4</option>
       											<option>5</option>
+      											<option>6</option>
+      											<option>7</option>
+      											<option>8</option>
+      											<option>9</option>
+      											<option>10</option>
+      											<option>11</option>
+      											<option>12</option>
       										</select>
 										</div>
 									</div>
