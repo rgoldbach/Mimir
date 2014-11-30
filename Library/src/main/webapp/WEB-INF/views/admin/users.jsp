@@ -34,11 +34,11 @@
                             <!-- Text input-->
                             
                             <div class="col-md-3">
-                            <input id="isbn" name="isbn" type="text" placeholder="Username..." class="form-control input-md">
+                            <input id="adminLibraryCard" name="" type="text" placeholder="Enter The Users Library Card Number" class="form-control input-md">
                             </div>
                             
                             <!-- Button trigger modal -->
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            <button onclick = "getUser()" class="btn btn-info" data-toggle="modal" data-target="#myModal">
                                 View
                             </button>
                             <!-- Modal -->

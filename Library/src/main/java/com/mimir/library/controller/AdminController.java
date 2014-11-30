@@ -1,22 +1,13 @@
 package com.mimir.library.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,27 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mimir.library.globalVariables.GlobalConstants;
-import com.mimir.library.model.AddBookForm;
-import com.mimir.library.model.AudioBookFormat;
-import com.mimir.library.model.AudioBookLanguage;
-import com.mimir.library.model.Author;
-import com.mimir.library.model.AuthorAward;
-import com.mimir.library.model.AwardInfo;
-import com.mimir.library.model.Book;
-import com.mimir.library.model.BookAward;
-import com.mimir.library.model.BookGenre;
-import com.mimir.library.model.BookInterestLevel;
-import com.mimir.library.model.DownloadSite;
-import com.mimir.library.model.EBookFormat;
-import com.mimir.library.model.EBookLanguage;
-import com.mimir.library.model.Format;
-import com.mimir.library.model.Genre;
-import com.mimir.library.model.InterestLevel;
-import com.mimir.library.model.Language;
-import com.mimir.library.model.Publisher;
+import com.mimir.library.model.ChangeUserInfo;
+import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.service.AddBookTextFileParsingService;
 import com.mimir.library.service.LibraryService;
+import com.mimir.library.service.RegisteredUserService;
 
 // Temporary until Signing in is figured out 
 @Controller
@@ -52,6 +27,9 @@ public class AdminController {
 	
 	@Autowired
 	LibraryService service;
+	
+	@Autowired
+	RegisteredUserService userService;
 	
 	@RequestMapping("admin")
 	public ModelAndView showMessage(HttpSession session){
@@ -104,5 +82,19 @@ public class AdminController {
             return "You failed to upload because the file was empty.";
         }
     }
+	
+	@RequestMapping(value="getUserAdmin", method = RequestMethod.GET)
+	@ResponseBody
+	public ChangeUserInfo editUser(@RequestParam("number") String libraryCardNumber){
+		ChangeUserInfo info = new ChangeUserInfo();
+		RegisteredUser user = userService.getSpecificUser(libraryCardNumber);
+		info.setEmail(user.getAccountInfo().getLoginCredentials().getEmail());
+		info.setFirstName(user.getAccountInfo().getFirstName());
+		info.setLastName(user.getAccountInfo().getLastName());
+		info.setLibraryCardNumber(libraryCardNumber);
+		info.setPassword(user.getAccountInfo().getLoginCredentials().getPassword());
+		info.setPasswordConfirm(user.getAccountInfo().getLoginCredentials().getPassword());
+		return info;
+	}
 	
 }

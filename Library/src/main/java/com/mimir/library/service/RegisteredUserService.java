@@ -28,6 +28,7 @@ public interface RegisteredUserService {
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);
+	RegisteredUser getSpecificUser(String libraryCard);
 	
 	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	List<BasicOnHoldBookInfo> getPendingBooksOfUser(RegisteredUser currentUser);

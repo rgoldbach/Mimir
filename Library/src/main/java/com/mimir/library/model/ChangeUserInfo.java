@@ -1,7 +1,7 @@
 package com.mimir.library.model;
 
 public class ChangeUserInfo {
-	private int libraryCardNumber;
+	private String libraryCardNumber;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -10,10 +10,10 @@ public class ChangeUserInfo {
 	private String passwordConfirm;
 	
 	
-	public int getLibraryCardNumber() {
+	public String getLibraryCardNumber() {
 		return libraryCardNumber;
 	}
-	public void setLibraryCardNumber(int libraryCardNumber) {
+	public void setLibraryCardNumber(String libraryCardNumber) {
 		this.libraryCardNumber = libraryCardNumber;
 	}
 	public String getFirstName() {

@@ -27,6 +27,7 @@ public interface RegisteredUserDao {
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);
+	RegisteredUser getSpecificUser(String id);
 	
 	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	

@@ -94,6 +94,11 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public RegisteredUser getSpecificUser(int id) {
 		return dao.getSpecificUser(id);
 	}
+	
+	@Override
+	public RegisteredUser getSpecificUser(String libraryCardNum){
+		return dao.getSpecificUser(libraryCardNum);
+	}
 
 	//BORROWED EBOOKS
 	@Override
