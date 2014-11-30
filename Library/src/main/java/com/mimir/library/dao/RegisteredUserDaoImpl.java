@@ -147,7 +147,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 
 	@Override
 	public void deleteRegisteredUserById(int id) {
-		Query query = getSession().createSQLQuery("DELETE FROM RegisteredUser WHERE userId = :userId");
+		Query query = getSession().createSQLQuery("DELETE FROM RegisteredUsers WHERE regUserId = :userId");
 		query.setLong("userId", id);
 		query.executeUpdate();
 

@@ -134,5 +134,34 @@ function saveUserChanges(){
 }
 
 function banUser(){
+	$('#myModal').modal('hide');
+	var libraryCardNum = $('#userLibraryCard').val();
+	var url = "banUser";
+	swal({   title: "Are you sure you want to remove this account?",   
+		text: "This will remove the user account forever.",   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#DD6B55",   
+		confirmButtonText: "Yep",   
+		closeOnConfirm: false }, 
+		function(){    
+			$.ajax({
+		    	headers: { 
+		        	'Accept': 'application/json',
+		        	'Content-Type': 'application/json' 
+		    	},
+		    	'url' : "banUser?libraryCard="+libraryCardNum,
+		    	'type' : "GET",
+		    	'complete' : function(result) {
+		    		console.log(result);
+		    		if(result.status === 200){	
+		    			swal("Account Removed", "", "success");
+		    			
+		    		}
+
+		    	}
+			}); 
+			
+		});
 	
 }

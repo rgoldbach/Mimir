@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.ChangeUserInfo;
 import com.mimir.library.model.LoginCredentials;
@@ -65,6 +64,17 @@ public class AdminController {
 	@RequestMapping(value ="support", method = RequestMethod.GET)
 	public String support() {
 		return "admin/support";
+	}
+	
+	
+	
+	@RequestMapping(value = "banUser", method = RequestMethod.GET)
+	@ResponseBody
+	public String banUser(@RequestParam("libraryCard") String libraryCard){
+		RegisteredUser user = userService.getSpecificUser(libraryCard);
+		userService.deleteRegisteredUserById(user.getRegUserId());
+		
+		return "success";
 	}
 	
 	@RequestMapping(value ="uploadFile", method = RequestMethod.POST)
@@ -119,5 +129,7 @@ public class AdminController {
 
 		
 	}
+	
+	
 	
 }
