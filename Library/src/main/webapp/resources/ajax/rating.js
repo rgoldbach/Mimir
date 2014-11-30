@@ -12,7 +12,7 @@ $( ".rating" ).change(function() {
 function rateBook(id, rating, formatType){
 	console.log(rating);
     var currentBook = $('#currentBook').val();
-    var rating = $('#input-21b').val;
+    var rating = $('#input-21b').val();
     var json = { 
   		  		"whichBook" : id,
   		  		"rating" : rating,
@@ -25,7 +25,7 @@ function rateBook(id, rating, formatType){
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        'url' : "ratebook?whichBook="+id+"&formatType="+formatType+"&rating="+3,
+        'url' : "ratebook?whichBook="+id+"&formatType="+formatType+"&rating="+rating,
         'type' : "GET",
         'complete' : function(result) {
         		console.log(result)          	              	
