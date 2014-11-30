@@ -51,6 +51,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public void updateRegisteredUser(RegisteredUser user) {
 		dao.updateRegisteredUser(user);	
 	}
+	@Override
+	public void updateAdmin(Admin admin){
+		dao.updateAdmin(admin);
+	}
 	@Override 
 	public int getMaxAccountInfoId(){
 		return dao.getMaxAccountInfoId();

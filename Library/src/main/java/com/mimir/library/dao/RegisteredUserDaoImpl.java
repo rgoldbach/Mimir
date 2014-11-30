@@ -104,6 +104,12 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		getSession().merge(user.getAccountInfo().getLoginCredentials());
 	}
 
+	@Override
+	public void updateAdmin(Admin admin){
+		getSession().merge(admin);
+		getSession().merge(admin.getAccountInfo());
+		getSession().merge(admin.getAccountInfo().getLoginCredentials());
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser) {

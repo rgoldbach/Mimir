@@ -20,6 +20,7 @@ public interface RegisteredUserDao {
 
 	void saveAccountInfo(AccountInfo info);
 	void saveRegisteredUser(RegisteredUser user);
+	void updateAdmin(Admin admin);
 	void updateRegisteredUser(RegisteredUser user);
 	List<RegisteredUser> getAllUsers();
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);

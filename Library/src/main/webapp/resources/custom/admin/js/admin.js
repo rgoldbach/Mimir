@@ -165,3 +165,84 @@ function banUser(){
 		});
 	
 }
+
+function registerAdmin(){
+	validation = true
+	var email =  $('#emailReg').val();
+	var firstName = $('#firstNameReg').val()
+	var lastName =  $('#lastNameReg').val()
+	var password = $('#passwordReg').val()
+	var confirmPass = $('#passwordConfirmReg').val()
+	if(password !== confirmPass){
+		validation = false
+		$('#adminregerror').text("Passwords Do Not Match");
+	}
+	if(lastName === ""){
+		validation = false
+		$('#adminregerror').text("Last Name Cannot Be Empty");
+
+	}
+	if (firstName === ""){
+		validation = false
+		$('#adminregerror').text("First Name Cannot Be Empty");
+
+	}
+	if (email === ""){
+		validation = false
+		$('#adminregerror').text("Email Cannot Be Empty");
+
+	}
+	if (password ==""){
+		validation = false
+		$('#adminregerror').text("Password Cannot Be Empty");
+
+	}
+	if(validation){
+		$('#adminregerror').text("");
+
+	}
+	
+	
+	var url = "registerAdmin";
+	
+	var json = "";
+	json = {
+			"libraryCardNumber" : "ADMIN",
+	        "firstName" : $('#firstNameReg').val(),
+	        "lastName" : $('#lastNameReg').val(),
+	        "email" : $('#emailReg').val(),
+	        "password" : password,
+	};
+	if(validation){
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+			},
+			'url' : url,
+			'data' : JSON.stringify(json),
+			'type' : "POST",
+			'complete' : function(result) {
+				console.log(result);
+				if(result.status === 200){
+					if(result.responseText === "success"){
+						$('#adminregerror').text("");
+						swal("Account Successfully Added", "", "success");
+					}
+					else{
+						$('#adminregerror').text("There Was A Problem");
+
+					}
+				}
+				else{
+					$('#adminregerror').text("There Was A Problem");
+
+				}
+				return false;
+
+			}
+		});  
+		return false;	
+	}	
+	
+}

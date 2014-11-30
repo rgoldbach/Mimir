@@ -19,5 +19,21 @@ public class Admin{
 	@OneToOne
 	@JoinColumn(name = "accountInfoId")
 	private AccountInfo accountInfo;
+
+	public int getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+
+	public AccountInfo getAccountInfo() {
+		return accountInfo;
+	}
+
+	public void setAccountInfo(AccountInfo accountInfo) {
+		this.accountInfo = accountInfo;
+	}
 	
 }
