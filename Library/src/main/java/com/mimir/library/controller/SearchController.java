@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.mimir.library.enums.FilterType;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.AdvancedSearchForm;
 import com.mimir.library.search.FilterOption;
 import com.mimir.library.search.SearchManager;
 import com.mimir.library.search.SearchResult;
@@ -47,10 +49,40 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value = "/advancedSearch")
-	public ModelAndView initAdvancedResults(String query, HttpSession session) {
+	public ModelAndView initAdvancedResults(HttpSession session, AdvancedSearchForm advancedSearchForm) {
 		ModelAndView mv = new ModelAndView("/library/search");
 		
-		mv.addObject("message", "Advanced Search fuk yah");
+		// boolean available = advancedSearchForm.isAvailable();
+		String title = advancedSearchForm.getTitle(); 
+		if(title.equals("")){
+			title = null;
+		}
+		String author = advancedSearchForm.getAuthor();
+		if(author.equals("")){
+			author = null;
+		}
+		String genre = advancedSearchForm.getGenre();
+		String language = advancedSearchForm.getLanguage();
+		String publisher = advancedSearchForm.getPublisher();
+		// String awards = advancedSearchForm.getAward();
+		String added = advancedSearchForm.getAdded();
+		String format = advancedSearchForm.getFormat();
+		
+		// Change it here if you want
+		List<SearchResult> searchResults = searchService.search("\""+title+"\"", 0, SearchType.Quick, SortType.TitleAtoZ);
+		searchResults.addAll(searchService.search("\""+author+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		searchResults.addAll(searchService.search("\""+genre+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		searchResults.addAll(searchService.search("\""+language+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		searchResults.addAll(searchService.search("\""+publisher+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		//searchResults.addAll(searchService.search("\""+awards+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		searchResults.addAll(searchService.search("\""+added+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		searchResults.addAll(searchService.search("\""+format+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		// then filter by available
+		// End change
+		
+		session.setAttribute("originalResults", searchResults);
+		
+		mv.addObject("message", searchResults.size() + " results found for '" + advancedSearchForm.toString() + "'");
 		
 		return mv;
 	}

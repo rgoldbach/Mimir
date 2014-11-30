@@ -43,7 +43,7 @@
 									<div class="form-group">
 										<div class="col-md-7">
 											<label style="font-size:25px;" class="control-label">Book Information</label>
-											<label style="font-size:15px;" for="availability" class="control-label">(Available Only <input type="checkbox" id="availability">)</label>
+											<label style="font-size:15px;" for="availability" class="control-label">(Available Only <form:checkbox id="available" path="available"/>)</label>
 										</div>
 									</div>
 									<div class="form-group">
@@ -117,7 +117,8 @@
 										</label>
 										</div>
 										<div class="col-md-4">
-											<form:select title="&nbsp;" path="added" id="added" class="selectpicker" data-live-search="true" data-width="100%" multiple="true" data-selected-text-format="count">
+											<form:select title="&nbsp;" path="added" id="added" class="selectpicker" data-live-search="true" data-width="100%" data-selected-text-format="count">
+					  							<form:option value="null" title="&nbsp;" />
 					  							<form:options items="${addeds}" />
 				       						</form:select>
 										</div>

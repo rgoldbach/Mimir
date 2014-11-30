@@ -170,6 +170,9 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 	@Override
 	public List<Book> search(String searchKeyword, int firstResultIndex, SearchType searchType, SortType sortType){
 		List<Book> books = new ArrayList<Book>();
+		if(searchKeyword == null){
+			return books;
+		}
 		if(sortType == SortType.Relevance && searchType != SearchType.Advanced){
 			System.out.println("DEBUG - Using Hibernate Search...");
 			books = performHibernateSearch(searchKeyword, firstResultIndex);

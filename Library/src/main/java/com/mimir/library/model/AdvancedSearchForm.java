@@ -11,6 +11,7 @@ public class AdvancedSearchForm {
 	private String award;
 	private String added;
 	private String format;
+	private boolean available;
 	
 	public String getTitle() {
 		return title;
@@ -60,6 +61,12 @@ public class AdvancedSearchForm {
 	public void setFormat(String format) {
 		this.format = format;
 	}
+	public boolean isAvailable() {
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
 	
 	@Override
 	public String toString() {
@@ -68,4 +75,5 @@ public class AdvancedSearchForm {
 				+ ", publisher=" + publisher + ", award=" + award + ", added="
 				+ added + ", format=" + format + "]";
 	}
+
 }
