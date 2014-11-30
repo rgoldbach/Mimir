@@ -32,6 +32,9 @@
 						<h1>Bookshelf</h1>
 						<hr>
 						<div>
+							<c:if test="${(empty currentUser.borrowedEBooks) and (empty currentUser.borrowedAudioBooks)}">
+								<i>Your bookshelf is empty!</i>
+							</c:if>
 							<c:forEach items="${currentUser.getBorrowedEBooks()}" var="element">
 								<div id = "bookshelfEBook${element.getEBook().getEBookId()}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
@@ -216,8 +219,8 @@
 												<i>No recommended books!</i>
 											</c:if>
 											<c:forEach items="${recommended}" var="recommended">
-												<div id="pending${recommended.format}${recommended.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
-													<h4 id="pendingFormat${recommended.format}${recommended.bookFormatId}">${recommended.format}</h4>
+												<div id="recommended${recommended.format}${recommended.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="recommendedFormat${recommended.format}${recommended.bookFormatId}">${recommended.format}</h4>
 													<a data-toggle="modal"  onclick = "bookModal('${recommended.bookFormatId}', '${recommended.format}')"> 
 														<img width="100px"src="<c:url value="${recommended.imageFilePath}" />">
 													</a>
@@ -226,6 +229,36 @@
 													</h4>
 													<h5>
 														<a href="#">${recommended.author}</a>
+													</h5>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading" id="history">
+										<h4 class="panel-title">
+											<a class="collapsed" data-toggle="collapse" data-parent="#lists" href="#collapseHistory">
+												History
+											</a>
+										</h4>
+									</div>
+									<div id="collapseHistory" class="panel-collapse collapse">
+										<div class="panel-body">
+											<c:if test="${empty pastBorrowed}">
+												<i>History is empty!</i>
+											</c:if>
+											<c:forEach items="${pastBorrowed}" var="pastBorrowed">
+												<div id="pastBorrowed${pastBorrowed.format}${pastBorrowed.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
+													<h4 id="pastBorrowedFormat${pastBorrowed.format}${pastBorrowed.bookFormatId}">${pastBorrowed.format}</h4>
+													<a data-toggle="modal"  onclick = "bookModal('${pastBorrowed.bookFormatId}', '${pastBorrowed.format}')"> 
+														<img width="100px"src="<c:url value="${pastBorrowed.imageFilePath}" />">
+													</a>
+													<h4>
+														<a href="#">${pastBorrowed.bookTitle}</a>
+													</h4>
+													<h5>
+														<a href="#">${pastBorrowed.author}</a>
 													</h5>
 												</div>
 											</c:forEach>

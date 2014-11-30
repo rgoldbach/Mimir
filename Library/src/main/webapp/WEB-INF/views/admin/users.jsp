@@ -4,9 +4,12 @@
 
 <!-- Head -->
 	<%@ include file="/WEB-INF/views/admin/include/head.jsp" %>
+	<%@ include file = "/WEB-INF/views/admin/include/jsSources.jsp" %>
 
 <body>
+	<script>
 
+	</script>
 <!-- Navigation Bar -->
 	<%@ include file="/WEB-INF/views/admin/include/navbar.jsp" %>
 		
@@ -34,11 +37,11 @@
                             <!-- Text input-->
                             
                             <div class="col-md-3">
-                            <input id="isbn" name="isbn" type="text" placeholder="Username..." class="form-control input-md">
+                            <input id="adminLibraryCard" name="" type="text" placeholder="Enter The Users Library Card Number" class="form-control input-md">
                             </div>
                             
                             <!-- Button trigger modal -->
-                            <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            <button onclick = "getUser()" class="btn btn-info" data-toggle="modal" data-target="#myModal">
                                 View
                             </button>
                             <!-- Modal -->
@@ -55,16 +58,24 @@
                                 <div class="col-lg-6">
                                     <form>
                                         <div class="form-group">
-                                            <label>Username:</label>
-                                            <input class="form-control" placeholder="Username">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Password:</label>
-                                            <input  type="password" class="form-control" placeholder="************">
+                                            <label>Library Card Number:</label>
+                                            <input id ="userLibraryCard" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label>Email:</label>
-                                            <input class="form-control" placeholder="whatevertheemail@is.com">
+                                            <input  id ="userEmail" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>First Name:</label>
+                                            <input id = "userFirstName" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name:</label>
+                                            <input id = "userLastName" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password:</label>
+                                            <input id = "userPassword" type="password"  class="form-control" >
                                         </div>
                                     </form>
                                 </div>

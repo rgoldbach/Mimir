@@ -24,6 +24,7 @@
 	
 	
 	<script src="<c:url value="/resources/ajax/rating.js" />"></script>
+	<script src="<c:url value="/resources/ajax/admin.js" />"></script>
 	
 	
 	<script>

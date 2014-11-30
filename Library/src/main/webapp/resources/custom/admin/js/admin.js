@@ -26,3 +26,31 @@ $(function() {
         }
     })
 });
+
+
+function getUser(){
+	var id = $('#adminLibraryCard').val();
+     
+    
+	$.ajax({
+		url: "getUserAdmin?number="+id,
+		type: "GET",
+      
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader("Accept", "application/json");
+			xhr.setRequestHeader("Content-Type", "application/json");
+     },
+     complete: function(result) {
+    	 if(result.status === 200){
+    		 var user = result.responseJSON
+    		 $('#userLibraryCard').val(user.libraryCardNumber);
+    		 $('#userEmail').val(user.email);
+    		 $('#userFirstName').val(user.firstName);
+    		 $('#userLastName').val(user.lastName);
+    		 $('#userPassword').val(user.password);
+    		 
+    	 }
+    	 console.log(result);
+     }
+ });	
+}

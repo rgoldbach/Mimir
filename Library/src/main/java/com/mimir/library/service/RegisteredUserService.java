@@ -28,6 +28,7 @@ public interface RegisteredUserService {
 	void deleteRegisteredUserById(int id);
 	
 	RegisteredUser getSpecificUser(int id);
+	RegisteredUser getSpecificUser(String libraryCard);
 	
 	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	List<BasicOnHoldBookInfo> getPendingBooksOfUser(RegisteredUser currentUser);
@@ -79,7 +80,8 @@ public interface RegisteredUserService {
 	RegisteredUser getSpecificUserFromAccountInfoWithAllInfo(AccountInfo accountInfo);
 	Admin getSpecificAdminFromAccountInfo(AccountInfo accountInfo);
 	
-	//Recommended Books
+	//Book Display Stuff
 	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
 	List<BasicBookInfo> getWishlistBooksOfUser(RegisteredUser currentUser);
+	List<BasicBookInfo> getPastBorrowedBooksOfUser(RegisteredUser currentUser);
 }

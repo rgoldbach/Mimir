@@ -94,6 +94,11 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	public RegisteredUser getSpecificUser(int id) {
 		return dao.getSpecificUser(id);
 	}
+	
+	@Override
+	public RegisteredUser getSpecificUser(String libraryCardNum){
+		return dao.getSpecificUser(libraryCardNum);
+	}
 
 	//BORROWED EBOOKS
 	@Override
@@ -317,6 +322,19 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	@Override
 	public void updateBorrowedBook(BorrowedAudioBook book){
 		dao.updateBorrowedBook(book);
+	}
+	@Override
+	public List<BasicBookInfo> getPastBorrowedBooksOfUser(RegisteredUser currentUser) {
+		List<BasicBookInfo> pastBorrowed = new ArrayList<BasicBookInfo>();
+		List<PastBorrowedEBook> eBooks = dao.getPastBorrowedEBooksOfSpecificUser(currentUser);
+		List<PastBorrowedAudioBook> aBooks = dao.getPastBorrowedAudioBooksOfSpecificUser(currentUser);
+		for(PastBorrowedEBook e : eBooks){
+			pastBorrowed.add(new BasicBookInfo(e.getEBook()));
+		}
+		for(PastBorrowedAudioBook a : aBooks){
+			pastBorrowed.add(new BasicBookInfo(a.getAudioBook()));
+		}
+		return pastBorrowed;
 	}
 	
 }

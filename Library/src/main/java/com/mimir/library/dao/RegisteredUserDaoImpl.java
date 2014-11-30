@@ -157,6 +157,15 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public RegisteredUser getSpecificUser(int id) {
 		return (RegisteredUser) getSession().get(RegisteredUser.class, id);
 	}
+	
+	@Override
+	public RegisteredUser getSpecificUser(String libraryCardNumber){
+		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
+		userCriteria.add(Restrictions.eq("libraryCardNumber", libraryCardNumber));
+		RegisteredUser user = (RegisteredUser) userCriteria.uniqueResult();
+		initializeUser(user);
+		return user;
+	}
 
 	// BORROWED EBOOKS
 	@SuppressWarnings("unchecked")
