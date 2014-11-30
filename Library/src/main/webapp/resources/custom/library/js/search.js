@@ -100,10 +100,10 @@
 																	// Generate the cover result html
 																	coverResults += '<div class="col-md-3">';
 																	if (this.format == 'AudioBook') {
-																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'AudioBook\')">';
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.formatId+', \'AudioBook\')">';
 																	}
 																	if (this.format == 'EBook') {
-																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.displayId+', \'EBook\')">';
+																		coverResults += '<a class="thumbnail" onclick="bookModal('+this.formatId+', \'EBook\')">';
 																	}
 																	coverResults += '<div class="ayyyLmao">';
 																	coverResults += '<img class="img-responsive" src="' + this.imgPath + '" alt="...">';
@@ -147,10 +147,10 @@
 																	listResults += this.description;
 																	listResults += '</p>';
 																if (this.format == 'AudioBook') {
-																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'AudioBook\')">More</button>';
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.formatId+', \'AudioBook\')">More</button>';
 																	}
 																if (this.format == 'EBook') {
-																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.displayId+', \'EBook\')">More</button>';
+																	listResults += '<button type="button" class="btn btn-default" onclick="bookModal('+this.formatId+', \'EBook\')">More</button>';
 																	}
 																	listResults += '</div><div class="col-md-12"><hr></div>';
 																});

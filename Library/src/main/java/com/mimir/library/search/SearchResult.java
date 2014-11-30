@@ -52,8 +52,6 @@ public class SearchResult {
 	
 	private String description;
 	
-	private int displayId;
-	
 	public SearchResult(){}
 	
 	public SearchResult(Book book, String format, int relevanceScore){
@@ -74,7 +72,6 @@ public class SearchResult {
 			this.formatNames = getEBookFormatNames(book.getEBook().geteBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			this.displayId = book.getBookDisplay().getBookDisplayId();
 			// this.languageNames = book.getEBook().getLanguages();
 			// this.publisherName = book.getEBook().getPublisher();
 			// this.awardNames = book.getAwards();
@@ -96,7 +93,6 @@ public class SearchResult {
 			this.formatNames = getAudioBookFormatNames(book.getAudioBook().getAudioBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			this.displayId = book.getBookDisplay().getBookDisplayId();
 			// this.languageNames = book.getAudioBook().getLanguages();
 			// this.publisherName = book.getAudioBook().getPublisher();
 			// this.awardNames = book.getAwards();
@@ -251,15 +247,7 @@ public class SearchResult {
 	public String setDescription(String description){
 		return this.description = description;
 	}
-	
-	public int getDisplayId() {
-		return displayId;
-	}
 
-	public void setDisplayId(int displayId) {
-		this.displayId = displayId;
-	}
-	
 	public void print(){
 		System.out.println("bookid "+bookId);
 		System.out.println("formatid "+formatId);

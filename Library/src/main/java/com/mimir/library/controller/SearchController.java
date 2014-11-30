@@ -128,7 +128,7 @@ public class SearchController {
 				jBook.put("authors", jAuthors);
 			jBook.put("format", result.getFormat());
 			jBook.put("description", result.getDescription());
-			jBook.put("displayId", result.getDisplayId());
+			jBook.put("formatId", result.getFormatId());
 			jResults.add(jBook);
 		}
 		
