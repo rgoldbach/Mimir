@@ -224,9 +224,12 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<button type="submit" type="button" class="btn btn-default">
-											<span class="glyphicon glyphicon-search"></span>
-										</button>
+										<div class="col-md-6 col-md-offset-3">
+										<br>
+											<button type="submit" type="button" class="btn btn-default btn-lg btn-block">
+												<span class="glyphicon glyphicon-search"></span>
+											</button>
+										</div>
 									</div>
 									</form:form>
 								</div>

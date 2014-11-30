@@ -46,6 +46,16 @@ public class SearchController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/advancedSearch")
+	public ModelAndView initAdvancedResults(String query, HttpSession session) {
+		ModelAndView mv = new ModelAndView("/library/search");
+		
+		mv.addObject("message", "Advanced Search fuk yah");
+		
+		return mv;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/loadFilters")
 	@ResponseBody

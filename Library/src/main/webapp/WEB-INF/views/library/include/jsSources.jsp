@@ -36,6 +36,7 @@
     			$('#quickSearchInput').val('');
     			$('#quickSearchInput').prop('disabled',!$('#quickSearchInput').prop('disabled'));
     			$('#quickSearchButton').prop('disabled',!$('#quickSearchButton').prop('disabled'));
+    			$('#quickSearchButton').css('opacity', '1');
    			});
 		});
 	</script>
