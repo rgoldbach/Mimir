@@ -46,4 +46,8 @@ public abstract class BookRating {
 	public int getBookRatingId() {
 		return bookRatingId;
 	}
+	public void updateRating(double newRating, double oldRating){
+		sumOfRatings = sumOfRatings - oldRating + newRating;
+		this.rating = (sumOfRatings/numberOfRatings);
+	}
 }
