@@ -44,7 +44,6 @@ public class FilterManager {
 			}
 		}
 		else if(filterType.equals(FilterType.Genre)){
-			/*
 			while (lIter.hasNext()) {
 				SearchResult searchResult = lIter.next();
 				List<String> genreNames = searchResult.getGenreNames();
@@ -52,7 +51,6 @@ public class FilterManager {
 					lIter.remove();
 				}
 			}
-			*/
 		}
 		else if(filterType.equals(FilterType.Language)){
 		}
