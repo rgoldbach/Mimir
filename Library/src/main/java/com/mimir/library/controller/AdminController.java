@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.ChangeUserInfo;
+import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.service.AddBookTextFileParsingService;
 import com.mimir.library.service.LibraryService;
@@ -95,6 +99,25 @@ public class AdminController {
 		info.setPassword(user.getAccountInfo().getLoginCredentials().getPassword());
 		info.setPasswordConfirm(user.getAccountInfo().getLoginCredentials().getPassword());
 		return info;
+	}
+	
+	@RequestMapping(value="editUserAdmin", method = RequestMethod.POST)
+	@ResponseBody
+	public String editUserAdmin(@RequestBody ChangeUserInfo info){
+		RegisteredUser user =userService.getSpecificUser(info.getLibraryCardNumber());
+		
+		AccountInfo userInfo = user.getAccountInfo();
+		LoginCredentials loginCreds = userInfo.getLoginCredentials();
+		userInfo.setFirstName(info.getFirstName());
+		userInfo.setLastName(info.getLastName());
+		loginCreds.setEmail(info.getEmail());
+		loginCreds.setPassword(info.getPassword());
+		userInfo.setLoginCredentials(loginCreds);
+		user.setAccountInfo(userInfo);
+		userService.updateRegisteredUser(user);
+		return "Success";
+
+		
 	}
 	
 }

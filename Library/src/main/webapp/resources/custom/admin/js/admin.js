@@ -42,15 +42,93 @@ function getUser(){
      },
      complete: function(result) {
     	 if(result.status === 200){
-    		 var user = result.responseJSON
-    		 $('#userLibraryCard').val(user.libraryCardNumber);
-    		 $('#userEmail').val(user.email);
-    		 $('#userFirstName').val(user.firstName);
-    		 $('#userLastName').val(user.lastName);
-    		 $('#userPassword').val(user.password);
     		 
+    		 var user = result.responseJSON
+    		 if(user.libraryCardNumber ===""){
+    			 $('#userlookuperror').text("User Could Not Be Found");
+    		 }
+    		 else{
+    			 $('#userLibraryCard').val(user.libraryCardNumber);
+    		 	$('#userEmail').val(user.email);
+    		 	$('#userFirstName').val(user.firstName);
+    		 	$('#userLastName').val(user.lastName);
+    		 	$('#userPassword').val(user.password);
+    		 	$('#userlookuperror').text("");
+    		 	$('#myModal').modal('show');
+    		 }
+    	}
+    	 else{
+    		 $('#userlookuperror').text("User Could Not Be Found");
     	 }
     	 console.log(result);
      }
  });	
+}
+
+function saveUserChanges(){
+	var controller = true;
+	var libraryCardNumber = $('#userLibraryCard').val();
+	if(libraryCardNumber.length != 9){
+		controller = false;
+		$('#userChangeError').text("Library Card Must Be 9 Digits Long");
+	}
+	if(! /^\d+$/.test(libraryCardNumber)){
+		controller = false	
+		$('#userChangeError').text("Library Card Can Only Contain Digits");
+	}
+	if($('#userFirstName').val() === ""){
+		validation = false
+		$('#userChangeError').text("First Name Cannot Be Blank");
+
+	}
+	if ($('#userLastName').val() === ""){
+		validation = false
+		$('#userChangeError').text("Last Name Cannot Be Blank");
+	}
+	if ($('#userEmail').val() === ""){
+			validation = false
+			$('#userChangeError').text("Email Cannot Be Blank");
+
+	}
+	if ($('#userPassword').val() === ""){
+			validation = false
+			$('#userChangeError').text("Password Cannot Be Blank");
+
+	}
+				
+	var url = "editUserAdmin";
+    var json = "";
+    json = {
+                "libraryCardNumber" : $('#userLibraryCard').val(),
+                "firstName" : $('#userFirstName').val(),
+                "lastName" : $('#userLastName').val(),
+                "email" : $('#userEmail').val(),
+                "currentPassword": $('#userPassword').val(),
+                "password" : $('#userPassword').val(),
+                "passwordConfirm" : $('#userPassword').val()
+    };
+    console.log(json)
+    $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+        'url' : url,
+        'data' : JSON.stringify(json),
+        'type' : "POST",
+        'complete' : function(result) {
+        	console.log(result);
+        	if(result.status === 200){	
+        			$('#userlookuperror').text("Info Successfuly Changed");
+        			$('#myModal').modal('hide');
+        			
+        	}
+
+        }
+    });  
+    return false;
+}
+
+function banUser(){
+	
 }

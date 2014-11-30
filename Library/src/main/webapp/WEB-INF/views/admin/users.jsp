@@ -41,9 +41,10 @@
                             </div>
                             
                             <!-- Button trigger modal -->
-                            <button onclick = "getUser()" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                            <button onclick = "getUser()" class="btn btn-info">
                                 View
                             </button>
+                            <span id="userlookuperror" class="formerror"></span>
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1">
                                 <div class="modal-dialog">
@@ -57,9 +58,10 @@
                                             <div class="row">
                                 <div class="col-lg-6">
                                     <form>
+                                        <span id="userChangeError" class="formerror"></span>
                                         <div class="form-group">
                                             <label>Library Card Number:</label>
-                                            <input id ="userLibraryCard" class="form-control" >
+                                            <input disabled id ="userLibraryCard" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label>Email:</label>
@@ -86,8 +88,8 @@
                                             <!-- End Modal -->
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success" data-dismiss="modal">Save Changes</button>
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Ban User</button>
+                                            <button onclick = "saveUserChanges()" type="button" class="btn btn-success">Save Changes</button>
+                                            <button onclick = "banUser()" type="button" class="btn btn-danger">Remove User Account</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
