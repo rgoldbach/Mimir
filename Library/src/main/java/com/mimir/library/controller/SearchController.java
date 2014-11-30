@@ -2,6 +2,7 @@ package com.mimir.library.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +20,7 @@ import com.mimir.library.enums.FilterType;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
+import com.mimir.library.search.FilterOption;
 import com.mimir.library.search.SearchManager;
 import com.mimir.library.search.SearchResult;
 import com.mimir.library.service.SearchService;
@@ -51,38 +53,58 @@ public class SearchController {
 	public JSONObject loadFilters(HttpSession session) {
 		PagedListHolder<SearchResult> pagedResults = (PagedListHolder<SearchResult>) session.getAttribute("pagedResults");
 		List<SearchResult> results = pagedResults.getSource();
-
-		JSONObject jFilters = new JSONObject();
-		
-		JSONArray jAuthorFilters = new JSONArray();
-		JSONArray jGenreFilters = new JSONArray();
 		
 		// Go through each result
-		List<String> authorFilters = new ArrayList<String>();
-				
-		List<String> genreFilters = new ArrayList<String>();
+		List<FilterOption> authorFilterOptions = new ArrayList<FilterOption>();
+		List<FilterOption> genreFilterOptions = new ArrayList<FilterOption>();
+
+		/*
+		for (SearchResult result : results) {
+			List<String> authorNames = result.getAuthorNames();
+			for(String authorName : authorNames){
+				boolean newFilter = true;
+				for(FilterOption authorFilterOption : authorFilterOptions){
+					if(authorFilterOption.matches(authorName)){
+						newFilter = false;
+						authorFilterOption.increment();
+					}
+				}
+				if(newFilter){
+					authorFilterOptions.add(new FilterOption(authorName));
+				}
+			}
+		}*/
 		
-		for (SearchResult sr : results) {
-			List<String> authorNames = sr.getAuthorNames();
-			for (String authorName : authorNames) {
-				if(!authorFilters.contains(authorName)){
-					authorFilters.add(authorName);
-				}
-			}
-			List<String> genreNames = sr.getGenreNames();
-			for (String genreName : genreNames) {
-				if(!genreFilters.contains(genreName)){
-					genreFilters.add(genreName);
-				}
-			}
+		for (SearchResult result : results) {
+			filterBuilder(result.getAuthorNames(), authorFilterOptions);
+			filterBuilder(result.getGenreNames(), genreFilterOptions);
 		}
 		
-		jAuthorFilters.addAll(authorFilters);
-		jGenreFilters.addAll(genreFilters);
+		JSONObject jFilterOptions = new JSONObject();
+		JSONArray jAuthorFilterOptions = new JSONArray();
+		JSONArray jGenreFilterOptions = new JSONArray();
 		
-		jFilters.put("authorFilters", jAuthorFilters);
-		jFilters.put("genreFilters", jGenreFilters);
-		return jFilters;
+		jAuthorFilterOptions.addAll(authorFilterOptions);
+		jGenreFilterOptions.addAll(genreFilterOptions);
+		
+		jFilterOptions.put("authorFilterOptions", jAuthorFilterOptions);
+		jFilterOptions.put("genreFilterOptions", jGenreFilterOptions);
+		return jFilterOptions;
+	}
+	
+	private void filterBuilder(List<String> names, List<FilterOption> options){
+		for(String name : names){
+			boolean newFilter = true;
+			for(FilterOption option : options){
+				if(option.matches(name)){
+					newFilter = false;
+					option.increment();
+				}
+			}
+			if(newFilter){
+				options.add(new FilterOption(name));
+			}
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

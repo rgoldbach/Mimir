@@ -5,24 +5,25 @@
 							
 							// Load filters
 							$.ajax({
-										url : 'loadFilters',
-										type : 'GET',
-										success : function(jFilters) {
-											$.each(jFilters.authorFilters, function(index, value){
-												$('#authorFilters').append('<option value="author?=\''+ value +'\'" >'+ value +' (2)</option>');
-											});
-											$.each(jFilters.genreFilters, function(index, value){
-												$('#genreFilters').append('<option value="genre?=\''+ value +'\'" >'+ value +' (2)</option>');
-											});
-										},
-										async: false
+								url : 'loadFilters',
+								type : 'GET',
+								success : function(jFilterOptions) {
+									console.log(jFilterOptions.authorFilterOptions);
+									$.each(jFilterOptions.authorFilterOptions, function(index, value){
+										$('#authorFilters').append('<option value="author?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
 									});
-							$('#filterBy').selectpicker('refresh');
+									$.each(jFilterOptions.genreFilterOptions, function(index, value){
+										$('#genreFilters').append('<option value="genre?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
+									});
+								},
+								async: false
+							});
+					$('#filterBy').selectpicker('refresh');
+			
 					
-							
-							// Init result view
-							$('#coverDisplay').addClass('active');
-							$('#listResultContainer').hide();
+					// Init result view
+					$('#coverDisplay').addClass('active');
+					$('#listResultContainer').hide();
 
 							// Toggle between cover and list
 							$('#coverDisplay, #listDisplay').click(function() {
