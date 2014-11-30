@@ -8,10 +8,14 @@ import org.joda.time.LocalDate;
 
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AudioBookFormat;
+import com.mimir.library.model.AudioBookLanguage;
 import com.mimir.library.model.Author;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BookAward;
 import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.EBookFormat;
+import com.mimir.library.model.EBookLanguage;
+import com.mimir.library.model.Publisher;
 
 public class SearchResult {
 
@@ -44,8 +48,8 @@ public class SearchResult {
 	
 	private List<String> languageNames;
 	
-	private String publisherName;
-	
+	private List<String> publisherNames;
+
 	private List<String> awardNames;
 	
 	private String imgPath;
@@ -72,10 +76,9 @@ public class SearchResult {
 			this.formatNames = getEBookFormatNames(book.getEBook().geteBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			// this.languageNames = book.getEBook().getLanguages();
-			// this.publisherName = book.getEBook().getPublisher();
-			// this.awardNames = book.getAwards();
-			
+			this.languageNames = getEBookLanguageNames(book.getEBook().getLanguages());
+			this.publisherNames = getPublisherNames(book.getEBook().getPublisher());
+			// this.awardNames = getAwardNames(book.getAwards());
 		}else if(format.equals(GlobalConstants.AUDIOBOOK)){
 			
 			this.bookId = book.getBookId();
@@ -93,9 +96,9 @@ public class SearchResult {
 			this.formatNames = getAudioBookFormatNames(book.getAudioBook().getAudioBookFormats());
 			this.imgPath = book.getBookDisplay().getImageFilePath();
 			this.description = book.getBookDisplay().getDescription();
-			// this.languageNames = book.getAudioBook().getLanguages();
-			// this.publisherName = book.getAudioBook().getPublisher();
-			// this.awardNames = book.getAwards();
+			this.languageNames  = getAudioBookLanguageNames(book.getAudioBook().getLanguages());
+			this.publisherNames = getPublisherNames(book.getAudioBook().getPublisher());
+			// this.awardNames = getAwardNames(book.getAwards());
 		}
 	}
 	
@@ -127,6 +130,28 @@ public class SearchResult {
 		}
 		return formatNames;
 	}
+	private List<String> getEBookLanguageNames(Collection<EBookLanguage> bookLanguages){
+		List<String> languageNames = new ArrayList<String>();
+		for(EBookLanguage bl : bookLanguages){
+			languageNames.add(bl.getLanguage().getLanguage());
+		}
+		return languageNames;
+	}
+	private List<String> getAudioBookLanguageNames(Collection<AudioBookLanguage> bookLanguages){
+		List<String> languageNames = new ArrayList<String>();
+		for(AudioBookLanguage bl : bookLanguages){
+			languageNames.add(bl.getLanguage().getLanguage());
+		}
+		return languageNames;
+	}
+	/*
+	private List<String> getAwardNames(Collection<BookAward> awards){
+		List<String> awardNames = new ArrayList<String>();
+		for(BookAward a : awards){
+			awardNames.add(a.getAwardInfo().getTitle());
+		}
+		return awardNames;
+	}*/
 	
 	public int getBookId() {
 		return bookId;
@@ -246,6 +271,36 @@ public class SearchResult {
 	
 	public String setDescription(String description){
 		return this.description = description;
+	}
+	
+	public List<String> getLanguageNames() {
+		return languageNames;
+	}
+
+	public void setLanguageNames(List<String> languageNames) {
+		this.languageNames = languageNames;
+	}
+
+	public List<String> getPublisherNames(Publisher p) {
+		ArrayList<String> publisherName = new ArrayList<String>();
+		publisherName.add(p.getName()); 
+		return publisherName;
+	}
+	
+	public List<String> getPublisherNames() {
+		return publisherNames;
+	}
+
+	public void setPublisherName(List<String> publisherNames) {
+		this.publisherNames = publisherNames;
+	}
+
+	public List<String> getAwardNames() {
+		return awardNames;
+	}
+
+	public void setAwardNames(List<String> awardNames) {
+		this.awardNames = awardNames;
 	}
 
 	public void print(){

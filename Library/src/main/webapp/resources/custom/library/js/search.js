@@ -45,6 +45,9 @@ $(document)
 							success : function(jFilterOptions) {
 								$('#authorFilters').html('');
 								$('#genreFilters').html('');
+								$('#languageFilters').html('');
+								$('#publisherFilters').html('');
+								//$('#awardFilters').html('');
 								$.each(jFilterOptions.authorFilterOptions,
 										function(index, value) {
 											$('#authorFilters').append(
@@ -65,6 +68,37 @@ $(document)
 															+ value.count
 															+ ')</option>');
 										});
+								$.each(jFilterOptions.languageFilterOptions,
+										function(index, value) {
+											$('#languageFilters').append(
+													'<option value="language?=\''
+															+ value.name
+															+ '\'" >'
+															+ value.name + ' ('
+															+ value.count
+															+ ')</option>');
+										});
+								$.each(jFilterOptions.publisherFilterOptions,
+										function(index, value) {
+											$('#publisherFilters').append(
+													'<option value="publisher?=\''
+															+ value.name
+															+ '\'" >'
+															+ value.name + ' ('
+															+ value.count
+															+ ')</option>');
+										});
+								/*
+								$.each(jFilterOptions.awardFilterOptions,
+										function(index, value) {
+											$('#awardFilters').append(
+													'<option value="award?=\''
+															+ value.name
+															+ '\'" >'
+															+ value.name + ' ('
+															+ value.count
+															+ ')</option>');
+										}); */
 							},
 							async : false
 						});

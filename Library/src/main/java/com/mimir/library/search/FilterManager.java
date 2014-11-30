@@ -53,10 +53,31 @@ public class FilterManager {
 			}
 		}
 		else if(filterType.equals(FilterType.Language)){
+			while (lIter.hasNext()) {
+				SearchResult searchResult = lIter.next();
+				List<String> languageNames = searchResult.getLanguageNames();
+				if (!languageNames.contains(value)) {
+					lIter.remove();
+				}
+			}
 		}
 		else if(filterType.equals(FilterType.Publisher)){
+			while (lIter.hasNext()) {
+				SearchResult searchResult = lIter.next();
+				List<String> publisherNames = searchResult.getPublisherNames();
+				if (!publisherNames.contains(value)) {
+					lIter.remove();
+				}
+			}
 		}
 		else if(filterType.equals(FilterType.Award)){
+			while (lIter.hasNext()) {
+				SearchResult searchResult = lIter.next();
+				List<String> awardNames = searchResult.getAwardNames();
+				if (!awardNames.contains(value)) {
+					lIter.remove();
+				}
+			}
 		}
 		else{
 			throw new IllegalArgumentException("Comparator not found for " + filterType);

@@ -56,21 +56,36 @@ public class SearchController {
 		// Go through each result
 		List<FilterOption> authorFilterOptions = new ArrayList<FilterOption>();
 		List<FilterOption> genreFilterOptions = new ArrayList<FilterOption>();
+		List<FilterOption> languageFilterOptions = new ArrayList<FilterOption>();
+		List<FilterOption> publisherFilterOptions = new ArrayList<FilterOption>();
+		//List<FilterOption> awardFilterOptions = new ArrayList<FilterOption>();
 		
 		for (SearchResult result : results) {
 			filterBuilder(result.getAuthorNames(), authorFilterOptions);
 			filterBuilder(result.getGenreNames(), genreFilterOptions);
+			filterBuilder(result.getLanguageNames(), languageFilterOptions);
+			filterBuilder(result.getPublisherNames(), publisherFilterOptions);
+			//filterBuilder(result.getAwardNames(), awardFilterOptions);
 		}
 		
 		JSONObject jFilterOptions = new JSONObject();
 		JSONArray jAuthorFilterOptions = new JSONArray();
 		JSONArray jGenreFilterOptions = new JSONArray();
+		JSONArray jLanguageFilterOptions = new JSONArray();
+		JSONArray jPublisherFilterOptions = new JSONArray();
+		//JSONArray jAwardFilterOptions = new JSONArray();
 		
 		jAuthorFilterOptions.addAll(authorFilterOptions);
 		jGenreFilterOptions.addAll(genreFilterOptions);
+		jLanguageFilterOptions.addAll(languageFilterOptions);
+		jPublisherFilterOptions.addAll(publisherFilterOptions);
+		//jAwardFilterOptions.addAll(awardFilterOptions);
 		
 		jFilterOptions.put("authorFilterOptions", jAuthorFilterOptions);
 		jFilterOptions.put("genreFilterOptions", jGenreFilterOptions);
+		jFilterOptions.put("languageFilterOptions", jLanguageFilterOptions);
+		jFilterOptions.put("publisherFilterOptions", jPublisherFilterOptions);
+		//jFilterOptions.put("awardFilterOptions", jAwardFilterOptions);
 		return jFilterOptions;
 	}
 	

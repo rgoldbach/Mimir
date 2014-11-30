@@ -48,9 +48,9 @@
  							</optgroup>
  							<optgroup id="genreFilters" label="Genre" data-max-options="1">
  							</optgroup>
- 							<optgroup label="Language" data-max-options="1">
+ 							<optgroup id="languageFilters" label="Language" data-max-options="1">
  							</optgroup>
- 							<optgroup label="Publisher" data-max-options="1">
+ 							<optgroup id="publisherFilters" label="Publisher" data-max-options="1">
  							</optgroup>
  							<optgroup label="Award" data-max-options="1">
  							</optgroup>
