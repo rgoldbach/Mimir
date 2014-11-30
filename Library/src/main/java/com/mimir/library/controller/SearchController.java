@@ -36,6 +36,10 @@ public class SearchController {
 	public ModelAndView initResults(String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView("/library/search");
 		
+		if(query.equals("")){
+			query = null;
+		}
+		
 		// Obtain results
 		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.TitleAtoZ);
 		
@@ -43,7 +47,7 @@ public class SearchController {
 		session.setAttribute("originalResults", searchResults); 
 		
 		// Add message
-		mv.addObject("message", searchResults.size() + " results found for '" + query + "'");
+		mv.addObject("message", searchResults.size() + " Quick search results found for '" + query + "'.");
 		
 		return mv;
 	}
@@ -65,7 +69,7 @@ public class SearchController {
 		String language = advancedSearchForm.getLanguage();
 		String publisher = advancedSearchForm.getPublisher();
 		// String awards = advancedSearchForm.getAward();
-		String added = advancedSearchForm.getAdded();
+		// String added = advancedSearchForm.getAdded();
 		String format = advancedSearchForm.getFormat();
 		
 		// Change it here if you want
@@ -75,14 +79,14 @@ public class SearchController {
 		searchResults.addAll(searchService.search("\""+language+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
 		searchResults.addAll(searchService.search("\""+publisher+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
 		//searchResults.addAll(searchService.search("\""+awards+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
-		searchResults.addAll(searchService.search("\""+added+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
+		//searchResults.addAll(searchService.search("\""+added+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
 		searchResults.addAll(searchService.search("\""+format+"\"", 0, SearchType.Quick, SortType.TitleAtoZ));
-		// then filter by available
+		// THEN FILTER BY AVIALABLE 
 		// End change
 		
 		session.setAttribute("originalResults", searchResults);
 		
-		mv.addObject("message", searchResults.size() + " results found for '" + advancedSearchForm.toString() + "'");
+		mv.addObject("message", searchResults.size() + " Advanced search results found for '\n" + advancedSearchForm.toStringArray() + "'.");
 		
 		return mv;
 	}

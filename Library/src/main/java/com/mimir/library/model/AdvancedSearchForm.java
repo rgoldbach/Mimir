@@ -1,5 +1,8 @@
 package com.mimir.library.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdvancedSearchForm {
 	// Not sure if we want these values connected to the actual models?
 	// this is also missing the levels & some other parts of advanced search.
@@ -68,12 +71,38 @@ public class AdvancedSearchForm {
 		this.available = available;
 	}
 	
-	@Override
-	public String toString() {
-		return "AdvancedSearchForm [title=" + title + ", author=" + author
-				+ ", genre=" + genre + ", language=" + language
-				+ ", publisher=" + publisher + ", award=" + award + ", added="
-				+ added + ", format=" + format + "]";
+	public List<String> toStringArray() {
+		List<String> result = new ArrayList<String>();
+		
+		if(available == true){
+			result.add("Available");
+		}
+		if(title != null){
+			result.add("Title: " + title);
+		}
+		if(author != null){
+			result.add("Author: " + author);
+		}
+		if(genre != null){
+			result.add("Genre: " + genre);
+		}
+		if(language != null){
+			result.add("Language: " + language);
+		}
+		if(publisher != null){
+			result.add("Publisher: " + publisher);
+		}
+		if(award != null){
+			result.add("Award: " + award);
+		}
+		if(added != null){
+			result.add("Added: " + added);
+		}
+		if(format != null){
+			result.add("Format: " + format);
+		}
+
+		return result;
 	}
 
 }
