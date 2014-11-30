@@ -53,5 +53,8 @@ public interface LibraryService {
 	void updateBookRating(AudioBookRating rating);
 
 	List<AdminBook> getAllBooksForAdmin();
+
+	int getTotalCopiesOfEBook(EBook eBook);
+	int getTotalCopiesOfAudioBook(AudioBook audioBook);
 	
 }

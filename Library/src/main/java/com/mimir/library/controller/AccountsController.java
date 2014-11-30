@@ -152,7 +152,7 @@ public class AccountsController {
 	@RequestMapping(value = "/signout", method = RequestMethod.POST)
 	public @ResponseBody String signOut(@RequestBody String todo, HttpSession session) {
 		System.out.println("Debug: User is signing out");
-		
+		session.setAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER, null);
 		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, null);
 		return "signoutsuccess";
 

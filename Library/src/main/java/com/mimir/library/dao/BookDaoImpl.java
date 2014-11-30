@@ -267,15 +267,13 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		List<AdminBook> adminBooks = new ArrayList<AdminBook>();
 		List<Book> books = getSession().createCriteria(Book.class).list();
 		for(Book book: books){
-			if(book.getBookId() != 869 && book.getBookId() != 1905){
-				//EBook
-				if(book.getEBook() != null){
-					adminBooks.add(new AdminBook(book.getEBook()));
-				}
-				//AUDIOBOOK
-				if(book.getAudioBook() != null){
-					adminBooks.add(new AdminBook(book.getAudioBook()));
-				}
+			//EBook
+			if(book.getEBook() != null){
+				adminBooks.add(new AdminBook(book.getEBook()));
+			}
+			//AUDIOBOOK
+			if(book.getAudioBook() != null){
+				adminBooks.add(new AdminBook(book.getAudioBook()));
 			}
 		}
 		return adminBooks;
@@ -308,5 +306,15 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		crit.setProjection(Projections.rowCount());
 		crit.add(Restrictions.eq("eBook.eBookId", eBook.getEBookId()));
 		return ((Long) crit.uniqueResult()).intValue();
+	}
+
+	@Override
+	public int getTotalCopiesOfEBook(EBook eBook) {
+		return getTotalCopies(eBook);
+	}
+
+	@Override
+	public int getTotalCopiesOfAudioBook(AudioBook audioBook) {
+		return getTotalCopies(audioBook);
 	}
 }

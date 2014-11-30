@@ -158,4 +158,14 @@ public class LibraryServiceImpl implements LibraryService{
 	public List<AdminBook> getAllBooksForAdmin() {
 		return dao.getAllBooksForAdmin();
 	}
+
+	@Override
+	public int getTotalCopiesOfEBook(EBook eBook) {
+		return dao.getTotalCopiesOfEBook(eBook);
+	}
+
+	@Override
+	public int getTotalCopiesOfAudioBook(AudioBook audioBook) {
+		return dao.getTotalCopiesOfAudioBook(audioBook);
+	}
 }
