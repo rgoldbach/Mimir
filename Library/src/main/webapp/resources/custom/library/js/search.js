@@ -3,22 +3,7 @@
 							// Get the first page of search results
 							sortThenFilter();
 							
-							// Load filters
-							$.ajax({
-								url : 'loadFilters',
-								type : 'GET',
-								success : function(jFilterOptions) {
-									console.log(jFilterOptions.authorFilterOptions);
-									$.each(jFilterOptions.authorFilterOptions, function(index, value){
-										$('#authorFilters').append('<option value="author?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
-									});
-									$.each(jFilterOptions.genreFilterOptions, function(index, value){
-										$('#genreFilters').append('<option value="genre?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
-									});
-								},
-								async: false
-							});
-					$('#filterBy').selectpicker('refresh');
+							
 			
 					
 					// Init result view
@@ -53,6 +38,29 @@
 								var sortType = $('#sortBy').val();
 								var filterTypeValues = $('#filterBy').val() || [];
 								sort(sortType, filterTypeValues);
+								
+								
+								$('#authorFilters').html('');
+								$('#genreFilters').html('');
+								$('#filterBy').selectpicker('refresh');
+								
+								// Load filters
+								$.ajax({
+									url : 'loadFilters',
+									type : 'GET',
+									success : function(jFilterOptions) {
+										console.log(jFilterOptions.authorFilterOptions);
+										$.each(jFilterOptions.authorFilterOptions, function(index, value){
+											$('#authorFilters').append('<option value="author?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
+										});
+										$.each(jFilterOptions.genreFilterOptions, function(index, value){
+											$('#genreFilters').append('<option value="genre?=\''+ value.name +'\'" >'+ value.name +' ('+ value.count +')</option>');
+										});
+									},
+									async: false
+								});
+								$('#filterBy').val(filterTypeValues);
+								$('#filterBy').selectpicker('refresh');
 							}
 
 							// Sort search results

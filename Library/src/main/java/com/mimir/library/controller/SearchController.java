@@ -2,7 +2,6 @@ package com.mimir.library.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,23 +56,6 @@ public class SearchController {
 		// Go through each result
 		List<FilterOption> authorFilterOptions = new ArrayList<FilterOption>();
 		List<FilterOption> genreFilterOptions = new ArrayList<FilterOption>();
-
-		/*
-		for (SearchResult result : results) {
-			List<String> authorNames = result.getAuthorNames();
-			for(String authorName : authorNames){
-				boolean newFilter = true;
-				for(FilterOption authorFilterOption : authorFilterOptions){
-					if(authorFilterOption.matches(authorName)){
-						newFilter = false;
-						authorFilterOption.increment();
-					}
-				}
-				if(newFilter){
-					authorFilterOptions.add(new FilterOption(authorName));
-				}
-			}
-		}*/
 		
 		for (SearchResult result : results) {
 			filterBuilder(result.getAuthorNames(), authorFilterOptions);
@@ -92,6 +74,7 @@ public class SearchController {
 		return jFilterOptions;
 	}
 	
+	// loadFilters helper function
 	private void filterBuilder(List<String> names, List<FilterOption> options){
 		for(String name : names){
 			boolean newFilter = true;

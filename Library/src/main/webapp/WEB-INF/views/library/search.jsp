@@ -39,7 +39,7 @@
 							</optgroup>
 						</select>
 						<br>
-						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple>
+						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple data-selected-text-format="count" title="Select Filter(s)">
 							<optgroup label="Format" data-max-options="1">
  								<option value="format?='eBookOnly'" data-icon="glyphicon glyphicon-book">eBook Only</option>
  								<option value="format?='audioOnly'" data-icon="glyphicon glyphicon-headphones">Audio Only</option>
