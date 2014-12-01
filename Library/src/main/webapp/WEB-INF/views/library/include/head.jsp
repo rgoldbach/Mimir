@@ -58,6 +58,12 @@
     	position:relative;
 	}
 	
+	img.no-resize {
+  		height: 200px;
+  		width: 100%;
+  		max-width: 200px;
+	}
+	
 	</style>
 	
 </head>

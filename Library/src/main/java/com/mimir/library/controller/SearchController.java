@@ -21,6 +21,7 @@ import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AdvancedSearchForm;
+import com.mimir.library.model.Genre;
 import com.mimir.library.search.FilterOption;
 import com.mimir.library.search.SearchManager;
 import com.mimir.library.search.SearchResult;
@@ -35,9 +36,12 @@ public class SearchController {
 	@RequestMapping(value = "/search")
 	public ModelAndView initResults(String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView("/library/search");
-		
-		if(query.equals("")){
-			query = null;
+	
+		System.out.println(query);
+		if((query == null) || (query.isEmpty()) || (query.equals(""))){
+			session.setAttribute("originalResults", new ArrayList<SearchResult>()); 
+			mv.addObject("message", "Please enter a search term!");
+			return mv;
 		}
 		
 		// Obtain results
@@ -173,6 +177,10 @@ public class SearchController {
 			jBook.put("format", result.getFormat());
 			jBook.put("description", result.getDescription());
 			jBook.put("formatId", result.getFormatId());
+			JSONArray jTags = new JSONArray();
+				jTags.addAll(result.getGenreNames());
+				jTags.addAll(result.getLanguageNames());
+			jBook.put("tags", jTags);
 			jResults.add(jBook);
 		}
 		

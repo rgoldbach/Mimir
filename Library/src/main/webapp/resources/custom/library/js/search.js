@@ -165,7 +165,7 @@ $(document)
 																		+ ', \'EBook\')">';
 															}
 															coverResults += '<div class="ayyyLmao">';
-															coverResults += '<img class="img-responsive" src="'
+															coverResults += '<img class="no-resize" src="'
 																	+ this.imgPath
 																	+ '" alt="...">';
 															if (this.format == 'AudioBook') {
@@ -202,10 +202,13 @@ $(document)
 															listResults += '<div class="thumbnail col-md-2"><img class="img-responsive" src="'
 																	+ this.imgPath
 																	+ '" alt="..."></div>';
-															listResults += '<div class="col-md-2"><p style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span>';
-															listResults += '<a href="#"> Tag</a>,';
-															listResults += '<br><a href="#">Tag</a>,';
-															listResults += '<br><a href="#">Tag</a>';
+															listResults += '<div class="col-md-2"><p style="font-size:15px;"><span class="glyphicon glyphicon-tags"></span> ';
+															jQuery.each(this.tags, function(index, val) {
+																listResults += '<a href="search?query='+ val +'">'+ val + '</a>';
+																if(index-1 != length){
+																	listResults += ', <br>';
+																}
+															});
 															listResults += '</p></div>';
 															listResults += '<div class="col-md-8"><p  style="font-size:13px;">';
 															listResults += this.description;

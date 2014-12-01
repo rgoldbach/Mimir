@@ -28,7 +28,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -42,7 +42,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -72,7 +72,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -86,7 +86,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'EBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -117,7 +117,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -131,7 +131,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -161,7 +161,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
@@ -175,7 +175,7 @@
                     					<div class="col-md-3">
 											<a data-toggle="modal" onclick = "bookModal('${book.bookFormatId}', 'AudioBook')" class="thumbnail"><img
 												src="<c:url value="${book.imageFilePath}" />" alt="Image"
-												style="max-width: 100%;"></a>
+												class="no-resize"></a>
 										</div>
                     				</c:forEach>
 								</div>
