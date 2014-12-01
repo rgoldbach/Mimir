@@ -865,17 +865,17 @@ INSERT INTO `EBookLicenses` VALUES   (1, 1, 1, 5),
 UNLOCK TABLES;
 
 LOCK TABLES `BorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), DateExpires, BookRating */
-INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2015-09-09', null , '285323a6-8cac-4b3d-9e2d-4f5db06b960c'), 
-									(2, 2, 1, '2015-09-09', null, '7ed4070e-c57c-433e-9997-46b8d9a65327'), 
-									(3, 3, 1, '2015-09-09', 4, '9f0fdde7-32f2-41e9-89d3-e6cdb172b777'), 
-									(4, 4, 2, '2015-09-09', null, '9bb70be6-fbeb-492c-98bf-7620a738ed24');
+INSERT INTO `BorrowedEBooks` VALUES (1, 1, 1, '2014-12-15', null , '285323a6-8cac-4b3d-9e2d-4f5db06b960c'), 
+									(2, 2, 1, '2014-12-16', null, '7ed4070e-c57c-433e-9997-46b8d9a65327'), 
+									(3, 3, 1, '2014-12-17', 4, '9f0fdde7-32f2-41e9-89d3-e6cdb172b777'), 
+									(4, 4, 2, '2014-12-17', null, '9bb70be6-fbeb-492c-98bf-7620a738ed24');
 UNLOCK TABLES;
 
 LOCK TABLES `PastBorrowedEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), BookRating */
-INSERT INTO `PastBorrowedEBooks` VALUES (1, 4, 1, '2015-09-09', null), 
-										 (2, 3, 1, '2015-09-09', null), 
-										 (3, 2, 1, '2015-09-09', 4), 
-										 (4, 1, 2, '2015-09-09', null);
+INSERT INTO `PastBorrowedEBooks` VALUES (1, 4, 1, '2014-09-09', null), 
+										 (2, 3, 1, '2014-09-09', null), 
+										 (3, 2, 1, '2014-09-09', 4), 
+										 (4, 1, 2, '2014-09-09', null);
 UNLOCK TABLES;
 
 LOCK TABLES `WishlistEBooks` WRITE;/* Id, EBookId(FK), RegUserId(FK), */

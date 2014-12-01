@@ -64,11 +64,15 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		//Book Genres
 		for(BookGenre bg : book.getGenres()){
 			bg.setBook(book);
+			saveOrUpdate(bg.getGenre());
 			save(bg);
 		}
 		//Book Interest Levels
 		for(BookInterestLevel bil : book.getInterestLevels()){
 			bil.setBook(book);
+			System.out.println("Saving.." + bil.getInterestLevel().getInterestLevel());
+			saveOrUpdate(bil.getInterestLevel());
+			System.out.println("Saved." + bil.getInterestLevel().getInterestLevel());
 			save(bil);
 		}
 		//Book Display
