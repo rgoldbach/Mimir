@@ -43,23 +43,39 @@ public class AdminController {
 	
 	@RequestMapping("admin")
 	public ModelAndView showMessage(HttpSession session){
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			ModelAndView mv = new ModelAndView("library/error");
+			return mv;
+		}
 		ModelAndView mv = new ModelAndView("admin/index");
 		return mv;
 	}
 	
 	@RequestMapping(value ="addBook", method = RequestMethod.GET)
-	public String addBook() {
+	public String addBook(HttpSession session) {
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			return "library/error";
+		}
 		return "admin/addBook";
 
 	}
 	
 	@RequestMapping(value ="addBooks", method = RequestMethod.GET)
-	public String addBooks() {
+	public String addBooks(HttpSession session) {
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			return "library/error";
+		}
+		
 		return "admin/addBooks";
 	}
 	
 	@RequestMapping(value ="searchBooks", method = RequestMethod.GET)
-	public ModelAndView searchBooks() {
+	public ModelAndView searchBooks(HttpSession session) {
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			ModelAndView mv = new ModelAndView("library/error");
+			return mv;
+		}
+		
 		ModelAndView mv = new ModelAndView("admin/searchBooks");
 		List<AdminBook> adminBooks = service.getAllBooksForAdmin();
 		mv.addObject("adminBooks", adminBooks);
@@ -104,12 +120,20 @@ public class AdminController {
 		return service.deleteBook(whichBook, bookFormat);
 	}
 	@RequestMapping(value ="users", method = RequestMethod.GET)
-	public String users() {
+	public String users(HttpSession session) {
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			return "library/error";
+		}
+		
 		return "admin/users";
 	}
 	
 	@RequestMapping(value ="support", method = RequestMethod.GET)
-	public String support() {
+	public String support(HttpSession session) {
+		if(session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER) == null){
+			return "library/error";
+		}
+		
 		return "admin/support";
 	}
 	
