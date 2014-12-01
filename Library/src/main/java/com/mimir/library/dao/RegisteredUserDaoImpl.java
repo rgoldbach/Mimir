@@ -14,6 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
@@ -347,6 +348,8 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			}
 		}
 	}
+	
+	
 
 	// WISH-LIST EBOOKS
 	@SuppressWarnings("unchecked")
@@ -645,5 +648,40 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	@Override
 	public void updateBorrowedBook(BorrowedAudioBook book){
 		getSession().merge(book);
+	}
+
+	@Override
+	public void updateHolds(AdminBook book) {
+		if(book.getFormatType().equalsIgnoreCase(GlobalConstants.EBOOK)){
+			List<EBookOnHold> holds = this.getOnHoldEBooks(book.getFormatId());
+			int availableCopies = book.getAvailableCopies();
+			Iterator<EBookOnHold> it = holds.iterator();
+			while(availableCopies > 0 && it.hasNext()){
+				EBookOnHold hold = it.next();
+				BorrowedEBook borrowedEBook = new BorrowedEBook(hold.getEBook(), hold.getUser());
+				// Save the audio book to the new user...
+				saveBorrowedEBookOfSpecificUser(borrowedEBook);
+				// Delete their hold..
+				delete(hold);
+				availableCopies--;
+				book.setNumberOfHolds(this.getOnHoldEBooks(book.getFormatId()).size());
+			}
+			book.setAvailableCopies(availableCopies);
+		}else if(book.getFormatType().equalsIgnoreCase(GlobalConstants.AUDIOBOOK)){
+			List<AudioBookOnHold> holds = this.getOnHoldAudioBooks(book.getFormatId());
+			int availableCopies = book.getAvailableCopies();
+			Iterator<AudioBookOnHold> it = holds.iterator();
+			while(availableCopies > 0 && it.hasNext()){
+				AudioBookOnHold hold = it.next();
+				BorrowedAudioBook borrowedAudioBook = new BorrowedAudioBook(hold.getAudioBook(), hold.getUser());
+				// Save the audio book to the new user...
+				saveBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
+				// Delete their hold..
+				delete(hold);
+				availableCopies--;
+				book.setNumberOfHolds(this.getOnHoldAudioBooks(book.getFormatId()).size());
+			}
+			book.setAvailableCopies(availableCopies);
+		}
 	}
 }

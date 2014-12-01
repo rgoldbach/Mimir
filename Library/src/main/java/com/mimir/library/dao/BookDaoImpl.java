@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -140,6 +141,35 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	public void deleteBook(int bookId) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public String deleteBook(int whichBook, String bookFormat) {
+		if(bookFormat.equalsIgnoreCase(GlobalConstants.EBOOK)){
+			try{
+				getSession().createSQLQuery("delete from Borrowedebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Ebookholds where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Pastborrowedebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Wishlistebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				EBook eBook = (EBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("eBookId", whichBook)).uniqueResult();
+				delete(eBook);	
+			}catch(Exception e){
+				System.out.println(e);
+				return "ERROR";
+			}
+		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			try{
+				getSession().createSQLQuery("delete from Borrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Audiobookholds where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Pastborrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Wishlistaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				AudioBook audioBook = (AudioBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("audioBookId", whichBook)).uniqueResult();
+				delete(audioBook);	
+			}catch(Exception e){
+				System.out.println(e);
+				return "ERROR";
+			}
+		}
+		return GlobalConstants.DAO_SUCCESS;
 	}
 
 	@Override
@@ -340,6 +370,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 					saveOrUpdate(bf);
 					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
 				}
+				//Update holds if needed
 				saveOrUpdate(eBook);
 			}else if(book.getFormatType().equals(GlobalConstants.AUDIOBOOK)){
 				AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("audioBookId", book.getFormatId())).uniqueResult();

@@ -173,4 +173,9 @@ public class LibraryServiceImpl implements LibraryService{
 	public boolean updateBook(AdminBook book) {
 		return dao.updateBook(book);
 	}
+
+	@Override
+	public String deleteBook(int whichBook, String bookFormat) {
+		return dao.deleteBook(whichBook, bookFormat);
+	}
 }

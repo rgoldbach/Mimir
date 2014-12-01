@@ -107,6 +107,31 @@ function adminSaveBookChanges(id, type){
         		$("#" + book.formatId + book.formatType + " .author").html(book.author);
         		$("#" + book.formatId + book.formatType + " .formats").html(book.formats);
         		$("#" + book.formatId + book.formatType + " .availCopies").html(book.availableCopies);
+        		$("#" + book.formatId + book.formatType + " .numOfHolds").html(book.numberOfHolds);
+        	}
+        }
+    });
+}  
+
+function deleteBook(){
+	var id = $('#modalBookId').val();
+	var type = $('#modalBookFormat').val();
+	if(!(confirm("Are you sure you want to delete this book?"))){
+		return;
+	}
+	var url = "adminDeleteBook?whichBook="+id+"&bookFormat="+type;	
+	$.ajax({
+        url: url,
+        type: "GET",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+        },
+        complete: function(result) {
+        	if(result.status === 200){
+        		if(result.responseText === "Success"){
+        			$("#" + id + type).remove();
+        		}
         	}
         }
     });
