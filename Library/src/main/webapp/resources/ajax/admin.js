@@ -107,6 +107,7 @@ function adminSaveBookChanges(id, type){
         		$("#" + book.formatId + book.formatType + " .author").html(book.author);
         		$("#" + book.formatId + book.formatType + " .formats").html(book.formats);
         		$("#" + book.formatId + book.formatType + " .availCopies").html(book.availableCopies);
+        		$("#" + book.formatId + book.formatType + " .numOfHolds").html(book.numberOfHolds);
         	}
         }
     });

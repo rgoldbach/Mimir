@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.dao.BookDao;
@@ -347,6 +348,10 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 			pastBorrowed.add(new BasicBookInfo(a.getAudioBook()));
 		}
 		return pastBorrowed;
+	}
+	@Override
+	public void updateHolds(AdminBook book) {
+		dao.updateHolds(book);
 	}
 	
 }

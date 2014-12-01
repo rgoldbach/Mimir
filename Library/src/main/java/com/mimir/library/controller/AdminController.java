@@ -91,6 +91,9 @@ public class AdminController {
 		if(!service.updateBook(book)){
 			System.out.println("DEBUG - Book Not Updated!");
 		}
+		if(book.getAvailableCopies() > 0){
+			userService.updateHolds(book);
+		}
 		return book;
 	}
 	@RequestMapping(value ="adminDeleteBook", method = RequestMethod.GET)

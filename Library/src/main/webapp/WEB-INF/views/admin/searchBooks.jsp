@@ -50,7 +50,7 @@
                                                 <td class="author">${element.author}</td>
                                                 <td class="center formats">${element.formats}</td>
                                                 <td class="availCopies">${element.availableCopies}</td>
-                                                <td>${element.numberOfHolds}</td>
+                                                <td class="numOfHolds">${element.numberOfHolds}</td>
                                                 <td class="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#adminModal" onclick="adminBookMoreInfo(${element.formatId}, '${element.formatType}');">Info</button></td>
                                             </tr>
 										</c:forEach>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.LocalDate;
@@ -150,8 +151,6 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				getSession().createSQLQuery("delete from Pastborrowedebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				getSession().createSQLQuery("delete from Wishlistebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				EBook eBook = (EBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("eBookId", whichBook)).uniqueResult();
-				//AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("bookId", eBook.getBook().getBookId())).uniqueResult();
-				//delete(audioBook);
 				delete(eBook);	
 			}catch(Exception e){
 				System.out.println(e);
@@ -164,8 +163,6 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				getSession().createSQLQuery("delete from Pastborrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				getSession().createSQLQuery("delete from Wishlistaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				AudioBook audioBook = (AudioBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("audioBookId", whichBook)).uniqueResult();
-				//EBook eBook = (EBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("bookId", audioBook.getBook().getBookId())).uniqueResult();
-				//delete(eBook);
 				delete(audioBook);	
 			}catch(Exception e){
 				System.out.println(e);
@@ -373,6 +370,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 					saveOrUpdate(bf);
 					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
 				}
+				//Update holds if needed
 				saveOrUpdate(eBook);
 			}else if(book.getFormatType().equals(GlobalConstants.AUDIOBOOK)){
 				AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("audioBookId", book.getFormatId())).uniqueResult();

@@ -3,6 +3,7 @@ package com.mimir.library.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.model.AccountInfo;
@@ -89,4 +90,5 @@ public interface RegisteredUserService {
 	List<BasicBookInfo> getRecommendedBooksForUser(RegisteredUser currentUser);
 	List<BasicBookInfo> getWishlistBooksOfUser(RegisteredUser currentUser);
 	List<BasicBookInfo> getPastBorrowedBooksOfUser(RegisteredUser currentUser);
+	void updateHolds(AdminBook book);
 }

@@ -3,6 +3,7 @@ package com.mimir.library.dao;
 import java.math.BigInteger;
 import java.util.List;
 
+import com.mimir.library.beans.AdminBook;
 import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
@@ -87,5 +88,6 @@ public interface RegisteredUserDao {
 	
 	void updateBorrowedBook(BorrowedEBook book);
 	void updateBorrowedBook(BorrowedAudioBook book);
+	void updateHolds(AdminBook book);
 	
 }
