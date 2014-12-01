@@ -91,7 +91,7 @@ public class AdminBook {
 	public AdminBook(AudioBook audioBook, String creationType){
 		if(creationType.equals("SIMPLE")){
 			this.setFormatId(audioBook.getAudioBookId());
-			this.setFormatType(GlobalConstants.EBOOK);
+			this.setFormatType(GlobalConstants.AUDIOBOOK);
 			this.isbn = audioBook.getBook().getIsbn();
 			this.bookTitle = audioBook.getBook().getBookDisplay().getTitle();
 			if(audioBook.getBook().getAuthors().size() == 0){

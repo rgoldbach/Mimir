@@ -1,12 +1,14 @@
 package com.mimir.library.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 
 import com.mimir.library.beans.AdminBook;
@@ -320,5 +322,153 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 	@Override
 	public int getTotalCopiesOfAudioBook(AudioBook audioBook) {
 		return getTotalCopies(audioBook);
+	}
+
+	@Override
+	public boolean updateBook(AdminBook book) {
+		try{
+			if(book.getFormatType().equals(GlobalConstants.EBOOK)){
+				EBook eBook = (EBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("eBookId", book.getFormatId())).uniqueResult();
+				eBook.getBook().getBookDisplay().setTitle(book.getBookTitle());
+				eBook.getBook().getAuthors().iterator().next().setName(book.getAuthor());
+				setEBookFormats(eBook, book.getFormats());
+				int previousTotalCopies = getTotalCopiesOfEBook(eBook);
+				setEBookCopies(eBook, previousTotalCopies, book.getTotalCopies());
+				book.setAvailableCopies(eBook.getRemainingCopies());
+				for(EBookFormat bf : eBook.geteBookFormats()){
+					bf.seteBook(eBook);
+					saveOrUpdate(bf);
+					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
+				}
+				saveOrUpdate(eBook);
+			}else if(book.getFormatType().equals(GlobalConstants.AUDIOBOOK)){
+				AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("audioBookId", book.getFormatId())).uniqueResult();
+				audioBook.getBook().getBookDisplay().setTitle(book.getBookTitle());
+				audioBook.getBook().getAuthors().iterator().next().setName(book.getAuthor());
+				setAudioBookFormats(audioBook, book.getFormats());
+				int previousTotalCopies = getTotalCopiesOfAudioBook(audioBook);
+				setAudioBookCopies(audioBook, previousTotalCopies, book.getTotalCopies());
+				book.setAvailableCopies(audioBook.getRemainingCopies());
+				for(AudioBookFormat bf : audioBook.getAudioBookFormats()){
+					bf.setAudioBook(audioBook);
+					saveOrUpdate(bf);
+					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
+				}
+				saveOrUpdate(audioBook);
+			}
+		}catch(Exception e){
+			System.out.println(e);
+			return false;
+		}
+		
+		return true;
+	}
+
+	private void setEBookCopies(EBook eBook, int previousTotalCopies, int totalCopies) {
+		if(previousTotalCopies > totalCopies){
+			if(eBook.getRemainingCopies() - (previousTotalCopies-totalCopies) >= 0){
+				eBook.setRemainingCopies(eBook.getRemainingCopies() - (previousTotalCopies-totalCopies));
+			}
+		}
+		if(totalCopies > previousTotalCopies){
+			eBook.setRemainingCopies(eBook.getRemainingCopies() + (totalCopies - previousTotalCopies));
+		}		
+	}
+	
+	private void setAudioBookCopies(AudioBook audioBook, int previousTotalCopies, int totalCopies) {
+		if(previousTotalCopies > totalCopies){
+			if(audioBook.getRemainingCopies() - (previousTotalCopies-totalCopies) >= 0){
+				audioBook.setRemainingCopies(audioBook.getRemainingCopies() - (previousTotalCopies-totalCopies));
+			}
+		}
+		if(totalCopies > previousTotalCopies){
+			audioBook.setRemainingCopies(audioBook.getRemainingCopies() + (totalCopies - previousTotalCopies));
+		}	
+	}
+
+	private void setEBookFormats(EBook eBook, String formats) {
+		List<String> formatTypes = new ArrayList<String>();
+		String[] split = formats.split(",");
+		for(String s : split){
+			formatTypes.add(s);
+		}
+		//Add any new formats
+		boolean contained = false;
+		for(String format : formatTypes){
+			for(EBookFormat bf : eBook.geteBookFormats()){
+				if(bf.getFormat().getFormatType().equalsIgnoreCase(format)){
+					contained = true;
+				}
+			}
+			if(!contained){
+				//Add it
+				EBookFormat bookFormat = new EBookFormat();
+				Format f = getFormat(format);
+				bookFormat.setFormat(f);
+				bookFormat.setFileSize(new Integer(999));
+				bookFormat.setReleaseDate(new LocalDate());
+				eBook.geteBookFormats().add(bookFormat);
+			}
+			contained = false;
+		}
+		//Now delete any formats that were changed...
+		contained = false;
+		Iterator<EBookFormat> it = eBook.geteBookFormats().iterator();
+		while(it.hasNext()){
+			EBookFormat bf = it.next();
+			for(String format : formatTypes){
+				if(bf.getFormat().getFormatType().equalsIgnoreCase(format)){
+					contained = true;
+				}
+			}
+			if(!contained){
+				it.remove();
+				delete(bf);
+			}
+			contained = false;
+		}
+	}
+	
+	private void setAudioBookFormats(AudioBook audioBook, String formats) {
+		List<String> formatTypes = new ArrayList<String>();
+		String[] split = formats.split(",");
+		for(String s : split){
+			formatTypes.add(s);
+		}
+		//Add any new formats
+		boolean contained = false;
+		for(String format : formatTypes){
+			for(AudioBookFormat bf : audioBook.getAudioBookFormats()){
+				if(bf.getFormat().getFormatType().equalsIgnoreCase(format)){
+					contained = true;
+				}
+			}
+			if(!contained){
+				//Add it
+				AudioBookFormat bookFormat = new AudioBookFormat();
+				Format f = getFormat(format);
+				bookFormat.setFormat(f);
+				bookFormat.setFileSize(new Integer(999));
+				bookFormat.setReleaseDate(new LocalDate());
+				audioBook.getAudioBookFormats().add(bookFormat);
+			}
+			contained = false;
+		}
+		//Now delete any formats that were changed...
+		contained = false;
+		Iterator<AudioBookFormat> it = audioBook.getAudioBookFormats().iterator();
+		while(it.hasNext()){
+			AudioBookFormat bf = it.next();
+			for(String format : formatTypes){
+				if(bf.getFormat().getFormatType().equalsIgnoreCase(format)){
+					contained = true;
+				}
+			}
+			if(!contained){
+				it.remove();
+				delete(bf);
+			}
+			contained = false;
+		}
 	}
 }

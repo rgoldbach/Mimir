@@ -44,12 +44,12 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${adminBooks}" var="element">
-											<tr>
-                                                <td>${element.isbn}</td>
-                                                <td>${element.bookTitle}</td>
-                                                <td>${element.author}</td>
-                                                <td class="center">${element.formats}</td>
-                                                <td>${element.availableCopies}</td>
+											<tr id="${element.formatId}${element.formatType}">
+                                                <td class="isbn">${element.isbn}</td>
+                                                <td class="title">${element.bookTitle}</td>
+                                                <td class="author">${element.author}</td>
+                                                <td class="center formats">${element.formats}</td>
+                                                <td class="availCopies">${element.availableCopies}</td>
                                                 <td>${element.numberOfHolds}</td>
                                                 <td class="center"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#adminModal" onclick="adminBookMoreInfo(${element.formatId}, '${element.formatType}');">Info</button></td>
                                             </tr>
@@ -74,14 +74,14 @@
                                                         <form id="singleForm" class="form-horizontal">
                                                             <!-- Text input-->
                                                             <div class="form-group">
-                                                                <label class="col-md-4 control-label" for="bookTitle">Title:</label>  
+                                                                <label class="col-md-4 control-label" for="modalBookTitle">Title:</label>  
                                                                 <div class="col-md-4">
                                                                     <input id="modalBookTitle" name="bookTitle" type="text" placeholder="Current Title..." class="form-control" style="width: 340px;" required>
                                                                 </div>
                                                             </div>
                                                             <!-- Text input-->
                                                             <div class="form-group">
-                                                                <label class="col-md-4 control-label" for="bookAuthor">Author:</label>  
+                                                                <label class="col-md-4 control-label" for="modalBookAuthor">Author:</label>  
                                                                 <div class="col-md-4">
                                                                     <input id="modalBookAuthor" name="bookAuthor" type="text" placeholder="Current Author..." class="form-control" required>
                                                                 </div>
@@ -99,39 +99,39 @@
                                                                 <label class="col-md-4 control-label" for="bookFormats">Book Format(s)</label>
                                                                 <div class="col-md-4">
                                                                     <div class="checkbox">
-                                                                        <label for="bookFormats-0">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-0" value="kindle">
-                                                                            Kindle
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label for="bookFormats-1">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-1" value="epub">
-                                                                            EPub
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label for="bookFormats-2">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-2" value="mp3">
-                                                                            MP3
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="checkbox">
-                                                                        <label for="bookFormats-3">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-3" value="wma">
+                                                                        <label id="Formats-0" for="bookFormats-0">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-0" value="WMA">
                                                                             WMA
                                                                         </label>
                                                                     </div>
                                                                     <div class="checkbox">
-                                                                        <label for="bookFormats-4">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-4" value="pdf">
-                                                                            PDF
+                                                                        <label id="Formats-1" for="bookFormats-1">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-1" value="MP3">
+                                                                            MP3
                                                                         </label>
                                                                     </div>
                                                                     <div class="checkbox">
-                                                                        <label for="bookFormats-4">
-                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-5" value="html">
+                                                                        <label id="Formats-2" for="bookFormats-2">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-2" value="Kindle">
+                                                                            Kindle
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label id="Formats-3" for="bookFormats-3">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-3" value="EPub">
+                                                                            EPub
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label id="Formats-4" for="bookFormats-4">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-4" value="Html">
                                                                             Html
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label id="Formats-5" for="bookFormats-5">
+                                                                            <input type="checkbox" name="bookFormats" id="bookFormats-5" value="Pdf">
+                                                                            Pdf
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -160,7 +160,7 @@
                                             <div class="modal-footer">
                                             	<input type="hidden" id="modalBookId">
                                             	<input type="hidden" id="modalBookFormat">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Save Changes</button>
+                                                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="adminSaveBookChanges()">Save Changes</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Delete Book</button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             </div>

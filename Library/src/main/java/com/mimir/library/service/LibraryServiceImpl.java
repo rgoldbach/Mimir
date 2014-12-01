@@ -168,4 +168,9 @@ public class LibraryServiceImpl implements LibraryService{
 	public int getTotalCopiesOfAudioBook(AudioBook audioBook) {
 		return dao.getTotalCopiesOfAudioBook(audioBook);
 	}
+
+	@Override
+	public boolean updateBook(AdminBook book) {
+		return dao.updateBook(book);
+	}
 }

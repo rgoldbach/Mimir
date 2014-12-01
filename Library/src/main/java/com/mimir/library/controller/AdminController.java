@@ -85,6 +85,14 @@ public class AdminController {
 		}
 		return book;
 	}
+	@RequestMapping(value ="adminSaveBookChanges", method = RequestMethod.POST)
+	@ResponseBody
+	public AdminBook saveBookChanges(@RequestBody AdminBook book) {
+		if(!service.updateBook(book)){
+			System.out.println("DEBUG - Book Not Updated!");
+		}
+		return book;
+	}
 	
 	@RequestMapping(value ="users", method = RequestMethod.GET)
 	public String users() {
