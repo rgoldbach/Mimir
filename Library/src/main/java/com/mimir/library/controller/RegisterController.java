@@ -1,6 +1,7 @@
 package com.mimir.library.controller;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -37,9 +38,12 @@ public class RegisterController {
 		if(service.numberOfUsersByEmail(regInfo.getEmail()).compareTo(BigInteger.ZERO)!=0){
 			return "email";
 		}
-		//if(service.numberOfUsersByLibraryCardNumber(regInfo.getLibraryCardNumber()).compareTo(BigInteger.ZERO)!=0){
-			//return "card";
-		//}
+		ArrayList<RegisteredUser> temps = (ArrayList<RegisteredUser>)service.getAllUsers();
+		for(RegisteredUser tempUser : temps){
+			if(tempUser.getLibraryCardNumber().equals(regInfo.getLibraryCardNumber())){
+				return "card";
+			}
+		}
 		
 		int accountId = service.getMaxAccountInfoId();
 		accountId +=1;

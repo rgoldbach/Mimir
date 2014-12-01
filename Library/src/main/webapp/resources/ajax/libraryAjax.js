@@ -460,6 +460,7 @@ function changeBookFormatInfo() {
 }
 
 function registerUser(){
+	$('#regerror').text("");
 	validation = true
 	var libraryCardNumber = $('#libraryCardNumberReg').val()
 	var firstName = $('#firstNameReg').val()
@@ -508,11 +509,11 @@ function registerUser(){
 						$('#regerror').text("That Email Is Already In Use.");
 					}
 					
-					else if(result.responseTest === "card"){
+					else if(result.responseText === "card"){
 						$('#regerror').text("That Library Card Number Is Already In Use.");
 					}
 					else{
-						$('#regerror').text("WHY");
+						$('#regerror').text("There Was An Unexpected Error");
 
 					}
 				}
