@@ -205,6 +205,10 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		if (userEBooks != null && userEBooks.contains(borrowedEBook)) {
 			return "You currently are borrowing this book!";
 		}
+		if(borrowedEBook.getEBook().getRemainingCopies() == 0){
+			System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedEBook.getEBook().getBook().getBookDisplay().getTitle());
+			return "No available copies!";
+		}
 		//GENERATE LLAMAZON KEY
 		generateLamazonKeyForEBook(borrowedEBook);
 		persist(borrowedEBook);
@@ -222,7 +226,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	
 	private void generateLamazonKeyForEBook(BorrowedEBook borrowedEBook) {
 		LamazonService ls = new LamazonService();
-		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getEBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
+		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
 		if (bookKey == null) {
 			System.out.println("DEBUG - Book Key is null");
 			return;
@@ -394,6 +398,10 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		if (userAudioBooks != null && userAudioBooks.contains(borrowedAudioBook)) {
 			return "You currently are borrowing this book!";
 		}
+		if(borrowedAudioBook.getAudioBook().getRemainingCopies() == 0){
+			System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedAudioBook.getAudioBook().getBook().getBookDisplay().getTitle());
+			return "No available copies!";
+		}
 		//GENERATE LLAMAZON KEY
 		generateLamazonKeyForAudioBook(borrowedAudioBook);
 		persist(borrowedAudioBook);
@@ -409,7 +417,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	
 	private void generateLamazonKeyForAudioBook(BorrowedAudioBook borrowedAudioBook) {
 		LamazonService ls = new LamazonService();
-		String bookKey = ls.getBookKey(borrowedAudioBook.getAudioBook().getAudioBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
+		String bookKey = ls.getBookKey(borrowedAudioBook.getAudioBook().getBook().getBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
 		if (bookKey == null) {
 			return;
 		}
@@ -581,7 +589,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 					break;
 				}
 				Book book = it.next();
-				if(book.getEBook() == null){
+				if(book.getEBook() != null){
 					boolean canAdd = true;
 					for(BorrowedEBook e : currentUser.getBorrowedEBooks()){
 						if(e.getEBook().getEBookId() == book.getEBook().getEBookId()){

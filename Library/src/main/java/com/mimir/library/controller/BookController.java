@@ -550,9 +550,22 @@ public class BookController {
 		if(currentUser == null) return "Error";
 		LamazonService ls = new LamazonService();
 		String bookKey = getBookKey(whichBook, bookFormat, currentUser);
-		return ls.getBookPageUrl(whichBook, currentUser.getUserCode(), bookKey, bookFormat);
+		int bookId = getSpecificBookId(whichBook, bookFormat);
+		return ls.getBookPageUrl(bookId, currentUser.getUserCode(), bookKey, bookFormat);
 	}
 	
+	private int getSpecificBookId(int whichBook, String bookFormat) {
+		if(bookFormat.equals(GlobalConstants.EBOOK)){
+			EBook eBook = libraryService.getSpecificEBook(whichBook);
+			return eBook.getBook().getBookId();
+		}
+		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			AudioBook audioBook = libraryService.getSpecificAudioBook(whichBook);
+			return audioBook.getBook().getBookId();
+		}
+		return -1;
+	}
+
 	private String getBookKey(int bookId, String bookFormat, RegisteredUser user){
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
 			Set<BorrowedEBook> borrowedBooks = user.getBorrowedEBooks();
