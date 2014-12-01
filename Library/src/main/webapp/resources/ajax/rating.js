@@ -1,9 +1,9 @@
-$( ".rating" ).change(function() {
-  console.log( $( this ).val());
-  console.log($( this ).attr('bookid') );
-  console.log($( this ).attr('formattype') );
+$(".rating").change(function() {
+  console.log( $( this ).attr('value'));
+  console.log( $( this ).attr('bookid') );
+  console.log ($( this ).attr('formattype') );
   
-  var rating = $( this ).val();
+  var rating = $(this).attr('value');
   var id = $( this ).attr('bookId');
   var formatType = $( this ).attr('formatType');
   rateBook(id, rating, formatType)

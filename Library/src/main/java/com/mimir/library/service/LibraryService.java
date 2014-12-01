@@ -56,5 +56,7 @@ public interface LibraryService {
 
 	int getTotalCopiesOfEBook(EBook eBook);
 	int getTotalCopiesOfAudioBook(AudioBook audioBook);
+
+	boolean updateBook(AdminBook book);
 	
 }

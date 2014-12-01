@@ -25,8 +25,7 @@
 				<li><a class="active" href="admin"><i class="fa fa-bar-chart-o fa-fw"></i> Reports</a></li>
 				<li><a href="#"><i class="fa fa-book fa-fw"></i> Books<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<li><a href="addBook">Add Single</a></li>
-						<li><a href="addBooks">Add Multiple</a></li>
+						<li><a href="addBooks">Add Books</a></li>
 						<li><a href="searchBooks">Search</a></li>
 					</ul> <!-- /.nav-second-level --></li>
 				<li><a href="users"><i class="fa fa-users fa-fw"></i>

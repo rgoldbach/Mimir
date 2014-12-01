@@ -50,7 +50,7 @@
 											<!-- Rating -->
 											<button onclick = "downloadBook(${element.getEBook().getEBookId()}, 'EBook')"class="btn btn-primary">Download</button>
 											<button onclick = "returnBook(${element.getEBook().getEBookId()}, 'EBook')"class="btn btn-danger">Return</button>
-											<input id='input-21b' value='${element.bookRating}' type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' formattype = 'EBook' bookid =${element.getEBook().getBook().getBookId()} data-size='xs'>											
+											<input id='input-21b' value='${element.bookRating}' type='number' class='rating ebook' min=0 max=5 step=0.5 data-symbol='&#xF379' formattype = 'EBook' bookid =${element.getEBook().getEBookId()} data-size='xs'>											
 											<br>
 										</div>
 								</div>
@@ -70,7 +70,7 @@
 											<!-- Rating -->
 											<button onclick = "downloadBook(${element.getAudioBook().getAudioBookId()}, 'AudioBook')"class="btn btn-primary">Download</button>
 											<button onclick = "returnBook(${element.getAudioBook().getAudioBookId()}, 'AudioBook')"class="btn btn-danger">Return</button>
-											<input id='input-21b' value='${element.bookRating}' formattype = 'AudioBook' bookid =${element.getAudioBook().getBook().getBookId()} type='number' class='rating' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='xs'>
+											<input id='input-21b' value='${element.bookRating}' formattype = 'AudioBook' bookid =${element.getAudioBook().getAudioBookId()} type='number' class='rating audio' min=0 max=5 step=0.5 data-symbol='&#xF379' data-default-caption='{rating} helmets' data-star-captions='{}' data-size='xs'>
 											<br>
 										</div>
 								</div>

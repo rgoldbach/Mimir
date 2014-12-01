@@ -307,14 +307,13 @@ public class BookController {
 		
 		System.out.println("TESTEST " + whichBook + " " + rating + " " + bookType);
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
-		//user.get
 		boolean prevRated = true;
 		double prevRating = 0.0;
 		BookRating bookRating = null;
 		if(bookType.equals(GlobalConstants.EBOOK)){
 			BorrowedEBook ratedEBook = null;
 			for(BorrowedEBook eBook : user.getBorrowedEBooks()){
-				if(eBook.getEBook().getEBookId() == whichBook)
+				if(eBook.getEBook().getEBookId() == whichBook){
 					if(eBook.getBookRating()==null){
 						prevRated = false;
 					}
@@ -323,21 +322,22 @@ public class BookController {
 					System.out.println(eBook.getBookRating());
 					eBook.setBookRating(rating);
 					userService.updateBorrowedBook(eBook);
+				}
 			}
 			
 			EBook book = libraryService.getSpecificEBook(whichBook);
 			bookRating = book.getBookRating();
-			System.out.print("TESTBOOK");
+			System.out.println(prevRated);
 			System.out.println(bookRating.getNumberOfRatings());
 			System.out.println(bookRating.getSumOfRatings());
 			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
 			if(prevRated)
 				bookRating.addRating(rating);
 			else
-				bookRating.updateRating(rating, prevRating);
+				bookRating.addRating(rating);
 			System.out.println(bookRating.getNumberOfRatings());
 			System.out.println(bookRating.getSumOfRatings());
-			System.out.println(bookRating.getRating());
+			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
 			libraryService.updateBookRating(bookRating);
 			return bookRating.getRating();
 			//PERSIST BOOKRATING
@@ -347,7 +347,7 @@ public class BookController {
 		if(bookType.equals(GlobalConstants.AUDIOBOOK)){
 			BorrowedAudioBook ratedAudioBook = null;
 			for(BorrowedAudioBook audioBook : user.getBorrowedAudioBooks()){
-				if(audioBook.getAudioBook().getAudioBookId()== whichBook)
+				if(audioBook.getAudioBook().getAudioBookId()== whichBook){
 					if(audioBook.getBookRating()==null){
 						prevRated = false;
 					}
@@ -355,11 +355,12 @@ public class BookController {
 						prevRating = audioBook.getBookRating();
 					audioBook.setBookRating(rating);
 					userService.updateBorrowedBook(audioBook);
+				}
 			}
 			AudioBook book = libraryService.getSpecificAudioBook(whichBook);
 			AudioBookRating audioBookRating= book.getBookRating();
 			if(prevRated)
-				audioBookRating.updateRating(rating, prevRating);
+				audioBookRating.addRating(rating);
 			else
 				audioBookRating.addRating(rating);
 			libraryService.updateBookRating(audioBookRating);
