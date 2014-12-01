@@ -34,6 +34,17 @@ public class FilterManager {
 				}
 			}
 		}
+		else if(filterType.equals(FilterType.Available)){
+			// by eBook
+			if(value.equals(GlobalConstants.AVAILABLE)){
+				while (lIter.hasNext()) {
+					SearchResult searchResult = lIter.next();
+						if (!searchResult.isAvailable()) {
+							lIter.remove();
+						}
+					}
+			}
+		}
 		else if(filterType.equals(FilterType.Author)){
 			while (lIter.hasNext()) {
 				SearchResult searchResult = lIter.next();

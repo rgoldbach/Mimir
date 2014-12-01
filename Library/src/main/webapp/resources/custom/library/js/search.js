@@ -45,11 +45,31 @@ $(document)
 							url : 'loadFilters',
 							type : 'GET',
 							success : function(jFilterOptions) {
+								$('#formatFilters').html('');
+								$('#availableFilters').html('');
 								$('#authorFilters').html('');
 								$('#genreFilters').html('');
 								$('#languageFilters').html('');
 								$('#publisherFilters').html('');
 								//$('#awardFilters').html('');
+								if(jFilterOptions.eBookFilterOption.count > 0){
+								$('#formatFilters').append('<option data-icon="glyphicon glyphicon-book" value="format?=\'eBookOnly\'" >'
+										+ jFilterOptions.eBookFilterOption.name + ' Only ('
+										+ jFilterOptions.eBookFilterOption.count
+										+ ')</option>');
+								}
+								if(jFilterOptions.audioFilterOption.count > 0){
+								$('#formatFilters').append('<option data-icon="glyphicon audioFilterOption" value="format?=\'audioOnly\'" >'
+										+ jFilterOptions.audioFilterOption.name + ' Only ('
+										+ jFilterOptions.audioFilterOption.count
+										+ ')</option>');
+								}
+								if(jFilterOptions.availableFilterOption.count > 0){
+								$('#availableFilters').append('<option data-icon="glyphicon glyphicon-thumbs-up" value="available?=\'availableOnly\'" >'
+															+ jFilterOptions.availableFilterOption.name + ' Only ('
+															+ jFilterOptions.availableFilterOption.count
+															+ ')</option>');
+								}
 								$.each(jFilterOptions.authorFilterOptions,
 										function(index, value) {
 											$('#authorFilters').append(

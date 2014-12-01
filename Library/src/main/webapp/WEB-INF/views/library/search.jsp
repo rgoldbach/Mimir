@@ -40,9 +40,9 @@
 						</select>
 						<br>
 						<select id="filterBy" class="resultDisplay selectpicker" data-width="190px" multiple data-selected-text-format="count" title="Select Filter(s)" data-live-search="true">
-							<optgroup label="Format" data-max-options="1">
- 								<option value="format?='eBookOnly'" data-icon="glyphicon glyphicon-book">eBook Only</option>
- 								<option value="format?='audioOnly'" data-icon="glyphicon glyphicon-headphones">Audio Only</option>
+							<optgroup id="formatFilters" label="Format" data-max-options="1">
+ 							</optgroup>
+ 							<optgroup id="availableFilters" label="Availability" data-max-options="1">
  							</optgroup>
  							<optgroup id="authorFilters" label="Author" data-max-options="1">
  							</optgroup>
@@ -51,8 +51,6 @@
  							<optgroup id="languageFilters" label="Language" data-max-options="1">
  							</optgroup>
  							<optgroup id="publisherFilters" label="Publisher" data-max-options="1">
- 							</optgroup>
- 							<optgroup label="Award" data-max-options="1">
  							</optgroup>
 						</select>
 					</div>

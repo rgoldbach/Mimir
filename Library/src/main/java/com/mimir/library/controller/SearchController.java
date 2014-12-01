@@ -109,6 +109,9 @@ public class SearchController {
 		List<FilterOption> languageFilterOptions = new ArrayList<FilterOption>();
 		List<FilterOption> publisherFilterOptions = new ArrayList<FilterOption>();
 		//List<FilterOption> awardFilterOptions = new ArrayList<FilterOption>();
+		FilterOption availableFilterOption = new FilterOption("Available", 0);
+		FilterOption eBookFilterOption = new FilterOption("eBook", 0);
+		FilterOption audioFilterOption = new FilterOption("Audio", 0);
 		
 		for (SearchResult result : results) {
 			filterBuilder(result.getAuthorNames(), authorFilterOptions);
@@ -116,6 +119,15 @@ public class SearchController {
 			filterBuilder(result.getLanguageNames(), languageFilterOptions);
 			filterBuilder(result.getPublisherNames(), publisherFilterOptions);
 			//filterBuilder(result.getAwardNames(), awardFilterOptions);
+			if(result.isAvailable()){
+				availableFilterOption.increment();
+			}
+			if(result.getFormat().equals(GlobalConstants.EBOOK)){
+				eBookFilterOption.increment();
+			}
+			if(result.getFormat().equals(GlobalConstants.AUDIOBOOK)){
+				audioFilterOption.increment();
+			}
 		}
 		
 		JSONObject jFilterOptions = new JSONObject();
@@ -124,6 +136,7 @@ public class SearchController {
 		JSONArray jLanguageFilterOptions = new JSONArray();
 		JSONArray jPublisherFilterOptions = new JSONArray();
 		//JSONArray jAwardFilterOptions = new JSONArray();
+		
 		
 		jAuthorFilterOptions.addAll(authorFilterOptions);
 		jGenreFilterOptions.addAll(genreFilterOptions);
@@ -136,6 +149,9 @@ public class SearchController {
 		jFilterOptions.put("languageFilterOptions", jLanguageFilterOptions);
 		jFilterOptions.put("publisherFilterOptions", jPublisherFilterOptions);
 		//jFilterOptions.put("awardFilterOptions", jAwardFilterOptions);
+		jFilterOptions.put("availableFilterOption", availableFilterOption);
+		jFilterOptions.put("eBookFilterOption", eBookFilterOption);
+		jFilterOptions.put("audioFilterOption", audioFilterOption);
 		return jFilterOptions;
 	}
 	
@@ -154,7 +170,7 @@ public class SearchController {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/loadResults")
 	@ResponseBody
@@ -274,6 +290,12 @@ public class SearchController {
 				else if(value.equals("audioOnly")){
 					value = GlobalConstants.AUDIOBOOK;
 				}
+				break;
+			case "available":
+				if(value.equals("availableOnly")){
+					value = GlobalConstants.AVAILABLE;
+				}
+				filterType = FilterType.Available;
 				break;
 			case "author":
 				filterType = FilterType.Author;

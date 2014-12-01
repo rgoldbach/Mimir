@@ -26,6 +26,7 @@ public class GlobalConstants {
 	//BOOK FORMATS
 	public static final String EBOOK = "EBook";
 	public static final String AUDIOBOOK = "AudioBook";
+	public static final String AVAILABLE = "Available";
 
 	public static final String CURRENT_ADMIN_SESSION_GETTER = "currentAdmin";
 	

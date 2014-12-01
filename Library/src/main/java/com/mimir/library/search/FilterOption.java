@@ -4,6 +4,11 @@ public class FilterOption {
 	private String name;
 	private int count;
 	
+	public FilterOption(String name, int count){
+		this.name = name;
+		this.count = count;
+	}
+	
 	public FilterOption(String name){
 		this.name = name;
 		this.count = 1;
