@@ -8,6 +8,8 @@ import com.mimir.library.enums.FilterType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.Book;
+import com.mimir.library.searchHelpers.RelevanceScoreCalculator;
+import com.mimir.library.searchHelpers.SearchKeywordSeperator;
 
 public class SearchManager {
 	
@@ -19,20 +21,23 @@ public class SearchManager {
 		filterManager = new FilterManager();
 	}
 	
-	public List<SearchResult> analyzeSearch(List<Book> books){
+	public List<SearchResult> analyzeSearch(List<Book> books, String searchKeyword){
 		List<SearchResult> searchResults = new ArrayList<SearchResult>();
+		List<String> searchKeywordsSeperated = SearchKeywordSeperator.seperateKeywords(searchKeyword);
 		//Since the default search sorts on relevance, we will use the size of the result sort to maintain this order for relevance.
-		int numberOfResults = books.size();
+		//int numberOfResults = books.size();
 		for(Book book : books){
 			SearchResult eBookResult = null;
 			SearchResult audioBookResult = null;
 			if(book.getEBook() != null){
-				eBookResult = new SearchResult(book, GlobalConstants.EBOOK, numberOfResults);
+				int relevanceScore = RelevanceScoreCalculator.calculateRelevanceScore(book, searchKeywordsSeperated);
+				eBookResult = new SearchResult(book, GlobalConstants.EBOOK, relevanceScore);
 			}
 			if(book.getAudioBook() != null){
-				audioBookResult = new SearchResult(book, GlobalConstants.AUDIOBOOK, numberOfResults);
+				int relevanceScore = RelevanceScoreCalculator.calculateRelevanceScore(book, searchKeywordsSeperated);
+				audioBookResult = new SearchResult(book, GlobalConstants.AUDIOBOOK, relevanceScore);
 			}
-			numberOfResults--;
+			//numberOfResults--;
 			if(eBookResult != null){
 				searchResults.add(eBookResult);
 			}

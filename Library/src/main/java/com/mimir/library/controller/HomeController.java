@@ -1,6 +1,7 @@
 package com.mimir.library.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.SearchService;
@@ -24,9 +26,23 @@ public class HomeController {
 	
 	@RequestMapping(value = "/" , method = RequestMethod.GET)
 	public ModelAndView goToHomePage(){
-		TestLibrary tl= new TestLibrary();
 		searchService.initHibernateSearch();
-		ArrayList<BookDisplayableInformation> newBooks = new ArrayList<BookDisplayableInformation>();
+		ModelAndView mv = new ModelAndView("library/index");
+		
+		List<BasicBookInfo> newEBooks =  searchService.getNewEBooks(8);
+		mv.addObject("newBooks", newEBooks);
+		
+		List<BasicBookInfo> newAudioBooks = searchService.getNewAudioBooks(8);
+		mv.addObject("newAudioBooks", newAudioBooks);
+		
+		List<BasicBookInfo> topEBooks = searchService.getTopEBooks(8);
+		mv.addObject("topBooks", topEBooks);
+		
+		List<BasicBookInfo> topAudioBooks = searchService.getTopAudioBooks(8);
+		mv.addObject("topAudioBooks", topAudioBooks);
+		
+		
+		/*ArrayList<BookDisplayableInformation> newBooks = new ArrayList<BookDisplayableInformation>();
 		newBooks.add(libraryService.getSpecificBook(1).getBookDisplay());
 		newBooks.add(libraryService.getSpecificBook(3).getBookDisplay());
 		newBooks.add(libraryService.getSpecificBook(2).getBookDisplay());
@@ -71,7 +87,7 @@ public class HomeController {
 		topAudioBooks.add(libraryService.getSpecificBook(7).getBookDisplay());
 		topAudioBooks.add(libraryService.getSpecificBook(8).getBookDisplay());
 
-		mv.addObject("topAudioBooks", topAudioBooks);
+		mv.addObject("topAudioBooks", topAudioBooks);*/
 		
 		
 		return mv;

@@ -25,7 +25,7 @@ public class SortManager {
 	Comparator<SearchResult> relevanceComparator = new Comparator<SearchResult>() {
 	    @Override
 	    public int compare(SearchResult o1, SearchResult o2) {
-	        return Integer.valueOf(o1.getRelevanceScore()).compareTo(o2.getRelevanceScore());
+	        return Integer.valueOf(o1.getRelevanceScore()).compareTo(o2.getRelevanceScore()) * -1;
 	    }
 	};
 	

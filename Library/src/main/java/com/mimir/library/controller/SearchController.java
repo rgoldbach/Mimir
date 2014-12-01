@@ -41,7 +41,7 @@ public class SearchController {
 		}
 		
 		// Obtain results
-		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.TitleAtoZ);
+		List<SearchResult> searchResults = searchService.search(query, 0, SearchType.Quick, SortType.Relevance);
 		
 		// Store original results 
 		session.setAttribute("originalResults", searchResults); 

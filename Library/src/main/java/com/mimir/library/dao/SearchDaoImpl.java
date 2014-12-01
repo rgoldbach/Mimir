@@ -6,18 +6,25 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.errors.EmptyQueryException;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AdvancedSearchForm;
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
+import com.mimir.library.model.BookDisplayableInformation;
+import com.mimir.library.model.BorrowedAudioBook;
+import com.mimir.library.model.BorrowedEBook;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.Format;
 import com.mimir.library.model.Genre;
 import com.mimir.library.model.InterestLevel;
@@ -173,14 +180,18 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		if(searchKeyword == null){
 			return books;
 		}
-		if(sortType == SortType.Relevance && searchType != SearchType.Advanced){
+		
+		System.out.println("DEBUG - Using Criteria Search...");
+		books = performCriteriaSearch(searchKeyword, firstResultIndex, searchType, sortType);
+		
+		/*if(sortType == SortType.Relevance && searchType != SearchType.Advanced){
 			System.out.println("DEBUG - Using Hibernate Search...");
 			books = performHibernateSearch(searchKeyword, firstResultIndex);
 		}
 		else{
 			System.out.println("DEBUG - Using Criteria Search...");
 			books = performCriteriaSearch(searchKeyword, firstResultIndex, searchType, sortType);
-		}
+		}*/
 		
 		this.initializeBooks(books);
 		
@@ -235,6 +246,7 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		// yes i know how to multi line comment but i'm too lazy
 		// yolo
 		Query query = fullTextSession.createFullTextQuery(luceneQuery, Book.class);
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		query.setFirstResult(firstResultIndex);
 		query.setMaxResults(GlobalConstants.MAX_RESULTS);
 		
@@ -242,5 +254,61 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		List<Book> result = (List<Book>) query.list();
 		System.out.println("DEBUG - " + result.size() + " results found!");
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BasicBookInfo> getNewEBooks(int sizeOfList) {
+		List<BasicBookInfo> newEBooks = new ArrayList<BasicBookInfo>();
+		Criteria crit = getSession().createCriteria(EBook.class, "eBook");
+		crit.createAlias("eBook.book", "book");
+		crit.createAlias("book.bookDisplay", "bookDisplay");
+		crit.addOrder(Order.asc("bookDisplay.dateAdded"));
+		crit.setMaxResults(sizeOfList);
+		List<EBook> books = (List<EBook>) crit.list();
+		for(EBook eBook : books){
+			newEBooks.add(new BasicBookInfo(eBook));
+		}
+		return newEBooks;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BasicBookInfo> getNewAudioBooks(int sizeOfList) {
+		List<BasicBookInfo> newAudioBooks = new ArrayList<BasicBookInfo>();
+		Criteria crit = getSession().createCriteria(AudioBook.class, "audioBook");
+		crit.createAlias("audioBook.book", "book");
+		crit.createAlias("book.bookDisplay", "bookDisplay");
+		crit.addOrder(Order.asc("bookDisplay.dateAdded"));
+		crit.setMaxResults(sizeOfList);
+		List<AudioBook> books = (List<AudioBook>) crit.list();
+		for(AudioBook audioBook : books){
+			newAudioBooks.add(new BasicBookInfo(audioBook));
+		}
+		return newAudioBooks;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BasicBookInfo> getTopEBooks(int sizeOfList) {
+		List<BasicBookInfo> topEBooks = new ArrayList<BasicBookInfo>();
+		Query query = getSession().createSQLQuery("SELECT * FROM BorrowedEBooks GROUP BY eBookId ORDER BY count(eBookId) DESC LIMIT 0,8").addEntity(BorrowedEBook.class);
+		List<BorrowedEBook> books = (List<BorrowedEBook>) query.list();
+		for(BorrowedEBook eBook : books){
+			topEBooks.add(new BasicBookInfo(eBook.getEBook()));
+		}
+		return topEBooks;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BasicBookInfo> getTopAudioBooks(int sizeOfList) {
+		List<BasicBookInfo> topAudioBooks = new ArrayList<BasicBookInfo>();
+		Query query = getSession().createSQLQuery("SELECT * FROM BorrowedAudioBooks GROUP BY audioBookId ORDER BY count(audioBookId) DESC LIMIT 0,8").addEntity(BorrowedAudioBook.class);
+		List<BorrowedAudioBook> books = (List<BorrowedAudioBook>) query.list();
+		for(BorrowedAudioBook audioBook : books){
+			topAudioBooks.add(new BasicBookInfo(audioBook.getAudioBook()));
+		}
+		return topAudioBooks;
 	}
 }

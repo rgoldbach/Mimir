@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.dao.SearchDao;
 import com.mimir.library.enums.SearchType;
 import com.mimir.library.enums.SortType;
@@ -84,8 +85,8 @@ public class SearchServiceImpl implements SearchService{
 		List<Book> results = dao.search(searchKeyword, firstResultIndex, searchType, sortType);
 		
 		SearchManager searchManager = new SearchManager();
-		List<SearchResult> searchResults = searchManager.analyzeSearch(results);
-		
+		List<SearchResult> searchResults = searchManager.analyzeSearch(results, searchKeyword);
+		searchManager.sort(sortType, searchResults);
 		System.out.println(searchResults);
 		
 		return searchResults;
@@ -95,6 +96,26 @@ public class SearchServiceImpl implements SearchService{
 	public List<Book> quickSearch(String keyword, int firstResultIndex, SortType sortType) {
 		List<Book> results = dao.quickSearch(keyword, firstResultIndex, sortType);
 		return results;
+	}
+
+	@Override
+	public List<BasicBookInfo> getNewEBooks(int sizeOfList) {
+		return dao.getNewEBooks(sizeOfList);
+	}
+
+	@Override
+	public List<BasicBookInfo> getNewAudioBooks(int sizeOfList) {
+		return dao.getNewAudioBooks(sizeOfList);
+	}
+
+	@Override
+	public List<BasicBookInfo> getTopEBooks(int sizeOfList) {
+		return dao.getTopEBooks(sizeOfList);
+	}
+
+	@Override
+	public List<BasicBookInfo> getTopAudioBooks(int sizeOfList) {
+		return dao.getTopAudioBooks(sizeOfList);
 	}
 	
 	
