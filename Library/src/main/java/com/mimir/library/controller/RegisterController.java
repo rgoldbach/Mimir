@@ -74,7 +74,7 @@ public class RegisterController {
 		user = service.getSpecificUserFromAccountInfoWithAllInfo(temp);
 		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
 		
-		System.out.print(user.getLibraryCardNumber());
+		// System.out.print(user.getLibraryCardNumber());
 		
 		return "success";
 		

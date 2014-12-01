@@ -48,14 +48,14 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void saveBook(Book book) {
-		System.out.print("Saving book: ");
+		//System.out.print("Saving book: ");
 		try{
 			save(book);
 			//Author Awards
 			for(Author author : book.getAuthors()){
 				for(AuthorAward aa : author.getAwards()){
 					aa.setAuthor(author);
-					System.out.print(" " + aa.getAwardInfo().getTitle() + ", ");
+					//System.out.print(" " + aa.getAwardInfo().getTitle() + ", ");
 					saveOrUpdate(aa.getAwardInfo());
 					save(aa);
 				}
@@ -64,33 +64,33 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 			//Book Awards
 			for(BookAward ba : book.getAwards()){
 				ba.setBook(book);
-				System.out.print(" " + ba.getAwardInfo().getTitle() + ", ");
+				//System.out.print(" " + ba.getAwardInfo().getTitle() + ", ");
 				saveOrUpdate(ba.getAwardInfo());
 				save(ba);
 			}
 			//Book Genres
 			for(BookGenre bg : book.getGenres()){
 				bg.setBook(book);
-				System.out.print(" " + bg.getGenre().getGenre() + ", ");
+				//System.out.print(" " + bg.getGenre().getGenre() + ", ");
 				saveOrUpdate(bg.getGenre());
 				save(bg);
 			}
 			//Book Interest Levels
 			for(BookInterestLevel bil : book.getInterestLevels()){
 				bil.setBook(book);
-				System.out.print(" " + bil.getInterestLevel().getInterestLevel() + ", ");
+				//System.out.print(" " + bil.getInterestLevel().getInterestLevel() + ", ");
 				saveOrUpdate(bil.getInterestLevel());
 				save(bil);
 			}
 			//Book Display
 			book.getBookDisplay().setBook(book);
-			System.out.print(" " + book.getBookDisplay().getTitle() + ", ");
+			//System.out.print(" " + book.getBookDisplay().getTitle() + ", ");
 			save(book.getBookDisplay());
 			//Book eBook
 			EBook eBook = book.getEBook();
 				//eBook Publisher
 				Publisher publisher = eBook.getPublisher();
-				System.out.print(" " + eBook.getPublisher().getName() + ", ");
+				//System.out.print(" " + eBook.getPublisher().getName() + ", ");
 				save(publisher);
 				eBook.setPublisher(publisher);
 			eBook.setBook(book);
@@ -101,14 +101,14 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				save(eBookRating);
 				//eBook Formats
 				for(EBookFormat ebf : eBook.geteBookFormats()){
-					System.out.print(" " + ebf.getFormat().getFormatType() + ", ");
+					//System.out.print(" " + ebf.getFormat().getFormatType() + ", ");
 					saveOrUpdate(ebf.getFormat());
 					ebf.seteBook(eBook);
 					save(ebf);
 				}
 				//eBook Languages
 				for(EBookLanguage ebl : eBook.getLanguages()){
-					System.out.print(" " + ebl.getLanguage().getLanguage() + ", ");
+					//System.out.print(" " + ebl.getLanguage().getLanguage() + ", ");
 					saveOrUpdate(ebl.getLanguage());
 					ebl.seteBook(eBook);
 					save(ebl);
@@ -117,7 +117,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 			AudioBook audioBook = book.getAudioBook();
 				//AudioBook Publisher
 				Publisher publisherA = audioBook.getPublisher();
-				System.out.print(" " + audioBook.getPublisher().getName() + ", ");
+				//System.out.print(" " + audioBook.getPublisher().getName() + ", ");
 				save(publisherA);
 				audioBook.setPublisher(publisherA);
 			audioBook.setBook(book);
@@ -128,14 +128,14 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				save(aBookRating);
 				//AudioBook Formats
 				for(AudioBookFormat abf : audioBook.getAudioBookFormats()){
-					System.out.print(" " + abf.getFormat().getFormatType() + ", ");
+					//System.out.print(" " + abf.getFormat().getFormatType() + ", ");
 					saveOrUpdate(abf.getFormat());
 					abf.setAudioBook(audioBook);
 					save(abf);
 				}
 				//AudioBook Languages
 				for(AudioBookLanguage abl : audioBook.getLanguages()){
-					System.out.print(" " + abl.getLanguage().getLanguage() + ", ");
+					//System.out.print(" " + abl.getLanguage().getLanguage() + ", ");
 					saveOrUpdate(abl.getLanguage());
 					abl.setAudioBook(audioBook);
 					save(abl);
