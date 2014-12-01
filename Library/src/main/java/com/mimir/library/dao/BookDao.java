@@ -47,4 +47,6 @@ public interface BookDao {
 
 	int getTotalCopiesOfEBook(EBook eBook);
 	int getTotalCopiesOfAudioBook(AudioBook audioBook);
+
+	boolean updateBook(AdminBook book);
 }
