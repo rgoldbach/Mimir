@@ -48,93 +48,113 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 
 	@Override
 	public void saveBook(Book book) {
-		save(book);
-		//Author Awards
-		for(Author author : book.getAuthors()){
-			for(AuthorAward aa : author.getAwards()){
-				aa.setAuthor(author);
-				saveOrUpdate(aa.getAwardInfo());
-				save(aa);
+		System.out.print("Saving book: ");
+		try{
+			save(book);
+			//Author Awards
+			for(Author author : book.getAuthors()){
+				for(AuthorAward aa : author.getAwards()){
+					aa.setAuthor(author);
+					System.out.print(" " + aa.getAwardInfo().getTitle() + ", ");
+					saveOrUpdate(aa.getAwardInfo());
+					save(aa);
+				}
 			}
+			
+			//Book Awards
+			for(BookAward ba : book.getAwards()){
+				ba.setBook(book);
+				System.out.print(" " + ba.getAwardInfo().getTitle() + ", ");
+				saveOrUpdate(ba.getAwardInfo());
+				save(ba);
+			}
+			//Book Genres
+			for(BookGenre bg : book.getGenres()){
+				bg.setBook(book);
+				System.out.print(" " + bg.getGenre().getGenre() + ", ");
+				saveOrUpdate(bg.getGenre());
+				save(bg);
+			}
+			//Book Interest Levels
+			for(BookInterestLevel bil : book.getInterestLevels()){
+				bil.setBook(book);
+				System.out.print(" " + bil.getInterestLevel().getInterestLevel() + ", ");
+				saveOrUpdate(bil.getInterestLevel());
+				save(bil);
+			}
+			//Book Display
+			book.getBookDisplay().setBook(book);
+			System.out.print(" " + book.getBookDisplay().getTitle() + ", ");
+			save(book.getBookDisplay());
+			//Book eBook
+			EBook eBook = book.getEBook();
+				//eBook Publisher
+				Publisher publisher = eBook.getPublisher();
+				System.out.print(" " + eBook.getPublisher().getName() + ", ");
+				save(publisher);
+				eBook.setPublisher(publisher);
+			eBook.setBook(book);
+			save(eBook);
+				//eBook Rating
+				EBookRating eBookRating = eBook.getBookRating();
+				eBookRating.seteBook(eBook);
+				save(eBookRating);
+				//eBook Formats
+				for(EBookFormat ebf : eBook.geteBookFormats()){
+					System.out.print(" " + ebf.getFormat().getFormatType() + ", ");
+					saveOrUpdate(ebf.getFormat());
+					ebf.seteBook(eBook);
+					save(ebf);
+				}
+				//eBook Languages
+				for(EBookLanguage ebl : eBook.getLanguages()){
+					System.out.print(" " + ebl.getLanguage().getLanguage() + ", ");
+					saveOrUpdate(ebl.getLanguage());
+					ebl.seteBook(eBook);
+					save(ebl);
+				}
+			//Book Audio Book
+			AudioBook audioBook = book.getAudioBook();
+				//AudioBook Publisher
+				Publisher publisherA = audioBook.getPublisher();
+				System.out.print(" " + audioBook.getPublisher().getName() + ", ");
+				save(publisherA);
+				audioBook.setPublisher(publisherA);
+			audioBook.setBook(book);
+			save(audioBook);
+				//AudioBook Rating
+				AudioBookRating aBookRating = audioBook.getBookRating();
+				aBookRating.setAudioBook(audioBook);
+				save(aBookRating);
+				//AudioBook Formats
+				for(AudioBookFormat abf : audioBook.getAudioBookFormats()){
+					System.out.print(" " + abf.getFormat().getFormatType() + ", ");
+					saveOrUpdate(abf.getFormat());
+					abf.setAudioBook(audioBook);
+					save(abf);
+				}
+				//AudioBook Languages
+				for(AudioBookLanguage abl : audioBook.getLanguages()){
+					System.out.print(" " + abl.getLanguage().getLanguage() + ", ");
+					saveOrUpdate(abl.getLanguage());
+					abl.setAudioBook(audioBook);
+					save(abl);
+				}
+			
+			getSession().flush();
+			
+			//Add book to lamazon table - for testing purpose only...
+			LlamazonBook llama = new LlamazonBook();
+			llama.setAuthor(book.getAuthors().iterator().next().getName());
+			llama.setBookImage(book.getBookDisplay().getImageFilePath());
+			llama.setBookTitle(book.getBookDisplay().getTitle());
+			llama.setDescription(book.getBookDisplay().getDescription());
+			save(llama);
+			System.out.println("DEBUG - BOOK SAVED!");
+		}catch(Exception e){
+			System.out.println("Could not save book!");
+			System.out.println(e);
 		}
-		
-		//Book Awards
-		for(BookAward ba : book.getAwards()){
-			ba.setBook(book);
-			saveOrUpdate(ba.getAwardInfo());
-			save(ba);
-		}
-		//Book Genres
-		for(BookGenre bg : book.getGenres()){
-			bg.setBook(book);
-			saveOrUpdate(bg.getGenre());
-			save(bg);
-		}
-		//Book Interest Levels
-		for(BookInterestLevel bil : book.getInterestLevels()){
-			bil.setBook(book);
-			System.out.println("Saving.." + bil.getInterestLevel().getInterestLevel());
-			saveOrUpdate(bil.getInterestLevel());
-			System.out.println("Saved." + bil.getInterestLevel().getInterestLevel());
-			save(bil);
-		}
-		//Book Display
-		book.getBookDisplay().setBook(book);
-		save(book.getBookDisplay());
-		//Book eBook
-		EBook eBook = book.getEBook();
-			//eBook Publisher
-			Publisher publisher = eBook.getPublisher();
-			save(publisher);
-			eBook.setPublisher(publisher);
-		eBook.setBook(book);
-		save(eBook);
-			//eBook Rating
-			EBookRating eBookRating = eBook.getBookRating();
-			eBookRating.seteBook(eBook);
-			save(eBookRating);
-			//eBook Formats
-			for(EBookFormat ebf : eBook.geteBookFormats()){
-				ebf.seteBook(eBook);
-				save(ebf);
-			}
-			//eBook Languages
-			for(EBookLanguage ebl : eBook.getLanguages()){
-				ebl.seteBook(eBook);
-				save(ebl);
-			}
-		//Book Audio Book
-		AudioBook audioBook = book.getAudioBook();
-			//AudioBook Publisher
-			Publisher publisherA = audioBook.getPublisher();
-			save(publisherA);
-			audioBook.setPublisher(publisherA);
-		audioBook.setBook(book);
-		save(audioBook);
-			//AudioBook Rating
-			AudioBookRating aBookRating = audioBook.getBookRating();
-			aBookRating.setAudioBook(audioBook);
-			save(aBookRating);
-			//AudioBook Formats
-			for(AudioBookFormat abf : audioBook.getAudioBookFormats()){
-				abf.setAudioBook(audioBook);
-				save(abf);
-			}
-			//AudioBook Languages
-			for(AudioBookLanguage abl : audioBook.getLanguages()){
-				abl.setAudioBook(audioBook);
-				save(abl);
-			}
-		
-		getSession().flush();
-		
-		//Add book to lamazon table - for testing purpose only...
-		LlamazonBook llama = new LlamazonBook();
-		llama.setAuthor(book.getAuthors().iterator().next().getName());
-		llama.setBookImage(book.getBookDisplay().getImageFilePath());
-		llama.setBookTitle(book.getBookDisplay().getTitle());
-		llama.setDescription(book.getBookDisplay().getDescription());
-		save(llama);
 	}
 
 	@Override
@@ -501,5 +521,12 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 			}
 			contained = false;
 		}
+	}
+
+	@Override
+	public BookDisplayableInformation getBookDisplayByTitle(String title) {
+		Criteria crit = getSession().createCriteria(BookDisplayableInformation.class, "language");
+		crit.add(Restrictions.eq("title", title));
+		return (BookDisplayableInformation) crit.uniqueResult();
 	}
 }

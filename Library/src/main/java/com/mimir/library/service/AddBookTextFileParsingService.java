@@ -15,6 +15,7 @@ import com.mimir.library.model.AuthorAward;
 import com.mimir.library.model.AwardInfo;
 import com.mimir.library.model.Book;
 import com.mimir.library.model.BookAward;
+import com.mimir.library.model.BookDisplayableInformation;
 import com.mimir.library.model.BookGenre;
 import com.mimir.library.model.BookInterestLevel;
 import com.mimir.library.model.DownloadSite;
@@ -74,7 +75,7 @@ public class AddBookTextFileParsingService {
 		String line = "";
     	try {
     		line = bufferedReader.readLine();
-    		while(!(line.equalsIgnoreCase("Finished"))){
+    		while(line!=null && !(line.equalsIgnoreCase("Finished") || line.equalsIgnoreCase(""))){
     			book = new Book();
         		line = bufferedReader.readLine();
         		System.out.println(line);
@@ -154,10 +155,13 @@ public class AddBookTextFileParsingService {
         		System.out.println(line);
         		service.saveBook(book);
         		response += " " + book.getBookDisplay().getTitle() + ", ";
+        		System.out.println(response);
     		}
 		} catch (IOException e) {
 			System.out.println("Error Parsing File At Line " + line);
-			return "Error Parsing File At Line " + line;
+			return  "Response: " + response + "Error Parsing File At Line " + line + "! Reason: " +  e;
+		} catch(IllegalArgumentException e1){
+			return "Response: " + response + "Error Parsing File At Line " + line + "! Reason: " + e1;
 		}
 		return response;	
 	}
@@ -165,12 +169,12 @@ public class AddBookTextFileParsingService {
 	private void parseDownloadSite(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(downloadSite)){
-			throw new IllegalArgumentException();
-		}
-		if(line.equals("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected download site, actual is " + line);
 		}
 		String restOfLine = line.substring(downloadSite.length(), line.length());
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("Download site cannot be null! Line: " + line);
+		}
 		String[] downloadSiteInfo = restOfLine.split("_");
 		if(downloadSiteInfo.length != 3){
 			throw new IllegalArgumentException();
@@ -193,12 +197,12 @@ public class AddBookTextFileParsingService {
 	private void parseLanguages(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(languages)){
-			throw new IllegalArgumentException();
-		}
-		if(line.equals("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected languages, actual is " + line);
 		}
 		String restOfLine = line.substring(languages.length(), line.length());
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("A book must have languages! Line: " + line);
+		}
 		String[] languages = restOfLine.split("_");
 		for(String languageName : languages){
 			Language language = service.getLanguage(languageName);
@@ -215,11 +219,11 @@ public class AddBookTextFileParsingService {
 		AudioBookFormat abf = new AudioBookFormat();
 		line = line.trim();
 		if(!line.contains(audioBookFormats)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected audio book formats, actual is " + line);
 		}
 		String restOfLine = line.substring(audioBookFormats.length(), line.length());
-		if(restOfLine.equals("null")){
-			throw new IllegalArgumentException();
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("You must add specific formats for the audiobook! Line: " + line);
 		}
 		String[] formatInfo = restOfLine.split("_");
 		if(formatInfo.length != 5){
@@ -257,11 +261,11 @@ public class AddBookTextFileParsingService {
 		EBookFormat ebf = new EBookFormat();
 		line = line.trim();
 		if(!line.contains(ebookFormats)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected ebook formats, actual is " + line);
 		}
 		String restOfLine = line.substring(ebookFormats.length(), line.length());
-		if(restOfLine.equals("null")){
-			throw new IllegalArgumentException();
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("You must add specific formats for the ebook! Line: " + line);
 		}
 		String[] formatInfo = restOfLine.split("_");
 		if(formatInfo.length != 3){
@@ -291,12 +295,13 @@ public class AddBookTextFileParsingService {
 	private void parseAudioBookPublisher(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(aPublisher)){
-			throw new IllegalArgumentException();
-		}
-		if((line.substring(aPublisher.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected audiobook publisher, actual is " + line);
 		}
 		String restOfLine = line.substring(aPublisher.length(), line.length());
+		if(restOfLine.equalsIgnoreCase("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("AudioBook Publisher cannot be null! Line: " + line);
+		}
+
 		Publisher publisher = service.getPublisher(restOfLine);
 		if(publisher == null){
 			publisher = new Publisher();
@@ -308,12 +313,12 @@ public class AddBookTextFileParsingService {
 	private void parseEBookPublisher(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(ePublisher)){
-			throw new IllegalArgumentException();
-		}
-		if((line.substring(ePublisher.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected ebook publisher, actual is " + line);
 		}
 		String restOfLine = (line.substring(ePublisher.length(), line.length()));
+		if(restOfLine.equalsIgnoreCase("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("EBook Publisher cannot be null! Line: " + line);
+		}
 		Publisher publisher = service.getPublisher(restOfLine);
 		if(publisher == null){
 			publisher = new Publisher();
@@ -325,12 +330,12 @@ public class AddBookTextFileParsingService {
 	private void parseInterestLevels(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(intrstLvls)){
-			throw new IllegalArgumentException();
-		}
-		if((line.substring(intrstLvls.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected interest levels, actual is " + line);
 		}
 		String restOfLine = (line.substring(intrstLvls.length(), line.length()));
+		if(restOfLine.equalsIgnoreCase("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("Interest Levels cannot be null! Line:" + line);
+		}	
 		String[] interestLevels = restOfLine.split("_");
 		for(String interestLevelname : interestLevels){
 			System.out.println("DEBUG - " + interestLevelname);
@@ -352,12 +357,12 @@ public class AddBookTextFileParsingService {
 	private void parseGenres(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(genres)){
-			throw new IllegalArgumentException();
-		}
-		if((line.substring(genres.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected genres, actual is " + line);
 		}
 		String restOfLine = line.substring(genres.length(), line.length());
+		if(restOfLine.equalsIgnoreCase("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("A book must have a genre! Line:"+line);
+		}
 		String[] genres = restOfLine.split("_");
 		for(String genreName : genres){
 			BookGenre bg = new BookGenre();
@@ -378,12 +383,13 @@ public class AddBookTextFileParsingService {
 	private void parseImageFile(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(imgPath)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected image path, found " + line);
 		}
-		if((line.substring(imgPath.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+		String restOfLine = line.substring(imgPath.length(), line.length());
+		if((restOfLine.equalsIgnoreCase("null") || restOfLine.equals(""))){
+			throw new IllegalArgumentException("Image path cannot be null! Line: " + line);
 		}
-		book.getBookDisplay().setImageFilePath(line.substring(imgPath.length(), line.length()));
+		book.getBookDisplay().setImageFilePath(restOfLine);
 	}
 
 	private void addTodaysDate(Book book) {
@@ -396,10 +402,10 @@ public class AddBookTextFileParsingService {
 		AwardInfo awardInfo = new AwardInfo();
 		line = line.trim();
 		if(!line.contains(bookAwards)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected book awards, found " + line);
 		}
 		String restOfLine = line.substring(bookAwards.length(), line.length());
-		if(restOfLine.equals("null")){
+		if(restOfLine.equals("null") || restOfLine.equals("")){
 			return;
 		}
 		String[] awrdInfo = restOfLine.split("_");
@@ -433,23 +439,25 @@ public class AddBookTextFileParsingService {
 	private void parseSeriesName(String line, Book book) throws IOException {
 		line = line.trim();
 		if(!line.contains(seriesName)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected series name, found " + line);
 		}
-		if((line.substring(seriesName.length(), line.length())).equalsIgnoreCase("null")){
+		String restOfLine = line.substring(seriesName.length(), line.length());
+		if((restOfLine.equalsIgnoreCase("null") || restOfLine.equals(""))){
 			return;
 		}
-		book.setSeriesName(line.substring(seriesName.length(), line.length()));
+		book.setSeriesName(restOfLine);
 	}
 
 	private void parseIsbn(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(isbn)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected isbn, found " + line);
 		}
-		if((line.substring(isbn.length(), line.length())).equalsIgnoreCase("null")){
-			throw new IllegalArgumentException();
+		String restOfLine = line.substring(isbn.length(), line.length());
+		if((restOfLine.equalsIgnoreCase("null") || restOfLine.equals(""))){
+			throw new IllegalArgumentException("Isbn cannot be null...");
 		}
-		book.setIsbn(line.substring(isbn.length(), line.length()));
+		book.setIsbn(restOfLine);
 	}
 	
 	private void parseAuthorAward(String line, Book book){
@@ -457,7 +465,7 @@ public class AddBookTextFileParsingService {
 		AwardInfo awardInfo = new AwardInfo();
 		line = line.trim();
 		if(!line.contains(authAwar)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected author awards, found " + line);
 		}
 		String restOfLine = line.substring(authAwar.length(), line.length());
 		if(restOfLine.equals("null")){
@@ -500,11 +508,11 @@ public class AddBookTextFileParsingService {
 		Author author = new Author();
 		line = line.trim();
 		if(!line.contains(authors)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected authors, found " + line);
 		}
 		String restOfLine = line.substring(authors.length(), line.length());
 		String[] authorInfo = restOfLine.split("_");
-		if(restOfLine.equals("null")){
+		if(restOfLine.equals("null") || restOfLine.equals("")){
 			throw new IllegalArgumentException();
 		}
 		if(authorInfo.length != 2){
@@ -524,23 +532,29 @@ public class AddBookTextFileParsingService {
 	private void parseDescription(String line, Book book) {
 		line = line.trim();
 		if(!line.contains(desc)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected description, found " + line);
 		}
-		if(line.equals("null")){
-			throw new IllegalArgumentException();
+		String restOfLine = line.substring(desc.length(), line.length());
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("Description cannot be null! Line: " + line);
 		}
-		book.getBookDisplay().setDescription(line.substring(desc.length(), line.length()));
+		book.getBookDisplay().setDescription(restOfLine);
 	}
 
 	private void parseTitle(String line, Book book){
 		line = line.trim();
 		if(!line.contains(title)){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Expected title, actual is " + line);
 		}
-		if(line.equals("null")){
-			throw new IllegalArgumentException();
+		String restOfLine = line.substring(title.length(), line.length());
+		BookDisplayableInformation bdi = service.getBookDisplayByTitle(restOfLine);
+		if(bdi != null){
+			throw new IllegalArgumentException("Title already exists in database! " + line);
 		}
-		book.getBookDisplay().setTitle(line.substring(title.length(), line.length()));
+		if(restOfLine.equals("null") || restOfLine.equals("")){
+			throw new IllegalArgumentException("Title cannot be null! " + line);
+		}
+		book.getBookDisplay().setTitle(restOfLine);
 	}
 	
 }

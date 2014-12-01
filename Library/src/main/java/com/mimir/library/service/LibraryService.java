@@ -60,5 +60,7 @@ public interface LibraryService {
 	boolean updateBook(AdminBook book);
 
 	String deleteBook(int whichBook, String bookFormat);
+
+	BookDisplayableInformation getBookDisplayByTitle(String title);
 	
 }

@@ -51,4 +51,6 @@ public interface BookDao {
 	boolean updateBook(AdminBook book);
 
 	String deleteBook(int whichBook, String bookFormat);
+
+	BookDisplayableInformation getBookDisplayByTitle(String title);
 }

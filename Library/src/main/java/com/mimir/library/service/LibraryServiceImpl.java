@@ -178,4 +178,9 @@ public class LibraryServiceImpl implements LibraryService{
 	public String deleteBook(int whichBook, String bookFormat) {
 		return dao.deleteBook(whichBook, bookFormat);
 	}
+
+	@Override
+	public BookDisplayableInformation getBookDisplayByTitle(String title) {
+		return dao.getBookDisplayByTitle(title);
+	}
 }
