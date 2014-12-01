@@ -85,6 +85,7 @@ public class AdminBook {
 			else{
 				this.author = eBook.getBook().getAuthors().iterator().next().getName();
 			}
+			this.formats = getFormats(eBook);
 		}
 	}
 	public AdminBook(AudioBook audioBook, String creationType){
@@ -99,6 +100,7 @@ public class AdminBook {
 			else{
 				this.author = audioBook.getBook().getAuthors().iterator().next().getName();
 			}
+			this.formats = getFormats(audioBook);
 		}
 	}
 	public String getIsbn() {

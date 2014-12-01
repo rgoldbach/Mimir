@@ -76,7 +76,7 @@
                                                             <div class="form-group">
                                                                 <label class="col-md-4 control-label" for="bookTitle">Title:</label>  
                                                                 <div class="col-md-4">
-                                                                    <input id="modalBookTitle" name="bookTitle" type="text" placeholder="Current Title..." class="form-control" required>
+                                                                    <input id="modalBookTitle" name="bookTitle" type="text" placeholder="Current Title..." class="form-control" style="width: 340px;" required>
                                                                 </div>
                                                             </div>
                                                             <!-- Text input-->
