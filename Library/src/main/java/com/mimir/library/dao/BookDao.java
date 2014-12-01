@@ -49,4 +49,6 @@ public interface BookDao {
 	int getTotalCopiesOfAudioBook(AudioBook audioBook);
 
 	boolean updateBook(AdminBook book);
+
+	String deleteBook(int whichBook, String bookFormat);
 }

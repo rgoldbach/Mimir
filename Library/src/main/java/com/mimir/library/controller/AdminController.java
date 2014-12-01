@@ -93,7 +93,13 @@ public class AdminController {
 		}
 		return book;
 	}
-	
+	@RequestMapping(value ="adminDeleteBook", method = RequestMethod.GET)
+	@ResponseBody
+	public String deleteBook(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+								@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+								HttpSession session) {
+		return service.deleteBook(whichBook, bookFormat);
+	}
 	@RequestMapping(value ="users", method = RequestMethod.GET)
 	public String users() {
 		return "admin/users";

@@ -161,7 +161,7 @@
                                             	<input type="hidden" id="modalBookId">
                                             	<input type="hidden" id="modalBookFormat">
                                                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick="adminSaveBookChanges()">Save Changes</button>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Delete Book</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteBook()">Delete Book</button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>

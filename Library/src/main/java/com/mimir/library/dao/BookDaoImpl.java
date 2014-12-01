@@ -141,6 +141,39 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String deleteBook(int whichBook, String bookFormat) {
+		if(bookFormat.equalsIgnoreCase(GlobalConstants.EBOOK)){
+			try{
+				getSession().createSQLQuery("delete from Borrowedebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Ebookholds where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Pastborrowedebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Wishlistebooks where eBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				EBook eBook = (EBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("eBookId", whichBook)).uniqueResult();
+				//AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("bookId", eBook.getBook().getBookId())).uniqueResult();
+				//delete(audioBook);
+				delete(eBook);	
+			}catch(Exception e){
+				System.out.println(e);
+				return "ERROR";
+			}
+		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
+			try{
+				getSession().createSQLQuery("delete from Borrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Audiobookholds where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Pastborrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				getSession().createSQLQuery("delete from Wishlistaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
+				AudioBook audioBook = (AudioBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("audioBookId", whichBook)).uniqueResult();
+				//EBook eBook = (EBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("bookId", audioBook.getBook().getBookId())).uniqueResult();
+				//delete(eBook);
+				delete(audioBook);	
+			}catch(Exception e){
+				System.out.println(e);
+				return "ERROR";
+			}
+		}
+		return GlobalConstants.DAO_SUCCESS;
+	}
 
 	@Override
 	public Book getSpecificBook(int bookId) {

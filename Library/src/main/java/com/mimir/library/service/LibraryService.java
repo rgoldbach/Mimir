@@ -58,5 +58,7 @@ public interface LibraryService {
 	int getTotalCopiesOfAudioBook(AudioBook audioBook);
 
 	boolean updateBook(AdminBook book);
+
+	String deleteBook(int whichBook, String bookFormat);
 	
 }
