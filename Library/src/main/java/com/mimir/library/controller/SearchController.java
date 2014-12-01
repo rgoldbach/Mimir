@@ -90,7 +90,7 @@ public class SearchController {
 		
 		session.setAttribute("originalResults", searchResults);
 		
-		mv.addObject("message", searchResults.size() + " Advanced search results found for '\n" + advancedSearchForm.toStringArray() + "'.");
+		mv.addObject("message", searchResults.size() + " Advanced search results found.");
 		
 		return mv;
 	}
