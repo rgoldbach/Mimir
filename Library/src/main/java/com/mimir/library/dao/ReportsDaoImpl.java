@@ -54,13 +54,13 @@ public class ReportsDaoImpl extends AbstractDao implements ReportsDao{
 			crit = getSession().createCriteria(BorrowedEBook.class);
 			crit.add(Restrictions.eq("dateExpires", date));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return ((Long) crit.uniqueResult()).intValue();
 		}
 		else if(whichClass.equalsIgnoreCase(GlobalConstants.AUDIOBOOK)){
 			crit =  getSession().createCriteria(BorrowedAudioBook.class);
 			crit.add(Restrictions.eq("dateExpires", date));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return ((Long) crit.uniqueResult()).intValue();
 		}
 		return 0;
 	}
@@ -84,14 +84,14 @@ public class ReportsDaoImpl extends AbstractDao implements ReportsDao{
 			crit.add(Restrictions.ge("dateExpires", date));
 			crit.add(Restrictions.le("dateExpires", date.plusDays(7)));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return ((Long) crit.uniqueResult()).intValue();
 		}
 		else if(whichClass.equalsIgnoreCase(GlobalConstants.AUDIOBOOK)){
 			crit =  getSession().createCriteria(BorrowedAudioBook.class);
 			crit.add(Restrictions.ge("dateExpires", date));
 			crit.add(Restrictions.le("dateExpires", date.plusDays(7)));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return ((Long) crit.uniqueResult()).intValue();
 		}
 		return 0;
 	}
@@ -122,14 +122,14 @@ public class ReportsDaoImpl extends AbstractDao implements ReportsDao{
 			crit.add(Restrictions.ge("dateExpires", date));
 			crit.add(Restrictions.le("dateExpires", date.plusMonths(1)));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return  ((Long)crit.uniqueResult()).intValue();
 		}
 		else if(whichClass.equalsIgnoreCase(GlobalConstants.AUDIOBOOK)){
 			crit =  getSession().createCriteria(BorrowedAudioBook.class);
 			crit.add(Restrictions.ge("dateExpires", date));
 			crit.add(Restrictions.le("dateExpires", date.plusMonths(1)));
 			crit.setProjection(Projections.rowCount());
-			return ((Integer) crit.uniqueResult()).intValue();
+			return ((Long) crit.uniqueResult()).intValue();
 		}
 		return 0;
 	}
