@@ -120,14 +120,14 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	}
 	@Override
 	public String saveBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
-		System.out.println("DEBUG - Attempting to borrow book.");
+		// System.out.println("DEBUG - Attempting to borrow book.");
 		//Double check to make sure there is an available copy...
 		EBook bookToBorrow = borrowedEBook.getEBook();
 		if(bookToBorrow.getRemainingCopies().intValue() == 0){
 			return "No more available copies!";
 		}
 		//Generate the book key from Llamazon...
-		System.out.println("DEBUG - Generating Key from Lamazon");
+		// System.out.println("DEBUG - Generating Key from Lamazon");
 		/*LamazonService ls = new LamazonService();
 		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
 		if(bookKey == null){
@@ -249,7 +249,7 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 	@Override
 	public String returnBorrowedAudioBook(BorrowedAudioBook borrowedAudioBook) {
 		//Delete the book key on the lamazon site
-		System.out.println("DEBUG - Deleting Key from Lamazon");
+		// System.out.println("DEBUG - Deleting Key from Lamazon");
 		/*LamazonService ls = new LamazonService();
 		boolean isReturned = ls.deleteBookKey(borrowedAudioBook.getAudioBook().getBook().getBookId(), borrowedAudioBook.getUser().getUserCode(), GlobalConstants.AUDIOBOOK);
 		if(!isReturned){

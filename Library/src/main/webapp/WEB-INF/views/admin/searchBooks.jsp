@@ -23,7 +23,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-info">
+                        <div id="loadsRlySlow" style="display:none" class="panel panel-info">
                             <div class="panel-heading">
                                 Search Books
                             </div>
@@ -192,6 +192,7 @@
 	<script>
             $(document).ready(function () {
                 $('#dataTables-example').dataTable();
+                $('#loadsRlySlow').fadeIn(1000);
             });
     </script>
 	

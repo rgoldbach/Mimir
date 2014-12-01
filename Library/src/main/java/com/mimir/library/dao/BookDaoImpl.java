@@ -150,10 +150,10 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 			llama.setBookTitle(book.getBookDisplay().getTitle());
 			llama.setDescription(book.getBookDisplay().getDescription());
 			save(llama);
-			System.out.println("DEBUG - BOOK SAVED!");
+			// System.out.println("DEBUG - BOOK SAVED!");
 		}catch(Exception e){
-			System.out.println("Could not save book!");
-			System.out.println(e);
+			// System.out.println("Could not save book!");
+			// System.out.println(e);
 		}
 	}
 
@@ -173,7 +173,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				EBook eBook = (EBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("eBookId", whichBook)).uniqueResult();
 				delete(eBook);	
 			}catch(Exception e){
-				System.out.println(e);
+				// System.out.println(e);
 				return "ERROR";
 			}
 		}else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
@@ -182,10 +182,10 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				getSession().createSQLQuery("delete from Audiobookholds where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				getSession().createSQLQuery("delete from Pastborrowedaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
 				getSession().createSQLQuery("delete from Wishlistaudiobooks where audioBookId= :bookId").setLong("bookId", whichBook).executeUpdate();
-				AudioBook audioBook = (AudioBook) getSession().createCriteria(EBook.class).add(Restrictions.eq("audioBookId", whichBook)).uniqueResult();
+				AudioBook audioBook = (AudioBook) getSession().createCriteria(AudioBook.class).add(Restrictions.eq("audioBookId", whichBook)).uniqueResult();
 				delete(audioBook);	
 			}catch(Exception e){
-				System.out.println(e);
+				// System.out.println(e);
 				return "ERROR";
 			}
 		}
@@ -234,7 +234,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		if(aBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue()-1));
 		getSession().merge(aBook);
-		System.out.println("DEBUG - AudioBook remaining copies decremented.");
+		// System.out.println("DEBUG - AudioBook remaining copies decremented.");
 	}
 
 	@Override
@@ -242,7 +242,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 		if(eBook.getRemainingCopies().intValue() == GlobalConstants.UNLIMITED) return;
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue()-1));
 		getSession().merge(eBook);
-		System.out.println("DEBUG - EBook remaining copies decremented.");
+		// System.out.println("DEBUG - EBook remaining copies decremented.");
 	}
 
 	@Override
@@ -388,7 +388,7 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				for(EBookFormat bf : eBook.geteBookFormats()){
 					bf.seteBook(eBook);
 					saveOrUpdate(bf);
-					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
+					// System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
 				}
 				//Update holds if needed
 				saveOrUpdate(eBook);
@@ -403,12 +403,12 @@ public class BookDaoImpl extends AbstractDao  implements BookDao{
 				for(AudioBookFormat bf : audioBook.getAudioBookFormats()){
 					bf.setAudioBook(audioBook);
 					saveOrUpdate(bf);
-					System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
+					// System.out.println("DEBUG - Format " + bf.getFormat().getFormatType());
 				}
 				saveOrUpdate(audioBook);
 			}
 		}catch(Exception e){
-			System.out.println(e);
+			// System.out.println(e);
 			return false;
 		}
 		

@@ -78,87 +78,87 @@ public class AddBookTextFileParsingService {
     		while(line!=null && !(line.equalsIgnoreCase("Finished") || line.equalsIgnoreCase(""))){
     			book = new Book();
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseTitle(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseDescription(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		while(!line.trim().equalsIgnoreCase(authFin)){
-        			System.out.println(line + " matching " + authFin + " results to " + (line.equalsIgnoreCase(authFin)));
+        			// System.out.println(line + " matching " + authFin + " results to " + (line.equalsIgnoreCase(authFin)));
         			parseAuthors(line, book);
         			line = bufferedReader.readLine();
-            		System.out.println(line);
+        			// System.out.println(line);
         			while(!line.equalsIgnoreCase(authAwarFin)){
         				parseAuthorAward(line, book);
         				line = bufferedReader.readLine();
-                		System.out.println(line);
+        				// System.out.println(line);
         			}
         			line = bufferedReader.readLine();
-        			System.out.println(line);
+        			// System.out.println(line);
         		}
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseIsbn(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseSeriesName(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		while(!line.trim().equalsIgnoreCase(bookAwardsFin)){
             		parseBookAwards(line, book);
             		line = bufferedReader.readLine();
-            		System.out.println(line);
+            		// System.out.println(line);
         		}
         		addTodaysDate(book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseImageFile(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseGenres(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseInterestLevels(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseEBookPublisher(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseAudioBookPublisher(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		while(!line.trim().equalsIgnoreCase(endEbookFormats)){
             		parseEBookFormat(line, book);
             		line = bufferedReader.readLine();
-            		System.out.println(line);
+            		// System.out.println(line);
         		}
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		while(!line.trim().equalsIgnoreCase(endAudioBookFormats)){
             		parseAudioBookFormat(line, book);
             		line = bufferedReader.readLine();
-            		System.out.println(line);
+            		// System.out.println(line);
         		}
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		parseLanguages(line, book);
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		while(!line.trim().equalsIgnoreCase(endDownloadSite)){
         			parseDownloadSite(line, book);
             		line = bufferedReader.readLine();
-            		System.out.println(line);
+            		// System.out.println(line);
         		}
         		line = bufferedReader.readLine();
-        		System.out.println(line);
+        		// System.out.println(line);
         		service.saveBook(book);
         		response += " " + book.getBookDisplay().getTitle() + ", ";
-        		System.out.println(response);
+        		// System.out.println(response);
     		}
 		} catch (IOException e) {
-			System.out.println("Error Parsing File At Line " + line);
+			// System.out.println("Error Parsing File At Line " + line);
 			return  "Response: " + response + "Error Parsing File At Line " + line + "! Reason: " +  e;
 		} catch(IllegalArgumentException e1){
 			return "Response: " + response + "Error Parsing File At Line " + line + "! Reason: " + e1;
@@ -232,7 +232,7 @@ public class AddBookTextFileParsingService {
 		if(!formatInfo[0].contains(type)){
 			throw new IllegalArgumentException();
 		}
-		System.out.println(formatInfo[0].substring(type.length(), formatInfo[0].length()));
+		// System.out.println(formatInfo[0].substring(type.length(), formatInfo[0].length()));
 		Format f = service.getFormat(formatInfo[0].substring(type.length(), formatInfo[0].length()));
 		if(f == null) throw new IllegalArgumentException("Invalid Audio Format Type");
 		abf.setFormat(f);
@@ -283,12 +283,12 @@ public class AddBookTextFileParsingService {
 		DateTimeFormatter dtf = DateTimeFormat.forPattern("MM/dd/yyyy");
 		LocalDate date = LocalDate.parse(formatInfo[1].substring(release.length(), formatInfo[1].length()), dtf);
 		ebf.setReleaseDate(date);
-		System.out.println(formatInfo[1]);
+		// System.out.println(formatInfo[1]);
 		if(!formatInfo[2].contains(fileSize)){
 			throw new IllegalArgumentException();
 		}
 		ebf.setFileSize(new Integer(formatInfo[2].substring(fileSize.length(), formatInfo[2].length())));
-		System.out.println(formatInfo[2]);
+		// System.out.println(formatInfo[2]);
 		book.getEBook().geteBookFormats().add(ebf);
 	}
 
@@ -338,7 +338,7 @@ public class AddBookTextFileParsingService {
 		}	
 		String[] interestLevels = restOfLine.split("_");
 		for(String interestLevelname : interestLevels){
-			System.out.println("DEBUG - " + interestLevelname);
+			// System.out.println("DEBUG - " + interestLevelname);
 			BookInterestLevel il = new BookInterestLevel();
 			InterestLevel interestLevel = service.getInterestLevel(interestLevelname);
 			if(interestLevel == null){

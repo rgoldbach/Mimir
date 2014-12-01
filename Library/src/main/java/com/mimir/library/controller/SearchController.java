@@ -37,7 +37,7 @@ public class SearchController {
 	public ModelAndView initResults(String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView("/library/search");
 	
-		System.out.println(query);
+		// System.out.println(query);
 		if((query == null) || (query.isEmpty()) || (query.equals(""))){
 			session.setAttribute("originalResults", new ArrayList<SearchResult>()); 
 			mv.addObject("message", "Please enter a search term!");

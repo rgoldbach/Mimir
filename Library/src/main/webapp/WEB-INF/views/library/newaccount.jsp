@@ -39,9 +39,9 @@
 								<div id = "bookshelfEBook${element.getEBook().getEBookId()}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>eBook</h3>
-											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getEBookId()}', 'EBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getEBook().getEBookId()}', 'EBook')" class="thumbnail"> <img class="no-resize-larger" src="<c:out value="${element.getEBook().getBook().getBookDisplay().getImageFilePath()}"/>"> </a>
 											<h4>
-												<a href="#"><c:out value="${element.getEBook().getBook().getBookDisplay().getTitle()}" /></a>
+												<a href="#"><c:out value="${element.getEBook().getBook().getBookDisplay().getDisplayTitle()}" /></a>
 											</h4>
 											<h5>
 											<a href="#"><c:out value="${element.getEBook().getBook().getAuthors()[0].getName()}" /></a>
@@ -59,7 +59,7 @@
 								<div id = "bookshelfAudioBook${element.getAudioBook().getAudioBookId()}" class="col-md-4" style="margin-bottom: 1cm;">
 										<div>
 											<h3>AudioBook</h3>
-											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getAudioBookId()}', 'AudioBook')" class="thumbnail"> <img width="175px" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
+											<a data-toggle="modal"  onclick = "bookModal('${element.getAudioBook().getAudioBookId()}', 'AudioBook')" class="thumbnail"> <img class="no-resize-larger" src="<c:out value="${element.getAudioBook().getBook().getBookDisplay().getImageFilePath()}"/>"></a>
 											<h4>
 												<a href="#"><c:out value="${element.getAudioBook().getBook().getBookDisplay().getTitle()}" /></a>
 											</h4>
@@ -100,7 +100,7 @@
 											<div id="recentlyAdded${recentlyAdded.format}${recentlyAdded.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
 												<h4 id="recentlyAddedFormat${recentlyAdded.format}${recentlyAdded.bookFormatId}">${recentlyAdded.format}</h4>
 												<a href="#"> 
-													<img width="100px"src="<c:url value="${recentlyAdded.imageFilePath}" />">
+													<img class="no-resize" src="<c:url value="${recentlyAdded.imageFilePath}" />">
 												</a>
 												<h4>
 													<a href="#">${recentlyAdded.bookTitle}</a>
@@ -129,7 +129,7 @@
 											<div id="pending${pending.format}${pending.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
 												<h4 id="pendingFormat${pending.format}${pending.bookFormatId}">${pending.format}</h4>
 												<a href="#"> 
-													<img width="100px"src="<c:url value="${pending.imageFilePath}" />">
+													<img class="no-resize" src="<c:url value="${pending.imageFilePath}" />">
 												</a>
 												<h4>
 													<a href="#">${pending.bookTitle}</a>
@@ -171,7 +171,7 @@
 												<div id="wishlist${element.format}${element.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
 													<h4 id="wishlistFormat${element.format}${element.bookFormatId}">${element.format}</h4>
 													<a data-toggle="modal"  onclick = "bookModal('${element.bookFormatId}', '${element.format}')"> 
-														<img width="100px"src="<c:url value="${element.imageFilePath}" />">
+														<img class="no-resize" src="<c:url value="${element.imageFilePath}" />">
 													</a>
 													<h4>
 														<a href="#">${element.bookTitle}</a>
@@ -222,7 +222,7 @@
 												<div id="recommended${recommended.format}${recommended.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
 													<h4 id="recommendedFormat${recommended.format}${recommended.bookFormatId}">${recommended.format}</h4>
 													<a data-toggle="modal"  onclick = "bookModal('${recommended.bookFormatId}', '${recommended.format}')"> 
-														<img width="100px"src="<c:url value="${recommended.imageFilePath}" />">
+														<img class="no-resize" src="<c:url value="${recommended.imageFilePath}" />">
 													</a>
 													<h4>
 														<a href="#">${recommended.bookTitle}</a>
@@ -252,7 +252,7 @@
 												<div id="pastBorrowed${pastBorrowed.format}${pastBorrowed.bookFormatId}" class="col-md-3" style="margin-bottom: 1cm;">
 													<h4 id="pastBorrowedFormat${pastBorrowed.format}${pastBorrowed.bookFormatId}">${pastBorrowed.format}</h4>
 													<a data-toggle="modal"  onclick = "bookModal('${pastBorrowed.bookFormatId}', '${pastBorrowed.format}')"> 
-														<img width="100px"src="<c:url value="${pastBorrowed.imageFilePath}" />">
+														<img class="no-resize" src="<c:url value="${pastBorrowed.imageFilePath}" />">
 													</a>
 													<h4>
 														<a href="#">${pastBorrowed.bookTitle}</a>
@@ -358,11 +358,13 @@
 									data-bv-different-message="The password cannot be the same as username" />
 							</div>
 						</div>
-					</form>
-							<div class="col-sm-offset-4 col-sm-3">
+					
+						<div class="form-group">
+							<div class="col-sm-offset-3 col-sm-5">
 								<button onclick = "changeUserInfo()"  class="btn btn-primary">Save Changes</button>
 							</div>
-					
+						</div>
+						</form>
 						</div>
 					</div>
 				</div>

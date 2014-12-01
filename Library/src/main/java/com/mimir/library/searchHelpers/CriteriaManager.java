@@ -54,7 +54,7 @@ public class CriteriaManager {
 	}
 	
 	public List<String> seperateKeywords(){
-		System.out.println("Debug - Keywords: ");
+		// System.out.println("Debug - Keywords: ");
 	    List<String> keywords = new ArrayList<String>();
 	    searchKeyword = searchKeyword.trim();
 		for(int i = 0; i < searchKeyword.length(); i++){

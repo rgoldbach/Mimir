@@ -87,7 +87,7 @@ public class SearchServiceImpl implements SearchService{
 		SearchManager searchManager = new SearchManager();
 		List<SearchResult> searchResults = searchManager.analyzeSearch(results, searchKeyword);
 		searchManager.sort(sortType, searchResults);
-		System.out.println(searchResults);
+		// System.out.println(searchResults);
 		
 		return searchResults;
 	}

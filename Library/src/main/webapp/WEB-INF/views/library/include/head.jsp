@@ -64,6 +64,12 @@
   		max-width: 200px;
 	}
 	
+	img.no-resize-larger {
+		height: 250px;
+  		width: 100%;
+  		max-width: 175px;
+	}
+	
 	</style>
 	
 </head>

@@ -25,7 +25,7 @@ public class RelevanceScoreCalculator {
 				}
 			}
 		}
-		System.out.println("DEBUG - Relevance Score for " + book.getBookDisplay().getTitle() + " is " + score  + ".");
+		// System.out.println("DEBUG - Relevance Score for " + book.getBookDisplay().getTitle() + " is " + score  + ".");
 		return score;
 	}
 	

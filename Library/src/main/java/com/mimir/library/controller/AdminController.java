@@ -105,7 +105,7 @@ public class AdminController {
 	@ResponseBody
 	public AdminBook saveBookChanges(@RequestBody AdminBook book) {
 		if(!service.updateBook(book)){
-			System.out.println("DEBUG - Book Not Updated!");
+			// System.out.println("DEBUG - Book Not Updated!");
 		}
 		if(book.getAvailableCopies() > 0){
 			userService.updateHolds(book);
@@ -156,7 +156,7 @@ public class AdminController {
             try {
             	InputStream inputStream = file.getInputStream();
             	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            	System.out.println("About to analyze file..");
+            	// System.out.println("About to analyze file..");
             	AddBookTextFileParsingService fileParser = new AddBookTextFileParsingService(service);
             	String response = fileParser.analyzeFile(bufferedReader);
                 return response;

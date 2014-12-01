@@ -34,7 +34,7 @@ public class RegisterController {
 	public String addBook(@RequestBody UserRegisterInformation regInfo, HttpSession session) {
 		//check if email and librarycard are unique
 		Long check = new Long(0);
-		System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
+		// System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
 		if(service.numberOfUsersByEmail(regInfo.getEmail()).compareTo(BigInteger.ZERO)!=0){
 			return "email";
 		}
@@ -47,8 +47,8 @@ public class RegisterController {
 		
 		int accountId = service.getMaxAccountInfoId();
 		accountId +=1;
-		System.out.println("TESTEST "+ accountId );
-		System.out.println("OASSWIRDASDA " + regInfo.getPassword());
+		// System.out.println("TESTEST "+ accountId );
+		// System.out.println("OASSWIRDASDA " + regInfo.getPassword());
 		AccountInfo acctInfor = new AccountInfo();
 		acctInfor.setFirstName(regInfo.getFirstName());
 		acctInfor.setLastName(regInfo.getLastName());
@@ -85,7 +85,7 @@ public class RegisterController {
 	public String regAdmin(@RequestBody UserRegisterInformation regInfo, HttpSession session) {
 		//check if email is unique
 		Long check = new Long(0);
-		System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
+		// System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
 		if(service.numberOfUsersByEmail(regInfo.getEmail()).compareTo(BigInteger.ZERO)!=0){
 			return "email";
 		}

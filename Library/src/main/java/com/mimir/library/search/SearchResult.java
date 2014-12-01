@@ -312,19 +312,19 @@ public class SearchResult {
 	}
 
 	public void print(){
-		System.out.println("bookid "+bookId);
-		System.out.println("formatid "+formatId);
-		System.out.println("format "+format);
-		System.out.println("relevance "+relevanceScore);
-		System.out.println("mostpop "+mostPopularScore);
-		System.out.println("authorname "+authorNames.get(0));
-		System.out.println("rating "+rating);
-		System.out.println("title "+title);
-		System.out.println("releasedate "+releaseDate);
-		System.out.println("dateadded "+dateAdded);
-		System.out.println("isavailable "+isAvailable);
-		System.out.println("genrename "+genreNames.get(0));
-		System.out.println("formatname "+formatNames.get(0));
+		// System.out.println("bookid "+bookId);
+		// System.out.println("formatid "+formatId);
+		// System.out.println("format "+format);
+		// System.out.println("relevance "+relevanceScore);
+		// System.out.println("mostpop "+mostPopularScore);
+		// System.out.println("authorname "+authorNames.get(0));
+		// System.out.println("rating "+rating);
+		// System.out.println("title "+title);
+		// System.out.println("releasedate "+releaseDate);
+		// System.out.println("dateadded "+dateAdded);
+		// System.out.println("isavailable "+isAvailable);
+		// System.out.println("genrename "+genreNames.get(0));
+		// System.out.println("formatname "+formatNames.get(0));
 	}
 	
 }

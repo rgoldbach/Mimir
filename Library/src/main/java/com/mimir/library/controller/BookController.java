@@ -52,7 +52,7 @@ public class BookController {
 	@RequestMapping("/book")
 	public ModelAndView showMessage(
 			@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") String whichBook) {
-		System.out.println("in controller");
+		// System.out.println("in controller");
 		
 		ModelAndView mv = new ModelAndView("library/book");
 		mv.addObject("whichBook", whichBook);
@@ -65,7 +65,7 @@ public class BookController {
 			@RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 			HttpSession session){
 		
-		System.out.println(whichBook);
+		// System.out.println(whichBook);
 		Book book = null;
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
 			book = libraryService.getSpecificEBook(whichBook).getBook();
@@ -233,7 +233,7 @@ public class BookController {
 		BorrowedEBook borrowedEBook = null;
 		BorrowedAudioBook borrowedAudioBook = null;
 		if(currentUser!=null){
-			System.out.println("Request to borrow " + bookFormat + " " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
+			// System.out.println("Request to borrow " + bookFormat + " " + whichBook + " from " + currentUser.getAccountInfo().getLoginCredentials().getEmail());
 			if(bookFormat.equals(GlobalConstants.EBOOK)){
 				borrowedEBook = new BorrowedEBook(libraryService.getSpecificEBook(whichBook), currentUser);
 				message = userService.saveBorrowedEBookOfSpecificUser(borrowedEBook);	
@@ -243,7 +243,7 @@ public class BookController {
 				message = userService.saveBorrowedAudioBookOfSpecificUser(borrowedAudioBook);
 			}
 			if(message.equals(GlobalConstants.DAO_SUCCESS)){
-				System.out.println("DEBUG - Successfully borrowed book!");
+				// System.out.println("DEBUG - Successfully borrowed book!");
 				//Borrowed EBook persisted...Adds book for  current session
 				if(bookFormat.equals(GlobalConstants.EBOOK)){
 					currentUser.addBookToBookshelf(borrowedEBook);
@@ -266,7 +266,7 @@ public class BookController {
 	public String wishlistBook(@RequestParam(value="whichBook", required = false, defaultValue = "ERROR") int whichBook, 
 							   @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 							   HttpSession session){
-		System.out.println("Request to wishlist " + whichBook);
+		// System.out.println("Request to wishlist " + whichBook);
 		String message = "";
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
@@ -305,7 +305,7 @@ public class BookController {
 			@RequestParam(value="formatType", required = false, defaultValue = "EBook") String bookType, 
 			HttpSession session){
 		
-		System.out.println("TESTEST " + whichBook + " " + rating + " " + bookType);
+		// System.out.println("TESTEST " + whichBook + " " + rating + " " + bookType);
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		boolean prevRated = true;
 		double prevRating = 0.0;
@@ -319,7 +319,7 @@ public class BookController {
 					}
 					else
 						prevRating = eBook.getBookRating();
-					System.out.println(eBook.getBookRating());
+					// System.out.println(eBook.getBookRating());
 					eBook.setBookRating(rating);
 					userService.updateBorrowedBook(eBook);
 				}
@@ -327,17 +327,17 @@ public class BookController {
 			
 			EBook book = libraryService.getSpecificEBook(whichBook);
 			bookRating = book.getBookRating();
-			System.out.println(prevRated);
-			System.out.println(bookRating.getNumberOfRatings());
-			System.out.println(bookRating.getSumOfRatings());
-			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
+			// System.out.println(prevRated);
+			// System.out.println(bookRating.getNumberOfRatings());
+			// System.out.println(bookRating.getSumOfRatings());
+			// System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
 			if(prevRated)
 				bookRating.addRating(rating);
 			else
 				bookRating.addRating(rating);
-			System.out.println(bookRating.getNumberOfRatings());
-			System.out.println(bookRating.getSumOfRatings());
-			System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
+			// System.out.println(bookRating.getNumberOfRatings());
+			// System.out.println(bookRating.getSumOfRatings());
+			// System.out.println(bookRating.getSumOfRatings()/bookRating.getNumberOfRatings());
 			libraryService.updateBookRating(bookRating);
 			return bookRating.getRating();
 			//PERSIST BOOKRATING
@@ -378,7 +378,7 @@ public class BookController {
 							 @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 							 HttpSession session){
 		String message = GlobalConstants.DAO_SUCCESS;
-		System.out.println("Request to return book " + whichBook);	
+		// System.out.println("Request to return book " + whichBook);	
 		//Determine which book format
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
 			message = returnEBook(session, whichBook);
@@ -421,7 +421,7 @@ public class BookController {
 									 @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 									 HttpSession session){
 		String message = "";
-		System.out.println("Request to remove wishlist book " + whichBook);
+		// System.out.println("Request to remove wishlist book " + whichBook);
 		RegisteredUser currentUser = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
 			message = removeEBookWishlist(currentUser, whichBook);
@@ -591,15 +591,15 @@ public class BookController {
 	public JSONObject changeFormatInfo(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
 							   @RequestParam(value="bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
 							   HttpSession session){
-		System.out.println("DEBUG - Changing book info on page for " + whichBook + " in " + bookFormat + " format.");
+		// System.out.println("DEBUG - Changing book info on page for " + whichBook + " in " + bookFormat + " format.");
 		if(bookFormat.equals(GlobalConstants.EBOOK)){
 			EBook book = libraryService.getSpecificEBook(whichBook);
-			System.out.println(book == null);
+			// System.out.println(book == null);
 			return constructJsonObject(book);
 		}
 		else if(bookFormat.equals(GlobalConstants.AUDIOBOOK)){
 			AudioBook book = libraryService.getSpecificAudioBook(whichBook);
-			System.out.println(book == null);
+			// System.out.println(book == null);
 			return constructJsonObject(book);
 		}
 		return null;
@@ -621,7 +621,7 @@ public class BookController {
 			languages.add(l.getLanguage().getLanguage());
 		}
 		json.put("languages", languages);
-		System.out.println(json);
+		// System.out.println(json);
 		return json;
 	}
 	
@@ -641,7 +641,7 @@ public class BookController {
 			languages.add(l.getLanguage().getLanguage());
 		}
 		json.put("languages", languages);
-		System.out.println(json);
+		// System.out.println(json);
 		return json;
 	}
 }

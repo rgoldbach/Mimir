@@ -27,22 +27,22 @@ public class LamazonService {
 	
 	public String getBookKey(int bookId, String userCode, String bookFormatType){
 		String url = getBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookFormatType=" + bookFormatType;
-		System.out.println("DEBUG - Sending Http Request to " + url);
+		// System.out.println("DEBUG - Sending Http Request to " + url);
 		String response = sendHttpGet(url);
 		return response;		
 	}
 	
 	public boolean deleteBookKey(int bookId, String userCode, String bookFormatType){
 		String url = delBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookFormatType=" + bookFormatType;
-		System.out.println("DEBUG - Sending Http Request to " + url);
+		// System.out.println("DEBUG - Sending Http Request to " + url);
 		String response = sendHttpGet(url);
-		System.out.println("DEBUG - Delete From Lamazon returned: " + Boolean.parseBoolean(response.trim()) + " " + Boolean.parseBoolean(response));
+		// System.out.println("DEBUG - Delete From Lamazon returned: " + Boolean.parseBoolean(response.trim()) + " " + Boolean.parseBoolean(response));
 		return Boolean.parseBoolean(response.trim());
 	}
 	
 	public String getBookPageUrl(int bookId, String userCode, String bookKey, String bookFormatType){
 		String url = goBook + "bookId=" + bookId + "&userCode=" + userCode + "&bookKey=" + bookKey + "&bookFormatType=" + bookFormatType;
-		System.out.println("DEBUG - Book page url " + url);
+		// System.out.println("DEBUG - Book page url " + url);
 		return url;
 	}
 	
@@ -64,7 +64,7 @@ public class LamazonService {
 			in.close();
 			return response.toString();
 		}catch(Exception e){
-			System.out.println("DEBUG - Cannot create http request");
+			// System.out.println("DEBUG - Cannot create http request");
 			return null;
 		}
 	}

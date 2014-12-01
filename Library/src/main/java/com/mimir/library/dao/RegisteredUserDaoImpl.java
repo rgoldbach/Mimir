@@ -58,7 +58,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public RegisteredUser getSpecificUserFromAccountInfo(AccountInfo accountInfo) {
 		Criteria userCriteria = getSession().createCriteria(RegisteredUser.class, "registeredUser");
 		userCriteria.add(Restrictions.eq("accountInfo", accountInfo));
-		System.out.println("Account id = " + accountInfo.getAccountInfoId());
+		// System.out.println("Account id = " + accountInfo.getAccountInfoId());
 		return (RegisteredUser) userCriteria.uniqueResult();
 	}
 
@@ -206,7 +206,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			return "You currently are borrowing this book!";
 		}
 		if(borrowedEBook.getEBook().getRemainingCopies() == 0){
-			System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedEBook.getEBook().getBook().getBookDisplay().getTitle());
+			// System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedEBook.getEBook().getBook().getBookDisplay().getTitle());
 			return "No available copies!";
 		}
 		//GENERATE LLAMAZON KEY
@@ -220,7 +220,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		eBook.setRemainingCopies(new Integer(eBook.getRemainingCopies().intValue() - 1));
 		getSession().merge(eBook);
 		
-		System.out.println("DEBUG - EBook remaining copies decremented.");
+		// System.out.println("DEBUG - EBook remaining copies decremented.");
 		return GlobalConstants.DAO_SUCCESS;
 	}
 	
@@ -228,11 +228,11 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		LamazonService ls = new LamazonService();
 		String bookKey = ls.getBookKey(borrowedEBook.getEBook().getBook().getBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
 		if (bookKey == null) {
-			System.out.println("DEBUG - Book Key is null");
+			// System.out.println("DEBUG - Book Key is null");
 			return;
 		}
 		if (bookKey.equals(LamazonService.LLAMAZON_ERROR_CODE_1) || bookKey.equals(LamazonService.LLAMAZON_ERROR_CODE_2)) {
-			System.out.println("DEBUG - Llamazon Error");
+			// System.out.println("DEBUG - Llamazon Error");
 			return;
 		}
 		borrowedEBook.setEBookCode(bookKey);
@@ -240,7 +240,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 
 	@Override
 	public String removeBorrowedEBookOfSpecificUser(BorrowedEBook borrowedEBook) {
-		System.out.println("DEBUG - Deleting Lamazon Key");
+		// System.out.println("DEBUG - Deleting Lamazon Key");
 		//DELETE LAMAZON KEY
 		LamazonService ls = new LamazonService();
 		boolean isReturned = ls.deleteBookKey(borrowedEBook.getEBook().getEBookId(), borrowedEBook.getUser().getUserCode(), GlobalConstants.EBOOK);
@@ -281,12 +281,12 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public String savePastBorrowedEBookOfSpecificUser(PastBorrowedEBook pastBorrowedEBook) {
 		List<PastBorrowedEBook> userEBooks = getPastBorrowedEBooksOfSpecificUser(pastBorrowedEBook.getUser());
 		if (userEBooks != null && userEBooks.contains(pastBorrowedEBook)) {
-			System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. User already has this EBOOK in history! Not adding...");
+			// System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. User already has this EBOOK in history! Not adding...");
 			return "EBook already in history!";
 		}
-		System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. Check if User has EBOOK in history passed! Attempting to Persist PastBorrowedEBook...");
+		// System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. Check if User has EBOOK in history passed! Attempting to Persist PastBorrowedEBook...");
 		persist(pastBorrowedEBook);
-		System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. PastBorrowedEBook persisted!");
+		// System.out.println("DEBUG: In savePastBorrowedEBookOfSpecificUser. PastBorrowedEBook persisted!");
 		return GlobalConstants.DAO_SUCCESS;
 	}
 
@@ -308,9 +308,9 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		if (userEBooks != null && userEBooks.contains(eBookOnHold)) {
 			return "You already have this EBook on hold!";
 		}
-		System.out.println("DEBUG: In saveOnHoldEBookOfSpecificUser. Check if User has EBOOK on hold passed! Attempting to Persist EBookOnHold...");
+		// System.out.println("DEBUG: In saveOnHoldEBookOfSpecificUser. Check if User has EBOOK on hold passed! Attempting to Persist EBookOnHold...");
 		persist(eBookOnHold);
-		System.out.println("DEBUG: In saveOnHoldEBookOfSpecificUser. EBookOnHold persisted!");
+		// System.out.println("DEBUG: In saveOnHoldEBookOfSpecificUser. EBookOnHold persisted!");
 		return GlobalConstants.DAO_SUCCESS;
 	}
 
@@ -327,14 +327,14 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		try {
 			int bookId = eBookOnHold.getEBook().getEBookId();
 			int positionInQueue = eBookOnHold.getPositionInQueue();
-			System.out.println("DEBUG - Deleting on hold book...");
+			// System.out.println("DEBUG - Deleting on hold book...");
 			delete(eBookOnHold);
 			// Update all other on hold books...
-			System.out.println("DEBUG - Updating all other on hold books...");
+			// System.out.println("DEBUG - Updating all other on hold books...");
 			updateAllOtherEBookHolds(bookId, positionInQueue);
 			return GlobalConstants.DAO_SUCCESS;
 		} catch (Exception e) {
-			System.out.println(e);
+			// System.out.println(e);
 			return "error";
 		}
 	}
@@ -378,7 +378,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public String removeWishlistEBookOfSpecificUser(WishlistEBook wishlistEBook) {
 		Query query = getSession().createSQLQuery("DELETE FROM WishlistEBooks WHERE id = :id");
 		query.setLong("id", wishlistEBook.getId());
-		System.out.println(query.toString());
+		// System.out.println(query.toString());
 		query.executeUpdate();
 		return GlobalConstants.DAO_SUCCESS;
 	}
@@ -399,7 +399,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			return "You currently are borrowing this book!";
 		}
 		if(borrowedAudioBook.getAudioBook().getRemainingCopies() == 0){
-			System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedAudioBook.getAudioBook().getBook().getBookDisplay().getTitle());
+			// System.out.println("DEBUG - NO REMAINING COPIES OF " + borrowedAudioBook.getAudioBook().getBook().getBookDisplay().getTitle());
 			return "No available copies!";
 		}
 		//GENERATE LLAMAZON KEY
@@ -411,7 +411,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			return GlobalConstants.DAO_SUCCESS;
 		aBook.setRemainingCopies(new Integer(aBook.getRemainingCopies().intValue() - 1));
 		getSession().merge(aBook);
-		System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. BorrowedAudioBook persisted!");
+		// System.out.println("DEBUG: In saveBorrowedAudioBookOfSpecificUser. BorrowedAudioBook persisted!");
 		return GlobalConstants.DAO_SUCCESS;
 	}
 	
@@ -422,7 +422,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			return;
 		}
 		if (bookKey.equals(LamazonService.LLAMAZON_ERROR_CODE_1) || bookKey.equals(LamazonService.LLAMAZON_ERROR_CODE_2)) {
-			System.out.println("DEBUG - Llamazon Error");
+			// System.out.println("DEBUG - Llamazon Error");
 			return;
 		}
 		borrowedAudioBook.setAudioBookCode(bookKey);
@@ -440,7 +440,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		//DELETE AUDIO BOOK
 		Query query = getSession().createSQLQuery("DELETE FROM BorrowedAudioBooks WHERE id = :id");
 		query.setLong("id", borrowedAudioBook.getId());
-		System.out.println("Debug: in removeBorrowedAudioBookOfSpecificUser");
+		// System.out.println("Debug: in removeBorrowedAudioBookOfSpecificUser");
 		int bookId = borrowedAudioBook.getAudioBook().getAudioBookId();
 		int positionInQueue = 0;
 		query.executeUpdate();
@@ -516,7 +516,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			updateAllOtherAudioBookHolds(bookId, positionInQueue);
 			return GlobalConstants.DAO_SUCCESS;
 		} catch (Exception e) {
-			System.out.println(e);
+			// System.out.println(e);
 			return "error";
 		}
 	}
@@ -562,7 +562,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 	public String removeWishlistAudioBookOfSpecificUser(WishlistAudioBook wishlistAudioBook) {
 		Query query = getSession().createSQLQuery("DELETE FROM WishlistAudioBooks WHERE id = :id");
 		query.setLong("id", wishlistAudioBook.getId());
-		System.out.println(query.toString());
+		// System.out.println(query.toString());
 		query.executeUpdate();
 		return GlobalConstants.DAO_SUCCESS;
 	}
@@ -645,7 +645,7 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 			}
 		}
 		for(BasicBookInfo b : recommendedBooks){
-			System.out.println("Recommended " + b.getBookTitle());
+			// System.out.println("Recommended " + b.getBookTitle());
 		}
 		return recommendedBooks;
 	}

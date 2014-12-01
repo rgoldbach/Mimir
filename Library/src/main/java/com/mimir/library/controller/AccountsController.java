@@ -94,7 +94,7 @@ public class AccountsController {
 		if(!info.getPassword().equals(info.getPasswordConfirm())){
 			return "failure";
 		}
-		System.out.println(service.numberOfUsersByEmail(info.getEmail()));
+		// System.out.println(service.numberOfUsersByEmail(info.getEmail()));
 		
 		if(!info.getEmail().equals(info.getOldEmail())){
 			if(service.numberOfUsersByEmail(info.getEmail()).compareTo(BigInteger.ZERO)!=0){
@@ -123,39 +123,39 @@ public class AccountsController {
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	@ResponseBody
 	public String signIn(@RequestBody LoginCredentials creds, HttpSession session) {
-		System.out.println("In Accounts Controller --> Trying to login user. ");	
+		// System.out.println("In Accounts Controller --> Trying to login user. ");	
 		AccountInfo currentUserAccountInfo = service.signInUser(creds);
 		
 		if(currentUserAccountInfo != null){
-			System.out.println("User " + currentUserAccountInfo.getFirstName() + " sign in.");
+			// System.out.println("User " + currentUserAccountInfo.getFirstName() + " sign in.");
 			if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.REGISTERED_USER_TYPE)){
-				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is a registered user.");
+				// System.out.println("User " + currentUserAccountInfo.getFirstName() + " is a registered user.");
 				//Joins all the book list tables, so those lists are now created
 				RegisteredUser user = service.getSpecificUserFromAccountInfoWithAllInfo(currentUserAccountInfo);
 				if(user != null){
 					session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, user);
-					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
+					// System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
 					return "user";
 				}			
 			}
 			else if(currentUserAccountInfo.getAccountType().equals(GlobalConstants.ADMIN_USER_TYPE)){
-				System.out.println("User " + currentUserAccountInfo.getFirstName() + " is an admin.");		
+				// System.out.println("User " + currentUserAccountInfo.getFirstName() + " is an admin.");		
 				Admin admin = service.getSpecificAdminFromAccountInfo(currentUserAccountInfo);
 				if(admin != null){
 					session.setAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER, admin);
-					System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
+					// System.out.println("User " + currentUserAccountInfo.getFirstName() + " successfully signed in.");
 					return "admin";
 				}	    
 			}		
 		}
-		System.out.println("Invalid user signin.");
+		// System.out.println("Invalid user signin.");
 		return "signinfailure";
 
 	}
 	
 	@RequestMapping(value = "/signout", method = RequestMethod.POST)
 	public @ResponseBody String signOut(@RequestBody String todo, HttpSession session) {
-		System.out.println("Debug: User is signing out");
+		// System.out.println("Debug: User is signing out");
 		session.setAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER, null);
 		session.setAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER, null);
 		return "signoutsuccess";

@@ -62,6 +62,13 @@ public class BookDisplayableInformation {
 	public String getTitle() {
 		return title;
 	}
+	
+	public String getDisplayTitle(){
+		if(title.length() > 20){
+			return (title.substring(0, 20) + "...");
+		}
+		return title;
+	}
 
 	public void setTitle(String title) {
 		this.title = title;

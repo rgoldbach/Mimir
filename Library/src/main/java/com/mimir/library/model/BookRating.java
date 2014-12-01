@@ -47,12 +47,12 @@ public abstract class BookRating {
 		return bookRatingId;
 	}
 	public void updateRating(double newRating, double oldRating){
-		System.out.println("oldRAte" + oldRating);
-		System.out.println("newRating" + newRating);
-		System.out.println("oldSum"+ this.sumOfRatings);
+		// System.out.println("oldRAte" + oldRating);
+		// System.out.println("newRating" + newRating);
+		// System.out.println("oldSum"+ this.sumOfRatings);
 		this.sumOfRatings = this.sumOfRatings - oldRating; 
 		this.sumOfRatings = this.sumOfRatings + newRating;
-		System.out.println("newSum"+sumOfRatings);
+		// System.out.println("newSum"+sumOfRatings);
 		this.rating = (sumOfRatings/numberOfRatings);
 	}
 }

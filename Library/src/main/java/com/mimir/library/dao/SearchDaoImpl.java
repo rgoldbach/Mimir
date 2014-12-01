@@ -153,7 +153,7 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 					  .matching(keyword)
 					  .createQuery();
 		}catch(EmptyQueryException e){
-			System.out.println("Aw, something went wrong!");
+			// System.out.println("Aw, something went wrong!");
 			return null;
 		}
 		
@@ -181,7 +181,7 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 			return books;
 		}
 		
-		System.out.println("DEBUG - Using Criteria Search...");
+		// System.out.println("DEBUG - Using Criteria Search...");
 		books = performCriteriaSearch(searchKeyword, firstResultIndex, searchType, sortType);
 		
 		/*if(sortType == SortType.Relevance && searchType != SearchType.Advanced){
@@ -236,7 +236,7 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 					  .matching(keyword)
 					  .createQuery();
 		}catch(EmptyQueryException e){
-			System.out.println("DEBUG - Query Exception! Aborting search...");
+			// System.out.println("DEBUG - Query Exception! Aborting search...");
 			return null;
 		}
 		
@@ -252,7 +252,7 @@ public class SearchDaoImpl extends AbstractDao implements SearchDao{
 		
 		@SuppressWarnings("unchecked")
 		List<Book> result = (List<Book>) query.list();
-		System.out.println("DEBUG - " + result.size() + " results found!");
+		// System.out.println("DEBUG - " + result.size() + " results found!");
 		return result;
 	}
 
