@@ -1,6 +1,7 @@
 $(document)
 		.ready(
 				function() {
+					
 					// Sort then Filter
 					$('.resultDisplay').change(function() {
 						// Empty the current results
@@ -11,11 +12,12 @@ $(document)
 					
 					// Get the first page of search results
 					sortThenFilter();
-
+					
 					// Init result view
 					$('#coverDisplay').addClass('active');
 					$('#listResultContainer').hide();
-
+					$('#searchContainer').show().fadeIn(1000);
+					
 					// Toggle between cover and list
 					$('#coverDisplay, #listDisplay').click(function() {
 						if ($(this).attr('id') == 'coverDisplay') {
@@ -187,13 +189,15 @@ $(document)
 															coverResults += '</div>';
 															// Generate the list
 															// result html
+															var authorSearch = ''+ this.authors;
+															authorSearch = authorSearch.replace(/ /g,"+");
 															listResults += '<div class="col-md-12"><h3>'
-																	+ this.title
-																	+ ' by <a href="#">'
-																	+ this.authors
-																	+ '</a> ';
-															if (this.format == 'AudioBook') {
-																listResults += '<span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span>';
+																+ this.title
+																+ ' by <a href="search?query='+authorSearch +'">'
+																+ this.authors
+																+ '</a> ';
+														if (this.format == 'AudioBook') {
+															listResults += '<span class="label label-default"><span class="glyphicon glyphicon-headphones"></span></span>';
 															}
 															if (this.format == 'EBook') {
 																listResults += '<span class="label label-default"><span class="glyphicon glyphicon-book"></span></span>';

@@ -12,7 +12,7 @@
 	<%@ include file="/WEB-INF/views/library/include/pageHeader.jsp" %>
 
 	<!-- Main Content -->
-	<div class="container">
+	<div id="searchContainer" style="display:none" class="container">
 <!-- Search Menu -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
