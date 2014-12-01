@@ -73,6 +73,34 @@ public class AdminBook {
 		return formats;
 	}
 	
+	public AdminBook(EBook eBook, String creationType){
+		if(creationType.equals("SIMPLE")){
+			this.setFormatId(eBook.getEBookId());
+			this.setFormatType(GlobalConstants.EBOOK);
+			this.isbn = eBook.getBook().getIsbn();
+			this.bookTitle = eBook.getBook().getBookDisplay().getTitle();
+			if(eBook.getBook().getAuthors().size() == 0){
+				this.author = "Anonymous";
+			}
+			else{
+				this.author = eBook.getBook().getAuthors().iterator().next().getName();
+			}
+		}
+	}
+	public AdminBook(AudioBook audioBook, String creationType){
+		if(creationType.equals("SIMPLE")){
+			this.setFormatId(audioBook.getAudioBookId());
+			this.setFormatType(GlobalConstants.EBOOK);
+			this.isbn = audioBook.getBook().getIsbn();
+			this.bookTitle = audioBook.getBook().getBookDisplay().getTitle();
+			if(audioBook.getBook().getAuthors().size() == 0){
+				this.author = "Anonymous";
+			}
+			else{
+				this.author = audioBook.getBook().getAuthors().iterator().next().getName();
+			}
+		}
+	}
 	public String getIsbn() {
 		return isbn;
 	}

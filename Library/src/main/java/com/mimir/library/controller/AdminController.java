@@ -21,7 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mimir.library.beans.AdminBook;
 import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
+import com.mimir.library.model.Admin;
+import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.ChangeUserInfo;
+import com.mimir.library.model.EBook;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
 import com.mimir.library.service.AddBookTextFileParsingService;
@@ -61,6 +64,26 @@ public class AdminController {
 		List<AdminBook> adminBooks = service.getAllBooksForAdmin();
 		mv.addObject("adminBooks", adminBooks);
 		return mv;
+	}
+	
+	@RequestMapping(value ="adminBookMoreInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public AdminBook modalBookInfo(@RequestParam(value = "whichBook", required = false, defaultValue = "ERROR") int whichBook,
+									  @RequestParam(value = "bookFormat", required = false, defaultValue = "ERROR") String bookFormat,
+									  HttpSession session) {
+		Admin admin = (Admin) session.getAttribute(GlobalConstants.CURRENT_ADMIN_SESSION_GETTER);
+		if(admin == null) return null;
+		AdminBook book = null;
+		if(bookFormat.equalsIgnoreCase(GlobalConstants.EBOOK)){
+			EBook eBook = service.getSpecificEBook(whichBook);
+			book = new AdminBook(eBook, "SIMPLE");
+			book.setTotalCopies(service.getTotalCopiesOfEBook(eBook));
+		}else if(bookFormat.equalsIgnoreCase(GlobalConstants.AUDIOBOOK)){
+			AudioBook audioBook = service.getSpecificAudioBook(whichBook);
+			book = new AdminBook(audioBook, "SIMPLE");
+			book.setTotalCopies(service.getTotalCopiesOfAudioBook(audioBook));
+		}
+		return book;
 	}
 	
 	@RequestMapping(value ="users", method = RequestMethod.GET)

@@ -333,17 +333,16 @@ public class AddBookTextFileParsingService {
 		String restOfLine = (line.substring(intrstLvls.length(), line.length()));
 		String[] interestLevels = restOfLine.split("_");
 		for(String interestLevelname : interestLevels){
+			System.out.println("DEBUG - " + interestLevelname);
 			BookInterestLevel il = new BookInterestLevel();
 			InterestLevel interestLevel = service.getInterestLevel(interestLevelname);
 			if(interestLevel == null){
-				System.out.println("InterestLevel is null");
 				interestLevel = new InterestLevel();
 				interestLevel.setInterestLevel(interestLevelname);
 				il.setInterestLevel(interestLevel);
 				book.getInterestLevels().add(il);
 			}
 			else{
-				System.out.println("InterestLevel is not null");
 				il.setInterestLevel(interestLevel);
 				book.getInterestLevels().add(il);
 			}
