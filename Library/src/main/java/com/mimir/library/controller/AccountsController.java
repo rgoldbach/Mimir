@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,6 @@ import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.ChangeUserInfo;
 import com.mimir.library.model.LoginCredentials;
 import com.mimir.library.model.RegisteredUser;
-import com.mimir.library.model.WishlistEBook;
 import com.mimir.library.service.LibraryService;
 import com.mimir.library.service.RegisteredUserService;
 
@@ -90,13 +90,17 @@ public class AccountsController {
 	@RequestMapping(value = "changeUserInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public String changeUserInformation(@RequestBody ChangeUserInfo info, HttpSession session){
-		System.out.println(info.getEmail());
-		System.out.println(info.getFirstName());
-		System.out.println(info.getPassword());
+		
 		if(!info.getPassword().equals(info.getPasswordConfirm())){
 			return "failure";
 		}
+		System.out.println(service.numberOfUsersByEmail(info.getEmail()));
 		
+		if(!info.getEmail().equals(info.getOldEmail())){
+			if(service.numberOfUsersByEmail(info.getEmail()).compareTo(BigInteger.ZERO)!=0){
+				return "email";
+			}
+		}
 		
 		RegisteredUser user = (RegisteredUser)session.getAttribute(GlobalConstants.CURRENT_USER_SESSION_GETTER);
 		if(!info.getCurrentPassword().equals(user.getAccountInfo().getLoginCredentials().getPassword())){

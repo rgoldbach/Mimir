@@ -1,5 +1,6 @@
 package com.mimir.library.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -86,7 +87,22 @@ public class RegisteredUserDaoImpl extends AbstractDao implements RegisteredUser
 		Hibernate.initialize(user.getWishlistAudioBooks());
 		Hibernate.initialize(user.getWishlistEBooks());
 	}
-
+	
+	@Override
+	public BigInteger numberOfUsersByEmail(String email){
+        Query query =(Query) getSession().createSQLQuery("SELECT count(*) FROM logincreds where email = :email");
+        query.setString("email", email);
+        return (BigInteger)query.uniqueResult();
+	}
+	
+	@Override
+	public BigInteger numberOfUsersByLibraryCardNumber(String libraryCardNumber){
+        Query query = (Query)getSession().createSQLQuery("SELECT count(*) FROM registeredusers where libraryCard = :libraryCardNumber'");
+        query.setString("libraryCardNumber", libraryCardNumber);
+        return (BigInteger)query.uniqueResult();
+	}
+	
+	
 	@Override
 	public void saveRegisteredUser(RegisteredUser user) {
 		persist(user);

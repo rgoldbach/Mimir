@@ -48,8 +48,9 @@ function getUser(){
         		 sweetAlert("Oops...", "User Could Not Be Found, Are You Sure That Was The Right Library Card Number", "error");
     		 }
     		 else{
-    			 $('#userLibraryCard').val(user.libraryCardNumber);
-    		 	$('#userEmail').val(user.email);
+    			$('#userLibraryCard').val(user.libraryCardNumber);
+    			$('#oldemail').val(user.email);
+    			$('#userEmail').val(user.email);
     		 	$('#userFirstName').val(user.firstName);
     		 	$('#userLastName').val(user.lastName);
     		 	$('#userPassword').val(user.password);
@@ -68,10 +69,7 @@ function getUser(){
 function saveUserChanges(){
 	var controller = true;
 	var libraryCardNumber = $('#userLibraryCard').val();
-	if(libraryCardNumber.length != 9){
-		controller = false;
-		$('#userChangeError').text("Library Card Must Be 9 Digits Long");
-	}
+	
 	if(! /^\d+$/.test(libraryCardNumber)){
 		controller = false	
 		$('#userChangeError').text("Library Card Can Only Contain Digits");
@@ -90,6 +88,12 @@ function saveUserChanges(){
 		$('#userChangeError').text("Email Cannot Be Blank");
 
 	}
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (! re.test($('#userEmail').val())){
+		controller = false;
+		$('#userChangeError').text("Not A Valid Email");
+
+	}
 	if ($('#userPassword').val() === ""){
 		controller = false
 		$('#userChangeError').text("Password Cannot Be Blank");
@@ -105,7 +109,8 @@ function saveUserChanges(){
                 "email" : $('#userEmail').val(),
                 "currentPassword": $('#userPassword').val(),
                 "password" : $('#userPassword').val(),
-                "passwordConfirm" : $('#userPassword').val()
+                "passwordConfirm" : $('#userPassword').val(),
+                "oldEmail" : $('#oldemail').val()
     };
     console.log(json)
     
@@ -121,10 +126,14 @@ function saveUserChanges(){
         	'complete' : function(result) {
         		console.log(result);
         		if(result.status === 200){	
-        				$('#userlookuperror').text("");
-        				$('#myModal').modal('hide');
-        				swal("Success",  $('#userFirstName').val() + "'s Account Successfully Updated.", "success")
-        			
+        				if(result.responseText === 'email'){
+        					$('#userChangeError').text("The Email Is Already In Use");
+        				}
+        				else{
+        					$('#userlookuperror').text("");
+        					$('#myModal').modal('hide');
+        					swal("Success",  $('#userFirstName').val() + "'s Account Successfully Updated.", "success")
+        				}
         		}
 
         	}
@@ -192,6 +201,12 @@ function registerAdmin(){
 		$('#adminregerror').text("Email Cannot Be Empty");
 
 	}
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	if (! re.test(email)){
+		controller = false;
+		$('#adminregerror').text("Not A Valid Email");
+
+	}
 	if (password ==""){
 		validation = false
 		$('#adminregerror').text("Password Cannot Be Empty");
@@ -228,6 +243,10 @@ function registerAdmin(){
 					if(result.responseText === "success"){
 						$('#adminregerror').text("");
 						swal("Account Successfully Added", "", "success");
+					}
+					else if(result.responseText ==="email"){
+						$('#adminregerror').text("That Email Address Is Already In Use.");
+
 					}
 					else{
 						$('#adminregerror').text("There Was A Problem");

@@ -1,5 +1,6 @@
 package com.mimir.library.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.mimir.library.beans.BasicBookInfo;
@@ -26,6 +27,9 @@ public interface RegisteredUserDao {
 	List<RegisteredUser> getAllUsersByFirstName(String firstName);
 	int getMaxAccountInfoId();
 	void deleteRegisteredUserById(int id);
+	
+	BigInteger numberOfUsersByEmail(String email);
+	BigInteger numberOfUsersByLibraryCardNumber(String libraryCardNumber);
 	
 	RegisteredUser getSpecificUser(int id);
 	RegisteredUser getSpecificUser(String id);

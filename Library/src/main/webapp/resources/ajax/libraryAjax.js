@@ -350,8 +350,8 @@ function changeUserInfo() {
     var firstName = $('#changeFirstName').val();
     var lastName = $('#changeLastName').val();
     var email = $('#changeEmail').val();
-	
-    
+	var oldEmail =  $('#oldemail').val();
+    console.log(oldEmail);
     if(lastName === ''){
     	controller = false;
 		$('#changeInfoError').text("Last Name Cannot Be Empty");
@@ -382,7 +382,8 @@ function changeUserInfo() {
                 "email" : $('#changeEmail').val(),
                 "currentPassword": $('#changeCurrentPassword').val(),
                 "password" : $('#changePassword').val(),
-                "passwordConfirm" : $('#changePasswordConfirm').val()
+                "passwordConfirm" : $('#changePasswordConfirm').val(),
+                "oldEmail" : oldEmail
     };
     if(controller){
     	$.ajax({
@@ -404,10 +405,15 @@ function changeUserInfo() {
             			$('#changeInfoError').text("Please Enter Your Correct Current Password");
             			$('#changeCurrentPassword').val("");
             		}
+            		else if (result.responseText === "email"){
+            			$('#changeInfoError').text("The Email You Entered Is Already In Use");
+            			$('#changeCurrentPassword').val("");
+            		}
             		else{	
 	    	    		swal("Success", "Information Updated", "success");
             			$('#changeInfoError').text("");
             			$('#changeCurrentPassword').val("");
+            			$('#oldemail').val($('#changeEmail').val());
             		}
             	}
 
@@ -471,13 +477,9 @@ function registerUser(){
 	if (firstName === "")
 		validation = false
 	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	if (! re.test(email))
+	if (! re.test($('#emailReg').val()))
 		validation = false;
-		
-	console.log(/^\d+$/.test(libraryCardNumber))
-	console.log(validation)
-	console.log(password)	
-	console.log(confirmPass)
+	console.log("idk " +  validation)
 	var url = "register";
 	var json = "";
 	json = {
@@ -501,6 +503,17 @@ function registerUser(){
 				if(result.status === 200){
 					if(result.responseText === "success"){
 						window.location.replace("/Library/");
+					}
+					else if(result.responseText === "email"){
+						$('#regerror').text("That Email Is Already In Use.");
+					}
+					
+					else if(result.responseTest === "card"){
+						$('#regerror').text("That Library Card Number Is Already In Use.");
+					}
+					else{
+						$('#regerror').text("WHY");
+
 					}
 				}
 				return false;

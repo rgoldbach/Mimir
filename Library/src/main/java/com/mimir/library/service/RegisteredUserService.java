@@ -1,5 +1,6 @@
 package com.mimir.library.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.mimir.library.beans.BasicBookInfo;
@@ -30,6 +31,9 @@ public interface RegisteredUserService {
 	
 	RegisteredUser getSpecificUser(int id);
 	RegisteredUser getSpecificUser(String libraryCard);
+	
+	BigInteger numberOfUsersByEmail(String email);
+	BigInteger numberOfUsersByLibraryCardNumber(String libraryCardNumber);
 	
 	List<BasicBookInfo> getRecentlyAddedBooksOfUser(RegisteredUser currentUser);
 	List<BasicOnHoldBookInfo> getPendingBooksOfUser(RegisteredUser currentUser);

@@ -1,5 +1,6 @@
 package com.mimir.library.service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -12,12 +13,10 @@ import com.mimir.library.beans.BasicBookInfo;
 import com.mimir.library.beans.BasicOnHoldBookInfo;
 import com.mimir.library.dao.BookDao;
 import com.mimir.library.dao.RegisteredUserDao;
-import com.mimir.library.globalVariables.GlobalConstants;
 import com.mimir.library.model.AccountInfo;
 import com.mimir.library.model.Admin;
 import com.mimir.library.model.AudioBook;
 import com.mimir.library.model.AudioBookOnHold;
-import com.mimir.library.model.Book;
 import com.mimir.library.model.BorrowedAudioBook;
 import com.mimir.library.model.BorrowedEBook;
 import com.mimir.library.model.EBook;
@@ -79,6 +78,15 @@ public class RegisteredUserServiceImpl implements RegisteredUserService{
 		return pendingBooks;
 	}
 
+	@Override
+	public BigInteger numberOfUsersByEmail(String email){
+		return dao.numberOfUsersByEmail(email);
+	}
+	@Override
+	public BigInteger numberOfUsersByLibraryCardNumber(String number){
+		return dao.numberOfUsersByLibraryCardNumber(number);
+	}
+	
 	@Override
 	public List<RegisteredUser> getAllUsers() {
 		return dao.getAllUsers();

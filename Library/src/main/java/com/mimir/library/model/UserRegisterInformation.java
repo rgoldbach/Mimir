@@ -6,7 +6,6 @@ public class UserRegisterInformation {
 	private String lastName;
 	private String email;
 	private String password;
-	
 	public String getLibraryCardNumber() {
 		return libraryCardNumber;
 	}
@@ -37,6 +36,8 @@ public class UserRegisterInformation {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	
 	
 	
 }

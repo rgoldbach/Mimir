@@ -291,7 +291,7 @@
 									disabled  />
 							</div>
 						</div>
-						
+						<input id="oldemail" type ="hidden" value = <c:out value="${currentUser.accountInfo.loginCredentials.email}"/>  >
 						<div class="form-group">
 							<label class="col-sm-3 control-label">First Name</label>
 							<div class="col-sm-4">

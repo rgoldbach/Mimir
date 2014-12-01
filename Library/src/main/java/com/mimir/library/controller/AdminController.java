@@ -3,6 +3,7 @@ package com.mimir.library.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -121,7 +122,11 @@ public class AdminController {
 	@ResponseBody
 	public String editUserAdmin(@RequestBody ChangeUserInfo info){
 		RegisteredUser user =userService.getSpecificUser(info.getLibraryCardNumber());
-		
+		if(!info.getEmail().equals(info.getOldEmail())){
+			if(userService.numberOfUsersByEmail(info.getEmail()).compareTo(BigInteger.ZERO)!=0)
+				return "email";
+			
+		}
 		AccountInfo userInfo = user.getAccountInfo();
 		LoginCredentials loginCreds = userInfo.getLoginCredentials();
 		userInfo.setFirstName(info.getFirstName());

@@ -8,6 +8,7 @@ public class ChangeUserInfo {
 	private String currentPassword;
 	private String password;
 	private String passwordConfirm;
+	private String oldEmail;
 	
 	
 	public String getLibraryCardNumber() {
@@ -51,6 +52,12 @@ public class ChangeUserInfo {
 	}
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+	public String getOldEmail() {
+		return oldEmail;
+	}
+	public void setOldEmail(String oldEmail) {
+		this.oldEmail = oldEmail;
 	}
 	
 	

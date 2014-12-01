@@ -1,5 +1,6 @@
 package com.mimir.library.controller;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,16 @@ public class RegisterController {
 	@RequestMapping(value ="register", method = RequestMethod.POST)
 	@ResponseBody
 	public String addBook(@RequestBody UserRegisterInformation regInfo, HttpSession session) {
+		//check if email and librarycard are unique
+		Long check = new Long(0);
+		System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
+		if(service.numberOfUsersByEmail(regInfo.getEmail()).compareTo(BigInteger.ZERO)!=0){
+			return "email";
+		}
+		//if(service.numberOfUsersByLibraryCardNumber(regInfo.getLibraryCardNumber()).compareTo(BigInteger.ZERO)!=0){
+			//return "card";
+		//}
+		
 		int accountId = service.getMaxAccountInfoId();
 		accountId +=1;
 		System.out.println("TESTEST "+ accountId );
@@ -68,6 +79,13 @@ public class RegisterController {
 	@RequestMapping(value ="registerAdmin", method = RequestMethod.POST)
 	@ResponseBody
 	public String regAdmin(@RequestBody UserRegisterInformation regInfo, HttpSession session) {
+		//check if email is unique
+		Long check = new Long(0);
+		System.out.println(service.numberOfUsersByEmail(regInfo.getEmail()));
+		if(service.numberOfUsersByEmail(regInfo.getEmail()).compareTo(BigInteger.ZERO)!=0){
+			return "email";
+		}
+		
 		AccountInfo acctInfor = new AccountInfo();
 		acctInfor.setFirstName(regInfo.getFirstName());
 		acctInfor.setLastName(regInfo.getLastName());

@@ -57,6 +57,7 @@
 											<div class="row">
 												<div class="col-lg-6">
 													<form>
+														<input id="oldemail" type = "hidden">
 														<span id="userChangeError" class="formerror"></span>
 														<div class="form-group">
 															<label>Library Card Number:</label> <input disabled
@@ -129,7 +130,7 @@
 												data-bv-notempty-message="The first name is required and cannot be empty" />
 										</div>
 									</div>
-
+									
 									<div class="form-group">
 										<label class="col-sm-3 control-label">Last Name</label>
 										<div class="col-sm-4">

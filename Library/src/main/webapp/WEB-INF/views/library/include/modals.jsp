@@ -111,6 +111,7 @@
 				data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
 				data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
 				data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+				<span id = "regerror" class = "formerror"></span>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span>&times;</span><span class="sr-only">Close</span>
